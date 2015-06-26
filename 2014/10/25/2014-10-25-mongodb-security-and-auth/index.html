@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>MongoDB 安全与认证 | Scarletsky</title>
+  <meta name="author" content="Scarletsky">
+  
+  <meta name="description" content="安全和认证要开启安全检查，需要在启动 mongod 时添加 —auth 选项admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。在开启安全检查之前，一定要有一个管理员帐号。数据库的用户存储在 admin 的 db.system.users 集合中。
+创建管理员12&amp;gt; ">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="MongoDB 安全与认证"/>
+  <meta property="og:site_name" content="Scarletsky"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Scarletsky</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-25T09:18:00.000Z"><a href="/2014/10/25/2014-10-25-mongodb-security-and-auth/">2014-10-25</a></time>
+      
+      
+  
+    <h1 class="title">MongoDB 安全与认证</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="安全和认证">安全和认证</h1><p>要开启安全检查，需要在启动 mongod 时添加 —auth 选项<br>admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。<br>在开启安全检查之前，一定要有一个管理员帐号。<br>数据库的用户存储在 admin 的 <code>db.system.users</code> 集合中。</p>
+<p>创建管理员<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.createUser(&#123;user: <span class="string">'root'</span>, <span class="built_in">pwd</span>: <span class="string">'password'</span>, roles: [<span class="string">'root'</span>]&#125;) <span class="comment"># 添加管理员</span></span><br></pre></td></tr></table></figure></p>
+<p>开启验证<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ mongod --config /usr/<span class="built_in">local</span>/etc/mongod.conf --auth</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证方法1</span></span><br><span class="line">$ mongo admin -u <span class="string">'username'</span> -p <span class="string">'password'</span> <span class="comment"># 必须指定该用户有权限访问的数据库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证方法2</span></span><br><span class="line">$ mongo</span><br><span class="line">&gt; use admin</span><br><span class="line">&gt; db.auth(<span class="string">'username'</span>, <span class="string">'password'</span>)</span><br><span class="line">&gt; use otherDatabase</span><br><span class="line">&gt; db.users.find().....</span><br></pre></td></tr></table></figure></p>
+<p>开启验证后，我们在使用 URI 去连接数据库的时候需要注意，要加上 authSource=admin 参数才能通过验证。这里以 mongoose 为例。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line">mongoose.connect(<span class="string">'mongodb://user:pass@server:port/database?authSource=admin'</span>);</span><br></pre></td></tr></table></figure></p>
+<h1 id="用户角色权限">用户角色权限</h1><p>Mongodb 内建了很多角色，详细可以去看看 <a href="http://docs.mongodb.org/manual/reference/built-in-roles/#built-in-roles" target="_blank" rel="external">built-in-roles</a></p>
+<p>这里只说说 Superuser roles。下面几种角色可以为任何用户分配任何权限在任何数据库上，这意味着拥有以下其中一种角色的用户可以分配他们自己的任何权限在任何数据库上面。</p>
+<ul>
+<li>dbOwner 角色，在 admin 数据库作用域中</li>
+<li>userAdmin 角色，在 admin 数据库作用域中</li>
+<li>userAdminAnyDatabase 角色</li>
+<li>root 角色拥有全部的权限</li>
+</ul>
+<p>需要注意的是，root 角色并没有在 <code>system.users</code> 和 <code>system.roles</code> 集合中直接插入数据的能力。因此， root 并不适合用 mongorestore 恢复那些包含了这两个集合的数据。如果你需要进行这些操作，请给用户加上 <code>restore</code> 角色。</p>
+<h1 id="其他安全考虑">其他安全考虑</h1><p>mongodb 传输协议是不加密的，如果需要加密，可以试用 <code>ssh</code> 或者类似的技术进行加密。<br>另外建议把 mongo 服务器布置在防火墙后或者布置在只有应用服务器能访问的网络中。同时建议使用 <code>--bindip</code> 选项，这样可以限制 ip 访问。运行 <code>mongod --bindip localhost</code> 后，只有本机的应用可以访问服务器。<br>最后，还可以用 <code>--noscripting</code> 选项完全禁止服务端 <code>JavaScript</code> 的执行。</p>
+<h1 id="参考文献">参考文献</h1><p><a href="http://docs.mongodb.org/manual/reference/method/js-user-management/" target="_blank" rel="external">Mongodb 官方文档</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/mongodb/">mongodb</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://scarletsky.github.io/2014/10/25/2014-10-25-mongodb-security-and-auth/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:scarletsky.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分類</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/angular-js/">angular.js</a><small>1</small></li>
+  
+    <li><a href="/categories/d3-js/">d3.js</a><small>2</small></li>
+  
+    <li><a href="/categories/drag-and-drop/">drag-and-drop</a><small>1</small></li>
+  
+    <li><a href="/categories/javascript/">javascript</a><small>2</small></li>
+  
+    <li><a href="/categories/javascript-canvas-html5/">javascript canvas html5</a><small>1</small></li>
+  
+    <li><a href="/categories/mongodb/">mongodb</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Scarletsky
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

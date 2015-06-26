@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>MongoDB 运维基础 | Scarletsky</title>
+  <meta name="author" content="Scarletsky">
+  
+  <meta name="description" content="可以试用 mongod --help 查看所有选项
+启动 MongoDB:1mongod --dbpath xxx --port 1111 --config yyy.conf
+使用配置文件获取配置信息(-f  或者 —config):1mongod --config ~/.mongodb.conf
+">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="MongoDB 运维基础"/>
+  <meta property="og:site_name" content="Scarletsky"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Scarletsky</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-10-16T09:59:00.000Z"><a href="/2014/10/16/2014-10-16-mongodb-operation-and-maintenance-basic/">2014-10-16</a></time>
+      
+      
+  
+    <h1 class="title">MongoDB 运维基础</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>可以试用 <code>mongod --help</code> 查看所有选项</p>
+<h1 id="启动_MongoDB:">启动 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --dbpath xxx --port <span class="number">1111</span> --config yyy.conf</span><br></pre></td></tr></table></figure>
+<h1 id="使用配置文件获取配置信息(-f_或者_—config):">使用配置文件获取配置信息(-f  或者 —config):</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --config ~/.mongodb.conf</span><br></pre></td></tr></table></figure>
+<h1 id="停止_MongoDB:">停止 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> -<span class="number">2</span> pid (SIGINT)</span><br><span class="line"><span class="built_in">kill</span> pid (SIGTEAM)</span><br></pre></td></tr></table></figure>
+<p>这两种方式都会稳妥退出，安全。<br>千万不能试用 kill -9 (SIGKILL) 这种方式去停止 MongoDB，这样会导致数据库直接关闭，又可能损坏数据库。<br>另一种方式是在 mongo shell 中试用 shutdownServer 命令，这个命令要在 admin 数据库下才能试用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.shutdownServer();</span><br></pre></td></tr></table></figure></p>
+<h1 id="监控">监控</h1><ul>
+<li>使用 http 管理接口。即用浏览器访问 <a href="http://localhost:28017" target="_blank" rel="external">http://localhost:28017</a><br> 如果想要关闭该接口，需要在 mongod 启动时使用 —nohttpinterface 选项</li>
+<li>使用 serverStatus。在 mongo shell 下使用 db.rubCommand({‘serverStatus;: 1})</li>
+<li>mongostat 命令。</li>
+<li>第三方插件</li>
+</ul>
+<h1 id="其他安全考虑">其他安全考虑</h1><p>mongodb 传输协议是不加密的，如果需要加密，可以试用 ssh 或者类似的技术进行加密。<br>另外建议把 mongo 服务器布置在防火墙后或者布置在只有应用服务器能访问的网络中。同时建议使用 —bindip 选项，这样可以限制 ip 访问。运行 <code>mongod --bindip localhost</code> 后，只有本机的应用可以访问服务器。<br>最后，还可以用 —noscripting 选项完全禁止服务端 JavaScript 的执行。</p>
+<h1 id="备份和修复">备份和修复</h1><p>mongodb 把所有数据都存放在数据目录下，默认目录是 /var/lib/mongo/ 下，如果只是想要备份，只需要简单创建文件副本就可以了。<br>mongodump 是一种可以在运行时备份的方法。这个工具使用普通的查询机制，备份时的查询会对其他客户端的性能产生不理的影响。<br>mongorestore 可以从备份中恢复数据的工具。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongodump <span class="operator">-d</span> <span class="built_in">test</span> -o backup/<span class="built_in">test</span></span><br><span class="line">mongorestore <span class="operator">-d</span> foo --drop backup/<span class="built_in">test</span></span><br></pre></td></tr></table></figure></p>
+<p><code>mongodump</code> 和 <code>mongorestore</code> 能不停机备份，但却失去了实时数据视图的能力。<code>fsync</code> 命令能在 mongodb 运行时赋值数据目录还不会损坏数据。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.runCommand(&#123;<span class="string">'fsync'</span>: <span class="number">1</span>, <span class="string">'lock'</span>: <span class="number">1</span>&#125;)  <span class="comment"># 强制服务器将所有缓冲区写入磁盘，上锁阻止对数据库的写入。</span></span><br><span class="line">&gt; db.fsyncUnlock()  <span class="comment"># 解锁</span></span><br><span class="line">&gt; db.currentOp()  <span class="comment"># 查看</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="参考资料">参考资料</h1><p><a href="http://book.douban.com/subject/6068947/" target="_blank" rel="external">MongoDB权威指南</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/mongodb/">mongodb</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://scarletsky.github.io/2014/10/16/2014-10-16-mongodb-operation-and-maintenance-basic/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:scarletsky.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分類</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/angular-js/">angular.js</a><small>1</small></li>
+  
+    <li><a href="/categories/d3-js/">d3.js</a><small>2</small></li>
+  
+    <li><a href="/categories/drag-and-drop/">drag-and-drop</a><small>1</small></li>
+  
+    <li><a href="/categories/javascript/">javascript</a><small>2</small></li>
+  
+    <li><a href="/categories/javascript-canvas-html5/">javascript canvas html5</a><small>1</small></li>
+  
+    <li><a href="/categories/mongodb/">mongodb</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Scarletsky
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

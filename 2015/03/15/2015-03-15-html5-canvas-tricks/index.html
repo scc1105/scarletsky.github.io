@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>HTML5 Canvas 技巧 | Scarletsky</title>
+  <meta name="author" content="Scarletsky">
+  
+  <meta name="description" content="注意事项用 &amp;lt;canvas&amp;gt; 标签进行绘图时必须要设置 width 和 height 属性，这里并不是指 CSS 属性中的 width 和 height，而是 &amp;lt;canvas&amp;gt; 标签本身的属性！
+12345678910111213&amp;lt;!-- 正确 --&amp;gt;&amp;lt;ca">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="HTML5 Canvas 技巧"/>
+  <meta property="og:site_name" content="Scarletsky"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Scarletsky</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-03-15T12:55:00.000Z"><a href="/2015/03/15/2015-03-15-html5-canvas-tricks/">2015-03-15</a></time>
+      
+      
+  
+    <h1 class="title">HTML5 Canvas 技巧</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="注意事项">注意事项</h1><p>用 <code>&lt;canvas&gt;</code> 标签进行绘图时必须要设置 <code>width</code> 和 <code>height</code> 属性，这里并不是指 CSS 属性中的 <code>width</code> 和 <code>height</code>，而是 <code>&lt;canvas&gt;</code> 标签本身的属性！</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 正确 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">width</span>=<span class="value">"500"</span> <span class="attribute">height</span>=<span class="value">"500"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 错误 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">style</span>=<span class="value">"width: 500px; height: 500px;"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 正确 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas"</span> <span class="attribute">style</span>=<span class="value">"width: 500px; height: 500px;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="mel"></span><br><span class="line">var <span class="keyword">canvas</span> = document.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">canvas</span>.setAttribute(<span class="string">'width'</span>, <span class="string">'500'</span>);</span><br><span class="line"><span class="keyword">canvas</span>.setAttribute(<span class="string">'height'</span>, <span class="string">'500'</span>);</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我以前一直以为 <code>&lt;canvas&gt;</code> 的 <code>width</code> 和 <code>height</code> 属性和 CSS 中的 <code>width</code> 和 <code>height</code> 是同一个东西，直到我看到 Stackoverflow 上面的<a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">这个帖子</a>…</p>
+<h1 id="读取图像文件，并绘制到_canvas_的中央">读取图像文件，并绘制到 canvas 的中央</h1><p>下面演示一下如何让用户选择一张图片，然后把图片绘制到 canvas 中央。</p>
+<p>HTML<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas"</span> <span class="attribute">width</span>=<span class="value">"500"</span> <span class="attribute">height</span>=<span class="value">"500"</span> <span class="attribute">style</span>=<span class="value">"border: 1px solid black;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">"input"</span> <span class="attribute">type</span>=<span class="value">"file"</span> <span class="attribute">style</span>=<span class="value">"display: none;"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>Javascript<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为了方便起见，还是用 jQuery 吧</span></span><br><span class="line"><span class="keyword">var</span> $canvas = $(<span class="string">'#canvas'</span>);</span><br><span class="line"><span class="keyword">var</span> $input = $(<span class="string">'#input'</span>);</span><br><span class="line"><span class="keyword">var</span> canvas = $canvas[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> input = $input[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过点击 canvas 触发 input 的 click 事件，用来选择文件</span></span><br><span class="line">$canvas.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    input.click();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 选择文件后，会触发 change 事件</span></span><br><span class="line">$input.on(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 通过 FileReader 来读取文件</span></span><br><span class="line">    <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">    <span class="keyword">var</span> file = e.target.files[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 绑定读取文件后的回调函数</span></span><br><span class="line">    reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> img = <span class="keyword">new</span> Image();</span><br><span class="line">        <span class="keyword">var</span> dataURL = e.target.result;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过计算可以得到</span></span><br><span class="line">        img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> hRatio = canvas.width  / img.width    ;</span><br><span class="line">            <span class="keyword">var</span> vRatio =  canvas.height / img.height  ;</span><br><span class="line">            <span class="keyword">var</span> ratio  = <span class="built_in">Math</span>.min ( hRatio, vRatio );</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> centerShiftX = ( canvas.width - img.width*ratio ) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">var</span> centerShiftY = ( canvas.height - img.height*ratio ) / <span class="number">2</span>;  </span><br><span class="line"></span><br><span class="line">            ctx.clearRect(<span class="number">0</span>, <span class="number">0</span>, canvas.width, canvas.height);</span><br><span class="line">            ctx.drawImage(img, </span><br><span class="line">                <span class="number">0</span>, <span class="number">0</span>, img.width, img.height, <span class="comment">// 原始图像</span></span><br><span class="line">                centerShiftX, centerShiftY, img.width*ratio, img.height*ratio); <span class="comment">// 目标图像</span></span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">      img.src = dataURL;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果用户在选择文件时点了取消，file 就会为 undefined</span></span><br><span class="line">    <span class="keyword">if</span> (file) &#123;</span><br><span class="line">        <span class="comment">// 读取文件，并返回 DataURL，可以通过 e.target.result 来得到这个 DataURL</span></span><br><span class="line">        reader.readAsDataURL(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考资料：">参考资料：</h1><p><a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties</a></p>
+<p><a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/javascript-canvas-html5/">javascript canvas html5</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://scarletsky.github.io/2015/03/15/2015-03-15-html5-canvas-tricks/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:scarletsky.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分類</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/angular-js/">angular.js</a><small>1</small></li>
+  
+    <li><a href="/categories/d3-js/">d3.js</a><small>2</small></li>
+  
+    <li><a href="/categories/drag-and-drop/">drag-and-drop</a><small>1</small></li>
+  
+    <li><a href="/categories/javascript/">javascript</a><small>2</small></li>
+  
+    <li><a href="/categories/javascript-canvas-html5/">javascript canvas html5</a><small>1</small></li>
+  
+    <li><a href="/categories/mongodb/">mongodb</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Scarletsky
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

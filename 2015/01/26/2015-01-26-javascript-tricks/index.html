@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JavaScript 常用技巧 | Scarletsky</title>
+  <meta name="author" content="Scarletsky">
+  
+  <meta name="description" content="字符串操作首字母大写123str.replace(/\b\w+/g, function (word) &amp;#123;    return word.substring(0, 1).toLowerCase() + word.substring(1);&amp;#125;);
+截取字符串最后几位1str.subs">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JavaScript 常用技巧"/>
+  <meta property="og:site_name" content="Scarletsky"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Scarletsky</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-26T10:05:00.000Z"><a href="/2015/01/26/2015-01-26-javascript-tricks/">2015-01-26</a></time>
+      
+      
+  
+    <h1 class="title">JavaScript 常用技巧</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="字符串操作">字符串操作</h1><h2 id="首字母大写">首字母大写</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="截取字符串最后几位">截取字符串最后几位</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str.substring(str.length-X)</span><br></pre></td></tr></table></figure>
+<h2 id="进制转换">进制转换</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">d.toString(<span class="number">16</span>)    (十进制 -&gt; 十六进制)</span><br><span class="line"><span class="built_in">parseInt</span>(‘ff’, <span class="number">16</span>) (十六进制 -&gt; 十进制)</span><br></pre></td></tr></table></figure>
+<h2 id="生成随机字符串">生成随机字符串</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.random().toString(<span class="number">36</span>).substring(<span class="number">7</span>)</span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript</span></span><br></pre></td></tr></table></figure>
+<h2 id="is-start-with?">is-start-with?</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string.lastIndexOf(str, <span class="number">0</span>) === <span class="number">0</span></span><br><span class="line">string.substring(<span class="number">0</span>, str.length) === str</span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string</span></span><br></pre></td></tr></table></figure>
+<h2 id="is-end-with?">is-end-with?</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/280634/endswith-in-javascript</span></span><br></pre></td></tr></table></figure>
+<h2 id="解析_Base64">解析 Base64</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> base64str = <span class="string">'this is base64 string'</span>;</span><br><span class="line">Buffer(base64str, <span class="string">'base64'</span>).toString();</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="数组操作">数组操作</h1><h2 id="获取最后数组中最后一个元素">获取最后数组中最后一个元素</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arr.slice(-<span class="number">1</span>).pop() <span class="comment">// 简洁</span></span><br><span class="line">arr[arr.length - <span class="number">1</span>] <span class="comment">// 快速</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="日期操作">日期操作</h1><h2 id="获取当前时间戳">获取当前时间戳</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+<span class="keyword">new</span> <span class="built_in">Date</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/javascript/">javascript</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://scarletsky.github.io/2015/01/26/2015-01-26-javascript-tricks/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:scarletsky.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分類</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/angular-js/">angular.js</a><small>1</small></li>
+  
+    <li><a href="/categories/d3-js/">d3.js</a><small>2</small></li>
+  
+    <li><a href="/categories/drag-and-drop/">drag-and-drop</a><small>1</small></li>
+  
+    <li><a href="/categories/javascript/">javascript</a><small>2</small></li>
+  
+    <li><a href="/categories/javascript-canvas-html5/">javascript canvas html5</a><small>1</small></li>
+  
+    <li><a href="/categories/mongodb/">mongodb</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Scarletsky
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

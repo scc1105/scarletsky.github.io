@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>D3.js 学习笔记2 | Scarletsky</title>
+  <meta name="author" content="Scarletsky">
+  
+  <meta name="description" content="Layout和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加方便处理的数据。
+D3 中包含的全部的 Layout 列表如下：
+
+Bundle
+Chord
+Cluster
+Forc">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="D3.js 学习笔记2"/>
+  <meta property="og:site_name" content="Scarletsky"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Scarletsky</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-01-04T09:28:04.000Z"><a href="/2015/01/04/2015-01-04-d3js-learning-2/">2015-01-04</a></time>
+      
+      
+  
+    <h1 class="title">D3.js 学习笔记2</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="Layout">Layout</h1><p>和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加方便处理的数据。</p>
+<p>D3 中包含的全部的 Layout 列表如下：</p>
+<ul>
+<li>Bundle</li>
+<li>Chord</li>
+<li>Cluster</li>
+<li>Force</li>
+<li>Histogram</li>
+<li>Pack</li>
+<li>Partition</li>
+<li>Pie</li>
+<li>Stack</li>
+<li>Tree</li>
+<li>Treemap</li>
+</ul>
+<p>每一种 Layout 都会提供一些特别的方法帮助你处理数据。</p>
+<p>本文主要介绍一下 <code>Pie Layout</code> 和 <code>Stack Layout</code>。</p>
+<h2 id="Pie_Layout">Pie Layout</h2><p>Pie Layout 可以帮助你生成类似饼状图的数据结构。我们先看看它的使用方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [ <span class="number">5</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">45</span>, <span class="number">6</span>, <span class="number">25</span> ];</span><br><span class="line"><span class="keyword">var</span> pie = d3.layout.pie();</span><br></pre></td></tr></table></figure>
+<p>如下图所示，你会看到 Pie Layout 会帮助你生成新的数据。<br><img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-01.png" alt=""></p>
+<p>我们来看看如何用这些数据来生成饼状图。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [ <span class="number">5</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">45</span>, <span class="number">6</span>, <span class="number">25</span> ];</span><br><span class="line"><span class="keyword">var</span> pie = d3.layout.pie();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> w = <span class="number">300</span>;</span><br><span class="line"><span class="keyword">var</span> h = <span class="number">300</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> outerRadius = w / <span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> innerRadius = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> arc = d3.svg.arc()  <span class="comment">// 创建弧形。</span></span><br><span class="line">                .innerRadius(innerRadius)  <span class="comment">// 内径</span></span><br><span class="line">                .outerRadius(outerRadius); <span class="comment">// 外径</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Create SVG element</span></span><br><span class="line"><span class="keyword">var</span> svg = d3.select(<span class="string">"body"</span>)</span><br><span class="line">            .append(<span class="string">"svg"</span>)</span><br><span class="line">            .attr(<span class="string">"width"</span>, w)</span><br><span class="line">            .attr(<span class="string">"height"</span>, h);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arcs = svg.selectAll(<span class="string">"g.arc"</span>)</span><br><span class="line">        .data(pie(dataset))</span><br><span class="line">        .enter()</span><br><span class="line">        .append(<span class="string">"g"</span>)</span><br><span class="line">        .attr(<span class="string">"class"</span>, <span class="string">"arc"</span>)</span><br><span class="line">        .attr(<span class="string">"transform"</span>, <span class="string">"translate("</span> + outerRadius + <span class="string">", "</span> + outerRadius + <span class="string">")"</span>);  <span class="comment">// 圆心位置</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> color = d3.scale.category10();  <span class="comment">// 创建颜色</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Draw arc paths</span></span><br><span class="line">arcs.append(<span class="string">"path"</span>)</span><br><span class="line">    .attr(<span class="string">"fill"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d, i</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> color(i);  <span class="comment">// 会返回不同的颜色</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"d"</span>, arc);  <span class="comment">// d 是 path 的属性，用来定义路径的生成规则。</span></span><br><span class="line"></span><br><span class="line">arcs.append(<span class="string">"text"</span>)</span><br><span class="line">    .attr(<span class="string">"transform"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"translate("</span> + arc.centroid(d) + <span class="string">")"</span>;  <span class="comment">// arc.centroid 是弧形中一个重要方法，会返回该弧形的中心位置。</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"text-anchor"</span>, <span class="string">"middle"</span>)</span><br><span class="line">    .text(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> d.value;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>你可以在下面这个连接里看到效果：<br><a href="http://examples.oreilly.com/0636920026938/chapter_11/01_pie.html" target="_blank" rel="external">http://examples.oreilly.com/0636920026938/chapter_11/01_pie.html</a></p>
+<h2 id="Stack_Layout">Stack Layout</h2><p>Stack Layout 可以帮你处理如下图所示的类似“叠加柱形图”那样的数据结构。</p>
+<p><img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-02.png" alt=""></p>
+<p>我们先来看看一组数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> _dataset = [</span><br><span class="line">        &#123; apples: <span class="number">5</span>, oranges: <span class="number">10</span>, grapes: <span class="number">22</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">4</span>, oranges: <span class="number">12</span>, grapes: <span class="number">28</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">2</span>, oranges: <span class="number">19</span>, grapes: <span class="number">32</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">7</span>, oranges: <span class="number">23</span>, grapes: <span class="number">35</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">23</span>, oranges: <span class="number">17</span>, grapes: <span class="number">43</span> &#125;</span><br><span class="line">];  <span class="comment">// 转换前的数据</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> dataset = [</span><br><span class="line">        [</span><br><span class="line">                &#123; x: <span class="number">0</span>, y: <span class="number">5</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">1</span>, y: <span class="number">4</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">2</span>, y: <span class="number">2</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">3</span>, y: <span class="number">7</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">4</span>, y: <span class="number">23</span> &#125;</span><br><span class="line">        ],</span><br><span class="line">        [</span><br><span class="line">                &#123; x: <span class="number">0</span>, y: <span class="number">10</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">1</span>, y: <span class="number">12</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">2</span>, y: <span class="number">19</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">3</span>, y: <span class="number">23</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">4</span>, y: <span class="number">17</span> &#125;</span><br><span class="line">        ],</span><br><span class="line">        [</span><br><span class="line">                &#123; x: <span class="number">0</span>, y: <span class="number">22</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">1</span>, y: <span class="number">28</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">2</span>, y: <span class="number">32</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">3</span>, y: <span class="number">35</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">4</span>, y: <span class="number">43</span> &#125;</span><br><span class="line">        ]</span><br><span class="line">];  <span class="comment">// 转换后的数据</span></span><br></pre></td></tr></table></figure>
+<p>要使用 Stack Layout，首先要把我们的数据处理一遍，把相同类型的数据归为一组，例如上面代码所示那样，第一组数据是 apples，第二组数据是 oranges， 第三组数据室 grapes。注意，分组后的数据必须同时包含 x 和 y，其中 x 只是代表他们的 id，y 才是真正的数据。</p>
+<p>处理好数据之后我们可以试试调用 stack 方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stack = d3.layout.stack();</span><br><span class="line">stack(dataset);</span><br></pre></td></tr></table></figure>
+<p>之后我们可以看到下面的结果：<br><img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-03.png" alt=""></p>
+<p>看到规律了吗？用 stack 方法处理过的数据，都会多了一个 <code>y0</code> 的键。而这个键的值刚好就是前面数据的 y 值之和。利用这个 <code>y0</code>，我们就可以很方便的创建“叠加柱形图”了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Width and height</span></span><br><span class="line"><span class="keyword">var</span> w = <span class="number">500</span>;</span><br><span class="line"><span class="keyword">var</span> h = <span class="number">300</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Original data</span></span><br><span class="line"><span class="keyword">var</span> dataset = [</span><br><span class="line">    [</span><br><span class="line">        &#123; x: <span class="number">0</span>, y: <span class="number">5</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">1</span>, y: <span class="number">4</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">2</span>, y: <span class="number">2</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">3</span>, y: <span class="number">7</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">4</span>, y: <span class="number">23</span> &#125;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &#123; x: <span class="number">0</span>, y: <span class="number">10</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">1</span>, y: <span class="number">12</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">2</span>, y: <span class="number">19</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">3</span>, y: <span class="number">23</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">4</span>, y: <span class="number">17</span> &#125;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &#123; x: <span class="number">0</span>, y: <span class="number">22</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">1</span>, y: <span class="number">28</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">2</span>, y: <span class="number">32</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">3</span>, y: <span class="number">35</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">4</span>, y: <span class="number">43</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">//Set up stack method</span></span><br><span class="line"><span class="keyword">var</span> stack = d3.layout.stack();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Data, stacked</span></span><br><span class="line">stack(dataset);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Set up scales</span></span><br><span class="line"><span class="keyword">var</span> xScale = d3.scale.ordinal()</span><br><span class="line">    .domain(d3.range(dataset[<span class="number">0</span>].length))</span><br><span class="line">    .rangeRoundBands([<span class="number">0</span>, w], <span class="number">0.05</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">    .domain([<span class="number">0</span>,             </span><br><span class="line">        d3.max(dataset, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> d3.max(d, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> d.y0 + d.y;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)</span><br><span class="line">    ])</span><br><span class="line">    .range([<span class="number">0</span>, h]);</span><br><span class="line">    </span><br><span class="line"><span class="comment">//Easy colors accessible via a 10-step ordinal scale</span></span><br><span class="line"><span class="keyword">var</span> colors = d3.scale.category10();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Create SVG element</span></span><br><span class="line"><span class="keyword">var</span> svg = d3.select(<span class="string">"body"</span>)</span><br><span class="line">            .append(<span class="string">"svg"</span>)</span><br><span class="line">            .attr(<span class="string">"width"</span>, w)</span><br><span class="line">            .attr(<span class="string">"height"</span>, h);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add a group for each row of data</span></span><br><span class="line"><span class="keyword">var</span> groups = svg.selectAll(<span class="string">"g"</span>)</span><br><span class="line">    .data(dataset)</span><br><span class="line">    .enter()</span><br><span class="line">    .append(<span class="string">"g"</span>)</span><br><span class="line">    .style(<span class="string">"fill"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d, i</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> colors(i);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add a rect for each data value</span></span><br><span class="line"><span class="keyword">var</span> rects = groups.selectAll(<span class="string">"rect"</span>)</span><br><span class="line">    .data(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d; &#125;)</span><br><span class="line">    .enter()</span><br><span class="line">    .append(<span class="string">"rect"</span>)</span><br><span class="line">    .attr(<span class="string">"x"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d, i</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> xScale(i);</span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"y"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> yScale(d.y0);</span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"height"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> yScale(d.y);</span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"width"</span>, xScale.rangeBand());</span><br></pre></td></tr></table></figure>
+<p>结果可以看看下面连接：<br><a href="http://examples.oreilly.com/0636920026938/chapter_11/03_stacked_bar.html" target="_blank" rel="external">http://examples.oreilly.com/0636920026938/chapter_11/03_stacked_bar.html</a></p>
+<p>什么？你不想要从上往下的柱形图？你想要从下往上的柱形图？</p>
+<p>其实要生成从下往上的柱形图很简单，只需要把 yScale 的 range 反过来，然后画图的时候调整一下 y 和 height 属性就好了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">    ...</span><br><span class="line">    .range([h, <span class="number">0</span>]); <span class="comment">// 原来是 [0, h]</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="keyword">var</span> rects = groups.selectAll(<span class="string">"rect"</span>)</span><br><span class="line">    ...</span><br><span class="line">    .attr(<span class="string">"y"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> yScale(d.y0) - (h - yScale(d.y)); <span class="comment">// 原来是 return yScale(d.y0)</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"height"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> h - yScale(d.y);  <span class="comment">// 原来是 return yScale(d.y)</span></span><br><span class="line">    &#125;)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p><a href="http://chimera.labs.oreilly.com/books/1230000000345/ch11.html" target="_blank" rel="external">http://chimera.labs.oreilly.com/books/1230000000345/ch11.html</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/d3-js/">d3.js</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://scarletsky.github.io/2015/01/04/2015-01-04-d3js-learning-2/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:scarletsky.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分類</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/angular-js/">angular.js</a><small>1</small></li>
+  
+    <li><a href="/categories/d3-js/">d3.js</a><small>2</small></li>
+  
+    <li><a href="/categories/drag-and-drop/">drag-and-drop</a><small>1</small></li>
+  
+    <li><a href="/categories/javascript/">javascript</a><small>2</small></li>
+  
+    <li><a href="/categories/javascript-canvas-html5/">javascript canvas html5</a><small>1</small></li>
+  
+    <li><a href="/categories/mongodb/">mongodb</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Scarletsky
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
