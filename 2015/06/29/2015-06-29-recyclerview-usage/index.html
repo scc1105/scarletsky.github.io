@@ -1,0 +1,215 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>RecyclerView 基本用法 | Scarletsky</title>
+  <meta name="author" content="Scarletsky">
+  
+  <meta name="description" content="基本用法
+在 XML 中添加 &amp;lt;android.support.v7.widget.RecyclerView/&amp;gt;
+
+编写继承 RecyclerView.Adapter&amp;lt;RecyclerViewAdapter.ViewHolder&amp;gt; 的 Adapter
+
+Constructor">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="RecyclerView 基本用法"/>
+  <meta property="og:site_name" content="Scarletsky"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Scarletsky</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-29T12:55:00.000Z"><a href="/2015/06/29/2015-06-29-recyclerview-usage/">2015-06-29</a></time>
+      
+      
+  
+    <h1 class="title">RecyclerView 基本用法</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="基本用法">基本用法</h1><ul>
+<li><p>在 XML 中添加 <code>&lt;android.support.v7.widget.RecyclerView/&gt;</code></p>
+</li>
+<li><p>编写继承 <code>RecyclerView.Adapter&lt;RecyclerViewAdapter.ViewHolder&gt;</code> 的 <code>Adapter</code></p>
+<ul>
+<li><code>Constructor</code></li>
+<li>编写继承 <code>RecyclerView.ViewHolder</code> 的 <code>ViewHolder</code></li>
+<li><code>onCreateViewHolder</code></li>
+<li><code>onBindViewHolder</code></li>
+</ul>
+</li>
+<li><p>设置 <code>RecyclerView</code></p>
+<ul>
+<li><code>setLayoutManager</code></li>
+<li><code>setAdapter</code></li>
+<li><code>setItemAnimator</code>(可选)</li>
+<li><code>addItemDecoration</code>(可选)</li>
+</ul>
+</li>
+</ul>
+<h1 id="XML">XML</h1><p>新建 xml，添加 <code>RecyclerView</code>。</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;RelativeLayout xmlns:<span class="variable">android=</span><span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:<span class="variable">fab=</span><span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    android:<span class="variable">orientation=</span><span class="string">"vertical"</span></span><br><span class="line">    android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="variable">layout_height=</span><span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.v7.widget.RecyclerView</span><br><span class="line">        android:<span class="variable">id=</span><span class="string">"@+id/my_recyclerview"</span></span><br><span class="line">        android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span></span><br><span class="line">        android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="ViewHolder">ViewHolder</h1><p>我们以前使用 <code>ListView</code> 的时候，会用以下的方式来提高 <code>ListView</code> 的性能:</p>
+<ul>
+<li>用 <code>convertView</code> 来减少 <code>LayoutInflater.inflate</code> 的使用</li>
+<li>用 <code>ViewHolder</code> 来减少 <code>findViewById</code> 的使用</li>
+</ul>
+<p><code>RecyclerView</code> 标准化了 <code>ViewHolder</code> 来缓存昂贵 <code>findViewById</code> 的结果。</p>
+<p>例子：</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> MyViewHolder <span class="keyword">extends</span> RecyclerView.ViewHolder &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> TextView mTitle;</span><br><span class="line">    <span class="keyword">public</span> TextView mSubtitle;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyViewHolder</span> <span class="params">(View v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(v);</span><br><span class="line">        mTitle = (TextView) v.findViewById(R.id.title);</span><br><span class="line">        mSubtitle = (TextView) v.findViewById(R.id.subtitle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>PS: 一般 <code>ViewHolder</code> 会编写在 <code>Adapter</code> 的内部。</p>
+<h1 id="Adapter">Adapter</h1><p>我们需要继承 <code>RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt;</code> 来编写我们自己的 <code>Adapter</code> 。编写我们自己的 <code>Adapter</code> 的时候，最重要的是要重写 <code>onCreateViewHolder</code> 和 <code>onBindViewHolder</code> 方法。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">MyAdapter</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">RecyclerView</span>.<span class="title">Adapter&lt;RecyclerView</span>.<span class="title">ViewHolder&gt;</span> &#123;</span></span><br><span class="line">    </span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    public <span class="type">RecyclerView</span>.<span class="type">ViewHolder</span> onCreateViewHolder (<span class="type">ViewGroup</span> parent, int viewType) &#123;</span><br><span class="line">        <span class="type">View</span> v = <span class="type">LayoutInflater</span>.from(ctx).inflate(<span class="type">R</span>.layout.my_adapter, parent, <span class="literal">false</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">ViewHolder</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    public void onBindViewHolder (<span class="type">RecyclerView</span>.<span class="type">ViewHolder</span> h, int position) &#123;</span><br><span class="line">        <span class="type">MyViewHolder</span> holder = (<span class="type">MyViewHolder</span>) h;</span><br><span class="line">        holder.mTitle.setText(<span class="string">"This is my title"</span>);</span><br><span class="line">        holder.mSubtitle.setText(<span class="string">"This is my subtitle"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，在这个例子中我们的 <code>MyAdapter</code> 存放的是 <code>&lt;RecyclerView.ViewHolder&gt;</code>，所以在 <code>onCreateViewHolder</code> 中返回的也必须是 <code>&lt;RecyclerView.ViewHolder&gt;</code>，而在 <code>onBindViewHolder</code> 的回调中，我们拿到的也是 <code>RecyclerView.ViewHolder</code>，要把它强转成我们之前编写的 <code>MyViewHolder</code> 之后才能正常使用。</p>
+<h1 id="RecyclerView">RecyclerView</h1><p>最后只要设置一下 <code>RecyclerView</code> 就能使用了。</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RecyclerView mRecyclerView = <span class="params">(RecyclerView)</span> findViewById<span class="params">(R.id.my_recyclerview)</span>;</span><br><span class="line">mRecyclerView.setLayoutManager<span class="params">(new LinearLayoutManager<span class="params">(this)</span>)</span>;</span><br><span class="line">mRecyclerView.setAdapter<span class="params">(adapter)</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p><a href="http://wobushi.ren/recyclerview.html" target="_blank" rel="external">RecyclerView全攻略</a><br><a href="http://blog.csdn.net/lmj623565791/article/details/45059587" target="_blank" rel="external">Android RecyclerView 使用完全解析 体验艺术般的控件</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://scarletsky.github.io/2015/06/29/2015-06-29-recyclerview-usage/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:scarletsky.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分類</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/android/">android</a><small>1</small></li>
+  
+    <li><a href="/categories/angular-js/">angular.js</a><small>1</small></li>
+  
+    <li><a href="/categories/d3-js/">d3.js</a><small>2</small></li>
+  
+    <li><a href="/categories/drag-and-drop/">drag-and-drop</a><small>1</small></li>
+  
+    <li><a href="/categories/javascript/">javascript</a><small>2</small></li>
+  
+    <li><a href="/categories/javascript-canvas-html5/">javascript canvas html5</a><small>1</small></li>
+  
+    <li><a href="/categories/mongodb/">mongodb</a><small>2</small></li>
+  
+  </ul>
+</div>
+
+
+  
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Scarletsky
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
