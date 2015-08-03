@@ -7,9 +7,8 @@
   <meta name="author" content="Scarletsky">
   
   <meta name="description" content="可以试用 mongod --help 查看所有选项
-启动 MongoDB:1mongod --dbpath xxx --port 1111 --config yyy.conf
-使用配置文件获取配置信息(-f  或者 —config):1mongod --config ~/.mongodb.conf
-">
+启动 MongoDB:1234mongod --dbpath xxx --port 1111 --config yyy.conf#for ubuntuservice mongod start
+使用配置文件获取配置信息(-f  或者 —config)">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -64,10 +63,11 @@
     <div class="entry">
       
         <p>可以试用 <code>mongod --help</code> 查看所有选项</p>
-<h1 id="启动_MongoDB:">启动 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --dbpath xxx --port <span class="number">1111</span> --config yyy.conf</span><br></pre></td></tr></table></figure>
+<h1 id="启动_MongoDB:">启动 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mongod --dbpath xxx --port <span class="number">1111</span> --config yyy.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#for ubuntu</span></span><br><span class="line">service mongod start</span><br></pre></td></tr></table></figure>
 <h1 id="使用配置文件获取配置信息(-f_或者_—config):">使用配置文件获取配置信息(-f  或者 —config):</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --config ~/.mongodb.conf</span><br></pre></td></tr></table></figure>
 <h1 id="停止_MongoDB:">停止 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> -<span class="number">2</span> pid (SIGINT)</span><br><span class="line"><span class="built_in">kill</span> pid (SIGTEAM)</span><br></pre></td></tr></table></figure>
 <p>这两种方式都会稳妥退出，安全。<br>千万不能试用 kill -9 (SIGKILL) 这种方式去停止 MongoDB，这样会导致数据库直接关闭，又可能损坏数据库。<br>另一种方式是在 mongo shell 中试用 shutdownServer 命令，这个命令要在 admin 数据库下才能试用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.shutdownServer();</span><br></pre></td></tr></table></figure></p>
+<h1 id="升级_MongoDB:">升级 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#for OS X</span></span><br><span class="line">brew update</span><br><span class="line">brew upgrade mongodb</span><br><span class="line"></span><br><span class="line"><span class="comment">#for ubuntu</span></span><br><span class="line">http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/</span><br><span class="line">需要指定安装版本</span><br></pre></td></tr></table></figure>
 <h1 id="监控">监控</h1><ul>
 <li>使用 http 管理接口。即用浏览器访问 <a href="http://localhost:28017" target="_blank" rel="external">http://localhost:28017</a><br> 如果想要关闭该接口，需要在 mongod 启动时使用 —nohttpinterface 选项</li>
 <li>使用 serverStatus。在 mongo shell 下使用 db.rubCommand({‘serverStatus;: 1})</li>
@@ -77,7 +77,8 @@
 <h1 id="其他安全考虑">其他安全考虑</h1><p>mongodb 传输协议是不加密的，如果需要加密，可以试用 ssh 或者类似的技术进行加密。<br>另外建议把 mongo 服务器布置在防火墙后或者布置在只有应用服务器能访问的网络中。同时建议使用 —bindip 选项，这样可以限制 ip 访问。运行 <code>mongod --bindip localhost</code> 后，只有本机的应用可以访问服务器。<br>最后，还可以用 —noscripting 选项完全禁止服务端 JavaScript 的执行。</p>
 <h1 id="备份和修复">备份和修复</h1><p>mongodb 把所有数据都存放在数据目录下，默认目录是 /var/lib/mongo/ 下，如果只是想要备份，只需要简单创建文件副本就可以了。<br>mongodump 是一种可以在运行时备份的方法。这个工具使用普通的查询机制，备份时的查询会对其他客户端的性能产生不理的影响。<br>mongorestore 可以从备份中恢复数据的工具。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongodump <span class="operator">-d</span> <span class="built_in">test</span> -o backup/<span class="built_in">test</span></span><br><span class="line">mongorestore <span class="operator">-d</span> foo --drop backup/<span class="built_in">test</span></span><br></pre></td></tr></table></figure></p>
 <p><code>mongodump</code> 和 <code>mongorestore</code> 能不停机备份，但却失去了实时数据视图的能力。<code>fsync</code> 命令能在 mongodb 运行时赋值数据目录还不会损坏数据。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.runCommand(&#123;<span class="string">'fsync'</span>: <span class="number">1</span>, <span class="string">'lock'</span>: <span class="number">1</span>&#125;)  <span class="comment"># 强制服务器将所有缓冲区写入磁盘，上锁阻止对数据库的写入。</span></span><br><span class="line">&gt; db.fsyncUnlock()  <span class="comment"># 解锁</span></span><br><span class="line">&gt; db.currentOp()  <span class="comment"># 查看</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="参考资料">参考资料</h1><p><a href="http://book.douban.com/subject/6068947/" target="_blank" rel="external">MongoDB权威指南</a></p>
+<h1 id="删除_MongoDB">删除 MongoDB</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#for ubuntu</span></span><br><span class="line">sudo service mongod stop</span><br><span class="line">sudo apt-get purge mongodb-org*</span><br><span class="line">sudo rm -r /var/<span class="built_in">log</span>/mongodb</span><br><span class="line">sudo rm -r /var/lib/mongodb</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p><a href="http://book.douban.com/subject/6068947/" target="_blank" rel="external">MongoDB权威指南</a><br><a href="http://docs.mongodb.org/" target="_blank" rel="external">MongoDB官方文档</a></p>
 
       
     </div>
@@ -149,7 +150,7 @@
   <h3 class="title">分類</h3>
   <ul class="entry">
   
-    <li><a href="/categories/android/">android</a><small>1</small></li>
+    <li><a href="/categories/android/">android</a><small>2</small></li>
   
     <li><a href="/categories/angular-js/">angular.js</a><small>1</small></li>
   

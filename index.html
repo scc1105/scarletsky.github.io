@@ -49,6 +49,47 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-07-05T15:45:02.000Z"><a href="/2015/07/05/2015-07-06-android-support-design-library-experience/">2015-07-05</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/07/05/2015-07-06-android-support-design-library-experience/">Android Support Design Library 注意事项</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="CoordinatorLayout">CoordinatorLayout</h1><p>这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。</p>
+<p>常见的用法如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CoordinatorLayout</span></span><br><span class="line">    xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.NestedScrollView</span></span><br><span class="line">        xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">        xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_gravity=<span class="string">"fill_vertical"</span></span><br><span class="line">        android:layout_marginBottom=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">        android:<span class="attribute">background</span>=<span class="string">"@android:color/white"</span></span><br><span class="line">        app:layout_behavior=<span class="string">"@string/appbar_scrolling_view_behavior"</span></span><br><span class="line">        &gt;</span><br><span class="line"></span><br><span class="line">        &lt;FrameLayout</span><br><span class="line">            android:id=<span class="string">"@+id/frame_image_toolbar_content"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            &gt;</span><br><span class="line">        &lt;/FrameLayout&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.NestedScrollView</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.AppBarLayout</span></span><br><span class="line">        android:id=<span class="string">"@+id/appbar"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"256dp"</span></span><br><span class="line">        android:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CollapsingToolbarLayout</span></span><br><span class="line">            android:id=<span class="string">"@+id/collapsing_toolbar_wrapper"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            app:contentScrim=<span class="string">"?attr/colorPrimary"</span></span><br><span class="line">            app:expandedTitleMarginEnd=<span class="string">"64dp"</span></span><br><span class="line">            app:expandedTitleMarginStart=<span class="string">"48dp"</span></span><br><span class="line">            app:layout_scrollFlags=<span class="string">"scroll|exitUntilCollapsed"</span></span><br><span class="line">            &gt;</span><br><span class="line"></span><br><span class="line">            &lt;ImageView</span><br><span class="line">                android:id=<span class="string">"@+id/collapsing_toolbar_image"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">                android:scaleType=<span class="string">"centerCrop"</span></span><br><span class="line">                app:layout_collapseMode=<span class="string">"parallax"</span></span><br><span class="line">                /&gt;</span><br><span class="line"></span><br><span class="line">            &lt;android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.Toolbar</span></span><br><span class="line">                android:id=<span class="string">"@+id/collapsing_toolbar"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">                app:layout_collapseMode=<span class="string">"pin"</span></span><br><span class="line">                app:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span></span><br><span class="line">                app:popupTheme=<span class="string">"@style/ThemeOverlay.AppCompat.Light"</span></span><br><span class="line">                /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CollapsingToolbarLayout</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.AppBarLayout</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CoordinatorLayout</span>&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CollapsingToolbarLayout.setTitle 代替 Toolbar.setTitle</li>
+<li>NestedScrollView 中必须添加 <code>app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;</code> 属性之后，里面的内容才会位于 AppBarLayout 之下</li>
+<li>NestedScrollView 中 <code>android:layout_gravity=&quot;fill_vertical&quot;</code> 和 <code>android:layout_marginBottom=&quot;?attr/actionBarSize&quot;</code> 属性不是必须的，但如果内容不够高，则内容会位于屏幕底部，而不是 AppBarLayout 下面。<code>layout_gravity=&quot;fill_vertical&quot;</code> 可以修复这个问题。</li>
+</ul>
+<h1 id="参考资料">参考资料</h1><p><a href="http://segmentfault.com/a/1190000002888109" target="_blank" rel="external">Android Support Design 中 CoordinatorLayout 与 Behaviors 初探</a><br><a href="http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior" target="_blank" rel="external">http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-06-29T12:55:00.000Z"><a href="/2015/06/29/2015-06-29-recyclerview-basic-usage/">2015-06-29</a></time>
       
       
@@ -564,10 +605,11 @@
     <div class="entry">
       
         <p>可以试用 <code>mongod --help</code> 查看所有选项</p>
-<h1 id="启动_MongoDB:">启动 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --dbpath xxx --port <span class="number">1111</span> --config yyy.conf</span><br></pre></td></tr></table></figure>
+<h1 id="启动_MongoDB:">启动 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mongod --dbpath xxx --port <span class="number">1111</span> --config yyy.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#for ubuntu</span></span><br><span class="line">service mongod start</span><br></pre></td></tr></table></figure>
 <h1 id="使用配置文件获取配置信息(-f_或者_—config):">使用配置文件获取配置信息(-f  或者 —config):</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --config ~/.mongodb.conf</span><br></pre></td></tr></table></figure>
 <h1 id="停止_MongoDB:">停止 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> -<span class="number">2</span> pid (SIGINT)</span><br><span class="line"><span class="built_in">kill</span> pid (SIGTEAM)</span><br></pre></td></tr></table></figure>
 <p>这两种方式都会稳妥退出，安全。<br>千万不能试用 kill -9 (SIGKILL) 这种方式去停止 MongoDB，这样会导致数据库直接关闭，又可能损坏数据库。<br>另一种方式是在 mongo shell 中试用 shutdownServer 命令，这个命令要在 admin 数据库下才能试用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.shutdownServer();</span><br></pre></td></tr></table></figure></p>
+<h1 id="升级_MongoDB:">升级 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#for OS X</span></span><br><span class="line">brew update</span><br><span class="line">brew upgrade mongodb</span><br><span class="line"></span><br><span class="line"><span class="comment">#for ubuntu</span></span><br><span class="line">http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/</span><br><span class="line">需要指定安装版本</span><br></pre></td></tr></table></figure>
 <h1 id="监控">监控</h1><ul>
 <li>使用 http 管理接口。即用浏览器访问 <a href="http://localhost:28017" target="_blank" rel="external">http://localhost:28017</a><br> 如果想要关闭该接口，需要在 mongod 启动时使用 —nohttpinterface 选项</li>
 <li>使用 serverStatus。在 mongo shell 下使用 db.rubCommand({‘serverStatus;: 1})</li>
@@ -577,65 +619,8 @@
 <h1 id="其他安全考虑">其他安全考虑</h1><p>mongodb 传输协议是不加密的，如果需要加密，可以试用 ssh 或者类似的技术进行加密。<br>另外建议把 mongo 服务器布置在防火墙后或者布置在只有应用服务器能访问的网络中。同时建议使用 —bindip 选项，这样可以限制 ip 访问。运行 <code>mongod --bindip localhost</code> 后，只有本机的应用可以访问服务器。<br>最后，还可以用 —noscripting 选项完全禁止服务端 JavaScript 的执行。</p>
 <h1 id="备份和修复">备份和修复</h1><p>mongodb 把所有数据都存放在数据目录下，默认目录是 /var/lib/mongo/ 下，如果只是想要备份，只需要简单创建文件副本就可以了。<br>mongodump 是一种可以在运行时备份的方法。这个工具使用普通的查询机制，备份时的查询会对其他客户端的性能产生不理的影响。<br>mongorestore 可以从备份中恢复数据的工具。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongodump <span class="operator">-d</span> <span class="built_in">test</span> -o backup/<span class="built_in">test</span></span><br><span class="line">mongorestore <span class="operator">-d</span> foo --drop backup/<span class="built_in">test</span></span><br></pre></td></tr></table></figure></p>
 <p><code>mongodump</code> 和 <code>mongorestore</code> 能不停机备份，但却失去了实时数据视图的能力。<code>fsync</code> 命令能在 mongodb 运行时赋值数据目录还不会损坏数据。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.runCommand(&#123;<span class="string">'fsync'</span>: <span class="number">1</span>, <span class="string">'lock'</span>: <span class="number">1</span>&#125;)  <span class="comment"># 强制服务器将所有缓冲区写入磁盘，上锁阻止对数据库的写入。</span></span><br><span class="line">&gt; db.fsyncUnlock()  <span class="comment"># 解锁</span></span><br><span class="line">&gt; db.currentOp()  <span class="comment"># 查看</span></span><br></pre></td></tr></table></figure></p>
-<h1 id="参考资料">参考资料</h1><p><a href="http://book.douban.com/subject/6068947/" target="_blank" rel="external">MongoDB权威指南</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2014-10-16T03:12:00.000Z"><a href="/2014/10/16/2014-10-16-the-digest-loop-and-apply/">2014-10-16</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2014/10/16/2014-10-16-the-digest-loop-and-apply/">The Digest Loop and $apply</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <p>让我们来看一下 <code>Angular</code> 底下是怎么工作的。我们是怎样通过几行代码让神奇的数据绑定起作用的呢？我们先来理解一下 <code>$digest</code> 循环和 <code>$apply</code> 方法是怎样工作的。</p>
-<p>在通常的浏览器工作流程中，当一个事件发生（例如 click），浏览器就会执行该事件注册过的回调函数。</p>
-<p>当页面被加载，当一个 <code>$http</code> 请求被响应，当鼠标移动或者一个按钮被点击等等，都会触发事件。</p>
-<p>当事件被触发后，JavaScript 就会创建一个 event object 并通过这个 event object 去执行任何监听该事件的函数。这个回调函数会运行在一个会返回给浏览器，可能更新 DOM 的 JavaScript 函数里面。</p>
-<p>不可能有两种事件同时发生，浏览器会一直执行一个事件处理器（event handler）直到它完成为止，之后才会调用下一个事件处理器。</p>
-<p>在非 Angular 的 JavaScript 中，我们可以把一个函数绑定到一个 div 的 click 事件中。任何情况下一个 click 事件触发后，该函数就会马上运行：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">"clickDiv"</span>);</span><br><span class="line">div.addEventListener(<span class="string">"click"</span>, </span><br><span class="line">  <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"evt"</span>, evt); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>打开 Chrome 的开发者工具，复制上面的代码到任何一个 web 页面，然后点击该页面。</p>
-<p>任何时候当浏览器检测到一个 click 事件，浏览器就会运行通过 <code>addEventListener</code> 注册的函数。</p>
-<p>当我们把 Angular 混合到该流程中后，它会扩展这种普通的浏览器流程，创建一个 Angular context。这个 Angular context 是指专门运行在 Angular event loop 中的代码，也就是 <code>$digest</code> 循环。要理解 Angular context，我们需要明确知道它里面发生了什么。在 <code>$digest</code> 循环里面，有两个主要的组件：</p>
-<ul>
-<li><code>$watch list</code></li>
-<li><code>$evalAsync list</code></li>
-</ul>
-<h1 id="$watch_list">$watch list</h1><p>每当我们追踪 view 中的一个事件的时候，我们都在注册一个回调函数，当一个事件发生在页面中的时候我们希望这个函数被调用。想想我们的第一个例子：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">ng-app</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Simple app<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">ng-model</span>=<span class="value">"name"</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">placeholder</span>=<span class="value">"Your name"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Hello &#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>任何时候用户去更新 input field 的值， 都会在 UI 中发生改变。会发生这种改变是因为我们把 input field 的值<strong>绑定</strong>到 <code>$scope.name</code> 属性中。为了更新 view ，Angular 需要追踪这个变化。它通过把一个 watch function 添加到 <code>$watch List</code> 中来达到这个目的。</p>
-<p>在 <code>$scope</code> 对象中的属性如果在视图中被使用的话，它们才会被绑定。上面的例子中，我们已经添加了一个函数到 <code>$watch list</code>。</p>
-<p>记住：对于<strong>所有</strong>被绑定到 <code>$scope</code> 对象的 UI 元素来说，一个 <code>$watch</code> 被添加到 <code>$watch list</code> 中。<br>Remember: For <strong>all</strong> UI elements that are bound to a $scope object, a $watch is added to the <code>$watch list</code>.</p>
-<p>这些 <code>$watch</code> 列表都会在 <code>$digest</code> 循环中通过一个叫 <code>dirty checking</code> 的过程被解决。</p>
-<h1 id="Dirty_Checking">Dirty Checking</h1><p>Dirty checking 是一个简单的过程，可以归结为一个非常基本的概念：检查是否一个值改变了，整个应用程序尚未同步。</p>
-<p>Dirty checking 策略在许多不同的应用程序中是很普遍的，远远超过 Angular 所做的。例如游戏引擎，数据库引擎，对象关系映射器（ORMs）都是这样。</p>
-<p>我们的 Angular app 一直追踪着目前在 watch（在 watch 对象里面） 的值。Angular 会一个一个地检查 <code>$watch list</code> 里面的值，如果值还没改变的话，它会继续检查下一个。如果值改变了，app 会记录新的值，然后继续检查下面的。</p>
-<p><img src="https://www.ng-book.com/images/digest_loop/digest.png" alt="Image Title"></p>
-<p>一旦 Angular 检查完整个 <code>$watch list</code>，如果任何值改变了，app 就会回到 <code>$watch</code> 循环中，直到它检测到没有东西改变。</p>
-<h1 id="参考资料">参考资料</h1><p><a href="https://www.ng-book.com/p/The-Digest-Loop-and-apply/" target="_blank" rel="external">The Digest Loop and $apply</a></p>
+<h1 id="删除_MongoDB">删除 MongoDB</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#for ubuntu</span></span><br><span class="line">sudo service mongod stop</span><br><span class="line">sudo apt-get purge mongodb-org*</span><br><span class="line">sudo rm -r /var/<span class="built_in">log</span>/mongodb</span><br><span class="line">sudo rm -r /var/lib/mongodb</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p><a href="http://book.douban.com/subject/6068947/" target="_blank" rel="external">MongoDB权威指南</a><br><a href="http://docs.mongodb.org/" target="_blank" rel="external">MongoDB官方文档</a></p>
 
       
     </div>
@@ -656,6 +641,8 @@
 <nav id="pagination">
   
   
+    <a href="/page/2/" class="alignright next">下一頁</a>
+  
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
@@ -671,7 +658,7 @@
   <h3 class="title">分類</h3>
   <ul class="entry">
   
-    <li><a href="/categories/android/">android</a><small>1</small></li>
+    <li><a href="/categories/android/">android</a><small>2</small></li>
   
     <li><a href="/categories/angular-js/">angular.js</a><small>1</small></li>
   
