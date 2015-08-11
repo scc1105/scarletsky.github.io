@@ -161,7 +161,7 @@
 <p>当事件被触发后，JavaScript 就会创建一个 event object 并通过这个 event object 去执行任何监听该事件的函数。这个回调函数会运行在一个会返回给浏览器，可能更新 DOM 的 JavaScript 函数里面。</p>
 <p>不可能有两种事件同时发生，浏览器会一直执行一个事件处理器（event handler）直到它完成为止，之后才会调用下一个事件处理器。</p>
 <p>在非 Angular 的 JavaScript 中，我们可以把一个函数绑定到一个 div 的 click 事件中。任何情况下一个 click 事件触发后，该函数就会马上运行：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">"clickDiv"</span>);</span><br><span class="line">div.addEventListener(<span class="string">"click"</span>, </span><br><span class="line">  <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>&#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"evt"</span>, evt); </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">"clickDiv"</span>);</span><br><span class="line">div.addEventListener(<span class="string">"click"</span>,</span><br><span class="line">  <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"evt"</span>, evt);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>打开 Chrome 的开发者工具，复制上面的代码到任何一个 web 页面，然后点击该页面。</p>
 <p>任何时候当浏览器检测到一个 click 事件，浏览器就会运行通过 <code>addEventListener</code> 注册的函数。</p>
 <p>当我们把 Angular 混合到该流程中后，它会扩展这种普通的浏览器流程，创建一个 Angular context。这个 Angular context 是指专门运行在 Angular event loop 中的代码，也就是 <code>$digest</code> 循环。要理解 Angular context，我们需要明确知道它里面发生了什么。在 <code>$digest</code> 循环里面，有两个主要的组件：</p>
@@ -218,17 +218,19 @@
   <h3 class="title">分类</h3>
   <ul class="entry">
   
+    <li><a href="/categories/HTML5/">HTML5</a><small>1</small></li>
+  
     <li><a href="/categories/android/">android</a><small>2</small></li>
   
-    <li><a href="/categories/angular-js/">angular.js</a><small>1</small></li>
+    <li><a href="/categories/angular-js/">angular.js</a><small>0</small></li>
   
-    <li><a href="/categories/d3-js/">d3.js</a><small>2</small></li>
+    <li><a href="/categories/d3-js/">d3.js</a><small>0</small></li>
   
-    <li><a href="/categories/drag-and-drop/">drag-and-drop</a><small>1</small></li>
+    <li><a href="/categories/drag-and-drop/">drag-and-drop</a><small>0</small></li>
   
-    <li><a href="/categories/javascript/">javascript</a><small>2</small></li>
+    <li><a href="/categories/javascript/">javascript</a><small>6</small></li>
   
-    <li><a href="/categories/javascript-canvas-html5/">javascript canvas html5</a><small>1</small></li>
+    <li><a href="/categories/javascript-canvas-html5/">javascript canvas html5</a><small>0</small></li>
   
     <li><a href="/categories/life/">life</a><small>1</small></li>
   
@@ -243,7 +245,15 @@
   <h3 class="title">标签</h3>
   <ul class="entry">
   
+    <li><a href="/tags/angular-js/">angular.js</a><small>1</small></li>
+  
+    <li><a href="/tags/canvas-html5/">canvas html5</a><small>1</small></li>
+  
     <li><a href="/tags/career/">career</a><small>1</small></li>
+  
+    <li><a href="/tags/d3-js/">d3.js</a><small>2</small></li>
+  
+    <li><a href="/tags/drag-and-drop/">drag-and-drop</a><small>1</small></li>
   
     <li><a href="/tags/mongodb/">mongodb</a><small>1</small></li>
   
