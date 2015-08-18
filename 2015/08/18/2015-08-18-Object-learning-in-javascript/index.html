@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JavaScript 中 Object.defineProperty 的使用 | Scarletsky</title>
+  <meta name="author" content="Scarletsky">
+  
+  <meta name="description" content="Object.defineProperty
+The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, ">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="JavaScript 中 Object.defineProperty 的使用"/>
+  <meta property="og:site_name" content="Scarletsky"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Scarletsky</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-18T09:57:31.000Z"><a href="/2015/08/18/2015-08-18-Object-learning-in-javascript/">2015-08-18</a></time>
+      
+      
+  
+    <h1 class="title">JavaScript 中 Object.defineProperty 的使用</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="Object-defineProperty">Object.defineProperty</h1><blockquote>
+<p>The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, and returns the object.</p>
+</blockquote>
+<p>直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。</p>
+<h3 id="语法">语法</h3><p><code>Object.defineProperty(obj, prop, descriptor)</code></p>
+<h3 id="参数">参数</h3><ul>
+<li><code>Object obj</code> 目标对象 </li>
+<li><code>String prop</code> 需要定义的属性</li>
+<li><code>Object descriptor</code> 该属性拥有的特性，可设置的值有：<ul>
+<li><code>value</code> 属性的值，默认为 <code>undefined</code>。</li>
+<li><code>writable</code> 该属性是否可写，如果设置成 <code>false</code>，则任何对该属性改写的操作都无效（但不会报错），默认为 <code>false</code>。</li>
+<li><code>get</code> 一旦目标对象访问该属性，就会调用这个方法，并返回结果。默认为 <code>undefined</code>。</li>
+<li><code>set</code> 一旦目标对象设置该属性，就会调用这个方法。默认为 <code>undeinfed</code>。</li>
+<li><code>configurable</code> 如果为false，则任何尝试删除目标属性或修改属性以下特性（writable, configurable, enumerable）的行为将被无效化，默认为 <code>false</code>。</li>
+<li><code>enumerable</code> 是否能在for…in循环中遍历出来或在Object.keys中列举出来。默认为 <code>false</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="注意"><strong>注意</strong></h4><p>在 <code>descriptor</code> 中不能<strong>同时</strong>设置访问器 (<code>get</code> 和 <code>set</code>) 和 <code>wriable</code> 或 <code>value</code>，否则会报以下错误：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Invalid <span class="keyword">property</span>.  A <span class="keyword">property</span> cannot both have accessors <span class="keyword">and</span> be writable <span class="keyword">or</span> have a value</span><br></pre></td></tr></table></figure></p>
+<h3 id="实际应用">实际应用</h3><p>我们知道，在 <code>Express.js</code> 升级到 4.0 之后，它把很多功能从核心库中移除了。当我们访问那些被移除的属性时，它会报错，告诉我们该属性已经被移除了。这个功能就是通过 <code>Object.defineProperty</code> 来实现的。看看源码吧：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  <span class="string">'json'</span>,</span><br><span class="line">  <span class="string">'urlencoded'</span>,</span><br><span class="line">  <span class="string">'bodyParser'</span>,</span><br><span class="line">  <span class="string">'compress'</span>,</span><br><span class="line">  <span class="string">'cookieSession'</span>,</span><br><span class="line">  <span class="string">'session'</span>,</span><br><span class="line">  <span class="string">'logger'</span>,</span><br><span class="line">  <span class="string">'cookieParser'</span>,</span><br><span class="line">  <span class="string">'favicon'</span>,</span><br><span class="line">  <span class="string">'responseTime'</span>,</span><br><span class="line">  <span class="string">'errorHandler'</span>,</span><br><span class="line">  <span class="string">'timeout'</span>,</span><br><span class="line">  <span class="string">'methodOverride'</span>,</span><br><span class="line">  <span class="string">'vhost'</span>,</span><br><span class="line">  <span class="string">'csrf'</span>,</span><br><span class="line">  <span class="string">'directory'</span>,</span><br><span class="line">  <span class="string">'limit'</span>,</span><br><span class="line">  <span class="string">'multipart'</span>,</span><br><span class="line">  <span class="string">'staticCache'</span>,</span><br><span class="line">].forEach(<span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(exports, name, &#123;</span><br><span class="line">    get: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Most middleware (like '</span> + name + <span class="string">') is no longer bundled with Express and must be installed separately. Please see https://github.com/senchalabs/connect#middleware.'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="Object-defineProperties">Object.defineProperties</h1><blockquote>
+<p>The Object.defineProperties() method defines new or modifies existing properties directly on an object, returning the object.</p>
+</blockquote>
+<p>和 <code>Object.defineProperty</code> 类似，只不过这个方法可以设置多个属性。</p>
+<h3 id="语法-1">语法</h3><p><code>Object.defineProperties(obj, props)</code></p>
+<h3 id="参数-1">参数</h3><ul>
+<li><code>Object obj</code> 目标对象 </li>
+<li><code>Object props</code> 要为目标对象添加的属性，其中 <code>key</code> 和 <code>value</code> 分别代表 <code>Object.defineProperty</code> 中的第二和第三个参数。</li>
+</ul>
+<h1 id="参考资料">参考资料</h1><p><a href="http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html" target="_blank" rel="external">http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object</a><br><a href="https://github.com/strongloop/express/blob/master/lib/express.js" target="_blank" rel="external">https://github.com/strongloop/express/blob/master/lib/express.js</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/javascript/">javascript</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/javascript/">javascript</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:scarletsky.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分類</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/HTML5/">HTML5</a><small>1</small></li>
+  
+    <li><a href="/categories/android/">android</a><small>2</small></li>
+  
+    <li><a href="/categories/javascript/">javascript</a><small>8</small></li>
+  
+    <li><a href="/categories/life/">life</a><small>1</small></li>
+  
+    <li><a href="/categories/mongodb/">mongodb</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/angular-js/">angular.js</a><small>1</small></li>
+  
+    <li><a href="/tags/canvas-html5/">canvas html5</a><small>1</small></li>
+  
+    <li><a href="/tags/career/">career</a><small>1</small></li>
+  
+    <li><a href="/tags/d3-js/">d3.js</a><small>2</small></li>
+  
+    <li><a href="/tags/drag-and-drop/">drag-and-drop</a><small>1</small></li>
+  
+    <li><a href="/tags/gulp/">gulp</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Scarletsky
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'scarletskygithubio';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
