@@ -49,6 +49,60 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-08-19T02:11:10.000Z"><a href="/2015/08/19/2015-08-19-commonjs-learning/">2015-08-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/19/2015-08-19-commonjs-learning/">CommonJS 学习笔记</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="概述">概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
+<p>根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 <code>require</code> 来获取 <code>module.exports</code> 中暴露的内容，而其他部分都是私有的，其他模块不能访问。</p>
+<h1 id="module_对象">module 对象</h1><p>每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是每个模块都有的本地变量。</p>
+<ul>
+<li><code>module.id</code> 模块的识别符，通常是带有绝对路径的模块文件名。</li>
+<li><code>module.filename</code> 模块的文件名。</li>
+<li><code>module.loaded</code> 返回一个布尔值，表示模块是否已经完成加载。</li>
+<li><code>module.parent</code> 返回一个对象，表示调用该模块的模块。</li>
+<li><code>module.children</code> 返回一个数组，表示该模块要用到的其他模块。数组中的内容是其他要用到的模块的 <code>module</code> 对象。</li>
+<li><code>module.paths</code> 返回一个数组，表示模块查找路径，排在越前面的优先级越高。具体请查看 <a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">这里</a></li>
+<li><code>module.exports</code> 表示其他模块可以通过 <code>require</code> 获取的内容。默认情况下是一个空对象，即 <code>{}</code>。</li>
+</ul>
+<h1 id="module-exports_和_exports">module.exports 和 exports</h1><p>默认情况下，<code>module.exports</code> 和 <code>exports</code> 两者是等价的，即 <code>module.exports === exports</code></p>
+<p><code>exports</code> 只是为了方便我们编码而添加的，相当于在每个文件中自动添加了 <code>var exports = module.exports</code>。</p>
+<p>我们可以根据个人喜好，把需要暴露的东西挂在 <code>exports</code> 或 <code>module.exports</code> 下。</p>
+<p><strong>但是</strong>，必须注意以下几点：</p>
+<ul>
+<li>不能把 <code>exports</code> 重新赋值，因为这样会令 <code>exports</code> 不再指向 <code>module.exports</code>，这样 <code>exports</code> 就没用了。</li>
+<li>我们可以通过 <code>module.exports = function() {...}</code> 这种方式指定 <code>module.exports</code> 的指向，这样在其他模块中 <code>require</code> 这个模块，获得的就是一个 <code>function</code>，而不是一个对象。这样做也会导致 <code>exports</code> 失效。</li>
+<li>由于上面的原因，我们会在很多地方看到 <code>module.exports = exports = xxx</code> 这样的代码。</li>
+</ul>
+<h1 id="参考资料">参考资料</h1><p><a href="http://javascript.ruanyifeng.com/nodejs/commonjs.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/nodejs/commonjs.html</a><br><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">http://www.infoq.com/cn/articles/nodejs-module-mechanism/</a><br><a href="http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js" target="_blank" rel="external">http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-18T09:57:31.000Z"><a href="/2015/08/18/2015-08-18-Object-learning-in-javascript/">2015-08-18</a></time>
       
       
@@ -705,81 +759,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-01-13T10:28:04.000Z"><a href="/2015/01/13/2015-01-13-html5-drag-and-drop-api/">2015-01-13</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/01/13/2015-01-13-html5-drag-and-drop-api/">HTML5 Drag and Drop API</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="基本使用">基本使用</h1><h2 id="创建可拖放对象">创建可拖放对象</h2><p>在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 <code>draggable=&quot;true&quot;</code> 就能创建可拖放对象了。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect red"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect green"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect blue"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="如何拖动">如何拖动</h2><p>有了可拖放对象之后，我们还需要处理拖放事件才能实现拖放。拖放包含下面的事件：</p>
-<ul>
-<li><code>dragstart</code> 发生在元素开始被拖动时</li>
-<li><code>drag</code> 发生在元素被拖动(按着鼠标不放时)</li>
-<li><code>dragenter</code> 发生在有元素被拖进一个可放区域</li>
-<li><code>dragover</code> 发生在有元素被拖在可放区域的上面</li>
-<li><code>dragleave</code> 发生在有元素被拖离一个可放区域</li>
-<li><code>drop</code> 发生在元素被放到可放区域内</li>
-<li><code>dragend</code> 发生在拖放事件结束(松开鼠标或者按 esc 键)</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> draggableElements = <span class="built_in">document</span>.querySelectorAll(<span class="string">'[draggable]'</span>);</span><br><span class="line"><span class="comment">// draggableElements 是 NodeList 对象，并不是 Array，因此没有 forEach 方法。</span></span><br><span class="line">[].forEach.call(draggableElements, <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">    element.addEventListener(<span class="string">'drag'</span>, drag, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragstart'</span>, dragStart, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragenter'</span>, dragEnter, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragleave'</span>, dragLeave, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragover'</span>, dragOver, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'drop'</span>, drop, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragend'</span>, dragEnd, <span class="literal">false</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="DataTransfer_对象">DataTransfer 对象</h2><p>dataTransfer 属性正是这一神奇 DnD 功能的动力来源，控制着拖动操作中发送的数据。dataTransfer 可在 dragstart 事件中进行设置，并在 drop 事件中读取/处理。调用 e.dataTransfer.setData(format, data) 会将对象内容设置成 MIME 类型，并将数据有效负载作为参数传递。</p>
-<p>拖放不同对象需要设置不同的格式，下面是 MDN 推荐 drag types。</p>
-<ul>
-<li>文字：<code>text/plain</code></li>
-<li>超链接：<code>text/uri-list</code>, <code>text/plain</code></li>
-<li>HTML &amp; XML：<code>text/html</code>, <code>text/plain</code></li>
-</ul>
-<p>其他类型可以查看 MDN 上面的文档：<a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Recommended_Drag_Types" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Recommended_Drag_Types</a></p>
-<p><strong>PS：综合自己试验和网上的说法，其实设置 <code>setData</code> 的 format 设置成自定义值也是可以使用的。</strong></p>
-<h2 id="DataTransfer_属性">DataTransfer 属性</h2><p><code>effectAllowed</code> 和 <code>dropEffect</code> 是 DnD 里面常看见的属性，也是对新手来说最摸不着头脑的属性。</p>
-<p>这两个属性最主要的作用是，用于配置拖放过程中鼠标的指针的类型，以便提示用户操作。其次作用是用来控制 <code>drop</code> 事件是否触发。</p>
-<p>这两个属性的有效值可以查阅 <a href="https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer</a>。</p>
-<h2 id="注意"><strong>注意</strong></h2><ul>
-<li><p><code>effectAllowed</code> 只能在 <code>dragstart</code> 事件中设置</p>
-</li>
-<li><p><code>dropEffect</code> 只能在 <code>dragenter</code> 和 <code>dragover</code> 事件中设置</p>
-</li>
-<li><p><code>dropEffect</code> 和 <code>effectAllowed</code> 不相等时，不会触发 <code>drop</code> 事件</p>
-</li>
-</ul>
-<h2 id="使用心得">使用心得</h2><ul>
-<li><p>必须禁止 <code>dragover</code> 的默认事件才能正常触发 <code>drop</code> 事件</p>
-</li>
-<li><p><code>e.dataTransfer.getData</code> 只能在 <code>drop</code> 事件中正常访问，在其他事件中访问的话会返回空值。具体请看 <a href="http://stackoverflow.com/questions/11927309/html5-dnd-datatransfer-setdata-or-getdata-not-working-in-every-browser-except-fi" target="_blank" rel="external">http://stackoverflow.com/questions/11927309/html5-dnd-datatransfer-setdata-or-getdata-not-working-in-every-browser-except-fi</a></p>
-</li>
-<li><p>拖放操作的结果一般情况下会产生新的 <code>DOM</code> 结构，因此不能使用 <code>$(selector).on(event, fn)</code> 来进行事件绑定，因为这样对新产生的 DOM 不起作用。要进行动态绑定的话，可以使用下面的写法：<code>$(document).on(event, selector, fn)</code>。</p>
-</li>
-</ul>
-<h2 id="使用示例">使用示例</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="doctype">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">        <span class="attr_selector">[draggable]</span> <span class="rules">&#123;<span class="rule"><span class="attribute">cursor</span>:<span class="value"> move</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.dragging</span> <span class="rules">&#123;<span class="rule"><span class="attribute">opacity</span>:<span class="value"> <span class="number">0.2</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.over</span> <span class="rules">&#123;<span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> dashed black</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.rect</span> <span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">500px</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>; <span class="rule"><span class="attribute">margin</span>:<span class="value"> auto</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.red</span>, <span class="class">.green</span>, <span class="class">.blue</span>, <span class="class">.black</span> <span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.red</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#FF8C8C</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.green</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#8CFFB5</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.blue</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#8CA3FF</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.black</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#3A3C44</span></span></span>;&#125;</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"red"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"green"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"blue"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"black"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="keyword">var</span> dragSrc = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">var</span> draggableElements = <span class="built_in">document</span>.querySelectorAll(<span class="string">'[draggable]'</span>);</span><br><span class="line">        <span class="comment">// draggableElements 是 NodeList 对象，并不是 Array，所以没有 forEach 方法。</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">resetDragSrc</span> (<span class="params"></span>) </span>&#123;dragSrc = <span class="literal">null</span>;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragStart</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag start'</span>);</span><br><span class="line">            dragSrc = <span class="keyword">this</span>;</span><br><span class="line">            e.dataTransfer.effectAllowed = <span class="string">'move'</span>;</span><br><span class="line">            e.dataTransfer.setData(<span class="string">'text/html'</span>, <span class="keyword">this</span>.innerHTML);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">this</span>.classList.add(<span class="string">'dragging'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragOver</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag over'</span>);</span><br><span class="line">            <span class="keyword">if</span> (e.preventDefault) &#123;</span><br><span class="line">                e.preventDefault(); <span class="comment">// Necessary. Allows us to drop.</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            e.dataTransfer.dropEffect = <span class="string">'move'</span>;  <span class="comment">// See the section on the DataTransfer object.</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragEnter</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag enter'</span>);</span><br><span class="line">            <span class="keyword">this</span>.classList.add(<span class="string">'over'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragLeave</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag leave'</span>);</span><br><span class="line">            <span class="keyword">this</span>.classList.remove(<span class="string">'over'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drop</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drop!'</span>);</span><br><span class="line">            <span class="keyword">if</span> (e.stopPropagation) &#123;</span><br><span class="line">                e.stopPropagation(); <span class="comment">// stops the browser from redirecting.</span></span><br><span class="line">            &#125;</span><br><span class="line">            dragSrc.innerHTML = <span class="keyword">this</span>.innerHTML;</span><br><span class="line">            <span class="keyword">this</span>.innerHTML = e.dataTransfer.getData(<span class="string">'text/html'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragEnd</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag end!'</span>);</span><br><span class="line">            [].forEach.call(draggableElements, <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">                element.classList.remove(<span class="string">'over'</span>);</span><br><span class="line">                element.classList.remove(<span class="string">'dragging'</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">            resetDragSrc();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drag</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'dragging!'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        [].forEach.call(draggableElements, <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">            element.addEventListener(<span class="string">'dragstart'</span>, dragStart, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragenter'</span>, dragEnter, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragleave'</span>, dragLeave, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragover'</span>, dragOver, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'drag'</span>, drag, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'drop'</span>, drop, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragend'</span>, dragEnd, <span class="literal">false</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h1 id="参考资料">参考资料</h1><p><a href="http://www.html5rocks.com/zh/tutorials/dnd/basics/" target="_blank" rel="external">http://www.html5rocks.com/zh/tutorials/dnd/basics/</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/Events</a><br><a href="http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements" target="_blank" rel="external">http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements</a><br><a href="http://www.cnblogs.com/fsjohnhuang/p/3961066.html" target="_blank" rel="external">http://www.cnblogs.com/fsjohnhuang/p/3961066.html</a></p>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -805,7 +784,7 @@
   
     <li><a href="/categories/android/">android</a><small>2</small></li>
   
-    <li><a href="/categories/javascript/">javascript</a><small>8</small></li>
+    <li><a href="/categories/javascript/">javascript</a><small>9</small></li>
   
     <li><a href="/categories/life/">life</a><small>1</small></li>
   
@@ -866,6 +845,16 @@ var disqus_shortname = 'scarletskygithubio';
 </script>
 
 
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-40690820-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
 
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
 <script src="/fancybox/jquery.fancybox.pack.js"></script>
@@ -874,6 +863,7 @@ var disqus_shortname = 'scarletskygithubio';
   $('.fancybox').fancybox();
 })(jQuery);
 </script>
+
 
 </body>
 </html>
