@@ -49,6 +49,49 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-01-26T10:05:00.000Z"><a href="/2015/01/26/2015-01-26-javascript-tricks/">2015-01-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/01/26/2015-01-26-javascript-tricks/">JavaScript 常用技巧</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="字符串操作">字符串操作</h1><h2 id="首字母大写">首字母大写</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="截取字符串最后几位">截取字符串最后几位</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str.substring(str.length-X)</span><br></pre></td></tr></table></figure>
+<h2 id="进制转换">进制转换</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">d.toString(<span class="number">16</span>)    (十进制 -&gt; 十六进制)</span><br><span class="line"><span class="built_in">parseInt</span>(‘ff’, <span class="number">16</span>) (十六进制 -&gt; 十进制)</span><br></pre></td></tr></table></figure>
+<h2 id="生成随机字符串">生成随机字符串</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.random().toString(<span class="number">36</span>).substring(<span class="number">7</span>)</span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript</span></span><br></pre></td></tr></table></figure>
+<h2 id="is-start-with?">is-start-with?</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string.lastIndexOf(str, <span class="number">0</span>) === <span class="number">0</span></span><br><span class="line">string.substring(<span class="number">0</span>, str.length) === str</span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string</span></span><br></pre></td></tr></table></figure>
+<h2 id="is-end-with?">is-end-with?</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/280634/endswith-in-javascript</span></span><br></pre></td></tr></table></figure>
+<h2 id="解析_Base64">解析 Base64</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> base64str = <span class="string">'this is base64 string'</span>;</span><br><span class="line">Buffer(base64str, <span class="string">'base64'</span>).toString();</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="数组操作">数组操作</h1><h2 id="获取最后数组中最后一个元素">获取最后数组中最后一个元素</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arr.slice(-<span class="number">1</span>).pop() <span class="comment">// 简洁</span></span><br><span class="line">arr[arr.length - <span class="number">1</span>] <span class="comment">// 快速</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="日期操作">日期操作</h1><h2 id="获取当前时间戳">获取当前时间戳</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+<span class="keyword">new</span> <span class="built_in">Date</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-01-13T10:28:04.000Z"><a href="/2015/01/13/2015-01-13-html5-drag-and-drop-api/">2015-01-13</a></time>
       
       
@@ -448,7 +491,7 @@
   
     <li><a href="/categories/android/">android</a><small>2</small></li>
   
-    <li><a href="/categories/javascript/">javascript</a><small>9</small></li>
+    <li><a href="/categories/javascript/">javascript</a><small>10</small></li>
   
     <li><a href="/categories/life/">life</a><small>1</small></li>
   

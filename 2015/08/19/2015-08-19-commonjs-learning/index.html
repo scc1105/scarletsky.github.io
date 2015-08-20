@@ -66,22 +66,32 @@ m">
 <p>根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 <code>require</code> 来获取 <code>module.exports</code> 中暴露的内容，而其他部分都是私有的，其他模块不能访问。</p>
 <h1 id="module_对象">module 对象</h1><p>每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是每个模块都有的本地变量。</p>
 <ul>
-<li><code>module.id</code> 模块的识别符，通常是带有绝对路径的模块文件名。</li>
-<li><code>module.filename</code> 模块的文件名。</li>
-<li><code>module.loaded</code> 返回一个布尔值，表示模块是否已经完成加载。</li>
-<li><code>module.parent</code> 返回一个对象，表示调用该模块的模块。</li>
-<li><code>module.children</code> 返回一个数组，表示该模块要用到的其他模块。数组中的内容是其他要用到的模块的 <code>module</code> 对象。</li>
-<li><code>module.paths</code> 返回一个数组，表示模块查找路径，排在越前面的优先级越高。具体请查看 <a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">这里</a></li>
-<li><code>module.exports</code> 表示其他模块可以通过 <code>require</code> 获取的内容。默认情况下是一个空对象，即 <code>{}</code>。</li>
+<li><p><code>module.id</code> 模块的识别符，通常是带有绝对路径的模块文件名。</p>
+</li>
+<li><p><code>module.filename</code> 模块的文件名。</p>
+</li>
+<li><p><code>module.loaded</code> 返回一个布尔值，表示模块是否已经完成加载。</p>
+</li>
+<li><p><code>module.parent</code> 返回一个对象，表示调用该模块的模块。</p>
+</li>
+<li><p><code>module.children</code> 返回一个数组，表示该模块要用到的其他模块。数组中的内容是其他要用到的模块的 <code>module</code> 对象。</p>
+</li>
+<li><p><code>module.paths</code> 返回一个数组，表示模块查找路径，排在越前面的优先级越高。具体请查看 <a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">这里</a></p>
+</li>
+<li><p><code>module.exports</code> 表示其他模块可以通过 <code>require</code> 获取的内容。默认情况下是一个空对象，即 <code>{}</code>。</p>
+</li>
 </ul>
 <h1 id="module-exports_和_exports">module.exports 和 exports</h1><p>默认情况下，<code>module.exports</code> 和 <code>exports</code> 两者是等价的，即 <code>module.exports === exports</code></p>
 <p><code>exports</code> 只是为了方便我们编码而添加的，相当于在每个文件中自动添加了 <code>var exports = module.exports</code>。</p>
 <p>我们可以根据个人喜好，把需要暴露的东西挂在 <code>exports</code> 或 <code>module.exports</code> 下。</p>
 <p><strong>但是</strong>，必须注意以下几点：</p>
 <ul>
-<li>不能把 <code>exports</code> 重新赋值，因为这样会令 <code>exports</code> 不再指向 <code>module.exports</code>，这样 <code>exports</code> 就没用了。</li>
-<li>我们可以通过 <code>module.exports = function() {...}</code> 这种方式指定 <code>module.exports</code> 的指向，这样在其他模块中 <code>require</code> 这个模块，获得的就是一个 <code>function</code>，而不是一个对象。这样做也会导致 <code>exports</code> 失效。</li>
-<li>由于上面的原因，我们会在很多地方看到 <code>module.exports = exports = xxx</code> 这样的代码。</li>
+<li><p>不能把 <code>exports</code> 重新赋值，因为这样会令 <code>exports</code> 不再指向 <code>module.exports</code>，这样 <code>exports</code> 就没用了。</p>
+</li>
+<li><p>我们可以通过 <code>module.exports = function() {...}</code> 这种方式指定 <code>module.exports</code> 的指向，这样在其他模块中 <code>require</code> 这个模块，获得的就是一个 <code>function</code>，而不是一个对象。这样做也会导致 <code>exports</code> 失效。</p>
+</li>
+<li><p>由于上面的原因，我们会在很多地方看到 <code>module.exports = exports = xxx</code> 这样的代码。</p>
+</li>
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://javascript.ruanyifeng.com/nodejs/commonjs.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/nodejs/commonjs.html</a><br><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">http://www.infoq.com/cn/articles/nodejs-module-mechanism/</a><br><a href="http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js" target="_blank" rel="external">http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js</a></p>
 
@@ -149,7 +159,7 @@ m">
   
     <li><a href="/categories/android/">android</a><small>2</small></li>
   
-    <li><a href="/categories/javascript/">javascript</a><small>9</small></li>
+    <li><a href="/categories/javascript/">javascript</a><small>10</small></li>
   
     <li><a href="/categories/life/">life</a><small>1</small></li>
   

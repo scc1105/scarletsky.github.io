@@ -67,15 +67,24 @@ The Object.defineProperty() method defines a new property directly on an object,
 <p>直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。</p>
 <h3 id="语法">语法</h3><p><code>Object.defineProperty(obj, prop, descriptor)</code></p>
 <h3 id="参数">参数</h3><ul>
-<li><code>Object obj</code> 目标对象 </li>
-<li><code>String prop</code> 需要定义的属性</li>
-<li><code>Object descriptor</code> 该属性拥有的特性，可设置的值有：<ul>
-<li><code>value</code> 属性的值，默认为 <code>undefined</code>。</li>
-<li><code>writable</code> 该属性是否可写，如果设置成 <code>false</code>，则任何对该属性改写的操作都无效（但不会报错），默认为 <code>false</code>。</li>
-<li><code>get</code> 一旦目标对象访问该属性，就会调用这个方法，并返回结果。默认为 <code>undefined</code>。</li>
-<li><code>set</code> 一旦目标对象设置该属性，就会调用这个方法。默认为 <code>undeinfed</code>。</li>
-<li><code>configurable</code> 如果为false，则任何尝试删除目标属性或修改属性以下特性（writable, configurable, enumerable）的行为将被无效化，默认为 <code>false</code>。</li>
-<li><code>enumerable</code> 是否能在for…in循环中遍历出来或在Object.keys中列举出来。默认为 <code>false</code>。</li>
+<li><p><code>Object obj</code> 目标对象</p>
+</li>
+<li><p><code>String prop</code> 需要定义的属性</p>
+</li>
+<li><p><code>Object descriptor</code> 该属性拥有的特性，可设置的值有：</p>
+<ul>
+<li><p><code>value</code> 属性的值，默认为 <code>undefined</code>。</p>
+</li>
+<li><p><code>writable</code> 该属性是否可写，如果设置成 <code>false</code>，则任何对该属性改写的操作都无效（但不会报错），默认为 <code>false</code>。</p>
+</li>
+<li><p><code>get</code> 一旦目标对象访问该属性，就会调用这个方法，并返回结果。默认为 <code>undefined</code>。</p>
+</li>
+<li><p><code>set</code> 一旦目标对象设置该属性，就会调用这个方法。默认为 <code>undeinfed</code>。</p>
+</li>
+<li><p><code>configurable</code> 如果为false，则任何尝试删除目标属性或修改属性以下特性（writable, configurable, enumerable）的行为将被无效化，默认为 <code>false</code>。</p>
+</li>
+<li><p><code>enumerable</code> 是否能在for…in循环中遍历出来或在Object.keys中列举出来。默认为 <code>false</code>。</p>
+</li>
 </ul>
 </li>
 </ul>
@@ -88,8 +97,10 @@ The Object.defineProperty() method defines a new property directly on an object,
 <p>和 <code>Object.defineProperty</code> 类似，只不过这个方法可以设置多个属性。</p>
 <h3 id="语法-1">语法</h3><p><code>Object.defineProperties(obj, props)</code></p>
 <h3 id="参数-1">参数</h3><ul>
-<li><code>Object obj</code> 目标对象 </li>
-<li><code>Object props</code> 要为目标对象添加的属性，其中 <code>key</code> 和 <code>value</code> 分别代表 <code>Object.defineProperty</code> 中的第二和第三个参数。</li>
+<li><p><code>Object obj</code> 目标对象</p>
+</li>
+<li><p><code>Object props</code> 要为目标对象添加的属性，其中 <code>key</code> 和 <code>value</code> 分别代表 <code>Object.defineProperty</code> 中的第二和第三个参数。</p>
+</li>
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html" target="_blank" rel="external">http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object</a><br><a href="https://github.com/strongloop/express/blob/master/lib/express.js" target="_blank" rel="external">https://github.com/strongloop/express/blob/master/lib/express.js</a></p>
 
@@ -162,7 +173,7 @@ The Object.defineProperty() method defines a new property directly on an object,
   
     <li><a href="/categories/android/">android</a><small>2</small></li>
   
-    <li><a href="/categories/javascript/">javascript</a><small>9</small></li>
+    <li><a href="/categories/javascript/">javascript</a><small>10</small></li>
   
     <li><a href="/categories/life/">life</a><small>1</small></li>
   

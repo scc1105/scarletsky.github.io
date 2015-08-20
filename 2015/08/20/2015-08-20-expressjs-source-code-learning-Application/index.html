@@ -1,0 +1,380 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ExpressJS 源码学习 —— Application 篇 | Scarletsky</title>
+  <meta name="author" content="Scarletsky">
+  
+  <meta name="description" content="概述ExpressJS 是 NodeJS 世界中使用最广泛的 Web 框架。它非常轻量，最大的特点是可以组合各种各样的中间件来处理请求，每个中间件都会对请求进行处理，最后再返回给客户端。目前最新版的 ExpressJS 是 4.13.3。
+这系列的文章是出于学习目的而写的，主要是想了解目前主流的 J">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="ExpressJS 源码学习 —— Application 篇"/>
+  <meta property="og:site_name" content="Scarletsky"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Scarletsky</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-08-20T02:11:10.000Z"><a href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/">2015-08-20</a></time>
+      
+      
+  
+    <h1 class="title">ExpressJS 源码学习 —— Application 篇</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="概述">概述</h1><p>ExpressJS 是 NodeJS 世界中使用最广泛的 Web 框架。它非常轻量，最大的特点是可以组合各种各样的中间件来处理请求，每个中间件都会对请求进行处理，最后再返回给客户端。目前最新版的 ExpressJS 是 4.13.3。</p>
+<p>这系列的文章是出于学习目的而写的，主要是想了解目前主流的 JavaScript 框架是如何设计的，使用了哪些我还不知道的技术。希望写完这系列的文章之后，对我自己的水平会有一定的提高。这系列的文章会先分析各个模块的 API 的工作流程，最后再作总结。</p>
+<p>本文先从 application.js 文件开始分析。</p>
+<h1 id="私有_API">私有 API</h1><ul>
+<li><p><code>app.init</code> 对 app 进行初始化</p>
+<ul>
+<li><p>初始化 <code>cache</code>, <code>engines</code>, <code>settings</code> 为 <code>{}</code></p>
+</li>
+<li><p>调用 <code>this.defaultConfiguration</code> 来设置 app 的默认配置。</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.defaultConfiguration</code> 设置 app 的默认配置</p>
+<ul>
+<li><p>启用 <code>x-powered-by</code> (<code>middleware/init</code>这个中间件会用到)</p>
+</li>
+<li><p>调用 <code>this.set</code> 来设置 <code>etag</code>, <code>env</code>, <code>query parser</code>, <code>subdomain offset</code>, <code>trust proxy</code>, <code>view</code>, <code>views</code>, <code>jsonp callback name</code> 等属性</p>
+</li>
+<li><p>初始化 <code>this.locals</code></p>
+</li>
+<li><p>为 <code>production</code> 环境启用 <code>view cache</code></p>
+</li>
+<li><p>禁止用户直接访问 <code>app.router</code></p>
+</li>
+<li><p>监听 <code>mount</code> 事件，该事件会在调用 <code>app.use</code> 时触发</p>
+</li>
+<li><p>很奇怪为什么一个普通的 <code>Object</code> 为什么可以监听和发送事件吧？想想就知道这个 <code>Object</code> 要么就继承了 <code>EventEmitter</code>，要么就和 <code>EventEmitter</code> 合并了。答案是后者，详细见 <code>express.js</code> 这个文件。</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.lazyrouter</code> 初始化 Router, 只会执行一次</p>
+<ul>
+<li><p>初始化 Router</p>
+</li>
+<li><p>为这个 Router 添加 <code>query</code> 和 <code>init</code> 这两个中间件。</p>
+</li>
+<li><p>把这个 API 放在 <code>defaultConfiguration</code> 之外是因为这个方法会读取 <code>settings</code>，如果把它放到 <code>defaultConfiguration</code> 中就会忽略用户的设置直接运行。试想，当你调用 <code>var app = express()</code> 的时候，默认的路由就已经新建好了，这时候你再怎么用 <code>app.set(xxx)</code> 也没效果的。</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.handle(req, res, callback)</code> 用来把 <code>req</code>, <code>res</code>, <code>callback</code> 交给 Router 来处理</p>
+<ul>
+<li><p>检查是否带有 <code>callback</code>，如果没有就提供一个默认的 <code>callback</code></p>
+</li>
+<li><p>检查是否已经初始化过 Router，如果没有就不会传递参数给 Router</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.path()</code> 返回绝对路径，看源码吧</p>
+</li>
+</ul>
+<h1 id="公开_API">公开 API</h1><ul>
+<li><p><code>app.use(fn)</code> 挂载中间件，代理到 <code>Router.use</code></p>
+<ul>
+<li><p>初始化 <code>offer</code>, <code>path</code></p>
+</li>
+<li><p>根据 <code>fn</code> 来调整 <code>offset</code> (要兼容 <code>app.use([path1, path2, path3...], fn1, [fn2, fn3...])</code> 这种语法)</p>
+</li>
+<li><p>通过 <code>slice.call(arguments, offset)</code> 获取传入的所有函数，保存到 <code>fns</code> 中</p>
+</li>
+<li><p>初始化 Router</p>
+</li>
+<li><p>遍历 <code>fns</code>, 挂载所有 <code>fn</code></p>
+</li>
+<li><p>通过 <code>this.emit(&#39;mount&#39;, this)</code> 的形式发送 <code>mount</code> 事件 (<code>app.defaultConfiguration</code> 会监听这个事件)</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.render(name, options, callback)</code> 渲染指定名字的页面，<code>callback</code> 中返回渲染后的模板字符串</p>
+<ul>
+<li><p>初始化 <code>cache</code>，<code>engine</code>，<code>renderOptions</code></p>
+</li>
+<li><p>把 <code>this.locals</code>，<code>options._locals</code>，<code>options</code> 合并到 <code>renderOptions</code> 中</p>
+</li>
+<li><p>根据 <code>this.settings[&#39;view cache&#39;]</code> 来判断是否需要缓存 <code>view</code>，在生产环境下，该值默认为 <code>true</code> (在 <code>defaultConfiguration</code> 设置的默认值)</p>
+</li>
+<li><p>如果需要渲染的 <code>view</code> 已经缓存过，就直接找到该 <code>view</code> 对象，否则就生成 <code>view</code> 对象。</p>
+</li>
+<li><p>尝试去渲染 <code>view</code> 对象。PS：渲染过程在 <code>View</code> 模块中实现的</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.route(path)</code> 代理到 <code>Router.route(path)</code></p>
+</li>
+<li><p><code>app.param(name, fn)</code> 代理到 <code>Router.param(name, fn)</code></p>
+<ul>
+<li>如果 <code>name</code> 参数为 <code>Array</code>，则会递归调用该函数</li>
+</ul>
+</li>
+<li><p><code>app.engine(ext, fn)</code> 注册模板引擎</p>
+<ul>
+<li><p>必须传入 <code>fn</code>，且 <code>fn</code> 必须是函数</p>
+</li>
+<li><p>解析 <code>ext</code> 参数，会确保 <code>ext</code> 前面带有 <code>.</code>，即如果传入 <code>ejs</code>，它会帮你转换成 <code>.ejs</code>。在实现上只是简单判断第一个字符是不是 <code>.</code></p>
+</li>
+<li><p>把解析过的 <code>ext</code> 和 <code>fn</code> 以 <code>key</code> 和 <code>value</code> 的形式添加到 <code>this.engines</code> 中</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.set(setting, val)</code> 设置相关属性值</p>
+<ul>
+<li><p>如果传入一个参数，就去获取相关的属性值。<code>app.get(setting)</code> 就是这样实现的</p>
+</li>
+<li><p>传入两个值的话，就会用 <code>this.settings[setting] = val</code> 的形式来设置值</p>
+</li>
+<li><p><code>etag</code>，<code>query parser</code>，<code>trust proxy</code> 并不是用上面的形式来设置的，具体请看源码</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.get(setting)</code> 获取相关属性值</p>
+<ul>
+<li><p>事实上，就如上面 <code>app.set</code> 中所说，并没有通过 <code>app.get(setting)</code> 这种形式来设计这个 API</p>
+</li>
+<li><p>由于 <code>get</code> 也是 HTTP 请求方法中的一个，所以它被放在 <code>app.VERB</code> 中实现了，但对它做过特殊处理。看下面的 <code>app.VERB</code> 吧。</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.VERB(...)</code> 委托 <code>.VERB</code> 去调用 <code>Router.VERB</code></p>
+<ul>
+<li><p><code>methods</code> 是一个含有最常用的 HTTP 请求方法的列表，如 <code>[&#39;get&#39;, &#39;post&#39;, &#39;put&#39;, &#39;delete&#39; ...]</code></p>
+</li>
+<li><p>遍历 <code>methods</code>，把每一个方法名都代理到 Router</p>
+</li>
+<li><p>对 <code>get</code> 进行特殊处理：如果方法名为 <code>get</code>，而且参数只有一个，就去调用 <code>this.set(xxx)</code></p>
+</li>
+</ul>
+</li>
+<li><p><code>app.all(path)</code></p>
+<ul>
+<li><p>初始化 Router</p>
+</li>
+<li><p>通过 <code>route[method].apply(route, args)</code> 来实现本功能</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.enable(setting)</code> 把 <code>setting</code> 设置为 <code>true</code></p>
+<ul>
+<li>通过 <code>this.set(setting, true)</code> 来实现</li>
+</ul>
+</li>
+<li><p><code>app.disable(setting)</code> 把 <code>setting</code> 设置为 <code>false</code></p>
+<ul>
+<li>通过 <code>this.set(setting, false)</code> 来实现</li>
+</ul>
+</li>
+<li><p><code>app.enabled(setting)</code> 验证 <code>setting</code> 是否为 <code>true</code></p>
+<ul>
+<li>通过 <code>Boolean(this.set(setting))</code> 来实现</li>
+</ul>
+</li>
+<li><p><code>app.disabled(setting)</code> 验证 <code>setting</code> 是否为 <code>false</code></p>
+<ul>
+<li>通过 <code>!this.set(setting)</code> 来实现</li>
+</ul>
+</li>
+<li><p><code>app.listen</code> 创建服务器</p>
+</li>
+</ul>
+<h1 id="学习心得">学习心得</h1><ul>
+<li><p>ExpressJS 本质上就是让我们根据自己需要去配置 <code>app</code> 对象。</p>
+</li>
+<li><p><code>fn.call(target, param)</code> 和 <code>fn.apply(target, args)</code> 配合 <code>Array.prototype.slice.apply(argument, offset)</code> 可以很好的调节参数。这一点在 ExpressJS 中大量使用。</p>
+</li>
+<li><p>实现挂载中间件的方法和我预想不一样，我原本以为 <code>app.use</code> 简单添加到一个数组里面，然后按顺序执行这些中间件，结果原来是通过事件机制来实现的。</p>
+</li>
+<li><p>涉及到 Router 的地方还没看懂，等到时候再来补一补。</p>
+</li>
+</ul>
+<h1 id="参考资料">参考资料</h1><p><a href="https://github.com/strongloop/express" target="_blank" rel="external">https://github.com/strongloop/express</a><br><a href="http://expressjs.com/api.html" target="_blank" rel="external">http://expressjs.com/api.html</a><br><a href="https://cnodejs.org/topic/545720506537f4d52c414d87" target="_blank" rel="external">https://cnodejs.org/topic/545720506537f4d52c414d87</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/javascript/">javascript</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="搜尋">
+    <input type="hidden" name="q" value="site:scarletsky.github.io">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">分類</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/HTML5/">HTML5</a><small>1</small></li>
+  
+    <li><a href="/categories/android/">android</a><small>2</small></li>
+  
+    <li><a href="/categories/javascript/">javascript</a><small>10</small></li>
+  
+    <li><a href="/categories/life/">life</a><small>1</small></li>
+  
+    <li><a href="/categories/mongodb/">mongodb</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">標籤</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/angular-js/">angular.js</a><small>1</small></li>
+  
+    <li><a href="/tags/canvas-html5/">canvas html5</a><small>1</small></li>
+  
+    <li><a href="/tags/career/">career</a><small>1</small></li>
+  
+    <li><a href="/tags/d3-js/">d3.js</a><small>2</small></li>
+  
+    <li><a href="/tags/drag-and-drop/">drag-and-drop</a><small>1</small></li>
+  
+    <li><a href="/tags/gulp/">gulp</a><small>1</small></li>
+  
+    <li><a href="/tags/javascript/">javascript</a><small>1</small></li>
+  
+    <li><a href="/tags/mongodb/">mongodb</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Scarletsky
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'scarletskygithubio';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-40690820-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+</html>

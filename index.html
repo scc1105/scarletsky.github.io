@@ -49,6 +49,207 @@
     <header>
       
         <div class="icon"></div>
+        <time datetime="2015-08-20T02:11:10.000Z"><a href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/">2015-08-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/">ExpressJS 源码学习 —— Application 篇</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="概述">概述</h1><p>ExpressJS 是 NodeJS 世界中使用最广泛的 Web 框架。它非常轻量，最大的特点是可以组合各种各样的中间件来处理请求，每个中间件都会对请求进行处理，最后再返回给客户端。目前最新版的 ExpressJS 是 4.13.3。</p>
+<p>这系列的文章是出于学习目的而写的，主要是想了解目前主流的 JavaScript 框架是如何设计的，使用了哪些我还不知道的技术。希望写完这系列的文章之后，对我自己的水平会有一定的提高。这系列的文章会先分析各个模块的 API 的工作流程，最后再作总结。</p>
+<p>本文先从 application.js 文件开始分析。</p>
+<h1 id="私有_API">私有 API</h1><ul>
+<li><p><code>app.init</code> 对 app 进行初始化</p>
+<ul>
+<li><p>初始化 <code>cache</code>, <code>engines</code>, <code>settings</code> 为 <code>{}</code></p>
+</li>
+<li><p>调用 <code>this.defaultConfiguration</code> 来设置 app 的默认配置。</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.defaultConfiguration</code> 设置 app 的默认配置</p>
+<ul>
+<li><p>启用 <code>x-powered-by</code> (<code>middleware/init</code>这个中间件会用到)</p>
+</li>
+<li><p>调用 <code>this.set</code> 来设置 <code>etag</code>, <code>env</code>, <code>query parser</code>, <code>subdomain offset</code>, <code>trust proxy</code>, <code>view</code>, <code>views</code>, <code>jsonp callback name</code> 等属性</p>
+</li>
+<li><p>初始化 <code>this.locals</code></p>
+</li>
+<li><p>为 <code>production</code> 环境启用 <code>view cache</code></p>
+</li>
+<li><p>禁止用户直接访问 <code>app.router</code></p>
+</li>
+<li><p>监听 <code>mount</code> 事件，该事件会在调用 <code>app.use</code> 时触发</p>
+</li>
+<li><p>很奇怪为什么一个普通的 <code>Object</code> 为什么可以监听和发送事件吧？想想就知道这个 <code>Object</code> 要么就继承了 <code>EventEmitter</code>，要么就和 <code>EventEmitter</code> 合并了。答案是后者，详细见 <code>express.js</code> 这个文件。</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.lazyrouter</code> 初始化 Router, 只会执行一次</p>
+<ul>
+<li><p>初始化 Router</p>
+</li>
+<li><p>为这个 Router 添加 <code>query</code> 和 <code>init</code> 这两个中间件。</p>
+</li>
+<li><p>把这个 API 放在 <code>defaultConfiguration</code> 之外是因为这个方法会读取 <code>settings</code>，如果把它放到 <code>defaultConfiguration</code> 中就会忽略用户的设置直接运行。试想，当你调用 <code>var app = express()</code> 的时候，默认的路由就已经新建好了，这时候你再怎么用 <code>app.set(xxx)</code> 也没效果的。</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.handle(req, res, callback)</code> 用来把 <code>req</code>, <code>res</code>, <code>callback</code> 交给 Router 来处理</p>
+<ul>
+<li><p>检查是否带有 <code>callback</code>，如果没有就提供一个默认的 <code>callback</code></p>
+</li>
+<li><p>检查是否已经初始化过 Router，如果没有就不会传递参数给 Router</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.path()</code> 返回绝对路径，看源码吧</p>
+</li>
+</ul>
+<h1 id="公开_API">公开 API</h1><ul>
+<li><p><code>app.use(fn)</code> 挂载中间件，代理到 <code>Router.use</code></p>
+<ul>
+<li><p>初始化 <code>offer</code>, <code>path</code></p>
+</li>
+<li><p>根据 <code>fn</code> 来调整 <code>offset</code> (要兼容 <code>app.use([path1, path2, path3...], fn1, [fn2, fn3...])</code> 这种语法)</p>
+</li>
+<li><p>通过 <code>slice.call(arguments, offset)</code> 获取传入的所有函数，保存到 <code>fns</code> 中</p>
+</li>
+<li><p>初始化 Router</p>
+</li>
+<li><p>遍历 <code>fns</code>, 挂载所有 <code>fn</code></p>
+</li>
+<li><p>通过 <code>this.emit(&#39;mount&#39;, this)</code> 的形式发送 <code>mount</code> 事件 (<code>app.defaultConfiguration</code> 会监听这个事件)</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.render(name, options, callback)</code> 渲染指定名字的页面，<code>callback</code> 中返回渲染后的模板字符串</p>
+<ul>
+<li><p>初始化 <code>cache</code>，<code>engine</code>，<code>renderOptions</code></p>
+</li>
+<li><p>把 <code>this.locals</code>，<code>options._locals</code>，<code>options</code> 合并到 <code>renderOptions</code> 中</p>
+</li>
+<li><p>根据 <code>this.settings[&#39;view cache&#39;]</code> 来判断是否需要缓存 <code>view</code>，在生产环境下，该值默认为 <code>true</code> (在 <code>defaultConfiguration</code> 设置的默认值)</p>
+</li>
+<li><p>如果需要渲染的 <code>view</code> 已经缓存过，就直接找到该 <code>view</code> 对象，否则就生成 <code>view</code> 对象。</p>
+</li>
+<li><p>尝试去渲染 <code>view</code> 对象。PS：渲染过程在 <code>View</code> 模块中实现的</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.route(path)</code> 代理到 <code>Router.route(path)</code></p>
+</li>
+<li><p><code>app.param(name, fn)</code> 代理到 <code>Router.param(name, fn)</code></p>
+<ul>
+<li>如果 <code>name</code> 参数为 <code>Array</code>，则会递归调用该函数</li>
+</ul>
+</li>
+<li><p><code>app.engine(ext, fn)</code> 注册模板引擎</p>
+<ul>
+<li><p>必须传入 <code>fn</code>，且 <code>fn</code> 必须是函数</p>
+</li>
+<li><p>解析 <code>ext</code> 参数，会确保 <code>ext</code> 前面带有 <code>.</code>，即如果传入 <code>ejs</code>，它会帮你转换成 <code>.ejs</code>。在实现上只是简单判断第一个字符是不是 <code>.</code></p>
+</li>
+<li><p>把解析过的 <code>ext</code> 和 <code>fn</code> 以 <code>key</code> 和 <code>value</code> 的形式添加到 <code>this.engines</code> 中</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.set(setting, val)</code> 设置相关属性值</p>
+<ul>
+<li><p>如果传入一个参数，就去获取相关的属性值。<code>app.get(setting)</code> 就是这样实现的</p>
+</li>
+<li><p>传入两个值的话，就会用 <code>this.settings[setting] = val</code> 的形式来设置值</p>
+</li>
+<li><p><code>etag</code>，<code>query parser</code>，<code>trust proxy</code> 并不是用上面的形式来设置的，具体请看源码</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.get(setting)</code> 获取相关属性值</p>
+<ul>
+<li><p>事实上，就如上面 <code>app.set</code> 中所说，并没有通过 <code>app.get(setting)</code> 这种形式来设计这个 API</p>
+</li>
+<li><p>由于 <code>get</code> 也是 HTTP 请求方法中的一个，所以它被放在 <code>app.VERB</code> 中实现了，但对它做过特殊处理。看下面的 <code>app.VERB</code> 吧。</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.VERB(...)</code> 委托 <code>.VERB</code> 去调用 <code>Router.VERB</code></p>
+<ul>
+<li><p><code>methods</code> 是一个含有最常用的 HTTP 请求方法的列表，如 <code>[&#39;get&#39;, &#39;post&#39;, &#39;put&#39;, &#39;delete&#39; ...]</code></p>
+</li>
+<li><p>遍历 <code>methods</code>，把每一个方法名都代理到 Router</p>
+</li>
+<li><p>对 <code>get</code> 进行特殊处理：如果方法名为 <code>get</code>，而且参数只有一个，就去调用 <code>this.set(xxx)</code></p>
+</li>
+</ul>
+</li>
+<li><p><code>app.all(path)</code></p>
+<ul>
+<li><p>初始化 Router</p>
+</li>
+<li><p>通过 <code>route[method].apply(route, args)</code> 来实现本功能</p>
+</li>
+</ul>
+</li>
+<li><p><code>app.enable(setting)</code> 把 <code>setting</code> 设置为 <code>true</code></p>
+<ul>
+<li>通过 <code>this.set(setting, true)</code> 来实现</li>
+</ul>
+</li>
+<li><p><code>app.disable(setting)</code> 把 <code>setting</code> 设置为 <code>false</code></p>
+<ul>
+<li>通过 <code>this.set(setting, false)</code> 来实现</li>
+</ul>
+</li>
+<li><p><code>app.enabled(setting)</code> 验证 <code>setting</code> 是否为 <code>true</code></p>
+<ul>
+<li>通过 <code>Boolean(this.set(setting))</code> 来实现</li>
+</ul>
+</li>
+<li><p><code>app.disabled(setting)</code> 验证 <code>setting</code> 是否为 <code>false</code></p>
+<ul>
+<li>通过 <code>!this.set(setting)</code> 来实现</li>
+</ul>
+</li>
+<li><p><code>app.listen</code> 创建服务器</p>
+</li>
+</ul>
+<h1 id="学习心得">学习心得</h1><ul>
+<li><p>ExpressJS 本质上就是让我们根据自己需要去配置 <code>app</code> 对象。</p>
+</li>
+<li><p><code>fn.call(target, param)</code> 和 <code>fn.apply(target, args)</code> 配合 <code>Array.prototype.slice.apply(argument, offset)</code> 可以很好的调节参数。这一点在 ExpressJS 中大量使用。</p>
+</li>
+<li><p>实现挂载中间件的方法和我预想不一样，我原本以为 <code>app.use</code> 简单添加到一个数组里面，然后按顺序执行这些中间件，结果原来是通过事件机制来实现的。</p>
+</li>
+<li><p>涉及到 Router 的地方还没看懂，等到时候再来补一补。</p>
+</li>
+</ul>
+<h1 id="参考资料">参考资料</h1><p><a href="https://github.com/strongloop/express" target="_blank" rel="external">https://github.com/strongloop/express</a><br><a href="http://expressjs.com/api.html" target="_blank" rel="external">http://expressjs.com/api.html</a><br><a href="https://cnodejs.org/topic/545720506537f4d52c414d87" target="_blank" rel="external">https://cnodejs.org/topic/545720506537f4d52c414d87</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
         <time datetime="2015-08-19T02:11:10.000Z"><a href="/2015/08/19/2015-08-19-commonjs-learning/">2015-08-19</a></time>
       
       
@@ -63,22 +264,32 @@
 <p>根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 <code>require</code> 来获取 <code>module.exports</code> 中暴露的内容，而其他部分都是私有的，其他模块不能访问。</p>
 <h1 id="module_对象">module 对象</h1><p>每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是每个模块都有的本地变量。</p>
 <ul>
-<li><code>module.id</code> 模块的识别符，通常是带有绝对路径的模块文件名。</li>
-<li><code>module.filename</code> 模块的文件名。</li>
-<li><code>module.loaded</code> 返回一个布尔值，表示模块是否已经完成加载。</li>
-<li><code>module.parent</code> 返回一个对象，表示调用该模块的模块。</li>
-<li><code>module.children</code> 返回一个数组，表示该模块要用到的其他模块。数组中的内容是其他要用到的模块的 <code>module</code> 对象。</li>
-<li><code>module.paths</code> 返回一个数组，表示模块查找路径，排在越前面的优先级越高。具体请查看 <a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">这里</a></li>
-<li><code>module.exports</code> 表示其他模块可以通过 <code>require</code> 获取的内容。默认情况下是一个空对象，即 <code>{}</code>。</li>
+<li><p><code>module.id</code> 模块的识别符，通常是带有绝对路径的模块文件名。</p>
+</li>
+<li><p><code>module.filename</code> 模块的文件名。</p>
+</li>
+<li><p><code>module.loaded</code> 返回一个布尔值，表示模块是否已经完成加载。</p>
+</li>
+<li><p><code>module.parent</code> 返回一个对象，表示调用该模块的模块。</p>
+</li>
+<li><p><code>module.children</code> 返回一个数组，表示该模块要用到的其他模块。数组中的内容是其他要用到的模块的 <code>module</code> 对象。</p>
+</li>
+<li><p><code>module.paths</code> 返回一个数组，表示模块查找路径，排在越前面的优先级越高。具体请查看 <a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">这里</a></p>
+</li>
+<li><p><code>module.exports</code> 表示其他模块可以通过 <code>require</code> 获取的内容。默认情况下是一个空对象，即 <code>{}</code>。</p>
+</li>
 </ul>
 <h1 id="module-exports_和_exports">module.exports 和 exports</h1><p>默认情况下，<code>module.exports</code> 和 <code>exports</code> 两者是等价的，即 <code>module.exports === exports</code></p>
 <p><code>exports</code> 只是为了方便我们编码而添加的，相当于在每个文件中自动添加了 <code>var exports = module.exports</code>。</p>
 <p>我们可以根据个人喜好，把需要暴露的东西挂在 <code>exports</code> 或 <code>module.exports</code> 下。</p>
 <p><strong>但是</strong>，必须注意以下几点：</p>
 <ul>
-<li>不能把 <code>exports</code> 重新赋值，因为这样会令 <code>exports</code> 不再指向 <code>module.exports</code>，这样 <code>exports</code> 就没用了。</li>
-<li>我们可以通过 <code>module.exports = function() {...}</code> 这种方式指定 <code>module.exports</code> 的指向，这样在其他模块中 <code>require</code> 这个模块，获得的就是一个 <code>function</code>，而不是一个对象。这样做也会导致 <code>exports</code> 失效。</li>
-<li>由于上面的原因，我们会在很多地方看到 <code>module.exports = exports = xxx</code> 这样的代码。</li>
+<li><p>不能把 <code>exports</code> 重新赋值，因为这样会令 <code>exports</code> 不再指向 <code>module.exports</code>，这样 <code>exports</code> 就没用了。</p>
+</li>
+<li><p>我们可以通过 <code>module.exports = function() {...}</code> 这种方式指定 <code>module.exports</code> 的指向，这样在其他模块中 <code>require</code> 这个模块，获得的就是一个 <code>function</code>，而不是一个对象。这样做也会导致 <code>exports</code> 失效。</p>
+</li>
+<li><p>由于上面的原因，我们会在很多地方看到 <code>module.exports = exports = xxx</code> 这样的代码。</p>
+</li>
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://javascript.ruanyifeng.com/nodejs/commonjs.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/nodejs/commonjs.html</a><br><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">http://www.infoq.com/cn/articles/nodejs-module-mechanism/</a><br><a href="http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js" target="_blank" rel="external">http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js</a></p>
 
@@ -119,15 +330,24 @@
 <p>直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。</p>
 <h3 id="语法">语法</h3><p><code>Object.defineProperty(obj, prop, descriptor)</code></p>
 <h3 id="参数">参数</h3><ul>
-<li><code>Object obj</code> 目标对象 </li>
-<li><code>String prop</code> 需要定义的属性</li>
-<li><code>Object descriptor</code> 该属性拥有的特性，可设置的值有：<ul>
-<li><code>value</code> 属性的值，默认为 <code>undefined</code>。</li>
-<li><code>writable</code> 该属性是否可写，如果设置成 <code>false</code>，则任何对该属性改写的操作都无效（但不会报错），默认为 <code>false</code>。</li>
-<li><code>get</code> 一旦目标对象访问该属性，就会调用这个方法，并返回结果。默认为 <code>undefined</code>。</li>
-<li><code>set</code> 一旦目标对象设置该属性，就会调用这个方法。默认为 <code>undeinfed</code>。</li>
-<li><code>configurable</code> 如果为false，则任何尝试删除目标属性或修改属性以下特性（writable, configurable, enumerable）的行为将被无效化，默认为 <code>false</code>。</li>
-<li><code>enumerable</code> 是否能在for…in循环中遍历出来或在Object.keys中列举出来。默认为 <code>false</code>。</li>
+<li><p><code>Object obj</code> 目标对象</p>
+</li>
+<li><p><code>String prop</code> 需要定义的属性</p>
+</li>
+<li><p><code>Object descriptor</code> 该属性拥有的特性，可设置的值有：</p>
+<ul>
+<li><p><code>value</code> 属性的值，默认为 <code>undefined</code>。</p>
+</li>
+<li><p><code>writable</code> 该属性是否可写，如果设置成 <code>false</code>，则任何对该属性改写的操作都无效（但不会报错），默认为 <code>false</code>。</p>
+</li>
+<li><p><code>get</code> 一旦目标对象访问该属性，就会调用这个方法，并返回结果。默认为 <code>undefined</code>。</p>
+</li>
+<li><p><code>set</code> 一旦目标对象设置该属性，就会调用这个方法。默认为 <code>undeinfed</code>。</p>
+</li>
+<li><p><code>configurable</code> 如果为false，则任何尝试删除目标属性或修改属性以下特性（writable, configurable, enumerable）的行为将被无效化，默认为 <code>false</code>。</p>
+</li>
+<li><p><code>enumerable</code> 是否能在for…in循环中遍历出来或在Object.keys中列举出来。默认为 <code>false</code>。</p>
+</li>
 </ul>
 </li>
 </ul>
@@ -140,8 +360,10 @@
 <p>和 <code>Object.defineProperty</code> 类似，只不过这个方法可以设置多个属性。</p>
 <h3 id="语法-1">语法</h3><p><code>Object.defineProperties(obj, props)</code></p>
 <h3 id="参数-1">参数</h3><ul>
-<li><code>Object obj</code> 目标对象 </li>
-<li><code>Object props</code> 要为目标对象添加的属性，其中 <code>key</code> 和 <code>value</code> 分别代表 <code>Object.defineProperty</code> 中的第二和第三个参数。</li>
+<li><p><code>Object obj</code> 目标对象</p>
+</li>
+<li><p><code>Object props</code> 要为目标对象添加的属性，其中 <code>key</code> 和 <code>value</code> 分别代表 <code>Object.defineProperty</code> 中的第二和第三个参数。</p>
+</li>
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html" target="_blank" rel="external">http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object</a><br><a href="https://github.com/strongloop/express/blob/master/lib/express.js" target="_blank" rel="external">https://github.com/strongloop/express/blob/master/lib/express.js</a></p>
 
@@ -716,49 +938,6 @@
 
 
 
-  <article class="post">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2015-01-26T10:05:00.000Z"><a href="/2015/01/26/2015-01-26-javascript-tricks/">2015-01-26</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2015/01/26/2015-01-26-javascript-tricks/">JavaScript 常用技巧</a></h1>
-  
-
-    </header>
-    <div class="entry">
-      
-        <h1 id="字符串操作">字符串操作</h1><h2 id="首字母大写">首字母大写</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="截取字符串最后几位">截取字符串最后几位</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str.substring(str.length-X)</span><br></pre></td></tr></table></figure>
-<h2 id="进制转换">进制转换</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">d.toString(<span class="number">16</span>)    (十进制 -&gt; 十六进制)</span><br><span class="line"><span class="built_in">parseInt</span>(‘ff’, <span class="number">16</span>) (十六进制 -&gt; 十进制)</span><br></pre></td></tr></table></figure>
-<h2 id="生成随机字符串">生成随机字符串</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.random().toString(<span class="number">36</span>).substring(<span class="number">7</span>)</span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript</span></span><br></pre></td></tr></table></figure>
-<h2 id="is-start-with?">is-start-with?</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string.lastIndexOf(str, <span class="number">0</span>) === <span class="number">0</span></span><br><span class="line">string.substring(<span class="number">0</span>, str.length) === str</span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string</span></span><br></pre></td></tr></table></figure>
-<h2 id="is-end-with?">is-end-with?</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/280634/endswith-in-javascript</span></span><br></pre></td></tr></table></figure>
-<h2 id="解析_Base64">解析 Base64</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> base64str = <span class="string">'this is base64 string'</span>;</span><br><span class="line">Buffer(base64str, <span class="string">'base64'</span>).toString();</span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="数组操作">数组操作</h1><h2 id="获取最后数组中最后一个元素">获取最后数组中最后一个元素</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arr.slice(-<span class="number">1</span>).pop() <span class="comment">// 简洁</span></span><br><span class="line">arr[arr.length - <span class="number">1</span>] <span class="comment">// 快速</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="日期操作">日期操作</h1><h2 id="获取当前时间戳">获取当前时间戳</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+<span class="keyword">new</span> <span class="built_in">Date</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer>
-      
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-
-
 
 <nav id="pagination">
   
@@ -784,7 +963,7 @@
   
     <li><a href="/categories/android/">android</a><small>2</small></li>
   
-    <li><a href="/categories/javascript/">javascript</a><small>9</small></li>
+    <li><a href="/categories/javascript/">javascript</a><small>10</small></li>
   
     <li><a href="/categories/life/">life</a><small>1</small></li>
   
