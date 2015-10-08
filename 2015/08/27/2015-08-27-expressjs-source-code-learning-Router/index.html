@@ -1,0 +1,634 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="概述Router 分为三个部分，分别是：Layer, Route, Router。
+Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instanceof Layer)) &amp;#123;    return new Layer(path, options, fn);  &amp;#125;  debug(&apos;new %s&apos;, path)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ExpressJS 源码学习 —— Router 篇">
+<meta property="og:url" content="http://scarletsky.github.io/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/index.html">
+<meta property="og:site_name" content="Scarletsky">
+<meta property="og:description" content="概述Router 分为三个部分，分别是：Layer, Route, Router。
+Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instanceof Layer)) &amp;#123;    return new Layer(path, options, fn);  &amp;#125;  debug(&apos;new %s&apos;, path)">
+<meta property="og:updated_time" content="2015-09-08T02:40:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ExpressJS 源码学习 —— Router 篇">
+<meta name="twitter:description" content="概述Router 分为三个部分，分别是：Layer, Route, Router。
+Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instanceof Layer)) &amp;#123;    return new Layer(path, options, fn);  &amp;#125;  debug(&apos;new %s&apos;, path)">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> ExpressJS 源码学习 —— Router 篇 | Scarletsky </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Scarletsky</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              ExpressJS 源码学习 —— Router 篇
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-27T00:36:54+08:00" content="2015-08-27">
+            2015-08-27
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/javascript/" itemprop="url" rel="index">
+                  <span itemprop="name">javascript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="概述">概述</h1><p>Router 分为三个部分，分别是：Layer, Route, Router。</p>
+<h1 id="Layer">Layer</h1><h2 id="构造函数">构造函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Layer</span>(<span class="params">path, options, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Layer)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Layer(path, options, fn);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  debug(<span class="string">'new %s'</span>, path);</span><br><span class="line">  <span class="comment">// Route 中会传一个空的对象进来</span></span><br><span class="line">  <span class="keyword">var</span> opts = options || &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.handle = fn;</span><br><span class="line">  <span class="keyword">this</span>.name = fn.name || <span class="string">'&lt;anonymous&gt;'</span>;</span><br><span class="line">  <span class="keyword">this</span>.params = <span class="literal">undefined</span>;</span><br><span class="line">  <span class="comment">// 不会受到传进来的 path 的影响</span></span><br><span class="line">  <span class="comment">// 这个值会在 layer.match(path) 中修改</span></span><br><span class="line">  <span class="keyword">this</span>.path = <span class="literal">undefined</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 定义 this.keys</span></span><br><span class="line">  <span class="comment">// pathRegexp(path, keys, options) 会把路径转换成正则表达式，express 通过这个库来解析路由</span></span><br><span class="line">  <span class="comment">// 转换后，this.regexp 为正则表达式，如果 path 中带有 express 路由风格的参数(/:foo/:bar)，则 this.keys 会变成 [&#123;name: 'foo'...&#125;, &#123;name: 'bar'...&#125;]，如果没有匹配的话，则 this.keys 就会是空数组</span></span><br><span class="line">  <span class="comment">// 如果想知道更多这个库的信息，请到 https://github.com/pillarjs/path-to-regexp</span></span><br><span class="line">  <span class="keyword">this</span>.regexp = pathRegexp(path, <span class="keyword">this</span>.keys = [], opts);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// router.route 中会把 opts.end 设置成 true</span></span><br><span class="line">  <span class="keyword">if</span> (path === <span class="string">'/'</span> &amp;&amp; opts.end === <span class="literal">false</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.regexp.fast_slash = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Layer-prototype-handle_error_处理错误">Layer.prototype.handle_error 处理错误</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Handle the error for the layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Error&#125; error</span><br><span class="line"> * @param &#123;Request&#125; req</span><br><span class="line"> * @param &#123;Response&#125; res</span><br><span class="line"> * @param &#123;function&#125; next</span><br><span class="line"> * @api private</span><br><span class="line"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// route.dispatch 中调用这个方法</span></span><br><span class="line">Layer.prototype.handle_error = <span class="function"><span class="keyword">function</span> <span class="title">handle_error</span>(<span class="params">error, req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>.handle;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// fn 必须要有 4 个参数</span></span><br><span class="line">  <span class="keyword">if</span> (fn.length !== <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="comment">// not a standard error handler</span></span><br><span class="line">    <span class="keyword">return</span> next(error);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    fn(error, req, res, next);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Layer-prototype-handle_request_处理请求">Layer.prototype.handle_request 处理请求</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Handle the request for the layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Request&#125; req</span><br><span class="line"> * @param &#123;Response&#125; res</span><br><span class="line"> * @param &#123;function&#125; next</span><br><span class="line"> * @api private</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// route.dispatch 中会调用这个方法</span></span><br><span class="line">Layer.prototype.handle_request = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>.handle;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// fn 如果参数多余三个，那么它就不是一个标准的处理器</span></span><br><span class="line">  <span class="keyword">if</span> (fn.length &gt; <span class="number">3</span>) &#123;</span><br><span class="line">    <span class="comment">// not a standard request handler</span></span><br><span class="line">    <span class="keyword">return</span> next();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    fn(req, res, next);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Layer-prototype-match_检查是否匹配指定路径，同时会把获取_URL_中变量的实际值">Layer.prototype.match 检查是否匹配指定路径，同时会把获取 URL 中变量的实际值</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Check if this route matches `path`, if so</span><br><span class="line"> * populate `.params`.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;String&#125; path</span><br><span class="line"> * @return &#123;Boolean&#125;</span><br><span class="line"> * @api private</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">Layer.prototype.match = <span class="function"><span class="keyword">function</span> <span class="title">match</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 检查路径</span></span><br><span class="line">  <span class="keyword">if</span> (path == <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="comment">// no path, nothing matches</span></span><br><span class="line">    <span class="keyword">this</span>.params = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="keyword">this</span>.path = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.regexp.fast_slash) &#123;</span><br><span class="line">    <span class="comment">// fast path non-ending match for / (everything matches)</span></span><br><span class="line">    <span class="keyword">this</span>.params = &#123;&#125;;</span><br><span class="line">    <span class="keyword">this</span>.path = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 匹配 path</span></span><br><span class="line">  <span class="keyword">var</span> m = <span class="keyword">this</span>.regexp.exec(path);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!m) &#123;</span><br><span class="line">    <span class="keyword">this</span>.params = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="keyword">this</span>.path = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// store values</span></span><br><span class="line">  <span class="keyword">this</span>.params = &#123;&#125;;</span><br><span class="line">  <span class="keyword">this</span>.path = m[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// keys 是在生成 this.regexp 中生成的，简单来说就是当路径有参数的时候就有值，否则就是空数组</span></span><br><span class="line">  <span class="keyword">var</span> keys = <span class="keyword">this</span>.keys;</span><br><span class="line">  <span class="comment">// 看前三行，params 为空对象</span></span><br><span class="line">  <span class="keyword">var</span> params = <span class="keyword">this</span>.params;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// m[0] 为路径本身，m[1] 以后的才是路径中的参数</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; m.length; i++) &#123;</span><br><span class="line">    <span class="comment">// keys 为 [&#123;name: 'xxx'...&#125;, &#123;name: 'yyy'...&#125;] 形式的数组，name 为参数的名字</span></span><br><span class="line">    <span class="comment">// 例如 /users/:userId 的 keys 为 [&#123;name: 'userId'...&#125;] </span></span><br><span class="line">    <span class="keyword">var</span> key = keys[i - <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">var</span> prop = key.name;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 相当于 decodeURIComponent(m[i])</span></span><br><span class="line">    <span class="keyword">var</span> val = decode_param(m[i]);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 把路径中匹配到的参数到保存到 params</span></span><br><span class="line">    <span class="keyword">if</span> (val !== <span class="literal">undefined</span> || !(hasOwnProperty.call(params, prop))) &#123;</span><br><span class="line">      params[prop] = val;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="decode_param_解析路径中的参数">decode_param 解析路径中的参数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Decode param value.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;string&#125; val</span><br><span class="line"> * @return &#123;string&#125;</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 只在 layer.match 中使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">decode_param</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> val !== <span class="string">'string'</span> || val.length === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">decodeURIComponent</span>(val);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">if</span> (err <span class="keyword">instanceof</span> <span class="built_in">URIError</span>) &#123;</span><br><span class="line">      err.message = <span class="string">'Failed to decode param \''</span> + val + <span class="string">'\''</span>;</span><br><span class="line">      err.status = err.statusCode = <span class="number">400</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">throw</span> err;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="Route">Route</h1><h2 id="构造函数-1">构造函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Initialize `Route` with the given `path`,</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;String&#125; path</span><br><span class="line"> * @public</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Route</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.path = path;</span><br><span class="line">  <span class="comment">// 在 route.VERB 中会修改这个属性，用于保存 layer </span></span><br><span class="line">  <span class="keyword">this</span>.stack = [];</span><br><span class="line"></span><br><span class="line">  debug(<span class="string">'new %s'</span>, path);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// route handlers for various http methods</span></span><br><span class="line">  <span class="comment">// Route.prototype[method] 中会通过 this.methods[method] = true 修改这个属性</span></span><br><span class="line">  <span class="keyword">this</span>.methods = &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Route-prototype-_handles_method_判断该路由是否能处理指定的_HTTP_方法"><code>Route.prototype._handles_method</code> 判断该路由是否能处理指定的 HTTP 方法</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Determine if the route handles a given method.</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line">Route.prototype._handles_method = <span class="function"><span class="keyword">function</span> <span class="title">_handles_method</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 调用过 route.all(...) 时，this.methods._all 会变成 true</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.methods._all) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> name = method.toLowerCase();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (name === <span class="string">'head'</span> &amp;&amp; !<span class="keyword">this</span>.methods[<span class="string">'head'</span>]) &#123;</span><br><span class="line">    name = <span class="string">'get'</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Boolean</span>(<span class="keyword">this</span>.methods[name]);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Route-prototype-_options_返回该路由支持的_HTTP_方法">Route.prototype._options 返回该路由支持的 HTTP 方法</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * @return &#123;Array&#125; supported HTTP methods</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">Route.prototype._options = <span class="function"><span class="keyword">function</span> <span class="title">_options</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> methods = <span class="built_in">Object</span>.keys(<span class="keyword">this</span>.methods);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// append automatic head</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.methods.get &amp;&amp; !<span class="keyword">this</span>.methods.head) &#123;</span><br><span class="line">    methods.push(<span class="string">'head'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; methods.length; i++) &#123;</span><br><span class="line">    <span class="comment">// make upper case</span></span><br><span class="line">    methods[i] = methods[i].toUpperCase();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> methods;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Route-prototype-dispatch_分发_req,_res">Route.prototype.dispatch 分发 req, res</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * dispatch req, res into this route</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Router.route 中会在创建 Layer 的时候调用这个方法，作为 Layer 的第三个参数</span></span><br><span class="line">Route.prototype.dispatch = <span class="function"><span class="keyword">function</span> <span class="title">dispatch</span>(<span class="params">req, res, done</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 每次调用 next() 都会增加这个下标</span></span><br><span class="line">  <span class="keyword">var</span> idx = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> stack = <span class="keyword">this</span>.stack;</span><br><span class="line">  <span class="comment">// 当该路由没有处理函数(handler)时，stack 是一个空数组</span></span><br><span class="line">  <span class="keyword">if</span> (stack.length === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> done();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> method = req.method.toLowerCase();</span><br><span class="line">  <span class="comment">// 对 head 方法进行特殊处理</span></span><br><span class="line">  <span class="keyword">if</span> (method === <span class="string">'head'</span> &amp;&amp; !<span class="keyword">this</span>.methods[<span class="string">'head'</span>]) &#123;</span><br><span class="line">    method = <span class="string">'get'</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 为请求对象 req 添加 route 属性，指向该 route 实例</span></span><br><span class="line">  req.route = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">  next();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 定义 next 方法</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err &amp;&amp; err === <span class="string">'route'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> done();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// stack 中保存的是 layer 的列表</span></span><br><span class="line">    <span class="keyword">var</span> layer = stack[idx++];</span><br><span class="line">    <span class="keyword">if</span> (!layer) &#123;</span><br><span class="line">      <span class="keyword">return</span> done(err);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// route.all 会把 layer.method 设置为 undefined</span></span><br><span class="line">    <span class="keyword">if</span> (layer.method &amp;&amp; layer.method !== method) &#123;</span><br><span class="line">      <span class="keyword">return</span> next(err);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      layer.handle_error(err, req, res, next);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      layer.handle_request(req, res, next);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Route-prototype[method]_&amp;&amp;_Route-prototype-all_为所有_HTTP_方法添加处理(handler)方法">Route.prototype[method] &amp;&amp; Route.prototype.all 为所有 HTTP 方法添加处理(handler)方法</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Add a handler for all HTTP verbs to this route.</span><br><span class="line"> *</span><br><span class="line"> * Behaves just like middleware and can respond or call `next`</span><br><span class="line"> * to continue processing.</span><br><span class="line"> *</span><br><span class="line"> * You can use multiple `.all` call to add multiple handlers.</span><br><span class="line"> *</span><br><span class="line"> *   function check_something(req, res, next)&#123;</span><br><span class="line"> *     next();</span><br><span class="line"> *   &#125;;</span><br><span class="line"> *</span><br><span class="line"> *   function validate_user(req, res, next)&#123;</span><br><span class="line"> *     next();</span><br><span class="line"> *   &#125;;</span><br><span class="line"> *</span><br><span class="line"> *   route</span><br><span class="line"> *   .all(validate_user)</span><br><span class="line"> *   .all(check_something)</span><br><span class="line"> *   .get(function(req, res, next)&#123;</span><br><span class="line"> *     res.send('hello world');</span><br><span class="line"> *   &#125;);</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;function&#125; handler</span><br><span class="line"> * @return &#123;Route&#125; for chaining</span><br><span class="line"> * @api public</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// route.all(...) 的实现</span></span><br><span class="line">Route.prototype.all = <span class="function"><span class="keyword">function</span> <span class="title">all</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 提取所有中间件， flatten 会把多维数组变成一维数组，即 [fn1, [fn2, fn3]] =&gt; [fn1, fn2, fn3]</span></span><br><span class="line">  <span class="keyword">var</span> handles = flatten(slice.call(<span class="built_in">arguments</span>));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; handles.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> handle = handles[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查 handle 的类型，必须为 function</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> handle !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">var</span> type = toString.call(handle);</span><br><span class="line">      <span class="keyword">var</span> msg = <span class="string">'Route.all() requires callback functions but got a '</span> + type;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新建 layer</span></span><br><span class="line">    <span class="comment">// Layer(path, options, fn)</span></span><br><span class="line">    <span class="comment">// path 无论传什么，layer.path 都会是 undefined</span></span><br><span class="line">    <span class="keyword">var</span> layer = Layer(<span class="string">'/'</span>, &#123;&#125;, handle);</span><br><span class="line">    <span class="comment">// 注意，Route.prototype[method] 中这是是 layer.method = method;</span></span><br><span class="line">    layer.method = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// route._handles_method 中会检查这个值</span></span><br><span class="line">    <span class="keyword">this</span>.methods._all = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// 保存 layer</span></span><br><span class="line">    <span class="keyword">this</span>.stack.push(layer);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 基本和 Route.prototype.all 一样</span></span><br><span class="line">methods.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">method</span>)</span>&#123;</span><br><span class="line">  Route.prototype[method] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> handles = flatten(slice.call(<span class="built_in">arguments</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; handles.length; i++) &#123;</span><br><span class="line">      <span class="keyword">var</span> handle = handles[i];</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> handle !== <span class="string">'function'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> type = toString.call(handle);</span><br><span class="line">        <span class="keyword">var</span> msg = <span class="string">'Route.'</span> + method + <span class="string">'() requires callback functions but got a '</span> + type;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(msg);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      debug(<span class="string">'%s %s'</span>, method, <span class="keyword">this</span>.path);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> layer = Layer(<span class="string">'/'</span>, &#123;&#125;, handle);</span><br><span class="line">      <span class="comment">// 和 .all 中不一样</span></span><br><span class="line">      layer.method = method;</span><br><span class="line"></span><br><span class="line">  	  <span class="comment">// route._handles_method 中会检查这个值, route.dispatch 中也会用到，但作用只是检查 head 方法而已</span></span><br><span class="line">      <span class="keyword">this</span>.methods[method] = <span class="literal">true</span>;</span><br><span class="line">      <span class="keyword">this</span>.stack.push(layer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="Router">Router</h1><h2 id="构造函数-2">构造函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> proto = <span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> opts = options || &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 初始化时会调用 router.handle</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">router</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    router.handle(req, res, next);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// mixin Router class functions</span></span><br><span class="line">  <span class="comment">// 把 router 的原型对象指向 proto</span></span><br><span class="line">  router.__proto__ = proto;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 初始化属性</span></span><br><span class="line">  router.params = &#123;&#125;;</span><br><span class="line">  router._params = [];</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 下面几个属性会传进在 router.route 中传进 layer 的 options 中</span></span><br><span class="line">  router.caseSensitive = opts.caseSensitive;</span><br><span class="line">  router.mergeParams = opts.mergeParams;</span><br><span class="line">  router.strict = opts.strict;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// stack 用于保存 layer</span></span><br><span class="line">  router.stack = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> router;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Router-route_为指定路径创建一个新的_Route">Router.route 为指定路径创建一个新的 Route</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Create a new Route for the given path.</span><br><span class="line"> *</span><br><span class="line"> * Each route contains a separate middleware stack and VERB handlers.</span><br><span class="line"> *</span><br><span class="line"> * See the Route api documentation for details on adding handlers</span><br><span class="line"> * and middleware to routes.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;String&#125; path</span><br><span class="line"> * @return &#123;Route&#125;</span><br><span class="line"> * @public</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">proto.route = <span class="function"><span class="keyword">function</span> <span class="title">route</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> route = <span class="keyword">new</span> Route(path);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Layer(path, options, fn)</span></span><br><span class="line">  <span class="comment">// path === '/' &amp;&amp; options.end === false 才会让 layer.regexp.fast_slash 变成 true</span></span><br><span class="line">  <span class="comment">// 也就是这个 layer.regexp.fast_slash 依然为 undefined</span></span><br><span class="line">  <span class="keyword">var</span> layer = <span class="keyword">new</span> Layer(path, &#123;</span><br><span class="line">    sensitive: <span class="keyword">this</span>.caseSensitive,</span><br><span class="line">    strict: <span class="keyword">this</span>.strict,</span><br><span class="line">    end: <span class="literal">true</span></span><br><span class="line">  &#125;, route.dispatch.bind(route));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// layer.js 里面没有定义过 layer.route，这是在 router 中才添加进去的</span></span><br><span class="line">  <span class="comment">// 难道 router 级别才需要用到？</span></span><br><span class="line">  layer.route = route;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.stack.push(layer);</span><br><span class="line">  <span class="keyword">return</span> route;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Router-handle_把_req，res_分发到_router_中">Router.handle 把 req，res 分发到 router 中</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Dispatch a req, res into the router.</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 无返回值</span></span><br><span class="line">proto.handle = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, out</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">  debug(<span class="string">'dispatching %s %s'</span>, req.method, req.url);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 用于找查询字符串的下标，如果 url 中没有查询字符串，则 search = 0，下一行就用到了</span></span><br><span class="line">  <span class="keyword">var</span> search = <span class="number">1</span> + req.url.indexOf(<span class="string">'?'</span>);</span><br><span class="line">  <span class="comment">// 不含查询字符串的 url 的长度</span></span><br><span class="line">  <span class="keyword">var</span> pathlength = search ? search - <span class="number">1</span> : req.url.length;</span><br><span class="line">  <span class="comment">// 判断 url 是否为完全合格域名，不以 '/' 开头的，同时也必须包含 '://' 。</span></span><br><span class="line">  <span class="comment">// 如果满足条件，就返回 '://' 的下标 + 1， 否则为 0 </span></span><br><span class="line">  <span class="keyword">var</span> fqdn = req.url[<span class="number">0</span>] !== <span class="string">'/'</span> &amp;&amp; <span class="number">1</span> + req.url.substr(<span class="number">0</span>, pathlength).indexOf(<span class="string">'://'</span>);</span><br><span class="line">  <span class="comment">// 如果是完全合格域名，就返回该域名。</span></span><br><span class="line">  <span class="comment">// 实现上是直接找 URI 中 host 后面的斜杠，即 https://www.baidu.com/ &lt;-- 这斜杠</span></span><br><span class="line">  <span class="keyword">var</span> protohost = fqdn ? req.url.substr(<span class="number">0</span>, req.url.indexOf(<span class="string">'/'</span>, <span class="number">2</span> + fqdn)) : <span class="string">''</span>;</span><br><span class="line">  <span class="keyword">var</span> idx = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> removed = <span class="string">''</span>;</span><br><span class="line">  <span class="keyword">var</span> slashAdded = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">var</span> paramcalled = &#123;&#125;; </span><br><span class="line"></span><br><span class="line">  <span class="comment">// store options for OPTIONS request</span></span><br><span class="line">  <span class="comment">// only used if OPTIONS request</span></span><br><span class="line">  <span class="comment">// 只用于 http 请求方法中的 options 方法</span></span><br><span class="line">  <span class="keyword">var</span> options = [];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// middleware and routes</span></span><br><span class="line">  <span class="comment">// 获取 self.stack 的引用，这里面保存的都是 layer，即中间件和 route</span></span><br><span class="line">  <span class="keyword">var</span> stack = self.stack;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// manage inter-router variables</span></span><br><span class="line">  <span class="keyword">var</span> parentParams = req.params;</span><br><span class="line">  <span class="keyword">var</span> parentUrl = req.baseUrl || <span class="string">''</span>;</span><br><span class="line">  <span class="comment">// restore(fn, obj)，用于重新保存除 fn, obj 以外的其他参数，返回一个函数</span></span><br><span class="line">  <span class="comment">// 这里就是重新保存 baseUrl, next, params</span></span><br><span class="line">  <span class="comment">// done 现在是一个函数，重新保存上面提到的属性之后，会调用 out 函数</span></span><br><span class="line">  <span class="keyword">var</span> done = restore(out, req, <span class="string">'baseUrl'</span>, <span class="string">'next'</span>, <span class="string">'params'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// setup next layer</span></span><br><span class="line">  req.next = next;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// for options requests, respond with a default if nothing else responds</span></span><br><span class="line">  <span class="comment">// 为 options 请求方法返回一个默认的响应</span></span><br><span class="line">  <span class="comment">// wrap(old, fn) 函数只是简单包装一下，fn 的第一个参数会变成 old，其他参数照旧</span></span><br><span class="line">  <span class="comment">// sendOptionsResponse 里面会调用 res.send，这样下面的代码就不会执行了。</span></span><br><span class="line">  <span class="keyword">if</span> (req.method === <span class="string">'OPTIONS'</span>) &#123;</span><br><span class="line">    done = wrap(done, <span class="function"><span class="keyword">function</span>(<span class="params">old, err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (err || options.length === <span class="number">0</span>) <span class="keyword">return</span> old(err);</span><br><span class="line">      sendOptionsResponse(res, options, old);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// setup basic req values</span></span><br><span class="line">  req.baseUrl = parentUrl;</span><br><span class="line">  req.originalUrl = req.originalUrl || req.url;</span><br><span class="line"></span><br><span class="line">  next();</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">next</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> layerError = err === <span class="string">'route'</span></span><br><span class="line">      ? <span class="literal">null</span></span><br><span class="line">      : err;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// remove added slash</span></span><br><span class="line">    <span class="comment">// slashAdded 默认为 false</span></span><br><span class="line">    <span class="keyword">if</span> (slashAdded) &#123;</span><br><span class="line">      req.url = req.url.substr(<span class="number">1</span>);</span><br><span class="line">      slashAdded = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// restore altered req.url</span></span><br><span class="line">    <span class="keyword">if</span> (removed.length !== <span class="number">0</span>) &#123;</span><br><span class="line">      req.baseUrl = parentUrl;</span><br><span class="line">      req.url = protohost + removed + req.url.substr(protohost.length);</span><br><span class="line">      removed = <span class="string">''</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// no more matching layers</span></span><br><span class="line">    <span class="keyword">if</span> (idx &gt;= stack.length) &#123;</span><br><span class="line">      setImmediate(done, layerError);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// get pathname of request</span></span><br><span class="line">    <span class="comment">// 获取请求中的路径，即</span></span><br><span class="line">    <span class="comment">// protocol :// hostname[:port] / path / [;parameters][?query]#fragment</span></span><br><span class="line">    <span class="comment">// 中的 path 部分</span></span><br><span class="line">    <span class="keyword">var</span> path = getPathname(req);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (path == <span class="literal">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> done(layerError);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// find next matching layer</span></span><br><span class="line">    <span class="keyword">var</span> layer;</span><br><span class="line">    <span class="keyword">var</span> match;</span><br><span class="line">    <span class="keyword">var</span> route;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 我们知道，router.stack 中保存了很多 layer，这些 layer 都是对应某个 url 的</span></span><br><span class="line">    <span class="comment">// 这里就是要通过 while 循环来找到和 path 对应的 layer</span></span><br><span class="line">    <span class="keyword">while</span> (match !== <span class="literal">true</span> &amp;&amp; idx &lt; stack.length) &#123;</span><br><span class="line">      layer = stack[idx++];</span><br><span class="line">      <span class="comment">// 这里封装了 layer.match(path); 为它添加了 try...catch</span></span><br><span class="line">      <span class="comment">// layer.path 就是匹配的值了</span></span><br><span class="line">      match = matchLayer(layer, path);</span><br><span class="line">      <span class="comment">// 还记得吗？router.route 中新建 layer 时会给 layer 添加 route 属性</span></span><br><span class="line">      route = layer.route;</span><br><span class="line"></span><br><span class="line">      <span class="comment">//  match 应该都是 boolean 的，不知道哪里会出错</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> match !== <span class="string">'boolean'</span>) &#123;</span><br><span class="line">        <span class="comment">// hold on to layerError</span></span><br><span class="line">        layerError = layerError || match;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 如果路径不匹配，就不会执行下面的代码了，继续下一轮循环</span></span><br><span class="line">      <span class="keyword">if</span> (match !== <span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 没有 route ，就没有处理函数(handler)</span></span><br><span class="line">      <span class="comment">// 估计这句是为了兼容 router.VERB(...) 的</span></span><br><span class="line">      <span class="keyword">if</span> (!route) &#123;</span><br><span class="line">        <span class="comment">// process non-route handlers normally</span></span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 处理 layerError</span></span><br><span class="line">      <span class="keyword">if</span> (layerError) &#123;</span><br><span class="line">        <span class="comment">// routes do not match with a pending error</span></span><br><span class="line">        match = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> method = req.method;</span><br><span class="line">      <span class="comment">// 用来判断该 route 是否有处理 method 的方法，返回 boolean</span></span><br><span class="line">      <span class="keyword">var</span> has_method = route._handles_method(method);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// build up automatic options response</span></span><br><span class="line">      <span class="keyword">if</span> (!has_method &amp;&amp; method === <span class="string">'OPTIONS'</span>) &#123;</span><br><span class="line">        <span class="comment">// options 原本是一个空数组</span></span><br><span class="line">        <span class="comment">// route._options() 返回的是该 route 支持的方法</span></span><br><span class="line">        <span class="comment">// appendMethods 可以理解成 options = [].concat(route._options())</span></span><br><span class="line">        <span class="comment">// options 数组里面不会有重复的方法</span></span><br><span class="line">        appendMethods(options, route._options());</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// don't even bother matching route</span></span><br><span class="line">      <span class="comment">// 注意 HEAD 方法是不会执行下面的代码的</span></span><br><span class="line">      <span class="keyword">if</span> (!has_method &amp;&amp; method !== <span class="string">'HEAD'</span>) &#123;</span><br><span class="line">        match = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// no match</span></span><br><span class="line">    <span class="comment">// 路径不匹配就直接 return ，不在执行下面的代码了</span></span><br><span class="line">    <span class="keyword">if</span> (match !== <span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> done(layerError);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// store route for dispatch on change</span></span><br><span class="line">    <span class="comment">// 为 req 添加 route 属性</span></span><br><span class="line">    <span class="keyword">if</span> (route) &#123;</span><br><span class="line">      req.route = route;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Capture one-time layer values</span></span><br><span class="line">    <span class="comment">// self.mergeParams 是在 Router 的构造函数中通过 opts 传进来的，默认值为 false</span></span><br><span class="line">    <span class="comment">// 默认情况下会以 layer.params 优先</span></span><br><span class="line">    req.params = self.mergeParams</span><br><span class="line">      ? mergeParams(layer.params, parentParams)</span><br><span class="line">      : layer.params;</span><br><span class="line">    <span class="keyword">var</span> layerPath = layer.path;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// this should be done for the layer</span></span><br><span class="line">    self.process_params(layer, paramcalled, req, res, <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="keyword">return</span> next(layerError || err);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 把 req，res，next 分发到后续的中间件，或者是我们的业务逻辑</span></span><br><span class="line">      <span class="keyword">if</span> (route) &#123;</span><br><span class="line">        <span class="keyword">return</span> layer.handle_request(req, res, next);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      trim_prefix(layer, layerError, layerPath, path);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 确保 path 是以 / 开头的</span></span><br><span class="line">  <span class="comment">// 确保 req.baseUrl 不是以 / 结尾</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">trim_prefix</span>(<span class="params">layer, layerError, layerPath, path</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> c = path[layerPath.length];</span><br><span class="line">    <span class="keyword">if</span> (c &amp;&amp; <span class="string">'/'</span> !== c &amp;&amp; <span class="string">'.'</span> !== c) <span class="keyword">return</span> next(layerError);</span><br><span class="line"></span><br><span class="line">     <span class="comment">// Trim off the part of the url that matches the route</span></span><br><span class="line">     <span class="comment">// middleware (.use stuff) needs to have the path stripped</span></span><br><span class="line">    <span class="keyword">if</span> (layerPath.length !== <span class="number">0</span>) &#123;</span><br><span class="line">      debug(<span class="string">'trim prefix (%s) from url %s'</span>, layerPath, req.url);</span><br><span class="line">      removed = layerPath;</span><br><span class="line">      req.url = protohost + req.url.substr(protohost.length + removed.length);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Ensure leading slash</span></span><br><span class="line">      <span class="keyword">if</span> (!fqdn &amp;&amp; req.url[<span class="number">0</span>] !== <span class="string">'/'</span>) &#123;</span><br><span class="line">        req.url = <span class="string">'/'</span> + req.url;</span><br><span class="line">        slashAdded = <span class="literal">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Setup base URL (no trailing slash)</span></span><br><span class="line">      req.baseUrl = parentUrl + (removed[removed.length - <span class="number">1</span>] === <span class="string">'/'</span></span><br><span class="line">        ? removed.substring(<span class="number">0</span>, removed.length - <span class="number">1</span>)</span><br><span class="line">        : removed);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    debug(<span class="string">'%s %s : %s'</span>, layer.name, layerPath, req.originalUrl);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (layerError) &#123;</span><br><span class="line">      layer.handle_error(layerError, req, res, next);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      layer.handle_request(req, res, next);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Router-param_获取指定参数的值">Router.param 获取指定参数的值</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Map the given param placeholder `name`(s) to the given callback.</span><br><span class="line"> *</span><br><span class="line"> * Parameter mapping is used to provide pre-conditions to routes</span><br><span class="line"> * which use normalized placeholders. For example a _:user_id_ parameter</span><br><span class="line"> * could automatically load a user's information from the database without</span><br><span class="line"> * any additional code,</span><br><span class="line"> *</span><br><span class="line"> * The callback uses the same signature as middleware, the only difference</span><br><span class="line"> * being that the value of the placeholder is passed, in this case the _id_</span><br><span class="line"> * of the user. Once the `next()` function is invoked, just like middleware</span><br><span class="line"> * it will continue on to execute the route, or subsequent parameter functions.</span><br><span class="line"> *</span><br><span class="line"> * Just like in middleware, you must either respond to the request or call next</span><br><span class="line"> * to avoid stalling the request.</span><br><span class="line"> *</span><br><span class="line"> *  app.param('user_id', function(req, res, next, id)&#123;</span><br><span class="line"> *    User.find(id, function(err, user)&#123;</span><br><span class="line"> *      if (err) &#123;</span><br><span class="line"> *        return next(err);</span><br><span class="line"> *      &#125; else if (!user) &#123;</span><br><span class="line"> *        return next(new Error('failed to load user'));</span><br><span class="line"> *      &#125;</span><br><span class="line"> *      req.user = user;</span><br><span class="line"> *      next();</span><br><span class="line"> *    &#125;);</span><br><span class="line"> *  &#125;);</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;String&#125; name</span><br><span class="line"> * @param &#123;Function&#125; fn</span><br><span class="line"> * @return &#123;app&#125; for chaining</span><br><span class="line"> * @public</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这个方法并不会调用 fn，实际调用 fn 的是 router.handle</span></span><br><span class="line">proto.param = <span class="function"><span class="keyword">function</span> <span class="title">param</span>(<span class="params">name, fn</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// param logic</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> name === <span class="string">'function'</span>) &#123;</span><br><span class="line">    deprecate(<span class="string">'router.param(fn): Refactor to use path params'</span>);</span><br><span class="line">    <span class="keyword">this</span>._params.push(name);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// apply param functions</span></span><br><span class="line">  <span class="keyword">var</span> params = <span class="keyword">this</span>._params;</span><br><span class="line">  <span class="keyword">var</span> len = params.length;</span><br><span class="line">  <span class="keyword">var</span> ret;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 兼容旧写法，旧的写法支持参数以 : 开头，新的写法不需要以 : 开头</span></span><br><span class="line">  <span class="keyword">if</span> (name[<span class="number">0</span>] === <span class="string">':'</span>) &#123;</span><br><span class="line">    deprecate(<span class="string">'router.param('</span> + <span class="built_in">JSON</span>.stringify(name) + <span class="string">', fn): Use router.param('</span> + <span class="built_in">JSON</span>.stringify(name.substr(<span class="number">1</span>)) + <span class="string">', fn) instead'</span>);</span><br><span class="line">    name = name.substr(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; ++i) &#123;</span><br><span class="line">    <span class="keyword">if</span> (ret = params[i](name, fn)) &#123;</span><br><span class="line">      fn = ret;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ensure we end up with a</span></span><br><span class="line">  <span class="comment">// middleware function</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'function'</span> != <span class="keyword">typeof</span> fn) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'invalid param() call for '</span> + name + <span class="string">', got '</span> + fn);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  (<span class="keyword">this</span>.params[name] = <span class="keyword">this</span>.params[name] || []).push(fn);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Router-process_params_为_layer_处理参数">Router.process_params 为 layer 处理参数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Process any parameters for the layer.</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"> <span class="comment">// 这个方法里面定义了两个函数，param(err) 和 paramCallback(err)</span></span><br><span class="line"> <span class="comment">// 先执行 param()，如果执行过程报错，就会调用 param(err) 来处理错误</span></span><br><span class="line"> <span class="comment">// 如果没有报错，就会调用 paramCallback()</span></span><br><span class="line"> <span class="comment">// 如果执行过程中报错，就会调用 paramCallback(err) 来处理错误</span></span><br><span class="line"> <span class="comment">// 其实 paramCallback(err) 内部也是调用 param(err) 来处理错误的</span></span><br><span class="line"> <span class="comment">//</span></span><br><span class="line"> <span class="comment">// 这个方法应该是用来处理 router.param(name, fn) 的</span></span><br><span class="line"> <span class="comment">// 因为 router.param 并没有处理参数，而是把 fn 添加到 router.params[name] 中</span></span><br><span class="line"> <span class="comment">// 实际上调用 fn 的是下面这个方法</span></span><br><span class="line">proto.process_params = <span class="function"><span class="keyword">function</span> <span class="title">process_params</span>(<span class="params">layer, called, req, res, done</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> params = <span class="keyword">this</span>.params;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// captured parameters from the layer, keys and values</span></span><br><span class="line">  <span class="comment">// 初始化 layer 的时候会通过 pathRegexp() 来定义 layer.keys</span></span><br><span class="line">  <span class="comment">// 这里的 keys 是 url 中的参数</span></span><br><span class="line">  <span class="comment">// 如 /:foo/:bar/baz 的 keys 就是 [&#123;name: 'foo'...&#125;, &#123;name: 'bar'...&#125;]</span></span><br><span class="line">  <span class="keyword">var</span> keys = layer.keys;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// fast track</span></span><br><span class="line">  <span class="comment">// 没有 keys 的话就不需要处理参数了，直接调用回调函数</span></span><br><span class="line">  <span class="keyword">if</span> (!keys || keys.length === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> done();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 用于遍历 keys 的下标</span></span><br><span class="line">  <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// key.name，即 url 中的参数名</span></span><br><span class="line">  <span class="keyword">var</span> name;</span><br><span class="line">  <span class="comment">// 每次调用 param() 都会把 paramIndex 清零</span></span><br><span class="line">  <span class="keyword">var</span> paramIndex = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> key;</span><br><span class="line">  <span class="comment">// url 中对应参数的实际值</span></span><br><span class="line">  <span class="keyword">var</span> paramVal;</span><br><span class="line">  <span class="keyword">var</span> paramCallbacks;</span><br><span class="line">  <span class="comment">// 下面的 paramCalled 的结构是在 param(err) 函数结束前定义的，形式为:</span></span><br><span class="line">  <span class="comment">// &#123; error: null, match: val, value: val &#125;</span></span><br><span class="line">  <span class="keyword">var</span> paramCalled;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// process params in order</span></span><br><span class="line">  <span class="comment">// param callbacks can be async</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">param</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> done(err);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i &gt;= keys.length ) &#123;</span><br><span class="line">      <span class="keyword">return</span> done();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    paramIndex = <span class="number">0</span>;</span><br><span class="line">    key = keys[i++];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!key) &#123;</span><br><span class="line">      <span class="keyword">return</span> done();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    name = key.name;</span><br><span class="line">    paramVal = req.params[name];</span><br><span class="line">    <span class="comment">// params 即 this.params</span></span><br><span class="line">    <span class="comment">// 翻了一下代码，只有 router.param(name, fn) 会修改这个值</span></span><br><span class="line">    <span class="comment">// 难道这行是为了处理 router.param 的？</span></span><br><span class="line">    <span class="comment">// 另外， params[name] 会返回一个数组，里面包含 fn</span></span><br><span class="line">    paramCallbacks = params[name];</span><br><span class="line">    <span class="comment">// called 是在 router.handle 传进来的，默认为 &#123;&#125;</span></span><br><span class="line">    <span class="comment">// 该值会在本函数递归调用时修改</span></span><br><span class="line">    paramCalled = called[name];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (paramVal === <span class="literal">undefined</span> || !paramCallbacks) &#123;</span><br><span class="line">      <span class="keyword">return</span> param();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// param previously called with same value or error occurred</span></span><br><span class="line">    <span class="keyword">if</span> (paramCalled &amp;&amp; (paramCalled.match === paramVal</span><br><span class="line">      || (paramCalled.error &amp;&amp; paramCalled.error !== <span class="string">'route'</span>))) &#123;</span><br><span class="line">      <span class="comment">// restore value</span></span><br><span class="line">      req.params[name] = paramCalled.value;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// next param</span></span><br><span class="line">      <span class="keyword">return</span> param(paramCalled.error);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    called[name] = paramCalled = &#123;</span><br><span class="line">      error: <span class="literal">null</span>,</span><br><span class="line">      match: paramVal,</span><br><span class="line">      value: paramVal</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    paramCallback();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// single param callbacks</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">paramCallback</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// paramCallbacks 是通过 this.params[name] 来得到的，是一个保存了 fn 的数组</span></span><br><span class="line">    <span class="keyword">var</span> fn = paramCallbacks[paramIndex++];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// store updated value</span></span><br><span class="line">    paramCalled.value = req.params[key.name];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (err) &#123;</span><br><span class="line">      <span class="comment">// store error</span></span><br><span class="line">      paramCalled.error = err;</span><br><span class="line">      param(err);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!fn) <span class="keyword">return</span> param();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      fn(req, res, paramCallback, paramVal, key.name);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">      paramCallback(e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  param();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Router-use_加载特定中间件">Router.use 加载特定中间件</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Use the given middleware function, with optional path, defaulting to "/".</span><br><span class="line"> *</span><br><span class="line"> * Use (like `.all`) will run for any http METHOD, but it will not add</span><br><span class="line"> * handlers for those methods so OPTIONS requests will not consider `.use`</span><br><span class="line"> * functions even if they could respond.</span><br><span class="line"> *</span><br><span class="line"> * The other difference is that _route_ path is stripped and not visible</span><br><span class="line"> * to the handler function. The main effect of this feature is that mounted</span><br><span class="line"> * handlers can operate without any code changes regardless of the "prefix"</span><br><span class="line"> * pathname.</span><br><span class="line"> *</span><br><span class="line"> * @public</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 中间件默认挂载在 / 下</span></span><br><span class="line">proto.use = <span class="function"><span class="keyword">function</span> <span class="title">use</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> offset = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> path = <span class="string">'/'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// default path to '/'</span></span><br><span class="line">  <span class="comment">// disambiguate router.use([fn])</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> arg = fn;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">Array</span>.isArray(arg) &amp;&amp; arg.length !== <span class="number">0</span>) &#123;</span><br><span class="line">      arg = arg[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// first arg is the path</span></span><br><span class="line">    <span class="comment">// 处理 router.use('/foo', bar)</span></span><br><span class="line">    <span class="comment">// 注意这里只是设置了偏移值</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> arg !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      offset = <span class="number">1</span>;</span><br><span class="line">      path = fn;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> callbacks = flatten(slice.call(<span class="built_in">arguments</span>, offset));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (callbacks.length === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Router.use() requires middleware functions'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; callbacks.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> fn = callbacks[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Router.use() requires middleware function but got a '</span> + gettype(fn));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add the middleware</span></span><br><span class="line">    debug(<span class="string">'use %s %s'</span>, path, fn.name || <span class="string">'&lt;anonymous&gt;'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> layer = <span class="keyword">new</span> Layer(path, &#123;</span><br><span class="line">      sensitive: <span class="keyword">this</span>.caseSensitive,</span><br><span class="line">      strict: <span class="literal">false</span>,</span><br><span class="line">      end: <span class="literal">false</span></span><br><span class="line">    &#125;, fn);</span><br><span class="line"></span><br><span class="line">    layer.route = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.stack.push(layer);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/" rel="next">ExpressJS 源码学习 —— Application 篇</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/2386165" alt="Scarletsky" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Scarletsky</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Layer"><span class="nav-number">2.</span> <span class="nav-text">Layer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数"><span class="nav-number">2.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-prototype-handle_error_处理错误"><span class="nav-number">2.2.</span> <span class="nav-text">Layer.prototype.handle_error 处理错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-prototype-handle_request_处理请求"><span class="nav-number">2.3.</span> <span class="nav-text">Layer.prototype.handle_request 处理请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-prototype-match_检查是否匹配指定路径，同时会把获取_URL_中变量的实际值"><span class="nav-number">2.4.</span> <span class="nav-text">Layer.prototype.match 检查是否匹配指定路径，同时会把获取 URL 中变量的实际值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decode_param_解析路径中的参数"><span class="nav-number">2.5.</span> <span class="nav-text">decode_param 解析路径中的参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Route"><span class="nav-number">3.</span> <span class="nav-text">Route</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数-1"><span class="nav-number">3.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Route-prototype-_handles_method_判断该路由是否能处理指定的_HTTP_方法"><span class="nav-number">3.2.</span> <span class="nav-text">Route.prototype._handles_method 判断该路由是否能处理指定的 HTTP 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Route-prototype-_options_返回该路由支持的_HTTP_方法"><span class="nav-number">3.3.</span> <span class="nav-text">Route.prototype._options 返回该路由支持的 HTTP 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Route-prototype-dispatch_分发_req,_res"><span class="nav-number">3.4.</span> <span class="nav-text">Route.prototype.dispatch 分发 req, res</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Route-prototype[method]_&&_Route-prototype-all_为所有_HTTP_方法添加处理(handler)方法"><span class="nav-number">3.5.</span> <span class="nav-text">Route.prototype[method] && Route.prototype.all 为所有 HTTP 方法添加处理(handler)方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Router"><span class="nav-number">4.</span> <span class="nav-text">Router</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数-2"><span class="nav-number">4.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-route_为指定路径创建一个新的_Route"><span class="nav-number">4.2.</span> <span class="nav-text">Router.route 为指定路径创建一个新的 Route</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-handle_把_req，res_分发到_router_中"><span class="nav-number">4.3.</span> <span class="nav-text">Router.handle 把 req，res 分发到 router 中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-param_获取指定参数的值"><span class="nav-number">4.4.</span> <span class="nav-text">Router.param 获取指定参数的值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-process_params_为_layer_处理参数"><span class="nav-number">4.5.</span> <span class="nav-text">Router.process_params 为 layer 处理参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-use_加载特定中间件"><span class="nav-number">4.6.</span> <span class="nav-text">Router.use 加载特定中间件</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Scarletsky</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'scarletskygithubio';
+      var disqus_identifier = '2015/08/27/2015-08-27-expressjs-source-code-learning-Router/';
+      var disqus_title = 'ExpressJS 源码学习 —— Router 篇';
+      var disqus_url = 'http://scarletsky.github.io/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
