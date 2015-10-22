@@ -22,19 +22,25 @@
 
 
 
-
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
-
-
-
-
-  <meta name="keywords" content="Hexo,next" />
+  
+    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
 
 
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
 
 
 
-  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
 <meta name="description">
@@ -55,6 +61,8 @@
   };
 </script>
 
+
+
   <title> Scarletsky </title>
 </head>
 
@@ -73,22 +81,27 @@
 
 
 
+
+
+
   <div class="container one-column 
    page-home 
 ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><h1 class="site-meta">
-  <span class="logo-line-before"><i></i></span>
-  <a href="/" class="brand" rel="start">
-      <span class="logo">
-        <i class="icon-next-logo"></i>
-      </span>
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
       <span class="site-title">Scarletsky</span>
-  </a>
-  <span class="logo-line-after"><i></i></span>
-</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
 
 <div class="site-nav-toggle">
   <button>
@@ -107,7 +120,9 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            <i class="menu-item-icon icon-next-home"></i> <br />
+            
+              <i class="menu-item-icon fa fa-home"></i> <br />
+            
             首页
           </a>
         </li>
@@ -115,7 +130,9 @@
         
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
-            <i class="menu-item-icon icon-next-archives"></i> <br />
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br />
+            
             归档
           </a>
         </li>
@@ -123,7 +140,9 @@
         
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
-            <i class="menu-item-icon icon-next-tags"></i> <br />
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br />
+            
             标签
           </a>
         </li>
@@ -147,60 +166,70 @@
     
       
 
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/10/22/2015-10-22-node-stream-api-learning/" itemprop="url">
-                Node.js 中 Stream API 的使用
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-10-22T17:09:06+08:00" content="2015-10-22">
-            2015-10-22
-          </time>
-        </span>
+    
+      <header class="post-header">
 
         
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/javascript/" itemprop="url" rel="index">
-                  <span itemprop="name">javascript</span>
+            
+              
+                <a class="post-title-link" href="/2015/10/22/2015-10-22-node-stream-api-learning/" itemprop="url">
+                  Node.js 中 Stream API 的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-22T17:09:06+08:00" content="2015-10-22">
+              2015-10-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/22/2015-10-22-node-stream-api-learning/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/22/2015-10-22-node-stream-api-learning/" itemprop="commentsCount"></span>
                 </a>
               </span>
-
-              
-              
-
             
-          </span>
-        
+          
 
-        
           
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/10/22/2015-10-22-node-stream-api-learning/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/22/2015-10-22-node-stream-api-learning/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
+
+        </div>
+      </header>
+    
+
 
     <div class="post-body">
 
@@ -209,7 +238,9 @@
 
       
         
-          <span itemprop="articleBody"><h2 id="基本介绍">基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
+          <span itemprop="articleBody">
+            
+              <h2 id="基本介绍">基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
 <p><code>fs.readFile</code> 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。</p>
 <p>而 <code>fs.createReadStream</code> 则是通过 Stream 来读取数据，它会把文件（数据）分割成小块，然后触发一些特定的事件，我们可以监听这些事件，编写特定的处理函数。这种方式相对上面来说，并不好上手，但它效率非常高。</p>
 <p>事实上， Stream 在 Node.js 中并非仅仅用在文件处理上，其他地方也可以看到它的身影，如 <code>process.stdin/stdout</code>, <code>http</code>, <code>tcp sockets</code>, <code>zlib</code>, <code>crypto</code> 等都有用到。</p>
@@ -271,7 +302,9 @@
 <li><a href="https://github.com/sindresorhus/awesome-nodejs#streams" target="_blank" rel="external">awesome-nodejs#streams</a> 由于其他 stream 库我都没用过，所以有需求的就直接看这里吧</li>
 </ul>
 <h2 id="参考资料">参考资料</h2><p><a href="http://javascript.ruanyifeng.com/nodejs/stream.html" target="_blank" rel="external">阮一峰 - stream接口</a><br><a href="https://nodejs.org/api/stream.html" target="_blank" rel="external">nodejs.org Stream</a><br><a href="http://codewinds.com/blog/2013-08-20-nodejs-transform-streams.html" target="_blank" rel="external">Transforming data with Node.js transform streams</a><br><a href="http://stackoverflow.com/questions/18335499/nodejs-whats-the-difference-between-a-duplex-stream-and-a-transform-stream" target="_blank" rel="external">NodeJS: What’s the difference between a Duplex stream and a Transform stream?</a></p>
-</span>
+
+            
+          </span>
         
       
     </div>
@@ -292,60 +325,70 @@
     
       
 
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="url">
-                ExpressJS 源码学习 —— Router 篇
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-08-27T00:36:54+08:00" content="2015-08-27">
-            2015-08-27
-          </time>
-        </span>
+    
+      <header class="post-header">
 
         
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/javascript/" itemprop="url" rel="index">
-                  <span itemprop="name">javascript</span>
+            
+              
+                <a class="post-title-link" href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="url">
+                  ExpressJS 源码学习 —— Router 篇
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-27T00:36:54+08:00" content="2015-08-27">
+              2015-08-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="commentsCount"></span>
                 </a>
               </span>
-
-              
-              
-
             
-          </span>
-        
+          
 
-        
           
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
+
+        </div>
+      </header>
+    
+
 
     <div class="post-body">
 
@@ -354,7 +397,9 @@
 
       
         
-          <span itemprop="articleBody"><h1 id="概述">概述</h1><p>Router 分为三个部分，分别是：Layer, Route, Router。</p>
+          <span itemprop="articleBody">
+            
+              <h1 id="概述">概述</h1><p>Router 分为三个部分，分别是：Layer, Route, Router。</p>
 <h1 id="Layer">Layer</h1><h2 id="构造函数">构造函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Layer</span>(<span class="params">path, options, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Layer)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Layer(path, options, fn);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  debug(<span class="string">'new %s'</span>, path);</span><br><span class="line">  <span class="comment">// Route 中会传一个空的对象进来</span></span><br><span class="line">  <span class="keyword">var</span> opts = options || &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.handle = fn;</span><br><span class="line">  <span class="keyword">this</span>.name = fn.name || <span class="string">'&lt;anonymous&gt;'</span>;</span><br><span class="line">  <span class="keyword">this</span>.params = <span class="literal">undefined</span>;</span><br><span class="line">  <span class="comment">// 不会受到传进来的 path 的影响</span></span><br><span class="line">  <span class="comment">// 这个值会在 layer.match(path) 中修改</span></span><br><span class="line">  <span class="keyword">this</span>.path = <span class="literal">undefined</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 定义 this.keys</span></span><br><span class="line">  <span class="comment">// pathRegexp(path, keys, options) 会把路径转换成正则表达式，express 通过这个库来解析路由</span></span><br><span class="line">  <span class="comment">// 转换后，this.regexp 为正则表达式，如果 path 中带有 express 路由风格的参数(/:foo/:bar)，则 this.keys 会变成 [&#123;name: 'foo'...&#125;, &#123;name: 'bar'...&#125;]，如果没有匹配的话，则 this.keys 就会是空数组</span></span><br><span class="line">  <span class="comment">// 如果想知道更多这个库的信息，请到 https://github.com/pillarjs/path-to-regexp</span></span><br><span class="line">  <span class="keyword">this</span>.regexp = pathRegexp(path, <span class="keyword">this</span>.keys = [], opts);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// router.route 中会把 opts.end 设置成 true</span></span><br><span class="line">  <span class="keyword">if</span> (path === <span class="string">'/'</span> &amp;&amp; opts.end === <span class="literal">false</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.regexp.fast_slash = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Layer-prototype-handle_error_处理错误">Layer.prototype.handle_error 处理错误</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Handle the error for the layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Error&#125; error</span><br><span class="line"> * @param &#123;Request&#125; req</span><br><span class="line"> * @param &#123;Response&#125; res</span><br><span class="line"> * @param &#123;function&#125; next</span><br><span class="line"> * @api private</span><br><span class="line"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// route.dispatch 中调用这个方法</span></span><br><span class="line">Layer.prototype.handle_error = <span class="function"><span class="keyword">function</span> <span class="title">handle_error</span>(<span class="params">error, req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>.handle;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// fn 必须要有 4 个参数</span></span><br><span class="line">  <span class="keyword">if</span> (fn.length !== <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="comment">// not a standard error handler</span></span><br><span class="line">    <span class="keyword">return</span> next(error);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    fn(error, req, res, next);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="Layer-prototype-handle_request_处理请求">Layer.prototype.handle_request 处理请求</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Handle the request for the layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Request&#125; req</span><br><span class="line"> * @param &#123;Response&#125; res</span><br><span class="line"> * @param &#123;function&#125; next</span><br><span class="line"> * @api private</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// route.dispatch 中会调用这个方法</span></span><br><span class="line">Layer.prototype.handle_request = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>.handle;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// fn 如果参数多余三个，那么它就不是一个标准的处理器</span></span><br><span class="line">  <span class="keyword">if</span> (fn.length &gt; <span class="number">3</span>) &#123;</span><br><span class="line">    <span class="comment">// not a standard request handler</span></span><br><span class="line">    <span class="keyword">return</span> next();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    fn(req, res, next);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -374,7 +419,9 @@
 <h2 id="Router-use_加载特定中间件">Router.use 加载特定中间件</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Use the given middleware function, with optional path, defaulting to "/".</span><br><span class="line"> *</span><br><span class="line"> * Use (like `.all`) will run for any http METHOD, but it will not add</span><br><span class="line"> * handlers for those methods so OPTIONS requests will not consider `.use`</span><br><span class="line"> * functions even if they could respond.</span><br><span class="line"> *</span><br><span class="line"> * The other difference is that _route_ path is stripped and not visible</span><br><span class="line"> * to the handler function. The main effect of this feature is that mounted</span><br><span class="line"> * handlers can operate without any code changes regardless of the "prefix"</span><br><span class="line"> * pathname.</span><br><span class="line"> *</span><br><span class="line"> * @public</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 中间件默认挂载在 / 下</span></span><br><span class="line">proto.use = <span class="function"><span class="keyword">function</span> <span class="title">use</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> offset = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> path = <span class="string">'/'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// default path to '/'</span></span><br><span class="line">  <span class="comment">// disambiguate router.use([fn])</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> arg = fn;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">Array</span>.isArray(arg) &amp;&amp; arg.length !== <span class="number">0</span>) &#123;</span><br><span class="line">      arg = arg[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// first arg is the path</span></span><br><span class="line">    <span class="comment">// 处理 router.use('/foo', bar)</span></span><br><span class="line">    <span class="comment">// 注意这里只是设置了偏移值</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> arg !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      offset = <span class="number">1</span>;</span><br><span class="line">      path = fn;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取 .use 中所有函数</span></span><br><span class="line">  <span class="comment">// 如 router.use('/test', fn1, fn2, fn3); </span></span><br><span class="line">  <span class="comment">// callbacks = [fn1, fn2, fn3]</span></span><br><span class="line">  <span class="keyword">var</span> callbacks = flatten(slice.call(<span class="built_in">arguments</span>, offset));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (callbacks.length === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Router.use() requires middleware functions'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 遍历 callbacks，每个 callback 都会成为一个 layer，并按顺序进入 Router.stack</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; callbacks.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> fn = callbacks[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Router.use() requires middleware function but got a '</span> + gettype(fn));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add the middleware</span></span><br><span class="line">    debug(<span class="string">'use %s %s'</span>, path, fn.name || <span class="string">'&lt;anonymous&gt;'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> layer = <span class="keyword">new</span> Layer(path, &#123;</span><br><span class="line">      sensitive: <span class="keyword">this</span>.caseSensitive,</span><br><span class="line">      strict: <span class="literal">false</span>,</span><br><span class="line">      end: <span class="literal">false</span></span><br><span class="line">    &#125;, fn);</span><br><span class="line"></span><br><span class="line">    layer.route = <span class="literal">undefined</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">this</span>.stack.push(layer);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="Router-route_为_router_创建新的路由">Router.route 为 router 创建新的路由</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Create a new Route for the given path.</span><br><span class="line"> *</span><br><span class="line"> * Each route contains a separate middleware stack and VERB handlers.</span><br><span class="line"> *</span><br><span class="line"> * See the Route api documentation for details on adding handlers</span><br><span class="line"> * and middleware to routes.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;String&#125; path</span><br><span class="line"> * @return &#123;Route&#125;</span><br><span class="line"> * @public</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">proto.route = <span class="function"><span class="keyword">function</span> <span class="title">route</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 创建新的路由</span></span><br><span class="line">  <span class="keyword">var</span> route = <span class="keyword">new</span> Route(path);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建新的 layer</span></span><br><span class="line">  <span class="keyword">var</span> layer = <span class="keyword">new</span> Layer(path, &#123;</span><br><span class="line">    sensitive: <span class="keyword">this</span>.caseSensitive,</span><br><span class="line">    strict: <span class="keyword">this</span>.strict,</span><br><span class="line">    end: <span class="literal">true</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 为这个特殊的 layer 提供分发 req，res 的能力</span></span><br><span class="line">  &#125;, route.dispatch.bind(route));</span><br><span class="line"></span><br><span class="line">  layer.route = route;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 其实 route 也是一个 layer</span></span><br><span class="line">  <span class="keyword">this</span>.stack.push(layer);</span><br><span class="line">  <span class="keyword">return</span> route;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="Router-VERB_为_router_提供_VERB_方法">Router.VERB 为 router 提供 VERB 方法</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// create Router#VERB functions</span></span><br><span class="line"><span class="comment">// 提供方便的语法来创建 route</span></span><br><span class="line">methods.concat(<span class="string">'all'</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">method</span>)</span>&#123;</span><br><span class="line">  proto[method] = <span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 只是简单的调用上面提到的 Router.route</span></span><br><span class="line">    <span class="keyword">var</span> route = <span class="keyword">this</span>.route(path)</span><br><span class="line">    route[method].apply(route, slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="helpers_只有_Router_中才用到的_helpers，属于私有_API">helpers 只有 Router 中才用到的 helpers，属于私有 API</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// append methods to a list of methods</span></span><br><span class="line"><span class="comment">// 为给定列表添加不重复的元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">appendMethods</span>(<span class="params">list, addition</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; addition.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> method = addition[i];</span><br><span class="line">    <span class="keyword">if</span> (list.indexOf(method) === -<span class="number">1</span>) &#123;</span><br><span class="line">      list.push(method);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get pathname of request</span></span><br><span class="line"><span class="comment">// 获取请求中的 pathname</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPathname</span>(<span class="params">req</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> parseUrl(req).pathname;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get type for error message</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gettype</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = <span class="keyword">typeof</span> obj;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type !== <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> type;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// inspect [[Class]] for objects</span></span><br><span class="line">  <span class="keyword">return</span> toString.call(obj)</span><br><span class="line">    .replace(objectRegExp, <span class="string">'$1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Match path to a layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Layer&#125; layer</span><br><span class="line"> * @param &#123;string&#125; path</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"><span class="comment">// 判断给定的 layer 是否与路径匹配</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">matchLayer</span>(<span class="params">layer, path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> layer.match(path);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> err;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// merge params with parent params</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeParams</span>(<span class="params">params, parent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> parent !== <span class="string">'object'</span> || !parent) &#123;</span><br><span class="line">    <span class="keyword">return</span> params;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// make copy of parent for base</span></span><br><span class="line">  <span class="keyword">var</span> obj = mixin(&#123;&#125;, parent);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// simple non-numeric merging</span></span><br><span class="line">  <span class="keyword">if</span> (!(<span class="number">0</span> <span class="keyword">in</span> params) || !(<span class="number">0</span> <span class="keyword">in</span> parent)) &#123;</span><br><span class="line">    <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// determine numeric gaps</span></span><br><span class="line">  <span class="keyword">while</span> (i <span class="keyword">in</span> params) &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (o <span class="keyword">in</span> parent) &#123;</span><br><span class="line">    o++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// offset numeric indices in params before merge</span></span><br><span class="line">  <span class="keyword">for</span> (i--; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    params[i + o] = params[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create holes for the merge when necessary</span></span><br><span class="line">    <span class="keyword">if</span> (i &lt; o) &#123;</span><br><span class="line">      <span class="keyword">delete</span> params[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// restore obj props after function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">restore</span>(<span class="params">fn, obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> props = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">var</span> vals = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">    props[i] = <span class="built_in">arguments</span>[i + <span class="number">2</span>];</span><br><span class="line">    vals[i] = obj[props[i]];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// restore vals</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">      obj[props[i]] = vals[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// send an OPTIONS response</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendOptionsResponse</span>(<span class="params">res, options, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body = options.join(<span class="string">','</span>);</span><br><span class="line">    res.set(<span class="string">'Allow'</span>, body);</span><br><span class="line">    res.send(body);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// wrap a function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrap</span>(<span class="params">old, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">proxy</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    args[<span class="number">0</span>] = old;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="built_in">arguments</span>.length; i &lt; len; i++) &#123;</span><br><span class="line">      args[i + <span class="number">1</span>] = <span class="built_in">arguments</span>[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fn.apply(<span class="keyword">this</span>, args);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+<h2 id="helpers_只有_Router_中才用到的_helpers，属于私有_API">helpers 只有 Router 中才用到的 helpers，属于私有 API</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// append methods to a list of methods</span></span><br><span class="line"><span class="comment">// 为给定列表添加不重复的元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">appendMethods</span>(<span class="params">list, addition</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; addition.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> method = addition[i];</span><br><span class="line">    <span class="keyword">if</span> (list.indexOf(method) === -<span class="number">1</span>) &#123;</span><br><span class="line">      list.push(method);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get pathname of request</span></span><br><span class="line"><span class="comment">// 获取请求中的 pathname</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPathname</span>(<span class="params">req</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> parseUrl(req).pathname;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get type for error message</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gettype</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = <span class="keyword">typeof</span> obj;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type !== <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> type;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// inspect [[Class]] for objects</span></span><br><span class="line">  <span class="keyword">return</span> toString.call(obj)</span><br><span class="line">    .replace(objectRegExp, <span class="string">'$1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Match path to a layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Layer&#125; layer</span><br><span class="line"> * @param &#123;string&#125; path</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"><span class="comment">// 判断给定的 layer 是否与路径匹配</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">matchLayer</span>(<span class="params">layer, path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> layer.match(path);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> err;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// merge params with parent params</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeParams</span>(<span class="params">params, parent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> parent !== <span class="string">'object'</span> || !parent) &#123;</span><br><span class="line">    <span class="keyword">return</span> params;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// make copy of parent for base</span></span><br><span class="line">  <span class="keyword">var</span> obj = mixin(&#123;&#125;, parent);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// simple non-numeric merging</span></span><br><span class="line">  <span class="keyword">if</span> (!(<span class="number">0</span> <span class="keyword">in</span> params) || !(<span class="number">0</span> <span class="keyword">in</span> parent)) &#123;</span><br><span class="line">    <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// determine numeric gaps</span></span><br><span class="line">  <span class="keyword">while</span> (i <span class="keyword">in</span> params) &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (o <span class="keyword">in</span> parent) &#123;</span><br><span class="line">    o++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// offset numeric indices in params before merge</span></span><br><span class="line">  <span class="keyword">for</span> (i--; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    params[i + o] = params[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create holes for the merge when necessary</span></span><br><span class="line">    <span class="keyword">if</span> (i &lt; o) &#123;</span><br><span class="line">      <span class="keyword">delete</span> params[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// restore obj props after function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">restore</span>(<span class="params">fn, obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> props = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">var</span> vals = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">    props[i] = <span class="built_in">arguments</span>[i + <span class="number">2</span>];</span><br><span class="line">    vals[i] = obj[props[i]];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// restore vals</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">      obj[props[i]] = vals[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// send an OPTIONS response</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendOptionsResponse</span>(<span class="params">res, options, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body = options.join(<span class="string">','</span>);</span><br><span class="line">    res.set(<span class="string">'Allow'</span>, body);</span><br><span class="line">    res.send(body);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// wrap a function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrap</span>(<span class="params">old, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">proxy</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    args[<span class="number">0</span>] = old;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="built_in">arguments</span>.length; i &lt; len; i++) &#123;</span><br><span class="line">      args[i + <span class="number">1</span>] = <span class="built_in">arguments</span>[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fn.apply(<span class="keyword">this</span>, args);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            
+          </span>
         
       
     </div>
@@ -395,60 +442,70 @@
     
       
 
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/" itemprop="url">
-                ExpressJS 源码学习 —— Application 篇
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-08-20T10:11:10+08:00" content="2015-08-20">
-            2015-08-20
-          </time>
-        </span>
+    
+      <header class="post-header">
 
         
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/javascript/" itemprop="url" rel="index">
-                  <span itemprop="name">javascript</span>
+            
+              
+                <a class="post-title-link" href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/" itemprop="url">
+                  ExpressJS 源码学习 —— Application 篇
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-20T10:11:10+08:00" content="2015-08-20">
+              2015-08-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/20/2015-08-20-expressjs-source-code-learning-Application/" itemprop="commentsCount"></span>
                 </a>
               </span>
-
-              
-              
-
             
-          </span>
-        
+          
 
-        
           
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/20/2015-08-20-expressjs-source-code-learning-Application/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
+
+        </div>
+      </header>
+    
+
 
     <div class="post-body">
 
@@ -457,7 +514,9 @@
 
       
         
-          <span itemprop="articleBody"><h1 id="概述">概述</h1><p>ExpressJS 是 NodeJS 世界中使用最广泛的 Web 框架。它非常轻量，最大的特点是可以组合各种各样的中间件来处理请求，每个中间件都会对请求进行处理，最后再返回给客户端。目前最新版的 ExpressJS 是 4.13.3。</p>
+          <span itemprop="articleBody">
+            
+              <h1 id="概述">概述</h1><p>ExpressJS 是 NodeJS 世界中使用最广泛的 Web 框架。它非常轻量，最大的特点是可以组合各种各样的中间件来处理请求，每个中间件都会对请求进行处理，最后再返回给客户端。目前最新版的 ExpressJS 是 4.13.3。</p>
 <p>这系列的文章是出于学习目的而写的，主要是想了解目前主流的 JavaScript 框架是如何设计的，使用了哪些我还不知道的技术。希望写完这系列的文章之后，对我自己的水平会有一定的提高。这系列的文章会先分析各个模块的 API 的工作流程，最后再作总结。</p>
 <p>本文先从 application.js 文件开始分析。</p>
 <h1 id="私有_API">私有 API</h1><ul>
@@ -626,7 +685,9 @@
 </li>
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="https://github.com/strongloop/express" target="_blank" rel="external">https://github.com/strongloop/express</a><br><a href="http://expressjs.com/api.html" target="_blank" rel="external">http://expressjs.com/api.html</a><br><a href="https://cnodejs.org/topic/545720506537f4d52c414d87" target="_blank" rel="external">https://cnodejs.org/topic/545720506537f4d52c414d87</a></p>
-</span>
+
+            
+          </span>
         
       
     </div>
@@ -647,60 +708,70 @@
     
       
 
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/19/2015-08-19-commonjs-learning/" itemprop="url">
-                CommonJS 学习笔记
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-08-19T10:11:10+08:00" content="2015-08-19">
-            2015-08-19
-          </time>
-        </span>
+    
+      <header class="post-header">
 
         
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/javascript/" itemprop="url" rel="index">
-                  <span itemprop="name">javascript</span>
+            
+              
+                <a class="post-title-link" href="/2015/08/19/2015-08-19-commonjs-learning/" itemprop="url">
+                  CommonJS 学习笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-19T10:11:10+08:00" content="2015-08-19">
+              2015-08-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/19/2015-08-19-commonjs-learning/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/19/2015-08-19-commonjs-learning/" itemprop="commentsCount"></span>
                 </a>
               </span>
-
-              
-              
-
             
-          </span>
-        
+          
 
-        
           
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/19/2015-08-19-commonjs-learning/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/19/2015-08-19-commonjs-learning/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
+
+        </div>
+      </header>
+    
+
 
     <div class="post-body">
 
@@ -709,7 +780,9 @@
 
       
         
-          <span itemprop="articleBody"><h1 id="概述">概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
+          <span itemprop="articleBody">
+            
+              <h1 id="概述">概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
 <p>根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 <code>require</code> 来获取 <code>module.exports</code> 中暴露的内容，而其他部分都是私有的，其他模块不能访问。</p>
 <h1 id="module_对象">module 对象</h1><p>每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是每个模块都有的本地变量。</p>
 <ul>
@@ -741,7 +814,9 @@
 </li>
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://javascript.ruanyifeng.com/nodejs/commonjs.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/nodejs/commonjs.html</a><br><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">http://www.infoq.com/cn/articles/nodejs-module-mechanism/</a><br><a href="http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js" target="_blank" rel="external">http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js</a></p>
-</span>
+
+            
+          </span>
         
       
     </div>
@@ -762,60 +837,70 @@
     
       
 
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/18/2015-08-18-Object-learning-in-javascript/" itemprop="url">
-                JavaScript 中 Object.defineProperty 的使用
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-08-18T17:57:31+08:00" content="2015-08-18">
-            2015-08-18
-          </time>
-        </span>
+    
+      <header class="post-header">
 
         
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/javascript/" itemprop="url" rel="index">
-                  <span itemprop="name">javascript</span>
+            
+              
+                <a class="post-title-link" href="/2015/08/18/2015-08-18-Object-learning-in-javascript/" itemprop="url">
+                  JavaScript 中 Object.defineProperty 的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-18T17:57:31+08:00" content="2015-08-18">
+              2015-08-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/18/2015-08-18-Object-learning-in-javascript/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/18/2015-08-18-Object-learning-in-javascript/" itemprop="commentsCount"></span>
                 </a>
               </span>
-
-              
-              
-
             
-          </span>
-        
+          
 
-        
           
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/18/2015-08-18-Object-learning-in-javascript/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/18/2015-08-18-Object-learning-in-javascript/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
+
+        </div>
+      </header>
+    
+
 
     <div class="post-body">
 
@@ -824,7 +909,9 @@
 
       
         
-          <span itemprop="articleBody"><h1 id="Object-defineProperty">Object.defineProperty</h1><blockquote>
+          <span itemprop="articleBody">
+            
+              <h1 id="Object-defineProperty">Object.defineProperty</h1><blockquote>
 <p>The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, and returns the object.</p>
 </blockquote>
 <p>直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。</p>
@@ -866,7 +953,9 @@
 </li>
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html" target="_blank" rel="external">http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object</a><br><a href="https://github.com/strongloop/express/blob/master/lib/express.js" target="_blank" rel="external">https://github.com/strongloop/express/blob/master/lib/express.js</a></p>
-</span>
+
+            
+          </span>
         
       
     </div>
@@ -887,60 +976,70 @@
     
       
 
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/" itemprop="url">
-                利用 Gulp 处理前端工作流程
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-08-14T16:57:33+08:00" content="2015-08-14">
-            2015-08-14
-          </time>
-        </span>
+    
+      <header class="post-header">
 
         
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/javascript/" itemprop="url" rel="index">
-                  <span itemprop="name">javascript</span>
+            
+              
+                <a class="post-title-link" href="/2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/" itemprop="url">
+                  利用 Gulp 处理前端工作流程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-14T16:57:33+08:00" content="2015-08-14">
+              2015-08-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/" itemprop="commentsCount"></span>
                 </a>
               </span>
-
-              
-              
-
             
-          </span>
-        
+          
 
-        
           
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
+
+        </div>
+      </header>
+    
+
 
     <div class="post-body">
 
@@ -949,7 +1048,9 @@
 
       
         
-          <span itemprop="articleBody"><h1 id="基本用法">基本用法</h1><figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line"><span class="comment">// gulpfile.js</span></span><br><span class="line">gulp.task<span class="params">('foo', function<span class="params">()</span> &#123;</span><br><span class="line">    gulp.src<span class="params">(glob)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">&#125;)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// shell</span></span><br><span class="line">$ gulp foo</span><br></pre></td></tr></table></figure>
+          <span itemprop="articleBody">
+            
+              <h1 id="基本用法">基本用法</h1><figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line"><span class="comment">// gulpfile.js</span></span><br><span class="line">gulp.task<span class="params">('foo', function<span class="params">()</span> &#123;</span><br><span class="line">    gulp.src<span class="params">(glob)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">&#125;)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// shell</span></span><br><span class="line">$ gulp foo</span><br></pre></td></tr></table></figure>
 <h1 id="基本_API">基本 API</h1><ul>
 <li><p><code>gulp.src(glob[, options])</code></p>
 <ul>
@@ -1044,7 +1145,9 @@
 </ul>
 <h3 id="实例代码">实例代码</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">gulp.task(<span class="string">'clean:build'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    del.sync(<span class="string">'dist/'</span>, &#123;force: <span class="literal">true</span>&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'minify'</span>, [<span class="string">'clean:build'</span>, <span class="string">'less'</span>], <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp</span><br><span class="line">        .src(<span class="string">'app/views/**/*.html'</span>)</span><br><span class="line">        .pipe(htmlmin(&#123;collapseWhitespace: <span class="literal">true</span>&#125;))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist/views'</span>));</span><br><span class="line"></span><br><span class="line">    gulp</span><br><span class="line">        .src(<span class="string">'app/index.html'</span>)</span><br><span class="line">        .pipe(usemin(&#123;</span><br><span class="line">            js: [uglify(), rev()],</span><br><span class="line">            css: [minifyCss(), <span class="string">'concat'</span>, rev()]</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist/'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'copyfonts'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp</span><br><span class="line">        .src(<span class="string">'app/styles/fonts/*'</span>)</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist/fonts/'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'build'</span>, [<span class="string">'clean:build'</span>, <span class="string">'minify'</span>, <span class="string">'copyfonts'</span>]);</span><br></pre></td></tr></table></figure>
 <h1 id="参考资料">参考资料</h1><p><a href="https://github.com/gulpjs/gulp/blob/master/docs/API.md" target="_blank" rel="external">英文文档</a><br><a href="http://www.gulpjs.com.cn/docs/api/" target="_blank" rel="external">中文文档</a></p>
-</span>
+
+            
+          </span>
         
       
     </div>
@@ -1065,60 +1168,70 @@
     
       
 
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/11/2015-08-11-mongo-shell-trap/" itemprop="url">
-                Mongo Shell 使用过程中遇到的坑
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-08-11T12:17:47+08:00" content="2015-08-11">
-            2015-08-11
-          </time>
-        </span>
+    
+      <header class="post-header">
 
         
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/mongodb/" itemprop="url" rel="index">
-                  <span itemprop="name">mongodb</span>
+            
+              
+                <a class="post-title-link" href="/2015/08/11/2015-08-11-mongo-shell-trap/" itemprop="url">
+                  Mongo Shell 使用过程中遇到的坑
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-11T12:17:47+08:00" content="2015-08-11">
+              2015-08-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/mongodb/" itemprop="url" rel="index">
+                    <span itemprop="name">mongodb</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/11/2015-08-11-mongo-shell-trap/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/11/2015-08-11-mongo-shell-trap/" itemprop="commentsCount"></span>
                 </a>
               </span>
-
-              
-              
-
             
-          </span>
-        
+          
 
-        
           
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/11/2015-08-11-mongo-shell-trap/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/2015-08-11-mongo-shell-trap/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
+
+        </div>
+      </header>
+    
+
 
     <div class="post-body">
 
@@ -1127,7 +1240,9 @@
 
       
         
-          <span itemprop="articleBody"><h1 id="编写_js_脚本">编写 js 脚本</h1><ul>
+          <span itemprop="articleBody">
+            
+              <h1 id="编写_js_脚本">编写 js 脚本</h1><ul>
 <li><p>js 脚本中不能包含 <code>use</code> 关键字，需要用 <code>$ mongo mydb xxx.js</code> 这样的方式来指定数据库</p>
 </li>
 <li><p>不能用 <code>console.log</code>，需要用 <code>print</code> 代替</p>
@@ -1140,7 +1255,9 @@
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$ mongo mydb test.js</span><br><span class="line"></span><br><span class="line"><span class="comment">// test.js</span></span><br><span class="line"><span class="keyword">var</span> users = db.users.find(&#123;&#125;);</span><br><span class="line">users.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">u</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// not console.log(u._id) !!</span></span><br><span class="line">    <span class="comment">// use print instead of console!</span></span><br><span class="line">    print(u._id);</span><br><span class="line"></span><br><span class="line">    db.users.update(&#123;</span><br><span class="line">        _id: ObjectId(<span class="string">''</span> + u._id) <span class="comment">// make sure the params is string</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        $set: &#123;</span><br><span class="line">            money: NumberInt(<span class="number">100</span>) <span class="comment">// it will be int, not float.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h1 id="参考资料">参考资料</h1><p><a href="http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer" target="_blank" rel="external">http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer</a></p>
 <p><a href="http://docs.mongodb.org/manual/core/shell-types/" target="_blank" rel="external">http://docs.mongodb.org/manual/core/shell-types/</a></p>
-</span>
+
+            
+          </span>
         
       
     </div>
@@ -1161,60 +1278,70 @@
     
       
 
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/08/07/2015-08-07-interview-summary/" itemprop="url">
-                面试总结
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-08-07T21:32:41+08:00" content="2015-08-07">
-            2015-08-07
-          </time>
-        </span>
+    
+      <header class="post-header">
 
         
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/life/" itemprop="url" rel="index">
-                  <span itemprop="name">life</span>
+            
+              
+                <a class="post-title-link" href="/2015/08/07/2015-08-07-interview-summary/" itemprop="url">
+                  面试总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-07T21:32:41+08:00" content="2015-08-07">
+              2015-08-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/life/" itemprop="url" rel="index">
+                    <span itemprop="name">life</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/07/2015-08-07-interview-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/07/2015-08-07-interview-summary/" itemprop="commentsCount"></span>
                 </a>
               </span>
-
-              
-              
-
             
-          </span>
-        
+          
 
-        
           
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/08/07/2015-08-07-interview-summary/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/07/2015-08-07-interview-summary/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
+
+        </div>
+      </header>
+    
+
 
     <div class="post-body">
 
@@ -1223,7 +1350,9 @@
 
       
         
-          <span itemprop="articleBody"><h1 id="面试前的准备">面试前的准备</h1><ul>
+          <span itemprop="articleBody">
+            
+              <h1 id="面试前的准备">面试前的准备</h1><ul>
 <li><p>了解该公司的业务</p>
 <ul>
 <li>如果不了解的话，面试的时候 HR 们那些一系列专业的术语会让你头晕</li>
@@ -1346,7 +1475,9 @@
 <li><p>做出决定</p>
 </li>
 </ul>
-</span>
+
+            
+          </span>
         
       
     </div>
@@ -1367,60 +1498,70 @@
     
       
 
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/05/2015-07-06-android-support-design-library-experience/" itemprop="url">
-                Android Support Design Library 注意事项
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-07-05T23:45:02+08:00" content="2015-07-05">
-            2015-07-05
-          </time>
-        </span>
+    
+      <header class="post-header">
 
         
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/android/" itemprop="url" rel="index">
-                  <span itemprop="name">android</span>
+            
+              
+                <a class="post-title-link" href="/2015/07/05/2015-07-06-android-support-design-library-experience/" itemprop="url">
+                  Android Support Design Library 注意事项
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-07-05T23:45:02+08:00" content="2015-07-05">
+              2015-07-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/05/2015-07-06-android-support-design-library-experience/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/05/2015-07-06-android-support-design-library-experience/" itemprop="commentsCount"></span>
                 </a>
               </span>
-
-              
-              
-
             
-          </span>
-        
+          
 
-        
           
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/07/05/2015-07-06-android-support-design-library-experience/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/05/2015-07-06-android-support-design-library-experience/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
+
+        </div>
+      </header>
+    
+
 
     <div class="post-body">
 
@@ -1429,7 +1570,9 @@
 
       
         
-          <span itemprop="articleBody"><h1 id="CoordinatorLayout">CoordinatorLayout</h1><p>这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。</p>
+          <span itemprop="articleBody">
+            
+              <h1 id="CoordinatorLayout">CoordinatorLayout</h1><p>这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。</p>
 <p>常见的用法如下：</p>
 <figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">&lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CoordinatorLayout</span></span><br><span class="line">    xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.NestedScrollView</span></span><br><span class="line">        xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">        xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_gravity=<span class="string">"fill_vertical"</span></span><br><span class="line">        android:layout_marginBottom=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">        android:<span class="attribute">background</span>=<span class="string">"@android:color/white"</span></span><br><span class="line">        app:layout_behavior=<span class="string">"@string/appbar_scrolling_view_behavior"</span></span><br><span class="line">        &gt;</span><br><span class="line"></span><br><span class="line">        &lt;FrameLayout</span><br><span class="line">            android:id=<span class="string">"@+id/frame_image_toolbar_content"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            &gt;</span><br><span class="line">        &lt;/FrameLayout&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.NestedScrollView</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.AppBarLayout</span></span><br><span class="line">        android:id=<span class="string">"@+id/appbar"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"256dp"</span></span><br><span class="line">        android:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CollapsingToolbarLayout</span></span><br><span class="line">            android:id=<span class="string">"@+id/collapsing_toolbar_wrapper"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            app:contentScrim=<span class="string">"?attr/colorPrimary"</span></span><br><span class="line">            app:expandedTitleMarginEnd=<span class="string">"64dp"</span></span><br><span class="line">            app:expandedTitleMarginStart=<span class="string">"48dp"</span></span><br><span class="line">            app:layout_scrollFlags=<span class="string">"scroll|exitUntilCollapsed"</span></span><br><span class="line">            &gt;</span><br><span class="line"></span><br><span class="line">            &lt;ImageView</span><br><span class="line">                android:id=<span class="string">"@+id/collapsing_toolbar_image"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">                android:scaleType=<span class="string">"centerCrop"</span></span><br><span class="line">                app:layout_collapseMode=<span class="string">"parallax"</span></span><br><span class="line">                /&gt;</span><br><span class="line"></span><br><span class="line">            &lt;android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.Toolbar</span></span><br><span class="line">                android:id=<span class="string">"@+id/collapsing_toolbar"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">                app:layout_collapseMode=<span class="string">"pin"</span></span><br><span class="line">                app:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span></span><br><span class="line">                app:popupTheme=<span class="string">"@style/ThemeOverlay.AppCompat.Light"</span></span><br><span class="line">                /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CollapsingToolbarLayout</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.AppBarLayout</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CoordinatorLayout</span>&gt;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -1438,7 +1581,9 @@
 <li>NestedScrollView 中 <code>android:layout_gravity=&quot;fill_vertical&quot;</code> 和 <code>android:layout_marginBottom=&quot;?attr/actionBarSize&quot;</code> 属性不是必须的，但如果内容不够高，则内容会位于屏幕底部，而不是 AppBarLayout 下面。<code>layout_gravity=&quot;fill_vertical&quot;</code> 可以修复这个问题。</li>
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://segmentfault.com/a/1190000002888109" target="_blank" rel="external">Android Support Design 中 CoordinatorLayout 与 Behaviors 初探</a><br><a href="http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior" target="_blank" rel="external">http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior</a></p>
-</span>
+
+            
+          </span>
         
       
     </div>
@@ -1459,60 +1604,70 @@
     
       
 
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
 
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/06/29/2015-06-29-recyclerview-basic-usage/" itemprop="url">
-                RecyclerView 基本用法
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-06-29T20:55:00+08:00" content="2015-06-29">
-            2015-06-29
-          </time>
-        </span>
+    
+      <header class="post-header">
 
         
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
+        
+          <h1 class="post-title" itemprop="name headline">
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                <a href="/categories/android/" itemprop="url" rel="index">
-                  <span itemprop="name">android</span>
+            
+              
+                <a class="post-title-link" href="/2015/06/29/2015-06-29-recyclerview-basic-usage/" itemprop="url">
+                  RecyclerView 基本用法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-06-29T20:55:00+08:00" content="2015-06-29">
+              2015-06-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/29/2015-06-29-recyclerview-basic-usage/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/29/2015-06-29-recyclerview-basic-usage/" itemprop="commentsCount"></span>
                 </a>
               </span>
-
-              
-              
-
             
-          </span>
-        
+          
 
-        
           
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2015/06/29/2015-06-29-recyclerview-basic-usage/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/29/2015-06-29-recyclerview-basic-usage/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
+
+        </div>
+      </header>
+    
+
 
     <div class="post-body">
 
@@ -1521,7 +1676,9 @@
 
       
         
-          <span itemprop="articleBody"><h1 id="基本用法">基本用法</h1><ul>
+          <span itemprop="articleBody">
+            
+              <h1 id="基本用法">基本用法</h1><ul>
 <li><p>在 XML 中添加 <code>&lt;android.support.v7.widget.RecyclerView/&gt;</code></p>
 </li>
 <li><p>编写继承 <code>RecyclerView.Adapter&lt;RecyclerViewAdapter.ViewHolder&gt;</code> 的 <code>Adapter</code></p>
@@ -1559,7 +1716,9 @@
 <h1 id="RecyclerView">RecyclerView</h1><p>最后只要设置一下 <code>RecyclerView</code> 就能使用了。</p>
 <figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line">RecyclerView mRecyclerView = <span class="params">(RecyclerView)</span> findViewById<span class="params">(R.id.my_recyclerview)</span>;</span><br><span class="line">mRecyclerView.setLayoutManager<span class="params">(new LinearLayoutManager<span class="params">(this)</span>)</span>;</span><br><span class="line">mRecyclerView.setAdapter<span class="params">(adapter)</span>;</span><br></pre></td></tr></table></figure>
 <h1 id="参考资料">参考资料</h1><p><a href="http://wobushi.ren/recyclerview.html" target="_blank" rel="external">RecyclerView全攻略</a><br><a href="http://blog.csdn.net/lmj623565791/article/details/45059587" target="_blank" rel="external">Android RecyclerView 使用完全解析 体验艺术般的控件</a></p>
-</span>
+
+            
+          </span>
         
       
     </div>
@@ -1582,8 +1741,9 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
+
 
  </div>
 
@@ -1593,6 +1753,7 @@
       </div>
 
       
+        
   
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
@@ -1607,9 +1768,11 @@
 
       
 
-      <section class="site-overview">
+      
+
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/2386165" alt="Scarletsky" itemprop="image"/>
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="Scarletsky" itemprop="image"/>
           <p class="site-author-name" itemprop="name">Scarletsky</p>
         </div>
         <p class="site-description motion-element" itemprop="description"></p>
@@ -1658,15 +1821,16 @@
   </aside>
 
 
+      
     </main>
 
     <footer id="footer" class="footer">
       <div class="footer-inner"> <div class="copyright" >
   
-  &copy; &nbsp; 
+  &copy; 
   <span itemprop="copyrightYear">2015</span>
   <span class="with-love">
-    <i class="icon-next-heart"></i>
+    <i class="icon-next-heart fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Scarletsky</span>
 </div>
@@ -1695,63 +1859,69 @@
   
   
     
+
+  
     
-
   
 
-    <script type="text/javascript">
-      var disqus_shortname = 'scarletskygithubio';
-      var disqus_identifier = 'index.html';
-      var disqus_title = '';
-      var disqus_url = '';
-
-      function run_disqus_script(disqus_script){
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      }
-
-      run_disqus_script('count.js');
-      
-    </script>
-  
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"notes-iissnan"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
 
 
+    
   
   
   <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
 
 
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
   
 
   <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
   <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
 
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
 
 
 
 
-  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
   <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
 
   
 
   <script type="text/javascript">
     $(document).ready(function () {
-      if (CONFIG.sidebar === 'always') {
-        displaySidebar();
-      }
-      if (isMobile()) {
-        FastClick.attach(document.body);
-      }
+
+      isMobile() && FastClick.attach(document.body);
+
+      // Define Motion Sequence.
+      motionIntegrator
+        .add(motionMiddleWares.logo)
+        .add(motionMiddleWares.menu)
+        .add(motionMiddleWares.backToTop)
+        .add(motionMiddleWares.postList)
+        .add(motionMiddleWares.sidebar);
+
+      // Bootstrap Motion.
+      motionIntegrator.bootstrap();
     });
   </script>
 
+  
   
 
   
