@@ -156,6 +156,97 @@
           
           
             
+              <a class="post-title-link" href="/2015/03/15/2015-03-15-html5-canvas-tricks/" itemprop="url">
+                HTML5 Canvas 技巧
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-03-15T20:55:00+08:00" content="2015-03-15">
+            2015-03-15
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/javascript/" itemprop="url" rel="index">
+                  <span itemprop="name">javascript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/03/15/2015-03-15-html5-canvas-tricks/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/15/2015-03-15-html5-canvas-tricks/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="注意事项">注意事项</h1><p>用 <code>&lt;canvas&gt;</code> 标签进行绘图时必须要设置 <code>width</code> 和 <code>height</code> 属性，这里并不是指 CSS 属性中的 <code>width</code> 和 <code>height</code>，而是 <code>&lt;canvas&gt;</code> 标签本身的属性！</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 正确 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">width</span>=<span class="value">"500"</span> <span class="attribute">height</span>=<span class="value">"500"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 错误 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">style</span>=<span class="value">"width: 500px; height: 500px;"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 正确 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas"</span> <span class="attribute">style</span>=<span class="value">"width: 500px; height: 500px;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="mel"></span><br><span class="line">var <span class="keyword">canvas</span> = document.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">canvas</span>.setAttribute(<span class="string">'width'</span>, <span class="string">'500'</span>);</span><br><span class="line"><span class="keyword">canvas</span>.setAttribute(<span class="string">'height'</span>, <span class="string">'500'</span>);</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我以前一直以为 <code>&lt;canvas&gt;</code> 的 <code>width</code> 和 <code>height</code> 属性和 CSS 中的 <code>width</code> 和 <code>height</code> 是同一个东西，直到我看到 Stackoverflow 上面的<a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">这个帖子</a>…</p>
+<h1 id="读取图像文件，并绘制到_canvas_的中央">读取图像文件，并绘制到 canvas 的中央</h1><p>下面演示一下如何让用户选择一张图片，然后把图片绘制到 canvas 中央。</p>
+<p>HTML<br><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas"</span> <span class="attribute">width</span>=<span class="value">"500"</span> <span class="attribute">height</span>=<span class="value">"500"</span> <span class="attribute">style</span>=<span class="value">"border: 1px solid black;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">"input"</span> <span class="attribute">type</span>=<span class="value">"file"</span> <span class="attribute">style</span>=<span class="value">"display: none;"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>Javascript<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 为了方便起见，还是用 jQuery 吧</span></span><br><span class="line"><span class="keyword">var</span> $canvas = $(<span class="string">'#canvas'</span>);</span><br><span class="line"><span class="keyword">var</span> $input = $(<span class="string">'#input'</span>);</span><br><span class="line"><span class="keyword">var</span> canvas = $canvas[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> input = $input[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过点击 canvas 触发 input 的 click 事件，用来选择文件</span></span><br><span class="line">$canvas.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    input.click();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 选择文件后，会触发 change 事件</span></span><br><span class="line">$input.on(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 FileReader 来读取文件</span></span><br><span class="line">    <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">    <span class="keyword">var</span> file = e.target.files[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 绑定读取文件后的回调函数</span></span><br><span class="line">    reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> img = <span class="keyword">new</span> Image();</span><br><span class="line">        <span class="keyword">var</span> dataURL = e.target.result;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过计算可以得到</span></span><br><span class="line">        img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> hRatio = canvas.width  / img.width    ;</span><br><span class="line">            <span class="keyword">var</span> vRatio =  canvas.height / img.height  ;</span><br><span class="line">            <span class="keyword">var</span> ratio  = <span class="built_in">Math</span>.min ( hRatio, vRatio );</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> centerShiftX = ( canvas.width - img.width*ratio ) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">var</span> centerShiftY = ( canvas.height - img.height*ratio ) / <span class="number">2</span>;  </span><br><span class="line"></span><br><span class="line">            ctx.clearRect(<span class="number">0</span>, <span class="number">0</span>, canvas.width, canvas.height);</span><br><span class="line">            ctx.drawImage(img,</span><br><span class="line">                <span class="number">0</span>, <span class="number">0</span>, img.width, img.height, <span class="comment">// 原始图像</span></span><br><span class="line">                centerShiftX, centerShiftY, img.width*ratio, img.height*ratio); <span class="comment">// 目标图像</span></span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">      img.src = dataURL;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果用户在选择文件时点了取消，file 就会为 undefined</span></span><br><span class="line">    <span class="keyword">if</span> (file) &#123;</span><br><span class="line">        <span class="comment">// 读取文件，并返回 DataURL，可以通过 e.target.result 来得到这个 DataURL</span></span><br><span class="line">        reader.readAsDataURL(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考资料：">参考资料：</h1><p><a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties</a></p>
+<p><a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/01/27/2015-01-27-javascript-upload-slice-file-using-blob/" itemprop="url">
                 JavaScript 利用 Blob 进行分片上传
               </a>
@@ -1092,7 +1183,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
