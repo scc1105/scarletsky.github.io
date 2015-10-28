@@ -1,11 +1,10 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next   use-motion ">
 <head>
-  
-
-<meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
@@ -18,7 +17,12 @@
 
 
 
-  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
 
 
 
@@ -27,9 +31,12 @@
   
 
 
-<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
 
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
 
 
 
@@ -40,7 +47,14 @@
 
 
 
+
+
+
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
 
 
 <meta name="description" content="安全和认证要开启安全检查，需要在启动 mongod 时添加 —auth 选项admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。在开启安全检查之前，一定要有一个管理员帐号。数据库的用户存储在 admin 的 db.system.users 集合中。
@@ -58,14 +72,14 @@
 创建管理员&amp;gt; use admin&amp;gt; db.createUser(&amp;#123;user: &apos;root&apos;, pwd:">
 
 
+
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
     scheme: '',
-    sidebar: 'post'
+    sidebar: 'post',
+    motion: true
   };
 </script>
-
-
 
   <title> MongoDB 安全与认证 | Scarletsky </title>
 </head>
@@ -123,7 +137,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
             
             首页
           </a>
@@ -133,7 +147,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
             
             归档
           </a>
@@ -143,7 +157,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
             
             标签
           </a>
@@ -163,7 +177,8 @@
 
     <main id="main" class="main">
       <div class="main-inner">
-        <div id="content" class="content"> 
+        <div id="content" class="content">
+          
 
   <div id="posts" class="posts-expand">
     
@@ -216,11 +231,11 @@
           
             
               <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/10/25/2014-10-25-mongodb-security-and-auth/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/25/2014-10-25-mongodb-security-and-auth/" itemprop="commentsCount"></span>
-                </a>
-              </span>
+              &nbsp; | &nbsp;
+              <a href="/2014/10/25/2014-10-25-mongodb-security-and-auth/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/25/2014-10-25-mongodb-security-and-auth/" itemprop="commentsCount"></span>
+              </a>
+            </span>
             
           
 
@@ -288,41 +303,25 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2014/10/25/2014-10-25-mongodb-security-and-auth/"
-     data-title="MongoDB 安全与认证"
-     data-content=""
-     data-url="http://scarletsky.github.io/2014/10/25/2014-10-25-mongodb-security-and-auth/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
     </div>
   </div>
 
- </div>
+
+        </div>
 
         
 
+
         
-          <div class="comments" id="comments">
-            
-              <div class="ds-thread" data-thread-key="2014/10/25/2014-10-25-mongodb-security-and-auth/"
-                   data-title="MongoDB 安全与认证" data-url="http://scarletsky.github.io/2014/10/25/2014-10-25-mongodb-security-and-auth/">
-              </div>
-            
-          </div>
-        
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </div>
+    
+  </div>
+
+
       </div>
 
       
@@ -354,7 +353,7 @@
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" src="/images/default_avatar.jpg" alt="Scarletsky" itemprop="image"/>
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/2386165" alt="Scarletsky" itemprop="image"/>
           <p class="site-author-name" itemprop="name">Scarletsky</p>
         </div>
         <p class="site-description motion-element" itemprop="description"></p>
@@ -402,6 +401,8 @@
           <div class="post-toc-indicator-top post-toc-indicator"></div>
           <div class="post-toc">
             
+              
+            
             
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安全和认证"><span class="nav-number">1.</span> <span class="nav-text">安全和认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用户角色权限"><span class="nav-number">2.</span> <span class="nav-text">用户角色权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他安全考虑"><span class="nav-number">3.</span> <span class="nav-text">其他安全考虑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
@@ -418,7 +419,8 @@
     </main>
 
     <footer id="footer" class="footer">
-      <div class="footer-inner"> <div class="copyright" >
+      <div class="footer-inner">
+        <div class="copyright" >
   
   &copy; 
   <span itemprop="copyrightYear">2015</span>
@@ -440,7 +442,8 @@
 </div>
 
 
- </div>
+
+      </div>
     </footer>
 
     <div class="back-to-top"></div>
@@ -450,49 +453,51 @@
 
   
   
-  
-    
 
   
     
+    
+
   
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"notes-iissnan"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-    
-     
+    <script type="text/javascript">
+      var disqus_shortname = 'scarletskygithubio';
+      var disqus_identifier = '2014/10/25/2014-10-25-mongodb-security-and-auth/';
+      var disqus_title = 'MongoDB 安全与认证';
+      var disqus_url = 'http://scarletsky.github.io/2014/10/25/2014-10-25-mongodb-security-and-auth/';
 
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
 
-    
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
   
+
+
+  
+
   
   <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
 
 
   <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
-  
-
   <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
 
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
-
-
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
 
 
-  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
   <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
   
@@ -657,23 +662,7 @@
 
 
 
-  <script type="text/javascript">
-    $(document).ready(function () {
-
-      isMobile() && FastClick.attach(document.body);
-
-      // Define Motion Sequence.
-      motionIntegrator
-        .add(motionMiddleWares.logo)
-        .add(motionMiddleWares.menu)
-        .add(motionMiddleWares.backToTop)
-        .add(motionMiddleWares.postList)
-        .add(motionMiddleWares.sidebar);
-
-      // Bootstrap Motion.
-      motionIntegrator.bootstrap();
-    });
-  </script>
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
 
   
   
@@ -681,15 +670,5 @@
   
   
 
-  
-  <script type="text/javascript" src="/js/lazyload.js"></script>
-  <script type="text/javascript">
-    $(function () {
-      $("#posts").find('img').lazyload({
-        placeholder: "/images/loading.gif",
-        effect: "fadeIn"
-      });
-    });
-  </script>
 </body>
 </html>

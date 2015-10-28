@@ -1,11 +1,10 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next   use-motion ">
 <head>
-  
-
-<meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
@@ -18,7 +17,12 @@
 
 
 
-  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
 
 
 
@@ -27,9 +31,12 @@
   
 
 
-<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
 
-<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
 
 
 
@@ -40,7 +47,14 @@
 
 
 
+
+
+
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
 
 
 <meta name="description" content="基本介绍在 Node.js 中，读取文件的方式有两种，一种是用 fs.readFile，另外一种是利用 fs.createReadStream 来读取。
@@ -61,14 +75,14 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 而 fs.createReadStream 则是通过 Str">
 
 
+
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
     scheme: '',
-    sidebar: 'post'
+    sidebar: 'post',
+    motion: true
   };
 </script>
-
-
 
   <title> Node.js 中 Stream API 的使用 | Scarletsky </title>
 </head>
@@ -126,7 +140,7 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
             
             首页
           </a>
@@ -136,7 +150,7 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
             
             归档
           </a>
@@ -146,7 +160,7 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
             
             标签
           </a>
@@ -166,7 +180,8 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 
     <main id="main" class="main">
       <div class="main-inner">
-        <div id="content" class="content"> 
+        <div id="content" class="content">
+          
 
   <div id="posts" class="posts-expand">
     
@@ -219,11 +234,11 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
           
             
               <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/10/22/2015-10-22-node-stream-api-learning/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/22/2015-10-22-node-stream-api-learning/" itemprop="commentsCount"></span>
-                </a>
-              </span>
+              &nbsp; | &nbsp;
+              <a href="/2015/10/22/2015-10-22-node-stream-api-learning/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/22/2015-10-22-node-stream-api-learning/" itemprop="commentsCount"></span>
+              </a>
+            </span>
             
           
 
@@ -344,41 +359,25 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/10/22/2015-10-22-node-stream-api-learning/"
-     data-title="Node.js 中 Stream API 的使用"
-     data-content=""
-     data-url="http://scarletsky.github.io/2015/10/22/2015-10-22-node-stream-api-learning/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
     </div>
   </div>
 
- </div>
+
+        </div>
 
         
 
+
         
-          <div class="comments" id="comments">
-            
-              <div class="ds-thread" data-thread-key="2015/10/22/2015-10-22-node-stream-api-learning/"
-                   data-title="Node.js 中 Stream API 的使用" data-url="http://scarletsky.github.io/2015/10/22/2015-10-22-node-stream-api-learning/">
-              </div>
-            
-          </div>
-        
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </div>
+    
+  </div>
+
+
       </div>
 
       
@@ -410,7 +409,7 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" src="/images/default_avatar.jpg" alt="Scarletsky" itemprop="image"/>
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/2386165" alt="Scarletsky" itemprop="image"/>
           <p class="site-author-name" itemprop="name">Scarletsky</p>
         </div>
         <p class="site-description motion-element" itemprop="description"></p>
@@ -458,6 +457,8 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
           <div class="post-toc-indicator-top post-toc-indicator"></div>
           <div class="post-toc">
             
+              
+            
             
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本介绍"><span class="nav-number">1.</span> <span class="nav-text">基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#种类"><span class="nav-number">3.</span> <span class="nav-text">种类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件"><span class="nav-number">4.</span> <span class="nav-text">事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#可读数据流的事件"><span class="nav-number">4.1.</span> <span class="nav-text">可读数据流的事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可写数据流的事件"><span class="nav-number">4.2.</span> <span class="nav-text">可写数据流的事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#状态"><span class="nav-number">5.</span> <span class="nav-text">状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用法"><span class="nav-number">6.</span> <span class="nav-text">用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读写文件"><span class="nav-number">6.1.</span> <span class="nav-text">读写文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取_CSV_文件，并上传数据（我在生产环境中写过）"><span class="nav-number">6.2.</span> <span class="nav-text">读取 CSV 文件，并上传数据（我在生产环境中写过）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多用法"><span class="nav-number">6.3.</span> <span class="nav-text">更多用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见坑"><span class="nav-number">7.</span> <span class="nav-text">常见坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用类库"><span class="nav-number">8.</span> <span class="nav-text">常用类库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
@@ -474,7 +475,8 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
     </main>
 
     <footer id="footer" class="footer">
-      <div class="footer-inner"> <div class="copyright" >
+      <div class="footer-inner">
+        <div class="copyright" >
   
   &copy; 
   <span itemprop="copyrightYear">2015</span>
@@ -496,7 +498,8 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 </div>
 
 
- </div>
+
+      </div>
     </footer>
 
     <div class="back-to-top"></div>
@@ -506,49 +509,51 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 
   
   
-  
-    
 
   
     
+    
+
   
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"notes-iissnan"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-    
-     
+    <script type="text/javascript">
+      var disqus_shortname = 'scarletskygithubio';
+      var disqus_identifier = '2015/10/22/2015-10-22-node-stream-api-learning/';
+      var disqus_title = 'Node.js 中 Stream API 的使用';
+      var disqus_url = 'http://scarletsky.github.io/2015/10/22/2015-10-22-node-stream-api-learning/';
 
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
 
-    
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
   
+
+
+  
+
   
   <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
 
 
   <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
-  
-
   <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
 
-  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
-
-
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
 
 
-  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
   <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
   
@@ -713,23 +718,7 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 
 
 
-  <script type="text/javascript">
-    $(document).ready(function () {
-
-      isMobile() && FastClick.attach(document.body);
-
-      // Define Motion Sequence.
-      motionIntegrator
-        .add(motionMiddleWares.logo)
-        .add(motionMiddleWares.menu)
-        .add(motionMiddleWares.backToTop)
-        .add(motionMiddleWares.postList)
-        .add(motionMiddleWares.sidebar);
-
-      // Bootstrap Motion.
-      motionIntegrator.bootstrap();
-    });
-  </script>
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
 
   
   
@@ -737,15 +726,5 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
   
   
 
-  
-  <script type="text/javascript" src="/js/lazyload.js"></script>
-  <script type="text/javascript">
-    $(function () {
-      $("#posts").find('img').lazyload({
-        placeholder: "/images/loading.gif",
-        effect: "fadeIn"
-      });
-    });
-  </script>
 </body>
 </html>
