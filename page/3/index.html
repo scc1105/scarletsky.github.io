@@ -41,7 +41,7 @@
 
 
 
-  <meta name="keywords" content="angular.js," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -57,26 +57,15 @@
 
 
 
-<meta name="description" content="让我们来看一下 Angular 底下是怎么工作的。我们是怎样通过几行代码让神奇的数据绑定起作用的呢？我们先来理解一下 $digest 循环和 $apply 方法是怎样工作的。
-在通常的浏览器工作流程中，当一个事件发生（例如 click），浏览器就会执行该事件注册过的回调函数。
-当页面被加载，当一个 $http 请求被响应，当鼠标移动或者一个按钮被点击等等，都会触发事件。
-当事件被触发后，JavaS">
-<meta property="og:type" content="article">
-<meta property="og:title" content="The Digest Loop and $apply">
-<meta property="og:url" content="http://scarletsky.github.io/2014/10/16/2014-10-16-the-digest-loop-and-apply/index.html">
+<meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Scarletsky">
+<meta property="og:url" content="http://scarletsky.github.io/page/3/index.html">
 <meta property="og:site_name" content="Scarletsky">
-<meta property="og:description" content="让我们来看一下 Angular 底下是怎么工作的。我们是怎样通过几行代码让神奇的数据绑定起作用的呢？我们先来理解一下 $digest 循环和 $apply 方法是怎样工作的。
-在通常的浏览器工作流程中，当一个事件发生（例如 click），浏览器就会执行该事件注册过的回调函数。
-当页面被加载，当一个 $http 请求被响应，当鼠标移动或者一个按钮被点击等等，都会触发事件。
-当事件被触发后，JavaS">
-<meta property="og:image" content="https://www.ng-book.com/images/digest_loop/digest.png">
-<meta property="og:updated_time" content="2015-08-11T04:40:21.000Z">
+<meta property="og:description">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="The Digest Loop and $apply">
-<meta name="twitter:description" content="让我们来看一下 Angular 底下是怎么工作的。我们是怎样通过几行代码让神奇的数据绑定起作用的呢？我们先来理解一下 $digest 循环和 $apply 方法是怎样工作的。
-在通常的浏览器工作流程中，当一个事件发生（例如 click），浏览器就会执行该事件注册过的回调函数。
-当页面被加载，当一个 $http 请求被响应，当鼠标移动或者一个按钮被点击等等，都会触发事件。
-当事件被触发后，JavaS">
+<meta name="twitter:title" content="Scarletsky">
+<meta name="twitter:description">
 
 
 
@@ -88,7 +77,7 @@
   };
 </script>
 
-  <title> The Digest Loop and $apply | Scarletsky </title>
+  <title> Scarletsky </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -109,7 +98,9 @@
 
 
 
-  <div class="container one-column page-post-detail">
+  <div class="container one-column 
+   page-home 
+">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -186,9 +177,9 @@
       <div class="main-inner">
         <div id="content" class="content">
           
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
   
@@ -204,7 +195,9 @@
             
             
               
-                The Digest Loop and $apply
+                <a class="post-title-link" href="/2014/10/16/2014-10-16-the-digest-loop-and-apply/" itemprop="url">
+                  The Digest Loop and $apply
+                </a>
               
             
           </h1>
@@ -259,7 +252,10 @@
       
 
       
-        <span itemprop="articleBody"><p>让我们来看一下 <code>Angular</code> 底下是怎么工作的。我们是怎样通过几行代码让神奇的数据绑定起作用的呢？我们先来理解一下 <code>$digest</code> 循环和 <code>$apply</code> 方法是怎样工作的。</p>
+        
+          <span itemprop="articleBody">
+            
+              <p>让我们来看一下 <code>Angular</code> 底下是怎么工作的。我们是怎样通过几行代码让神奇的数据绑定起作用的呢？我们先来理解一下 <code>$digest</code> 循环和 <code>$apply</code> 方法是怎样工作的。</p>
 <p>在通常的浏览器工作流程中，当一个事件发生（例如 click），浏览器就会执行该事件注册过的回调函数。</p>
 <p>当页面被加载，当一个 <code>$http</code> 请求被响应，当鼠标移动或者一个按钮被点击等等，都会触发事件。</p>
 <p>当事件被触发后，JavaScript 就会创建一个 event object 并通过这个 event object 去执行任何监听该事件的函数。这个回调函数会运行在一个会返回给浏览器，可能更新 DOM 的 JavaScript 函数里面。</p>
@@ -285,46 +281,34 @@
 <p><img src="https://www.ng-book.com/images/digest_loop/digest.png" alt="Image Title"></p>
 <p>一旦 Angular 检查完整个 <code>$watch list</code>，如果任何值改变了，app 就会回到 <code>$watch</code> 循环中，直到它检测到没有东西改变。</p>
 <h1 id="参考资料">参考资料</h1><p><a href="https://www.ng-book.com/p/The-Digest-Loop-and-apply/" target="_blank" rel="external">The Digest Loop and $apply</a></p>
-</span>
+
+            
+          </span>
+        
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/angular-js/" rel="tag">#angular.js</a>
-          
-        </div>
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2014/10/16/2014-10-16-mongodb-operation-and-maintenance-basic/" rel="prev" title="MongoDB 运维基础">
-                MongoDB 运维基础 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
 
 
         </div>
@@ -333,14 +317,6 @@
 
 
         
-  <div class="comments" id="comments">
-    
-      <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-      </div>
-    
-  </div>
-
 
       </div>
 
@@ -361,17 +337,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/2386165" alt="Scarletsky" itemprop="image"/>
           <p class="site-author-name" itemprop="name">Scarletsky</p>
@@ -416,19 +383,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator"></div>
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#$watch_list"><span class="nav-number">1.</span> <span class="nav-text">$watch list</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dirty_Checking"><span class="nav-number">2.</span> <span class="nav-text">Dirty Checking</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-            
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
-        </section>
       
 
     </div>
@@ -482,9 +436,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'scarletskygithubio';
-      var disqus_identifier = '2014/10/16/2014-10-16-the-digest-loop-and-apply/';
-      var disqus_title = 'The Digest Loop and $apply';
-      var disqus_url = 'http://scarletsky.github.io/2014/10/16/2014-10-16-the-digest-loop-and-apply/';
+      var disqus_identifier = 'page/3/index.html';
+      var disqus_title = '';
+      var disqus_url = '';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
@@ -495,8 +449,6 @@
       }
 
       run_disqus_script('count.js');
-      
-        run_disqus_script('embed.js');
       
     </script>
   
@@ -520,167 +472,6 @@
   <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
-  
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
-
-
-<script type="text/javascript" id="sidebar.toc.highlight">
-  $(document).ready(function () {
-    var tocSelector = '.post-toc';
-    var $tocSelector = $(tocSelector);
-    var activeCurrentSelector = '.active-current';
-
-    $tocSelector
-      .on('activate.bs.scrollspy', function () {
-        var $currentActiveElement = $(tocSelector + ' .active').last();
-
-        removeCurrentActiveClass();
-        $currentActiveElement.addClass('active-current');
-
-        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
-      })
-      .on('clear.bs.scrollspy', function () {
-        removeCurrentActiveClass();
-      });
-
-    function removeCurrentActiveClass () {
-      $(tocSelector + ' ' + activeCurrentSelector)
-        .removeClass(activeCurrentSelector.substring(1));
-    }
-
-    function processTOC () {
-      getTOCMaxHeight();
-      toggleTOCOverflowIndicators();
-    }
-
-    function getTOCMaxHeight () {
-      var height = $('.sidebar').height() -
-                   $tocSelector.position().top -
-                   $('.post-toc-indicator-bottom').height();
-
-      $tocSelector.css('height', height);
-
-      return height;
-    }
-
-    function toggleTOCOverflowIndicators () {
-      tocOverflowIndicator(
-        '.post-toc-indicator-top',
-        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
-      );
-
-      tocOverflowIndicator(
-        '.post-toc-indicator-bottom',
-        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
-      )
-    }
-
-    $(document).on('sidebar.motion.complete', function () {
-      processTOC();
-    });
-
-    $('body').scrollspy({ target: tocSelector });
-    $(window).on('resize', function () {
-      if ( $('.sidebar').hasClass('sidebar-active') ) {
-        processTOC();
-      }
-    });
-
-    onScroll($tocSelector);
-
-    function onScroll (element) {
-      element.on('mousewheel DOMMouseScroll', function (event) {
-          var oe = event.originalEvent;
-          var delta = oe.wheelDelta || -oe.detail;
-
-          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-          event.preventDefault();
-
-          toggleTOCOverflowIndicators();
-      });
-    }
-
-    function tocOverflowIndicator (indicator, action) {
-      var $indicator = $(indicator);
-      var opacity = action === 'show' ? 0.4 : 0;
-      $indicator.velocity ?
-        $indicator.velocity('stop').velocity({
-          opacity: opacity
-        }, { duration: 100 }) :
-        $indicator.stop().animate({
-          opacity: opacity
-        }, 100);
-    }
-
-  });
-</script>
-
-<script type="text/javascript" id="sidebar.nav">
-  $(document).ready(function () {
-    var html = $('html');
-    var TAB_ANIMATE_DURATION = 200;
-    var hasVelocity = $.isFunction(html.velocity);
-
-    $('.sidebar-nav li').on('click', function () {
-      var item = $(this);
-      var activeTabClassName = 'sidebar-nav-active';
-      var activePanelClassName = 'sidebar-panel-active';
-      if (item.hasClass(activeTabClassName)) {
-        return;
-      }
-
-      var currentTarget = $('.' + activePanelClassName);
-      var target = $('.' + item.data('target'));
-
-      hasVelocity ?
-        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
-          target
-            .velocity('stop')
-            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
-            .addClass(activePanelClassName);
-        }) :
-        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
-          currentTarget.hide();
-          target
-            .stop()
-            .css({'opacity': 0, 'display': 'block'})
-            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
-              currentTarget.removeClass(activePanelClassName);
-              target.addClass(activePanelClassName);
-            });
-        });
-
-      item.siblings().removeClass(activeTabClassName);
-      item.addClass(activeTabClassName);
-    });
-
-    $('.post-toc a').on('click', function (e) {
-      e.preventDefault();
-      var targetSelector = escapeSelector(this.getAttribute('href'));
-      var offset = $(targetSelector).offset().top;
-      hasVelocity ?
-        html.velocity('stop').velocity('scroll', {
-          offset: offset  + 'px',
-          mobileHA: false
-        }) :
-        $('html, body').stop().animate({
-          scrollTop: offset
-        }, 500);
-    });
-
-    // Expand sidebar on post detail page by default, when post has a toc.
-    motionMiddleWares.sidebar = function () {
-      var $tocContent = $('.post-toc-content');
-      if (CONFIG.sidebar === 'post') {
-        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-          displaySidebar();
-        }
-      }
-    };
-  });
-</script>
-
-
 
   <script type="text/javascript" src="/js/bootstrap.js"></script>
 
