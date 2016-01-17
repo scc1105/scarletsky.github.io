@@ -1,248 +1,26 @@
-<!doctype html>
-<html class="theme-next   use-motion ">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
-
-
-
-
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[Scarletsky]]></title>
   
-    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://scarletsky.github.io/"/>
+  <updated>2016-01-17T11:10:02.000Z</updated>
+  <id>http://scarletsky.github.io/</id>
   
-
-
-
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
-
-
-
-
-
-
-<meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Scarletsky">
-<meta property="og:url" content="http://scarletsky.github.io/index.html">
-<meta property="og:site_name" content="Scarletsky">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Scarletsky">
-<meta name="twitter:description">
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var CONFIG = {
-    scheme: '',
-    sidebar: 'post',
-    motion: true
-  };
-</script>
-
-  <title> Scarletsky </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
-    </a>
-  </div>
-<![endif]-->
-  
-
-
-
-
-
-
-  <div class="container one-column 
-   page-home 
-">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Scarletsky</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-  <p class="site-subtitle"></p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu ">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-
-      
-      
-    </ul>
-  
-
-  
-</nav>
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div id="content" class="content">
-          
-  <section id="posts" class="posts-expand">
+  <author>
+    <name><![CDATA[Scarletsky]]></name>
     
-      
-
+  </author>
   
+  <generator uri="http://hexo.io/">Hexo</generator>
   
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2016/01/17/2016-01-17-localtunnel-usage/" itemprop="url">
-                  Localtunnel（Node.js 版） 使用教程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-01-17T17:07:06+08:00" content="2016-01-17">
-              2016-01-17
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2016/01/17/2016-01-17-localtunnel-usage/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/01/17/2016-01-17-localtunnel-usage/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="简介">简介</h2><p>Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。</p>
+  <entry>
+    <title><![CDATA[Localtunnel（Node.js 版） 使用教程]]></title>
+    <link href="http://scarletsky.github.io/2016/01/17/2016-01-17-localtunnel-usage/"/>
+    <id>http://scarletsky.github.io/2016/01/17/2016-01-17-localtunnel-usage/</id>
+    <published>2016-01-17T09:07:06.000Z</published>
+    <updated>2016-01-17T11:10:02.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="简介">简介</h2><p>Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。</p>
 <h2 id="客户端">客户端</h2><h3 id="安装">安装</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ npm install -g localtunnel</span><br></pre></td></tr></table></figure>
 <h3 id="使用">使用</h3><p>假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露到公网中</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ lt --port 8000&#10;your url is: https://uhhzexcifv.localtunnel.me</span><br></pre></td></tr></table></figure>
@@ -264,89 +42,23 @@
 <p>要解决这个问题，最简单的就是 <strong>不用</strong> <code>--host</code> 来指定子域名，而用 <code>--subdomain</code> 来指定。</p>
 <p>其实有好几个 pull request 都尝试去解决这个问题的，但不知道什么原因，作者一直没去合并。或者再过一段时间，这个问题就会解决，到时候， localtunnel 就会变得更加好用了。</p>
 <h2 id="参考资料">参考资料</h2><p><a href="https://github.com/localtunnel/localtunnel" target="_blank" rel="external">https://github.com/localtunnel/localtunnel</a><br><a href="https://github.com/localtunnel/server" target="_blank" rel="external">https://github.com/localtunnel/server</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="简介">简介</h2><p>Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。</p>
+<h2 id="客户端">客户端</h2><h3 id="安装">安装</h3><figure class="highlight"><table><tr><]]>
+    </summary>
     
-      
-
+      <category term="localtunnel" scheme="http://scarletsky.github.io/tags/localtunnel/"/>
+    
+  </entry>
   
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2015/12/02/2015-12-02-the-little-javascript-closures/" itemprop="url">
-                  The Little JavaScript Closures
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-12-02T20:55:54+08:00" content="2015-12-02">
-              2015-12-02
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/12/02/2015-12-02-the-little-javascript-closures/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/12/02/2015-12-02-the-little-javascript-closures/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="写在前面">写在前面</h2><p>本文尝试模仿 <a href="http://uternet.github.io/TLS/" target="_blank" rel="external">The Little Schema</a> 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。</p>
+  <entry>
+    <title><![CDATA[The Little JavaScript Closures]]></title>
+    <link href="http://scarletsky.github.io/2015/12/02/2015-12-02-the-little-javascript-closures/"/>
+    <id>http://scarletsky.github.io/2015/12/02/2015-12-02-the-little-javascript-closures/</id>
+    <published>2015-12-02T12:55:54.000Z</published>
+    <updated>2015-12-04T08:57:51.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="写在前面">写在前面</h2><p>本文尝试模仿 <a href="http://uternet.github.io/TLS/" target="_blank" rel="external">The Little Schema</a> 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。</p>
 <h2 id="简介">简介</h2><p>什么是闭包？</p>
 <blockquote>
 <p>闭包是一个函数</p>
@@ -608,89 +320,22 @@
 <hr>
 <h2 id="One_More_Thing">One More Thing</h2><p>[注1] 根据 <a href="https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/" target="_blank" rel="external">Understanding JavaScript Closures</a> 这篇文章，事实上所有函数在创建的时候都会形成闭包。但这种闭包并没什么趣味，也没什么特别的用途，所以我们更关注的是由内部函数形成的闭包。</p>
 <h2 id="参考资料">参考资料</h2><p><a href="http://uternet.github.io/TLS/" target="_blank" rel="external">http://uternet.github.io/TLS/</a><br><a href="http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting</a><br><a href="http://javascriptissexy.com/understand-javascript-closures-with-ease/" target="_blank" rel="external">http://javascriptissexy.com/understand-javascript-closures-with-ease/</a><br><a href="http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/" target="_blank" rel="external">http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/</a><br><a href="http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions" target="_blank" rel="external">http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions</a><br><a href="https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/" target="_blank" rel="external">https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/</a><br><a href="http://www.moye.me/2014/12/29/closure_higher-order-function/" target="_blank" rel="external">http://www.moye.me/2014/12/29/closure_higher-order-function/</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="写在前面">写在前面</h2><p>本文尝试模仿 <a href="http://uternet.github.io/TLS/" target="_blank" rel="external">The Little Schema</a> 的风格，介绍 JavaScr]]>
+    </summary>
     
-      
-
+      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
+  </entry>
   
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2015/11/17/2015-11-17-react-dnd-usage/" itemprop="url">
-                  React-DnD 的使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-11-17T10:59:31+08:00" content="2015-11-17">
-              2015-11-17
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/11/17/2015-11-17-react-dnd-usage/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/11/17/2015-11-17-react-dnd-usage/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="介绍">介绍</h2><p>React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数据，而组件会改变它们的外观和应用的状态来响应拖拽事件。</p>
+  <entry>
+    <title><![CDATA[React-DnD 的使用]]></title>
+    <link href="http://scarletsky.github.io/2015/11/17/2015-11-17-react-dnd-usage/"/>
+    <id>http://scarletsky.github.io/2015/11/17/2015-11-17-react-dnd-usage/</id>
+    <published>2015-11-17T02:59:31.000Z</published>
+    <updated>2015-11-17T05:48:41.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="介绍">介绍</h2><p>React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数据，而组件会改变它们的外观和应用的状态来响应拖拽事件。</p>
 <h2 id="基本用法">基本用法</h2><ol>
 <li>把应用的根组件包装在 <code>DragDropContext</code> 中</li>
 <li>把可以拖拽的组件包装在 <code>DragSource</code> 中<ol>
@@ -773,104 +418,22 @@
 <li><a href="https://github.com/gaearon/react-dnd/tree/master/examples" target="_blank" rel="external">代码</a></li>
 </ul>
 <h2 id="参考资料">参考资料</h2><p><a href="http://gaearon.github.io/react-dnd/" target="_blank" rel="external">官方文档</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="介绍">介绍</h2><p>React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数据，而组件会改变它们的外观和应用的]]>
+    </summary>
     
-      
-
+      <category term="react" scheme="http://scarletsky.github.io/tags/react/"/>
+    
+  </entry>
   
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2015/10/25/2015-10-25-birthday-summary/" itemprop="url">
-                  写在二十四岁生日
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-10-25T17:38:50+08:00" content="2015-10-25">
-              2015-10-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/life/" itemprop="url" rel="index">
-                    <span itemprop="name">life</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/25/2015-10-25-birthday-summary/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/25/2015-10-25-birthday-summary/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>又一年过去了，今年是第四年。<br>今年的生日是和女朋友一起，平平淡淡地过的。<br>回顾今年，我做的事情基本都是读书，学习，工作，陪妹子。</p>
+  <entry>
+    <title><![CDATA[写在二十四岁生日]]></title>
+    <link href="http://scarletsky.github.io/2015/10/25/2015-10-25-birthday-summary/"/>
+    <id>http://scarletsky.github.io/2015/10/25/2015-10-25-birthday-summary/</id>
+    <published>2015-10-25T09:38:50.000Z</published>
+    <updated>2015-10-26T09:42:10.000Z</updated>
+    <content type="html"><![CDATA[<p>又一年过去了，今年是第四年。<br>今年的生日是和女朋友一起，平平淡淡地过的。<br>回顾今年，我做的事情基本都是读书，学习，工作，陪妹子。</p>
 <p>相信大家都知道读书的好处，但很多人在工作之后都会抱怨没时间读书，包括我自己。但人们常说，时间是挤出来的。所以，我也试着去挤时间——把上下班坐地铁/公交的时间利用起来。于是乎，这一年下来看的书大概有：</p>
 <ul>
 <li>《三体系列》</li>
@@ -890,104 +453,25 @@
 <p>工作上面，今年年中的时候以前的老大找过我，问我要不要跟他一起干，说他能给我我现在拥有的一切给我，还把项目的一切控制权交给我，其实他们的项目前景还是挺好的，但跟我的技术栈不符合，加上我对他们所在行业不太感兴趣，所以只好推掉了~看以后还有没有机会合作~</p>
 <p>另外，我今年还试着做了一个开源的网站，<a href="http://aniquo.com" target="_blank" rel="external">http://aniquo.com</a> 大家有兴趣的可以去围观一下。没什么特别有趣的东西，只有我自己收录的一些经典的语录而已。本来是想把它做成一个语录搜索系统的，但精力有限，现阶段大概算是一个可用的版本。至于用户量，从头到尾都只有我一个，233. 继续做这个的原因，只剩下情怀了。如果有人有兴趣的话，联系我吧~至于源码，到 github 搜下就找到了，写的很烂的东西。</p>
 <p>今年的总结大概就这些了~</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>又一年过去了，今年是第四年。<br>今年的生日是和女朋友一起，平平淡淡地过的。<br>回顾今年，我做的事情基本都是读书，学习，工作，陪妹子。</p>
+<p>相信大家都知道读书的好处，但很多人在工作之后都会抱怨没时间读书，包括我自己。但人们常说，时间是挤出来的。所以，我也试着]]>
+    </summary>
     
-      
-
+      <category term="life" scheme="http://scarletsky.github.io/tags/life/"/>
+    
+      <category term="life" scheme="http://scarletsky.github.io/categories/life/"/>
+    
+  </entry>
   
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2015/10/22/2015-10-22-node-stream-api-learning/" itemprop="url">
-                  Node.js 中 Stream API 的使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-10-22T17:09:06+08:00" content="2015-10-22">
-              2015-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/22/2015-10-22-node-stream-api-learning/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/22/2015-10-22-node-stream-api-learning/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="基本介绍">基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
+  <entry>
+    <title><![CDATA[Node.js 中 Stream API 的使用]]></title>
+    <link href="http://scarletsky.github.io/2015/10/22/2015-10-22-node-stream-api-learning/"/>
+    <id>http://scarletsky.github.io/2015/10/22/2015-10-22-node-stream-api-learning/</id>
+    <published>2015-10-22T09:09:06.000Z</published>
+    <updated>2015-10-22T14:31:19.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="基本介绍">基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
 <p><code>fs.readFile</code> 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。</p>
 <p>而 <code>fs.createReadStream</code> 则是通过 Stream 来读取数据，它会把文件（数据）分割成小块，然后触发一些特定的事件，我们可以监听这些事件，编写特定的处理函数。这种方式相对上面来说，并不好上手，但它效率非常高。</p>
 <p>事实上， Stream 在 Node.js 中并非仅仅用在文件处理上，其他地方也可以看到它的身影，如 <code>process.stdin/stdout</code>, <code>http</code>, <code>tcp sockets</code>, <code>zlib</code>, <code>crypto</code> 等都有用到。</p>
@@ -1049,104 +533,25 @@
 <li><a href="https://github.com/sindresorhus/awesome-nodejs#streams" target="_blank" rel="external">awesome-nodejs#streams</a> 由于其他 stream 库我都没用过，所以有需求的就直接看这里吧</li>
 </ul>
 <h2 id="参考资料">参考资料</h2><p><a href="http://javascript.ruanyifeng.com/nodejs/stream.html" target="_blank" rel="external">阮一峰 - stream接口</a><br><a href="https://nodejs.org/api/stream.html" target="_blank" rel="external">nodejs.org Stream</a><br><a href="http://codewinds.com/blog/2013-08-20-nodejs-transform-streams.html" target="_blank" rel="external">Transforming data with Node.js transform streams</a><br><a href="http://stackoverflow.com/questions/18335499/nodejs-whats-the-difference-between-a-duplex-stream-and-a-transform-stream" target="_blank" rel="external">NodeJS: What’s the difference between a Duplex stream and a Transform stream?</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="基本介绍">基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
+<p><code>fs]]>
+    </summary>
     
-      
-
+      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+  </entry>
   
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="url">
-                  ExpressJS 源码学习 —— Router 篇
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-27T00:36:54+08:00" content="2015-08-27">
-              2015-08-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h1 id="概述">概述</h1><p>Router 分为三个部分，分别是：Layer, Route, Router。</p>
+  <entry>
+    <title><![CDATA[ExpressJS 源码学习 —— Router 篇]]></title>
+    <link href="http://scarletsky.github.io/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/"/>
+    <id>http://scarletsky.github.io/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/</id>
+    <published>2015-08-26T16:36:54.000Z</published>
+    <updated>2015-10-10T10:09:59.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="概述">概述</h1><p>Router 分为三个部分，分别是：Layer, Route, Router。</p>
 <h1 id="Layer">Layer</h1><h2 id="构造函数">构造函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Layer</span>(<span class="params">path, options, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Layer)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Layer(path, options, fn);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  debug(<span class="string">'new %s'</span>, path);</span><br><span class="line">  <span class="comment">// Route 中会传一个空的对象进来</span></span><br><span class="line">  <span class="keyword">var</span> opts = options || &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.handle = fn;</span><br><span class="line">  <span class="keyword">this</span>.name = fn.name || <span class="string">'&lt;anonymous&gt;'</span>;</span><br><span class="line">  <span class="keyword">this</span>.params = <span class="literal">undefined</span>;</span><br><span class="line">  <span class="comment">// 不会受到传进来的 path 的影响</span></span><br><span class="line">  <span class="comment">// 这个值会在 layer.match(path) 中修改</span></span><br><span class="line">  <span class="keyword">this</span>.path = <span class="literal">undefined</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 定义 this.keys</span></span><br><span class="line">  <span class="comment">// pathRegexp(path, keys, options) 会把路径转换成正则表达式，express 通过这个库来解析路由</span></span><br><span class="line">  <span class="comment">// 转换后，this.regexp 为正则表达式，如果 path 中带有 express 路由风格的参数(/:foo/:bar)，则 this.keys 会变成 [&#123;name: 'foo'...&#125;, &#123;name: 'bar'...&#125;]，如果没有匹配的话，则 this.keys 就会是空数组</span></span><br><span class="line">  <span class="comment">// 如果想知道更多这个库的信息，请到 https://github.com/pillarjs/path-to-regexp</span></span><br><span class="line">  <span class="keyword">this</span>.regexp = pathRegexp(path, <span class="keyword">this</span>.keys = [], opts);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// router.route 中会把 opts.end 设置成 true</span></span><br><span class="line">  <span class="keyword">if</span> (path === <span class="string">'/'</span> &amp;&amp; opts.end === <span class="literal">false</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.regexp.fast_slash = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Layer-prototype-handle_error_处理错误">Layer.prototype.handle_error 处理错误</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Handle the error for the layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Error&#125; error</span><br><span class="line"> * @param &#123;Request&#125; req</span><br><span class="line"> * @param &#123;Response&#125; res</span><br><span class="line"> * @param &#123;function&#125; next</span><br><span class="line"> * @api private</span><br><span class="line"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// route.dispatch 中调用这个方法</span></span><br><span class="line">Layer.prototype.handle_error = <span class="function"><span class="keyword">function</span> <span class="title">handle_error</span>(<span class="params">error, req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>.handle;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// fn 必须要有 4 个参数</span></span><br><span class="line">  <span class="keyword">if</span> (fn.length !== <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="comment">// not a standard error handler</span></span><br><span class="line">    <span class="keyword">return</span> next(error);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    fn(error, req, res, next);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="Layer-prototype-handle_request_处理请求">Layer.prototype.handle_request 处理请求</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Handle the request for the layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Request&#125; req</span><br><span class="line"> * @param &#123;Response&#125; res</span><br><span class="line"> * @param &#123;function&#125; next</span><br><span class="line"> * @api private</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// route.dispatch 中会调用这个方法</span></span><br><span class="line">Layer.prototype.handle_request = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>.handle;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// fn 如果参数多余三个，那么它就不是一个标准的处理器</span></span><br><span class="line">  <span class="keyword">if</span> (fn.length &gt; <span class="number">3</span>) &#123;</span><br><span class="line">    <span class="comment">// not a standard request handler</span></span><br><span class="line">    <span class="keyword">return</span> next();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    fn(req, res, next);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -1166,104 +571,23 @@
 <h2 id="Router-use_加载特定中间件">Router.use 加载特定中间件</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Use the given middleware function, with optional path, defaulting to "/".</span><br><span class="line"> *</span><br><span class="line"> * Use (like `.all`) will run for any http METHOD, but it will not add</span><br><span class="line"> * handlers for those methods so OPTIONS requests will not consider `.use`</span><br><span class="line"> * functions even if they could respond.</span><br><span class="line"> *</span><br><span class="line"> * The other difference is that _route_ path is stripped and not visible</span><br><span class="line"> * to the handler function. The main effect of this feature is that mounted</span><br><span class="line"> * handlers can operate without any code changes regardless of the "prefix"</span><br><span class="line"> * pathname.</span><br><span class="line"> *</span><br><span class="line"> * @public</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 中间件默认挂载在 / 下</span></span><br><span class="line">proto.use = <span class="function"><span class="keyword">function</span> <span class="title">use</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> offset = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> path = <span class="string">'/'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// default path to '/'</span></span><br><span class="line">  <span class="comment">// disambiguate router.use([fn])</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> arg = fn;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">Array</span>.isArray(arg) &amp;&amp; arg.length !== <span class="number">0</span>) &#123;</span><br><span class="line">      arg = arg[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// first arg is the path</span></span><br><span class="line">    <span class="comment">// 处理 router.use('/foo', bar)</span></span><br><span class="line">    <span class="comment">// 注意这里只是设置了偏移值</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> arg !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      offset = <span class="number">1</span>;</span><br><span class="line">      path = fn;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取 .use 中所有函数</span></span><br><span class="line">  <span class="comment">// 如 router.use('/test', fn1, fn2, fn3); </span></span><br><span class="line">  <span class="comment">// callbacks = [fn1, fn2, fn3]</span></span><br><span class="line">  <span class="keyword">var</span> callbacks = flatten(slice.call(<span class="built_in">arguments</span>, offset));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (callbacks.length === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Router.use() requires middleware functions'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 遍历 callbacks，每个 callback 都会成为一个 layer，并按顺序进入 Router.stack</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; callbacks.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> fn = callbacks[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Router.use() requires middleware function but got a '</span> + gettype(fn));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add the middleware</span></span><br><span class="line">    debug(<span class="string">'use %s %s'</span>, path, fn.name || <span class="string">'&lt;anonymous&gt;'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> layer = <span class="keyword">new</span> Layer(path, &#123;</span><br><span class="line">      sensitive: <span class="keyword">this</span>.caseSensitive,</span><br><span class="line">      strict: <span class="literal">false</span>,</span><br><span class="line">      end: <span class="literal">false</span></span><br><span class="line">    &#125;, fn);</span><br><span class="line"></span><br><span class="line">    layer.route = <span class="literal">undefined</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">this</span>.stack.push(layer);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="Router-route_为_router_创建新的路由">Router.route 为 router 创建新的路由</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Create a new Route for the given path.</span><br><span class="line"> *</span><br><span class="line"> * Each route contains a separate middleware stack and VERB handlers.</span><br><span class="line"> *</span><br><span class="line"> * See the Route api documentation for details on adding handlers</span><br><span class="line"> * and middleware to routes.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;String&#125; path</span><br><span class="line"> * @return &#123;Route&#125;</span><br><span class="line"> * @public</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">proto.route = <span class="function"><span class="keyword">function</span> <span class="title">route</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 创建新的路由</span></span><br><span class="line">  <span class="keyword">var</span> route = <span class="keyword">new</span> Route(path);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建新的 layer</span></span><br><span class="line">  <span class="keyword">var</span> layer = <span class="keyword">new</span> Layer(path, &#123;</span><br><span class="line">    sensitive: <span class="keyword">this</span>.caseSensitive,</span><br><span class="line">    strict: <span class="keyword">this</span>.strict,</span><br><span class="line">    end: <span class="literal">true</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 为这个特殊的 layer 提供分发 req，res 的能力</span></span><br><span class="line">  &#125;, route.dispatch.bind(route));</span><br><span class="line"></span><br><span class="line">  layer.route = route;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 其实 route 也是一个 layer</span></span><br><span class="line">  <span class="keyword">this</span>.stack.push(layer);</span><br><span class="line">  <span class="keyword">return</span> route;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="Router-VERB_为_router_提供_VERB_方法">Router.VERB 为 router 提供 VERB 方法</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// create Router#VERB functions</span></span><br><span class="line"><span class="comment">// 提供方便的语法来创建 route</span></span><br><span class="line">methods.concat(<span class="string">'all'</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">method</span>)</span>&#123;</span><br><span class="line">  proto[method] = <span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 只是简单的调用上面提到的 Router.route</span></span><br><span class="line">    <span class="keyword">var</span> route = <span class="keyword">this</span>.route(path)</span><br><span class="line">    route[method].apply(route, slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="helpers_只有_Router_中才用到的_helpers，属于私有_API">helpers 只有 Router 中才用到的 helpers，属于私有 API</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// append methods to a list of methods</span></span><br><span class="line"><span class="comment">// 为给定列表添加不重复的元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">appendMethods</span>(<span class="params">list, addition</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; addition.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> method = addition[i];</span><br><span class="line">    <span class="keyword">if</span> (list.indexOf(method) === -<span class="number">1</span>) &#123;</span><br><span class="line">      list.push(method);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get pathname of request</span></span><br><span class="line"><span class="comment">// 获取请求中的 pathname</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPathname</span>(<span class="params">req</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> parseUrl(req).pathname;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get type for error message</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gettype</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = <span class="keyword">typeof</span> obj;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type !== <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> type;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// inspect [[Class]] for objects</span></span><br><span class="line">  <span class="keyword">return</span> toString.call(obj)</span><br><span class="line">    .replace(objectRegExp, <span class="string">'$1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Match path to a layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Layer&#125; layer</span><br><span class="line"> * @param &#123;string&#125; path</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"><span class="comment">// 判断给定的 layer 是否与路径匹配</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">matchLayer</span>(<span class="params">layer, path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> layer.match(path);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> err;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// merge params with parent params</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeParams</span>(<span class="params">params, parent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> parent !== <span class="string">'object'</span> || !parent) &#123;</span><br><span class="line">    <span class="keyword">return</span> params;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// make copy of parent for base</span></span><br><span class="line">  <span class="keyword">var</span> obj = mixin(&#123;&#125;, parent);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// simple non-numeric merging</span></span><br><span class="line">  <span class="keyword">if</span> (!(<span class="number">0</span> <span class="keyword">in</span> params) || !(<span class="number">0</span> <span class="keyword">in</span> parent)) &#123;</span><br><span class="line">    <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// determine numeric gaps</span></span><br><span class="line">  <span class="keyword">while</span> (i <span class="keyword">in</span> params) &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (o <span class="keyword">in</span> parent) &#123;</span><br><span class="line">    o++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// offset numeric indices in params before merge</span></span><br><span class="line">  <span class="keyword">for</span> (i--; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    params[i + o] = params[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create holes for the merge when necessary</span></span><br><span class="line">    <span class="keyword">if</span> (i &lt; o) &#123;</span><br><span class="line">      <span class="keyword">delete</span> params[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// restore obj props after function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">restore</span>(<span class="params">fn, obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> props = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">var</span> vals = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">    props[i] = <span class="built_in">arguments</span>[i + <span class="number">2</span>];</span><br><span class="line">    vals[i] = obj[props[i]];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// restore vals</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">      obj[props[i]] = vals[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// send an OPTIONS response</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendOptionsResponse</span>(<span class="params">res, options, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body = options.join(<span class="string">','</span>);</span><br><span class="line">    res.set(<span class="string">'Allow'</span>, body);</span><br><span class="line">    res.send(body);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// wrap a function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrap</span>(<span class="params">old, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">proxy</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    args[<span class="number">0</span>] = old;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="built_in">arguments</span>.length; i &lt; len; i++) &#123;</span><br><span class="line">      args[i + <span class="number">1</span>] = <span class="built_in">arguments</span>[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fn.apply(<span class="keyword">this</span>, args);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
+<h2 id="helpers_只有_Router_中才用到的_helpers，属于私有_API">helpers 只有 Router 中才用到的 helpers，属于私有 API</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// append methods to a list of methods</span></span><br><span class="line"><span class="comment">// 为给定列表添加不重复的元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">appendMethods</span>(<span class="params">list, addition</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; addition.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> method = addition[i];</span><br><span class="line">    <span class="keyword">if</span> (list.indexOf(method) === -<span class="number">1</span>) &#123;</span><br><span class="line">      list.push(method);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get pathname of request</span></span><br><span class="line"><span class="comment">// 获取请求中的 pathname</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPathname</span>(<span class="params">req</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> parseUrl(req).pathname;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get type for error message</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gettype</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = <span class="keyword">typeof</span> obj;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type !== <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> type;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// inspect [[Class]] for objects</span></span><br><span class="line">  <span class="keyword">return</span> toString.call(obj)</span><br><span class="line">    .replace(objectRegExp, <span class="string">'$1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Match path to a layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Layer&#125; layer</span><br><span class="line"> * @param &#123;string&#125; path</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"><span class="comment">// 判断给定的 layer 是否与路径匹配</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">matchLayer</span>(<span class="params">layer, path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> layer.match(path);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> err;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// merge params with parent params</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeParams</span>(<span class="params">params, parent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> parent !== <span class="string">'object'</span> || !parent) &#123;</span><br><span class="line">    <span class="keyword">return</span> params;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// make copy of parent for base</span></span><br><span class="line">  <span class="keyword">var</span> obj = mixin(&#123;&#125;, parent);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// simple non-numeric merging</span></span><br><span class="line">  <span class="keyword">if</span> (!(<span class="number">0</span> <span class="keyword">in</span> params) || !(<span class="number">0</span> <span class="keyword">in</span> parent)) &#123;</span><br><span class="line">    <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// determine numeric gaps</span></span><br><span class="line">  <span class="keyword">while</span> (i <span class="keyword">in</span> params) &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (o <span class="keyword">in</span> parent) &#123;</span><br><span class="line">    o++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// offset numeric indices in params before merge</span></span><br><span class="line">  <span class="keyword">for</span> (i--; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    params[i + o] = params[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create holes for the merge when necessary</span></span><br><span class="line">    <span class="keyword">if</span> (i &lt; o) &#123;</span><br><span class="line">      <span class="keyword">delete</span> params[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// restore obj props after function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">restore</span>(<span class="params">fn, obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> props = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">var</span> vals = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">    props[i] = <span class="built_in">arguments</span>[i + <span class="number">2</span>];</span><br><span class="line">    vals[i] = obj[props[i]];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// restore vals</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">      obj[props[i]] = vals[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// send an OPTIONS response</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendOptionsResponse</span>(<span class="params">res, options, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body = options.join(<span class="string">','</span>);</span><br><span class="line">    res.set(<span class="string">'Allow'</span>, body);</span><br><span class="line">    res.send(body);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// wrap a function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrap</span>(<span class="params">old, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">proxy</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    args[<span class="number">0</span>] = old;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="built_in">arguments</span>.length; i &lt; len; i++) &#123;</span><br><span class="line">      args[i + <span class="number">1</span>] = <span class="built_in">arguments</span>[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fn.apply(<span class="keyword">this</span>, args);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="概述">概述</h1><p>Router 分为三个部分，分别是：Layer, Route, Router。</p>
+<h1 id="Layer">Layer</h1><h2 id="构造函数">构造函数</h2><figure class="highlight j]]>
+    </summary>
     
-      
-
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+  </entry>
   
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/" itemprop="url">
-                  ExpressJS 源码学习 —— Application 篇
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-20T10:11:10+08:00" content="2015-08-20">
-              2015-08-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/20/2015-08-20-expressjs-source-code-learning-Application/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h1 id="概述">概述</h1><p>ExpressJS 是 NodeJS 世界中使用最广泛的 Web 框架。它非常轻量，最大的特点是可以组合各种各样的中间件来处理请求，每个中间件都会对请求进行处理，最后再返回给客户端。目前最新版的 ExpressJS 是 4.13.3。</p>
+  <entry>
+    <title><![CDATA[ExpressJS 源码学习 —— Application 篇]]></title>
+    <link href="http://scarletsky.github.io/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/"/>
+    <id>http://scarletsky.github.io/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/</id>
+    <published>2015-08-20T02:11:10.000Z</published>
+    <updated>2015-08-20T04:32:53.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="概述">概述</h1><p>ExpressJS 是 NodeJS 世界中使用最广泛的 Web 框架。它非常轻量，最大的特点是可以组合各种各样的中间件来处理请求，每个中间件都会对请求进行处理，最后再返回给客户端。目前最新版的 ExpressJS 是 4.13.3。</p>
 <p>这系列的文章是出于学习目的而写的，主要是想了解目前主流的 JavaScript 框架是如何设计的，使用了哪些我还不知道的技术。希望写完这系列的文章之后，对我自己的水平会有一定的提高。这系列的文章会先分析各个模块的 API 的工作流程，最后再作总结。</p>
 <p>本文先从 application.js 文件开始分析。</p>
 <h1 id="私有_API">私有 API</h1><ul>
@@ -1432,104 +756,22 @@
 </li>
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="https://github.com/strongloop/express" target="_blank" rel="external">https://github.com/strongloop/express</a><br><a href="http://expressjs.com/api.html" target="_blank" rel="external">http://expressjs.com/api.html</a><br><a href="https://cnodejs.org/topic/545720506537f4d52c414d87" target="_blank" rel="external">https://cnodejs.org/topic/545720506537f4d52c414d87</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="概述">概述</h1><p>ExpressJS 是 NodeJS 世界中使用最广泛的 Web 框架。它非常轻量，最大的特点是可以组合各种各样的中间件来处理请求，每个中间件都会对请求进行处理，最后再返回给客户端。目前最新版的 ExpressJS 是 4.13.3。<]]>
+    </summary>
     
-      
-
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+  </entry>
   
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2015/08/19/2015-08-19-commonjs-learning/" itemprop="url">
-                  CommonJS 学习笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-19T10:11:10+08:00" content="2015-08-19">
-              2015-08-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/19/2015-08-19-commonjs-learning/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/19/2015-08-19-commonjs-learning/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h1 id="概述">概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
+  <entry>
+    <title><![CDATA[CommonJS 学习笔记]]></title>
+    <link href="http://scarletsky.github.io/2015/08/19/2015-08-19-commonjs-learning/"/>
+    <id>http://scarletsky.github.io/2015/08/19/2015-08-19-commonjs-learning/</id>
+    <published>2015-08-19T02:11:10.000Z</published>
+    <updated>2015-08-20T03:22:41.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="概述">概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
 <p>根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 <code>require</code> 来获取 <code>module.exports</code> 中暴露的内容，而其他部分都是私有的，其他模块不能访问。</p>
 <h1 id="module_对象">module 对象</h1><p>每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是每个模块都有的本地变量。</p>
 <ul>
@@ -1561,104 +803,23 @@
 </li>
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://javascript.ruanyifeng.com/nodejs/commonjs.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/nodejs/commonjs.html</a><br><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">http://www.infoq.com/cn/articles/nodejs-module-mechanism/</a><br><a href="http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js" target="_blank" rel="external">http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="概述">概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
+<p>根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 <code>require</code]]>
+    </summary>
     
-      
-
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+  </entry>
   
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2015/08/18/2015-08-18-Object-learning-in-javascript/" itemprop="url">
-                  JavaScript 中 Object.defineProperty 的使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-18T17:57:31+08:00" content="2015-08-18">
-              2015-08-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/18/2015-08-18-Object-learning-in-javascript/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/18/2015-08-18-Object-learning-in-javascript/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h1 id="Object-defineProperty">Object.defineProperty</h1><blockquote>
+  <entry>
+    <title><![CDATA[JavaScript 中 Object.defineProperty 的使用]]></title>
+    <link href="http://scarletsky.github.io/2015/08/18/2015-08-18-Object-learning-in-javascript/"/>
+    <id>http://scarletsky.github.io/2015/08/18/2015-08-18-Object-learning-in-javascript/</id>
+    <published>2015-08-18T09:57:31.000Z</published>
+    <updated>2015-08-20T03:23:22.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="Object-defineProperty">Object.defineProperty</h1><blockquote>
 <p>The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, and returns the object.</p>
 </blockquote>
 <p>直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。</p>
@@ -1700,104 +861,25 @@
 </li>
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html" target="_blank" rel="external">http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object</a><br><a href="https://github.com/strongloop/express/blob/master/lib/express.js" target="_blank" rel="external">https://github.com/strongloop/express/blob/master/lib/express.js</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="Object-defineProperty">Object.defineProperty</h1><blockquote>
+<p>The Object.defineProperty() method defines a new property directly ]]>
+    </summary>
     
-      
-
+      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+  </entry>
   
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                <a class="post-title-link" href="/2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/" itemprop="url">
-                  利用 Gulp 处理前端工作流程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-14T16:57:33+08:00" content="2015-08-14">
-              2015-08-14
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h1 id="基本用法">基本用法</h1><figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line"><span class="comment">// gulpfile.js</span></span><br><span class="line">gulp.task<span class="params">('foo', function<span class="params">()</span> &#123;</span><br><span class="line">    gulp.src<span class="params">(glob)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">&#125;)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// shell</span></span><br><span class="line">$ gulp foo</span><br></pre></td></tr></table></figure>
+  <entry>
+    <title><![CDATA[利用 Gulp 处理前端工作流程]]></title>
+    <link href="http://scarletsky.github.io/2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/"/>
+    <id>http://scarletsky.github.io/2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/</id>
+    <published>2015-08-14T08:57:33.000Z</published>
+    <updated>2015-08-15T06:52:15.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="基本用法">基本用法</h1><figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line"><span class="comment">// gulpfile.js</span></span><br><span class="line">gulp.task<span class="params">('foo', function<span class="params">()</span> &#123;</span><br><span class="line">    gulp.src<span class="params">(glob)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">&#125;)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// shell</span></span><br><span class="line">$ gulp foo</span><br></pre></td></tr></table></figure>
 <h1 id="基本_API">基本 API</h1><ul>
 <li><p><code>gulp.src(glob[, options])</code></p>
 <ul>
@@ -1892,212 +974,581 @@
 </ul>
 <h3 id="实例代码">实例代码</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">gulp.task(<span class="string">'clean:build'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    del.sync(<span class="string">'dist/'</span>, &#123;force: <span class="literal">true</span>&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'minify'</span>, [<span class="string">'clean:build'</span>, <span class="string">'less'</span>], <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp</span><br><span class="line">        .src(<span class="string">'app/views/**/*.html'</span>)</span><br><span class="line">        .pipe(htmlmin(&#123;collapseWhitespace: <span class="literal">true</span>&#125;))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist/views'</span>));</span><br><span class="line"></span><br><span class="line">    gulp</span><br><span class="line">        .src(<span class="string">'app/index.html'</span>)</span><br><span class="line">        .pipe(usemin(&#123;</span><br><span class="line">            js: [uglify(), rev()],</span><br><span class="line">            css: [minifyCss(), <span class="string">'concat'</span>, rev()]</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist/'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'copyfonts'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp</span><br><span class="line">        .src(<span class="string">'app/styles/fonts/*'</span>)</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist/fonts/'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'build'</span>, [<span class="string">'clean:build'</span>, <span class="string">'minify'</span>, <span class="string">'copyfonts'</span>]);</span><br></pre></td></tr></table></figure>
 <h1 id="参考资料">参考资料</h1><p><a href="https://github.com/gulpjs/gulp/blob/master/docs/API.md" target="_blank" rel="external">英文文档</a><br><a href="http://www.gulpjs.com.cn/docs/api/" target="_blank" rel="external">中文文档</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="基本用法">基本用法</h1><figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line"><span class="comment">// gulpf]]>
+    </summary>
     
-  </section>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
-
-
-        </div>
-
-        
-
-
-        
-
-      </div>
-
-      
-        
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/2386165" alt="Scarletsky" itemprop="image"/>
-          <p class="site-author-name" itemprop="name">Scarletsky</p>
-        </div>
-        <p class="site-description motion-element" itemprop="description"></p>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">23</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-
-          <div class="site-state-item site-state-categories">
-            
-              <span class="site-state-item-count">5</span>
-              <span class="site-state-item-name">分类</span>
-              
-          </div>
-
-          <div class="site-state-item site-state-tags">
-            <a href="/tags">
-              <span class="site-state-item-count">11</span>
-              <span class="site-state-item-name">标签</span>
-              </a>
-          </div>
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-      </section>
-
-      
-
-    </div>
-  </aside>
-
-
-      
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
-  <span class="with-love">
-    <i class="icon-next-heart fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Scarletsky</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
-  </a>
-</div>
-
-
-
-      </div>
-    </footer>
-
-    <div class="back-to-top"></div>
-  </div>
-
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
-
-  
-  
-
-  
+      <category term="gulp" scheme="http://scarletsky.github.io/tags/gulp/"/>
     
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
     
-
+  </entry>
   
-
-    <script type="text/javascript">
-      var disqus_shortname = 'scarletskygithubio';
-      var disqus_identifier = 'index.html';
-      var disqus_title = '';
-      var disqus_url = '';
-
-      function run_disqus_script(disqus_script){
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      }
-
-      run_disqus_script('count.js');
-      
-    </script>
+  <entry>
+    <title><![CDATA[Mongo Shell 使用过程中遇到的坑]]></title>
+    <link href="http://scarletsky.github.io/2015/08/11/2015-08-11-mongo-shell-trap/"/>
+    <id>http://scarletsky.github.io/2015/08/11/2015-08-11-mongo-shell-trap/</id>
+    <published>2015-08-11T04:17:47.000Z</published>
+    <updated>2015-08-11T04:40:32.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="编写_js_脚本">编写 js 脚本</h1><ul>
+<li><p>js 脚本中不能包含 <code>use</code> 关键字，需要用 <code>$ mongo mydb xxx.js</code> 这样的方式来指定数据库</p>
+</li>
+<li><p>不能用 <code>console.log</code>，需要用 <code>print</code> 代替</p>
+</li>
+<li><p>调用 <code>ObjectId()</code> 时需要确保传进去的值为字符串，否则会出现 <code>Error: invalid object id: length</code></p>
+</li>
+<li><p>使用 <code>$set</code> 来设置数字时需要注意，mongo shell 默认会把所有数字类型的值转换成浮点型，如果你需要插入整形，你需要用 <code>NumberInt()</code> 或 <code>NumberLong()</code> 来代替。</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">$ mongo mydb test.js</span><br><span class="line"></span><br><span class="line"><span class="comment">// test.js</span></span><br><span class="line"><span class="keyword">var</span> users = db.users.find(&#123;&#125;);</span><br><span class="line">users.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">u</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// not console.log(u._id) !!</span></span><br><span class="line">    <span class="comment">// use print instead of console!</span></span><br><span class="line">    print(u._id);</span><br><span class="line"></span><br><span class="line">    db.users.update(&#123;</span><br><span class="line">        _id: ObjectId(<span class="string">''</span> + u._id) <span class="comment">// make sure the params is string</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        $set: &#123;</span><br><span class="line">            money: NumberInt(<span class="number">100</span>) <span class="comment">// it will be int, not float.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p><a href="http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer" target="_blank" rel="external">http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer</a></p>
+<p><a href="http://docs.mongodb.org/manual/core/shell-types/" target="_blank" rel="external">http://docs.mongodb.org/manual/core/shell-types/</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="编写_js_脚本">编写 js 脚本</h1><ul>
+<li><p>js 脚本中不能包含 <code>use</code> 关键字，需要用 <code>$ mongo mydb xxx.js</code> 这样的方式来指定数据库</p>
+</li>
+<li><p]]>
+    </summary>
+    
+      <category term="mongodb" scheme="http://scarletsky.github.io/tags/mongodb/"/>
+    
+      <category term="mongodb" scheme="http://scarletsky.github.io/categories/mongodb/"/>
+    
+  </entry>
   
-
-
+  <entry>
+    <title><![CDATA[面试总结]]></title>
+    <link href="http://scarletsky.github.io/2015/08/07/2015-08-07-interview-summary/"/>
+    <id>http://scarletsky.github.io/2015/08/07/2015-08-07-interview-summary/</id>
+    <published>2015-08-07T13:32:41.000Z</published>
+    <updated>2015-08-11T04:40:36.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="面试前的准备">面试前的准备</h1><ul>
+<li><p>了解该公司的业务</p>
+<ul>
+<li>如果不了解的话，面试的时候 HR 们那些一系列专业的术语会让你头晕</li>
+</ul>
+</li>
+<li><p>想清楚你为什么不去投其他公司（如BAT）</p>
+</li>
+<li><p>想清楚该公司哪些方面吸引你，常见的有</p>
+<ul>
+<li><p>办公环境优雅</p>
+</li>
+<li><p>技术先进</p>
+</li>
+<li><p>工作自由</p>
+</li>
+<li><p>福利待遇好</p>
+</li>
+<li><p>业务熟悉</p>
+</li>
+</ul>
+</li>
+<li><p>想清楚你要问的问题，常见的有</p>
+<ul>
+<li><p>期望工资（互联网行业跳槽一般涨幅 10% ~ 20% —— By 某 HR）</p>
+</li>
+<li><p>试用期长度</p>
+</li>
+<li><p>工作情况（几点上下班，一周上几天，加班怎么办）</p>
+</li>
+<li><p>各种制度（打卡，加班，调休，激励，补助）</p>
+</li>
+<li><p>是否社保（五险一金）</p>
+</li>
+</ul>
+</li>
+<li><p>想清楚你目前公司产品（你参与过的项目）的状况</p>
+<ul>
+<li><p>优点</p>
+</li>
+<li><p>缺点</p>
+</li>
+<li><p>当初选择这种架构/技术的原因</p>
+</li>
+<li><p>是否出现过问题？怎么解决？</p>
+</li>
+</ul>
+</li>
+<li><p>想清楚你问什么要离开现在的公司</p>
+<ul>
+<li><p>自身发展（技术，业务）达到瓶颈？</p>
+</li>
+<li><p>待遇不佳</p>
+</li>
+<li><p>工作强度大</p>
+</li>
+<li><p>为了更好的待遇</p>
+</li>
+</ul>
+</li>
+<li><p>想清楚你想加入什么样的公司/团队（你理想中的公司/团队是怎样的）</p>
+<ul>
+<li><p>所处的行业</p>
+</li>
+<li><p>技术水平</p>
+</li>
+<li><p>为什么</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="面试中">面试中</h1><ul>
+<li><p>介绍自己</p>
+<ul>
+<li><p>谈谈自己的成长经历</p>
+</li>
+<li><p>谈谈自己对未来的期待</p>
+</li>
+</ul>
+</li>
+<li><p>聊面试前准备的问题，相互问答。注意几点：</p>
+<ul>
+<li><p>不要紧张</p>
+</li>
+<li><p>想清楚，组织清楚语言再回答</p>
+</li>
+</ul>
+</li>
+<li><p>你觉得刚才的 HR 怎么样？（多轮面试下会问到），注意：</p>
+<ul>
+<li><p>不要无中生有</p>
+</li>
+<li><p>回答尽量圆滑</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="面试后">面试后</h1><ul>
+<li><p>冷静下来，再次思考</p>
+<ul>
+<li><p>新公司和旧公司之间的差别</p>
+</li>
+<li><p>跳槽的目的</p>
+</li>
+<li><p>跳槽是否有必要</p>
+</li>
+</ul>
+</li>
+<li><p>衡量跳槽的成本</p>
+<ul>
+<li><p>搬家成本（如果需要搬家的话）</p>
+</li>
+<li><p>交通成本</p>
+</li>
+<li><p>适应新环境所需时间</p>
+</li>
+<li><p>是否会带来其他问题</p>
+</li>
+</ul>
+</li>
+<li><p>做出决定</p>
+</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="面试前的准备">面试前的准备</h1><ul>
+<li><p>了解该公司的业务</p>
+<ul>
+<li>如果不了解的话，面试的时候 HR 们那些一系列专业的术语会让你头晕</li>
+</ul>
+</li>
+<li><p>想清楚你为什么不去投其他公司（如BAT）<]]>
+    </summary>
+    
+      <category term="career" scheme="http://scarletsky.github.io/tags/career/"/>
+    
+      <category term="life" scheme="http://scarletsky.github.io/categories/life/"/>
+    
+  </entry>
   
-
+  <entry>
+    <title><![CDATA[Android Support Design Library 注意事项]]></title>
+    <link href="http://scarletsky.github.io/2015/07/05/2015-07-06-android-support-design-library-experience/"/>
+    <id>http://scarletsky.github.io/2015/07/05/2015-07-06-android-support-design-library-experience/</id>
+    <published>2015-07-05T15:45:02.000Z</published>
+    <updated>2015-07-07T14:15:30.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="CoordinatorLayout">CoordinatorLayout</h1><p>这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。</p>
+<p>常见的用法如下：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">&lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CoordinatorLayout</span></span><br><span class="line">    xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.NestedScrollView</span></span><br><span class="line">        xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">        xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_gravity=<span class="string">"fill_vertical"</span></span><br><span class="line">        android:layout_marginBottom=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">        android:<span class="attribute">background</span>=<span class="string">"@android:color/white"</span></span><br><span class="line">        app:layout_behavior=<span class="string">"@string/appbar_scrolling_view_behavior"</span></span><br><span class="line">        &gt;</span><br><span class="line"></span><br><span class="line">        &lt;FrameLayout</span><br><span class="line">            android:id=<span class="string">"@+id/frame_image_toolbar_content"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            &gt;</span><br><span class="line">        &lt;/FrameLayout&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.NestedScrollView</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.AppBarLayout</span></span><br><span class="line">        android:id=<span class="string">"@+id/appbar"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"256dp"</span></span><br><span class="line">        android:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CollapsingToolbarLayout</span></span><br><span class="line">            android:id=<span class="string">"@+id/collapsing_toolbar_wrapper"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            app:contentScrim=<span class="string">"?attr/colorPrimary"</span></span><br><span class="line">            app:expandedTitleMarginEnd=<span class="string">"64dp"</span></span><br><span class="line">            app:expandedTitleMarginStart=<span class="string">"48dp"</span></span><br><span class="line">            app:layout_scrollFlags=<span class="string">"scroll|exitUntilCollapsed"</span></span><br><span class="line">            &gt;</span><br><span class="line"></span><br><span class="line">            &lt;ImageView</span><br><span class="line">                android:id=<span class="string">"@+id/collapsing_toolbar_image"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">                android:scaleType=<span class="string">"centerCrop"</span></span><br><span class="line">                app:layout_collapseMode=<span class="string">"parallax"</span></span><br><span class="line">                /&gt;</span><br><span class="line"></span><br><span class="line">            &lt;android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.Toolbar</span></span><br><span class="line">                android:id=<span class="string">"@+id/collapsing_toolbar"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">                app:layout_collapseMode=<span class="string">"pin"</span></span><br><span class="line">                app:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span></span><br><span class="line">                app:popupTheme=<span class="string">"@style/ThemeOverlay.AppCompat.Light"</span></span><br><span class="line">                /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CollapsingToolbarLayout</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.AppBarLayout</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CoordinatorLayout</span>&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>CollapsingToolbarLayout.setTitle 代替 Toolbar.setTitle</li>
+<li>NestedScrollView 中必须添加 <code>app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;</code> 属性之后，里面的内容才会位于 AppBarLayout 之下</li>
+<li>NestedScrollView 中 <code>android:layout_gravity=&quot;fill_vertical&quot;</code> 和 <code>android:layout_marginBottom=&quot;?attr/actionBarSize&quot;</code> 属性不是必须的，但如果内容不够高，则内容会位于屏幕底部，而不是 AppBarLayout 下面。<code>layout_gravity=&quot;fill_vertical&quot;</code> 可以修复这个问题。</li>
+</ul>
+<h1 id="参考资料">参考资料</h1><p><a href="http://segmentfault.com/a/1190000002888109" target="_blank" rel="external">Android Support Design 中 CoordinatorLayout 与 Behaviors 初探</a><br><a href="http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior" target="_blank" rel="external">http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="CoordinatorLayout">CoordinatorLayout</h1><p>这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效]]>
+    </summary>
+    
+      <category term="android" scheme="http://scarletsky.github.io/categories/android/"/>
+    
+  </entry>
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
-
-
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
-
-
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
+  <entry>
+    <title><![CDATA[RecyclerView 基本用法]]></title>
+    <link href="http://scarletsky.github.io/2015/06/29/2015-06-29-recyclerview-basic-usage/"/>
+    <id>http://scarletsky.github.io/2015/06/29/2015-06-29-recyclerview-basic-usage/</id>
+    <published>2015-06-29T12:55:00.000Z</published>
+    <updated>2015-06-30T04:33:25.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="基本用法">基本用法</h1><ul>
+<li><p>在 XML 中添加 <code>&lt;android.support.v7.widget.RecyclerView/&gt;</code></p>
+</li>
+<li><p>编写继承 <code>RecyclerView.Adapter&lt;RecyclerViewAdapter.ViewHolder&gt;</code> 的 <code>Adapter</code></p>
+<ul>
+<li><code>Constructor</code></li>
+<li>编写继承 <code>RecyclerView.ViewHolder</code> 的 <code>ViewHolder</code></li>
+<li><code>onCreateViewHolder</code></li>
+<li><code>onBindViewHolder</code></li>
+<li><code>getItemCount</code></li>
+</ul>
+</li>
+<li><p>设置 <code>RecyclerView</code></p>
+<ul>
+<li><code>setLayoutManager</code></li>
+<li><code>setAdapter</code></li>
+<li><code>setItemAnimator</code>(可选)</li>
+<li><code>addItemDecoration</code>(可选)</li>
+</ul>
+</li>
+</ul>
+<h1 id="XML">XML</h1><p>新建 xml，添加 <code>RecyclerView</code>。</p>
+<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">&lt;RelativeLayout xmlns:<span class="variable">android=</span><span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:<span class="variable">fab=</span><span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    android:<span class="variable">orientation=</span><span class="string">"vertical"</span></span><br><span class="line">    android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="variable">layout_height=</span><span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.v7.widget.RecyclerView</span><br><span class="line">        android:<span class="variable">id=</span><span class="string">"@+id/my_recyclerview"</span></span><br><span class="line">        android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span></span><br><span class="line">        android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="ViewHolder">ViewHolder</h1><p>我们以前使用 <code>ListView</code> 的时候，会用以下的方式来提高 <code>ListView</code> 的性能:</p>
+<ul>
+<li>用 <code>convertView</code> 来减少 <code>LayoutInflater.inflate</code> 的使用</li>
+<li>用 <code>ViewHolder</code> 来减少 <code>findViewById</code> 的使用</li>
+</ul>
+<p><code>RecyclerView</code> 标准化了 <code>ViewHolder</code> 来缓存昂贵 <code>findViewById</code> 的结果。</p>
+<p>例子：</p>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> MyViewHolder <span class="keyword">extends</span> RecyclerView.ViewHolder &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> TextView mTitle;</span><br><span class="line">    <span class="keyword">public</span> TextView mSubtitle;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyViewHolder</span> <span class="params">(View v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(v);</span><br><span class="line">        mTitle = (TextView) v.findViewById(R.id.title);</span><br><span class="line">        mSubtitle = (TextView) v.findViewById(R.id.subtitle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>PS: 一般 <code>ViewHolder</code> 会编写在 <code>Adapter</code> 的内部。</p>
+<h1 id="Adapter">Adapter</h1><p>我们需要继承 <code>RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt;</code> 来编写我们自己的 <code>Adapter</code> 。编写我们自己的 <code>Adapter</code> 的时候，最重要的是要重写 <code>onCreateViewHolder</code> 和 <code>onBindViewHolder</code> 方法。</p>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">RecyclerView</span>.<span class="title">ViewHolder</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> RecyclerView.<span class="function">ViewHolder <span class="title">onCreateViewHolder</span> <span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</span><br><span class="line">        View v = LayoutInflater.from(ctx).inflate(R.layout.my_adapter, parent, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewHolder(v);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onBindViewHolder</span> <span class="params">(RecyclerView.ViewHolder h, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        MyViewHolder holder = (MyViewHolder) h;</span><br><span class="line">        holder.mTitle.setText(<span class="string">"This is my title"</span>);</span><br><span class="line">        holder.mSubtitle.setText(<span class="string">"This is my subtitle"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> data.<span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，在这个例子中我们的 <code>MyAdapter</code> 存放的是 <code>&lt;RecyclerView.ViewHolder&gt;</code>，所以在 <code>onCreateViewHolder</code> 中返回的也必须是 <code>&lt;RecyclerView.ViewHolder&gt;</code>，而在 <code>onBindViewHolder</code> 的回调中，我们拿到的也是 <code>RecyclerView.ViewHolder</code>，要把它强转成我们之前编写的 <code>MyViewHolder</code> 之后才能正常使用。</p>
+<h1 id="RecyclerView">RecyclerView</h1><p>最后只要设置一下 <code>RecyclerView</code> 就能使用了。</p>
+<figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line">RecyclerView mRecyclerView = <span class="params">(RecyclerView)</span> findViewById<span class="params">(R.id.my_recyclerview)</span>;</span><br><span class="line">mRecyclerView.setLayoutManager<span class="params">(new LinearLayoutManager<span class="params">(this)</span>)</span>;</span><br><span class="line">mRecyclerView.setAdapter<span class="params">(adapter)</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p><a href="http://wobushi.ren/recyclerview.html" target="_blank" rel="external">RecyclerView全攻略</a><br><a href="http://blog.csdn.net/lmj623565791/article/details/45059587" target="_blank" rel="external">Android RecyclerView 使用完全解析 体验艺术般的控件</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="基本用法">基本用法</h1><ul>
+<li><p>在 XML 中添加 <code>&lt;android.support.v7.widget.RecyclerView/&gt;</code></p>
+</li>
+<li><p>编写继承 <code>Recycl]]>
+    </summary>
+    
+      <category term="android" scheme="http://scarletsky.github.io/categories/android/"/>
+    
+  </entry>
   
-
-  <script type="text/javascript" src="/js/bootstrap.js"></script>
-
+  <entry>
+    <title><![CDATA[HTML5 Canvas 技巧]]></title>
+    <link href="http://scarletsky.github.io/2015/03/15/2015-03-15-html5-canvas-tricks/"/>
+    <id>http://scarletsky.github.io/2015/03/15/2015-03-15-html5-canvas-tricks/</id>
+    <published>2015-03-15T12:55:00.000Z</published>
+    <updated>2015-08-11T04:38:25.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="注意事项">注意事项</h1><p>用 <code>&lt;canvas&gt;</code> 标签进行绘图时必须要设置 <code>width</code> 和 <code>height</code> 属性，这里并不是指 CSS 属性中的 <code>width</code> 和 <code>height</code>，而是 <code>&lt;canvas&gt;</code> 标签本身的属性！</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 正确 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">width</span>=<span class="value">"500"</span> <span class="attribute">height</span>=<span class="value">"500"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 错误 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">style</span>=<span class="value">"width: 500px; height: 500px;"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 正确 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas"</span> <span class="attribute">style</span>=<span class="value">"width: 500px; height: 500px;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="mel"></span><br><span class="line">var <span class="keyword">canvas</span> = document.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">canvas</span>.setAttribute(<span class="string">'width'</span>, <span class="string">'500'</span>);</span><br><span class="line"><span class="keyword">canvas</span>.setAttribute(<span class="string">'height'</span>, <span class="string">'500'</span>);</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>我以前一直以为 <code>&lt;canvas&gt;</code> 的 <code>width</code> 和 <code>height</code> 属性和 CSS 中的 <code>width</code> 和 <code>height</code> 是同一个东西，直到我看到 Stackoverflow 上面的<a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">这个帖子</a>…</p>
+<h1 id="读取图像文件，并绘制到_canvas_的中央">读取图像文件，并绘制到 canvas 的中央</h1><p>下面演示一下如何让用户选择一张图片，然后把图片绘制到 canvas 中央。</p>
+<p>HTML<br><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas"</span> <span class="attribute">width</span>=<span class="value">"500"</span> <span class="attribute">height</span>=<span class="value">"500"</span> <span class="attribute">style</span>=<span class="value">"border: 1px solid black;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">input</span> <span class="attribute">id</span>=<span class="value">"input"</span> <span class="attribute">type</span>=<span class="value">"file"</span> <span class="attribute">style</span>=<span class="value">"display: none;"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>Javascript<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 为了方便起见，还是用 jQuery 吧</span></span><br><span class="line"><span class="keyword">var</span> $canvas = $(<span class="string">'#canvas'</span>);</span><br><span class="line"><span class="keyword">var</span> $input = $(<span class="string">'#input'</span>);</span><br><span class="line"><span class="keyword">var</span> canvas = $canvas[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> input = $input[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">var</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过点击 canvas 触发 input 的 click 事件，用来选择文件</span></span><br><span class="line">$canvas.on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">    input.click();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 选择文件后，会触发 change 事件</span></span><br><span class="line">$input.on(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过 FileReader 来读取文件</span></span><br><span class="line">    <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">    <span class="keyword">var</span> file = e.target.files[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 绑定读取文件后的回调函数</span></span><br><span class="line">    reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> img = <span class="keyword">new</span> Image();</span><br><span class="line">        <span class="keyword">var</span> dataURL = e.target.result;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过计算可以得到</span></span><br><span class="line">        img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> hRatio = canvas.width  / img.width    ;</span><br><span class="line">            <span class="keyword">var</span> vRatio =  canvas.height / img.height  ;</span><br><span class="line">            <span class="keyword">var</span> ratio  = <span class="built_in">Math</span>.min ( hRatio, vRatio );</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> centerShiftX = ( canvas.width - img.width*ratio ) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">var</span> centerShiftY = ( canvas.height - img.height*ratio ) / <span class="number">2</span>;  </span><br><span class="line"></span><br><span class="line">            ctx.clearRect(<span class="number">0</span>, <span class="number">0</span>, canvas.width, canvas.height);</span><br><span class="line">            ctx.drawImage(img,</span><br><span class="line">                <span class="number">0</span>, <span class="number">0</span>, img.width, img.height, <span class="comment">// 原始图像</span></span><br><span class="line">                centerShiftX, centerShiftY, img.width*ratio, img.height*ratio); <span class="comment">// 目标图像</span></span><br><span class="line">      &#125;;</span><br><span class="line"></span><br><span class="line">      img.src = dataURL;</span><br><span class="line"></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果用户在选择文件时点了取消，file 就会为 undefined</span></span><br><span class="line">    <span class="keyword">if</span> (file) &#123;</span><br><span class="line">        <span class="comment">// 读取文件，并返回 DataURL，可以通过 e.target.result 来得到这个 DataURL</span></span><br><span class="line">        reader.readAsDataURL(file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考资料：">参考资料：</h1><p><a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties</a></p>
+<p><a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="注意事项">注意事项</h1><p>用 <code>&lt;canvas&gt;</code> 标签进行绘图时必须要设置 <code>width</code> 和 <code>height</code> 属性，这里并不是指 CSS 属性中的 <code>width]]>
+    </summary>
+    
+      <category term="canvas html5" scheme="http://scarletsky.github.io/tags/canvas-html5/"/>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+  </entry>
   
+  <entry>
+    <title><![CDATA[JavaScript 利用 Blob 进行分片上传]]></title>
+    <link href="http://scarletsky.github.io/2015/01/27/2015-01-27-javascript-upload-slice-file-using-blob/"/>
+    <id>http://scarletsky.github.io/2015/01/27/2015-01-27-javascript-upload-slice-file-using-blob/</id>
+    <published>2015-01-27T09:28:00.000Z</published>
+    <updated>2015-06-26T07:57:37.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="基本流程">基本流程</h1><ul>
+<li><p>用户选择文件</p>
+</li>
+<li><p>判断文件大小</p>
+<ul>
+<li><p>如果文件小于限定文件大小，则直接上传</p>
+</li>
+<li><p>否则进行分片上传</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="分片流程">分片流程</h1><ul>
+<li><p>给定限定大小。</p>
+</li>
+<li><p>利用 <code>Blob</code> 对象的 <code>slice</code> 方法把文件分成 N 份。</p>
+</li>
+<li><p>遍历 N 次，利用 <code>FormData</code> 创建需要提交的数据，上传数据。</p>
+</li>
+</ul>
+<hr>
+<h1 id="服务端处理流程">服务端处理流程</h1><ul>
+<li><p>接收数据</p>
+</li>
+<li><p>判断数据总份数</p>
+<ul>
+<li><p>如果总份数为 1，则直接保存成文件，文件名不需要改变。保存完成后，直接返回信息给客户端。</p>
+</li>
+<li><p>否则保存成文件时，文件名后缀名需要带上 .partX 来表示该文件为第几部分。</p>
+</li>
+</ul>
+</li>
+<li><p>判断已上传的数据是否等于总份数。</p>
+<ul>
+<li><p>如果相等，则合并文件。</p>
+</li>
+<li><p>合并完成后，删除带有 .partX 的文件。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="代码实例">代码实例</h1><h2 id="客户端代码_-_html">客户端代码 - html</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"file"</span> <span class="attribute">id</span>=<span class="value">"upload"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="客户端代码_-_JavaScript">客户端代码 - JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">uploadFile</span> (<span class="params">url, blob, callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> perFileSize = <span class="number">2097152</span>; <span class="comment">// 2 * 1024 * 1024</span></span><br><span class="line">    <span class="keyword">var</span> blobParts = <span class="built_in">Math</span>.ceil(blob.size / perFileSize);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; blobParts; i++) &#123;</span><br><span class="line">        (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> fd = <span class="keyword">new</span> FormData();</span><br><span class="line">            <span class="keyword">var</span> _blob = blob.slice(i * perFileSize, (i + <span class="number">1</span>) * perFileSize);</span><br><span class="line"></span><br><span class="line">            fd.append(<span class="string">'_blob'</span>, _blob);</span><br><span class="line">            fd.append(<span class="string">'filename'</span>, blob.name);</span><br><span class="line">            fd.append(<span class="string">'index'</span>, i + <span class="number">1</span>);</span><br><span class="line">            fd.append(<span class="string">'total'</span>, blobParts);</span><br><span class="line"></span><br><span class="line">            $.ajax(&#123;</span><br><span class="line">                type: <span class="string">'POST'</span>,</span><br><span class="line">                url: url,</span><br><span class="line">                data: fd,</span><br><span class="line">                processData: <span class="literal">false</span>,</span><br><span class="line">                contentType: <span class="literal">false</span></span><br><span class="line">            &#125;).done(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'upload status: '</span>);</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'this is '</span> + (i + <span class="number">1</span>) + <span class="string">'part, total '</span> + blobParts + <span class="string">' part(s).'</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (res.statusCode === <span class="number">200</span>) &#123;</span><br><span class="line">                    callback(<span class="literal">null</span>, res);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).fail(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">                callback(err, <span class="literal">null</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$(<span class="string">'#upload'</span>).on(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> file = e.target.files[<span class="number">0</span>];</span><br><span class="line">    uploadFile(<span class="string">'/upload'</span>, file, <span class="function"><span class="keyword">function</span> (<span class="params">err, res</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123; <span class="keyword">return</span> <span class="built_in">console</span>.log(err); &#125;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'upload successfully!'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="服务端代码_-_NodeJS">服务端代码 - NodeJS</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Expressjs</span></span><br><span class="line"><span class="keyword">var</span> multipart = <span class="built_in">require</span>(<span class="string">'connect-multiparty'</span>);</span><br><span class="line"><span class="keyword">var</span> multipartMiddleware = multipart();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> uploadDir = <span class="string">'./upload/'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 合并文件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeFiles</span>(<span class="params">fileName, fileParts</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> buffers = [];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取各个部分的路径</span></span><br><span class="line">    <span class="keyword">var</span> filePartsPaths = fileParts.map(<span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> path.join(uploadDir, name);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取各个 part 的 buffer，并保存到 buffers 中</span></span><br><span class="line">    filePartsPaths.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> buffer = fs.readFileSync(path);</span><br><span class="line">        buffers.push(buffer);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 合并文件</span></span><br><span class="line">    <span class="keyword">var</span> concatBuffer = Buffer.concat(buffers);</span><br><span class="line">    <span class="keyword">var</span> concatFilePath = path.join(uploadDir, fileName);</span><br><span class="line">    fs.writeFileSync(concatFilePath, concatBuffer);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除各个 part 的文件</span></span><br><span class="line">    filePartsPaths.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">        fs.unlinkSync(path);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">upload</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (req.method === <span class="string">'POST'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> data = req.body;</span><br><span class="line">        <span class="keyword">var</span> _blobPath = req.files._blob.path;</span><br><span class="line">        <span class="keyword">var</span> fileName = data.filename;</span><br><span class="line">        <span class="keyword">var</span> filePath;</span><br><span class="line">        <span class="keyword">var</span> total = <span class="built_in">parseInt</span>(data.total);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理文件路径</span></span><br><span class="line">        <span class="keyword">if</span> (total === <span class="number">1</span>) &#123;</span><br><span class="line">            filePath = path.join(uploadDir, fileName);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> fileNameWithPart = fileName + <span class="string">'.part'</span> + data.index;</span><br><span class="line">            filePath = path.join(uploadDir, fileNameWithPart);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 读取上传的数据，保存到指定路径</span></span><br><span class="line">        <span class="keyword">var</span> tmpBuffer = fs.readFileSync(_blobPath);</span><br><span class="line">        fs.writeFileSync(filePath, tmpBuffer);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断是否上传完成</span></span><br><span class="line">        <span class="keyword">if</span> (total === <span class="number">1</span>) &#123;</span><br><span class="line">            res.send(<span class="number">200</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 获取指定目录下的所有文件名</span></span><br><span class="line">            <span class="keyword">var</span> filesInDir = fs.readdirSync(uploadDir);</span><br><span class="line">            <span class="comment">// 找出指定文件名中带有 .part 的文件</span></span><br><span class="line">            <span class="keyword">var</span> fileParts = filesInDir.filter(<span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> name.substring(<span class="number">0</span>, fileName.length + <span class="number">5</span>) === (fileName + <span class="string">'.part'</span>);</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 判断是否需要合并文件</span></span><br><span class="line">            <span class="keyword">if</span> (fileParts.length === total) &#123;</span><br><span class="line">                mergeFiles(fileName, fileParts);</span><br><span class="line">                res.send(<span class="number">200</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                res.send(<span class="number">204</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.send(<span class="number">405</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/upload'</span>, multipartMiddleware, upload);</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="基本流程">基本流程</h1><ul>
+<li><p>用户选择文件</p>
+</li>
+<li><p>判断文件大小</p>
+<ul>
+<li><p>如果文件小于限定文件大小，则直接上传</p>
+</li>
+<li><p>否则进行分片上传</p>
+</li>
+</u]]>
+    </summary>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+  </entry>
   
-
+  <entry>
+    <title><![CDATA[JavaScript 常用技巧]]></title>
+    <link href="http://scarletsky.github.io/2015/01/26/2015-01-26-javascript-tricks/"/>
+    <id>http://scarletsky.github.io/2015/01/26/2015-01-26-javascript-tricks/</id>
+    <published>2015-01-26T10:05:00.000Z</published>
+    <updated>2015-11-28T03:02:19.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="字符串操作">字符串操作</h1><h2 id="首字母大写">首字母大写</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="截取字符串最后几位">截取字符串最后几位</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.substring(str.length-X)</span><br></pre></td></tr></table></figure>
+<h2 id="进制转换">进制转换</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">d.toString(<span class="number">16</span>)    (十进制 -&gt; 十六进制)</span><br><span class="line"><span class="built_in">parseInt</span>(‘ff’, <span class="number">16</span>) (十六进制 -&gt; 十进制)</span><br></pre></td></tr></table></figure>
+<h2 id="移除左边多余的_0">移除左边多余的 0</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 用正则, '000.00' -&gt; 0.00</span></span><br><span class="line"><span class="comment">// 基于 http://stackoverflow.com/questions/594325/truncate-leading-zeros-of-a-string-in-javascript</span></span><br><span class="line">str.replace(<span class="regexp">/^[0]&#123;2&#125;/</span>, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 parseInt , '000123' -&gt; '123'</span></span><br><span class="line"><span class="comment">// http://stackoverflow.com/questions/6676488/remove-leading-zeros-from-a-number-in-javascript</span></span><br><span class="line"><span class="built_in">parseInt</span>(str, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="生成随机字符串">生成随机字符串</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Math</span>.random().toString(<span class="number">36</span>).substring(<span class="number">7</span>)</span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript</span></span><br></pre></td></tr></table></figure>
+<h2 id="is-start-with?">is-start-with?</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">string.lastIndexOf(str, <span class="number">0</span>) === <span class="number">0</span></span><br><span class="line">string.substring(<span class="number">0</span>, str.length) === str</span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string</span></span><br></pre></td></tr></table></figure>
+<h2 id="is-end-with?">is-end-with?</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/280634/endswith-in-javascript</span></span><br></pre></td></tr></table></figure>
+<h2 id="解析_Base64">解析 Base64</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> base64str = <span class="string">'this is base64 string'</span>;</span><br><span class="line">Buffer(base64str, <span class="string">'base64'</span>).toString();</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="数组操作">数组操作</h1><h2 id="获取最后数组中最后一个元素">获取最后数组中最后一个元素</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">arr.slice(-<span class="number">1</span>).pop() <span class="comment">// 简洁</span></span><br><span class="line">arr[arr.length - <span class="number">1</span>] <span class="comment">// 快速</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array</span></span><br></pre></td></tr></table></figure>
+<h2 id="过滤重复元素">过滤重复元素</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">arr.filter(<span class="function"><span class="keyword">function</span>(<span class="params">v, i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> arr.indexOf(v) === i;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="日期操作">日期操作</h1><h2 id="获取当前时间戳">获取当前时间戳</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">+<span class="keyword">new</span> <span class="built_in">Date</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript</span></span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="字符串操作">字符串操作</h1><h2 id="首字母大写">首字母大写</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.repla]]>
+    </summary>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+  </entry>
   
+  <entry>
+    <title><![CDATA[HTML5 Drag and Drop API]]></title>
+    <link href="http://scarletsky.github.io/2015/01/13/2015-01-13-html5-drag-and-drop-api/"/>
+    <id>http://scarletsky.github.io/2015/01/13/2015-01-13-html5-drag-and-drop-api/</id>
+    <published>2015-01-13T10:28:04.000Z</published>
+    <updated>2015-08-11T04:39:29.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="基本使用">基本使用</h1><h2 id="创建可拖放对象">创建可拖放对象</h2><p>在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 <code>draggable=&quot;true&quot;</code> 就能创建可拖放对象了。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect red"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect green"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect blue"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="如何拖动">如何拖动</h2><p>有了可拖放对象之后，我们还需要处理拖放事件才能实现拖放。拖放包含下面的事件：</p>
+<ul>
+<li><code>dragstart</code> 发生在元素开始被拖动时</li>
+<li><code>drag</code> 发生在元素被拖动(按着鼠标不放时)</li>
+<li><code>dragenter</code> 发生在有元素被拖进一个可放区域</li>
+<li><code>dragover</code> 发生在有元素被拖在可放区域的上面</li>
+<li><code>dragleave</code> 发生在有元素被拖离一个可放区域</li>
+<li><code>drop</code> 发生在元素被放到可放区域内</li>
+<li><code>dragend</code> 发生在拖放事件结束(松开鼠标或者按 esc 键)</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> draggableElements = <span class="built_in">document</span>.querySelectorAll(<span class="string">'[draggable]'</span>);</span><br><span class="line"><span class="comment">// draggableElements 是 NodeList 对象，并不是 Array，因此没有 forEach 方法。</span></span><br><span class="line">[].forEach.call(draggableElements, <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">    element.addEventListener(<span class="string">'drag'</span>, drag, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragstart'</span>, dragStart, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragenter'</span>, dragEnter, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragleave'</span>, dragLeave, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragover'</span>, dragOver, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'drop'</span>, drop, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragend'</span>, dragEnd, <span class="literal">false</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="DataTransfer_对象">DataTransfer 对象</h2><p>dataTransfer 属性正是这一神奇 DnD 功能的动力来源，控制着拖动操作中发送的数据。dataTransfer 可在 dragstart 事件中进行设置，并在 drop 事件中读取/处理。调用 e.dataTransfer.setData(format, data) 会将对象内容设置成 MIME 类型，并将数据有效负载作为参数传递。</p>
+<p>拖放不同对象需要设置不同的格式，下面是 MDN 推荐 drag types。</p>
+<ul>
+<li>文字：<code>text/plain</code></li>
+<li>超链接：<code>text/uri-list</code>, <code>text/plain</code></li>
+<li>HTML &amp; XML：<code>text/html</code>, <code>text/plain</code></li>
+</ul>
+<p>其他类型可以查看 MDN 上面的文档：<a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Recommended_Drag_Types" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Recommended_Drag_Types</a></p>
+<p><strong>PS：综合自己试验和网上的说法，其实设置 <code>setData</code> 的 format 设置成自定义值也是可以使用的。</strong></p>
+<h2 id="DataTransfer_属性">DataTransfer 属性</h2><p><code>effectAllowed</code> 和 <code>dropEffect</code> 是 DnD 里面常看见的属性，也是对新手来说最摸不着头脑的属性。</p>
+<p>这两个属性最主要的作用是，用于配置拖放过程中鼠标的指针的类型，以便提示用户操作。其次作用是用来控制 <code>drop</code> 事件是否触发。</p>
+<p>这两个属性的有效值可以查阅 <a href="https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer</a>。</p>
+<h2 id="注意"><strong>注意</strong></h2><ul>
+<li><p><code>effectAllowed</code> 只能在 <code>dragstart</code> 事件中设置</p>
+</li>
+<li><p><code>dropEffect</code> 只能在 <code>dragenter</code> 和 <code>dragover</code> 事件中设置</p>
+</li>
+<li><p><code>dropEffect</code> 和 <code>effectAllowed</code> 不相等时，不会触发 <code>drop</code> 事件</p>
+</li>
+</ul>
+<h2 id="使用心得">使用心得</h2><ul>
+<li><p>必须禁止 <code>dragover</code> 的默认事件才能正常触发 <code>drop</code> 事件</p>
+</li>
+<li><p><code>e.dataTransfer.getData</code> 只能在 <code>drop</code> 事件中正常访问，在其他事件中访问的话会返回空值。具体请看 <a href="http://stackoverflow.com/questions/11927309/html5-dnd-datatransfer-setdata-or-getdata-not-working-in-every-browser-except-fi" target="_blank" rel="external">http://stackoverflow.com/questions/11927309/html5-dnd-datatransfer-setdata-or-getdata-not-working-in-every-browser-except-fi</a></p>
+</li>
+<li><p>拖放操作的结果一般情况下会产生新的 <code>DOM</code> 结构，因此不能使用 <code>$(selector).on(event, fn)</code> 来进行事件绑定，因为这样对新产生的 DOM 不起作用。要进行动态绑定的话，可以使用下面的写法：<code>$(document).on(event, selector, fn)</code>。</p>
+</li>
+</ul>
+<h2 id="使用示例">使用示例</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="doctype">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">        <span class="attr_selector">[draggable]</span> <span class="rules">&#123;<span class="rule"><span class="attribute">cursor</span>:<span class="value"> move</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.dragging</span> <span class="rules">&#123;<span class="rule"><span class="attribute">opacity</span>:<span class="value"> <span class="number">0.2</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.over</span> <span class="rules">&#123;<span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> dashed black</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.rect</span> <span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">500px</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>; <span class="rule"><span class="attribute">margin</span>:<span class="value"> auto</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.red</span>, <span class="class">.green</span>, <span class="class">.blue</span>, <span class="class">.black</span> <span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.red</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#FF8C8C</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.green</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#8CFFB5</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.blue</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#8CA3FF</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.black</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#3A3C44</span></span></span>;&#125;</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"red"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"green"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"blue"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"black"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="keyword">var</span> dragSrc = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">var</span> draggableElements = <span class="built_in">document</span>.querySelectorAll(<span class="string">'[draggable]'</span>);</span><br><span class="line">        <span class="comment">// draggableElements 是 NodeList 对象，并不是 Array，所以没有 forEach 方法。</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">resetDragSrc</span> (<span class="params"></span>) </span>&#123;dragSrc = <span class="literal">null</span>;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragStart</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag start'</span>);</span><br><span class="line">            dragSrc = <span class="keyword">this</span>;</span><br><span class="line">            e.dataTransfer.effectAllowed = <span class="string">'move'</span>;</span><br><span class="line">            e.dataTransfer.setData(<span class="string">'text/html'</span>, <span class="keyword">this</span>.innerHTML);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">this</span>.classList.add(<span class="string">'dragging'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragOver</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag over'</span>);</span><br><span class="line">            <span class="keyword">if</span> (e.preventDefault) &#123;</span><br><span class="line">                e.preventDefault(); <span class="comment">// Necessary. Allows us to drop.</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            e.dataTransfer.dropEffect = <span class="string">'move'</span>;  <span class="comment">// See the section on the DataTransfer object.</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragEnter</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag enter'</span>);</span><br><span class="line">            <span class="keyword">this</span>.classList.add(<span class="string">'over'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragLeave</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag leave'</span>);</span><br><span class="line">            <span class="keyword">this</span>.classList.remove(<span class="string">'over'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drop</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drop!'</span>);</span><br><span class="line">            <span class="keyword">if</span> (e.stopPropagation) &#123;</span><br><span class="line">                e.stopPropagation(); <span class="comment">// stops the browser from redirecting.</span></span><br><span class="line">            &#125;</span><br><span class="line">            dragSrc.innerHTML = <span class="keyword">this</span>.innerHTML;</span><br><span class="line">            <span class="keyword">this</span>.innerHTML = e.dataTransfer.getData(<span class="string">'text/html'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragEnd</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag end!'</span>);</span><br><span class="line">            [].forEach.call(draggableElements, <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">                element.classList.remove(<span class="string">'over'</span>);</span><br><span class="line">                element.classList.remove(<span class="string">'dragging'</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">            resetDragSrc();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drag</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'dragging!'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        [].forEach.call(draggableElements, <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">            element.addEventListener(<span class="string">'dragstart'</span>, dragStart, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragenter'</span>, dragEnter, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragleave'</span>, dragLeave, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragover'</span>, dragOver, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'drag'</span>, drag, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'drop'</span>, drop, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragend'</span>, dragEnd, <span class="literal">false</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p><a href="http://www.html5rocks.com/zh/tutorials/dnd/basics/" target="_blank" rel="external">http://www.html5rocks.com/zh/tutorials/dnd/basics/</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/Events</a><br><a href="http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements" target="_blank" rel="external">http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements</a><br><a href="http://www.cnblogs.com/fsjohnhuang/p/3961066.html" target="_blank" rel="external">http://www.cnblogs.com/fsjohnhuang/p/3961066.html</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="基本使用">基本使用</h1><h2 id="创建可拖放对象">创建可拖放对象</h2><p>在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 <code>draggable=&quot;true&quot;</code> 就能创建可拖放对象了。]]>
+    </summary>
+    
+      <category term="drag-and-drop" scheme="http://scarletsky.github.io/tags/drag-and-drop/"/>
+    
+      <category term="HTML5" scheme="http://scarletsky.github.io/categories/HTML5/"/>
+    
+  </entry>
   
-
-</body>
-</html>
+  <entry>
+    <title><![CDATA[D3.js 学习笔记2]]></title>
+    <link href="http://scarletsky.github.io/2015/01/04/2015-01-04-d3js-learning-2/"/>
+    <id>http://scarletsky.github.io/2015/01/04/2015-01-04-d3js-learning-2/</id>
+    <published>2015-01-04T09:28:04.000Z</published>
+    <updated>2015-08-11T04:39:46.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="Layout">Layout</h1><p>和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加方便处理的数据。</p>
+<p>D3 中包含的全部的 Layout 列表如下：</p>
+<ul>
+<li>Bundle</li>
+<li>Chord</li>
+<li>Cluster</li>
+<li>Force</li>
+<li>Histogram</li>
+<li>Pack</li>
+<li>Partition</li>
+<li>Pie</li>
+<li>Stack</li>
+<li>Tree</li>
+<li>Treemap</li>
+</ul>
+<p>每一种 Layout 都会提供一些特别的方法帮助你处理数据。</p>
+<p>本文主要介绍一下 <code>Pie Layout</code> 和 <code>Stack Layout</code>。</p>
+<h2 id="Pie_Layout">Pie Layout</h2><p>Pie Layout 可以帮助你生成类似饼状图的数据结构。我们先看看它的使用方法。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [ <span class="number">5</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">45</span>, <span class="number">6</span>, <span class="number">25</span> ];</span><br><span class="line"><span class="keyword">var</span> pie = d3.layout.pie();</span><br></pre></td></tr></table></figure>
+<p>如下图所示，你会看到 Pie Layout 会帮助你生成新的数据。<br><img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-01.png" alt=""></p>
+<p>我们来看看如何用这些数据来生成饼状图。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [ <span class="number">5</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">45</span>, <span class="number">6</span>, <span class="number">25</span> ];</span><br><span class="line"><span class="keyword">var</span> pie = d3.layout.pie();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> w = <span class="number">300</span>;</span><br><span class="line"><span class="keyword">var</span> h = <span class="number">300</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> outerRadius = w / <span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> innerRadius = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> arc = d3.svg.arc()  <span class="comment">// 创建弧形。</span></span><br><span class="line">                .innerRadius(innerRadius)  <span class="comment">// 内径</span></span><br><span class="line">                .outerRadius(outerRadius); <span class="comment">// 外径</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Create SVG element</span></span><br><span class="line"><span class="keyword">var</span> svg = d3.select(<span class="string">"body"</span>)</span><br><span class="line">            .append(<span class="string">"svg"</span>)</span><br><span class="line">            .attr(<span class="string">"width"</span>, w)</span><br><span class="line">            .attr(<span class="string">"height"</span>, h);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arcs = svg.selectAll(<span class="string">"g.arc"</span>)</span><br><span class="line">        .data(pie(dataset))</span><br><span class="line">        .enter()</span><br><span class="line">        .append(<span class="string">"g"</span>)</span><br><span class="line">        .attr(<span class="string">"class"</span>, <span class="string">"arc"</span>)</span><br><span class="line">        .attr(<span class="string">"transform"</span>, <span class="string">"translate("</span> + outerRadius + <span class="string">", "</span> + outerRadius + <span class="string">")"</span>);  <span class="comment">// 圆心位置</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> color = d3.scale.category10();  <span class="comment">// 创建颜色</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Draw arc paths</span></span><br><span class="line">arcs.append(<span class="string">"path"</span>)</span><br><span class="line">    .attr(<span class="string">"fill"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d, i</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> color(i);  <span class="comment">// 会返回不同的颜色</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"d"</span>, arc);  <span class="comment">// d 是 path 的属性，用来定义路径的生成规则。</span></span><br><span class="line"></span><br><span class="line">arcs.append(<span class="string">"text"</span>)</span><br><span class="line">    .attr(<span class="string">"transform"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"translate("</span> + arc.centroid(d) + <span class="string">")"</span>;  <span class="comment">// arc.centroid 是弧形中一个重要方法，会返回该弧形的中心位置。</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"text-anchor"</span>, <span class="string">"middle"</span>)</span><br><span class="line">    .text(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> d.value;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>你可以在下面这个连接里看到效果：<br><a href="http://examples.oreilly.com/0636920026938/chapter_11/01_pie.html" target="_blank" rel="external">http://examples.oreilly.com/0636920026938/chapter_11/01_pie.html</a></p>
+<h2 id="Stack_Layout">Stack Layout</h2><p>Stack Layout 可以帮你处理如下图所示的类似“叠加柱形图”那样的数据结构。</p>
+<p><img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-02.png" alt=""></p>
+<p>我们先来看看一组数据：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> _dataset = [</span><br><span class="line">        &#123; apples: <span class="number">5</span>, oranges: <span class="number">10</span>, grapes: <span class="number">22</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">4</span>, oranges: <span class="number">12</span>, grapes: <span class="number">28</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">2</span>, oranges: <span class="number">19</span>, grapes: <span class="number">32</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">7</span>, oranges: <span class="number">23</span>, grapes: <span class="number">35</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">23</span>, oranges: <span class="number">17</span>, grapes: <span class="number">43</span> &#125;</span><br><span class="line">];  <span class="comment">// 转换前的数据</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> dataset = [</span><br><span class="line">        [</span><br><span class="line">                &#123; x: <span class="number">0</span>, y: <span class="number">5</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">1</span>, y: <span class="number">4</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">2</span>, y: <span class="number">2</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">3</span>, y: <span class="number">7</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">4</span>, y: <span class="number">23</span> &#125;</span><br><span class="line">        ],</span><br><span class="line">        [</span><br><span class="line">                &#123; x: <span class="number">0</span>, y: <span class="number">10</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">1</span>, y: <span class="number">12</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">2</span>, y: <span class="number">19</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">3</span>, y: <span class="number">23</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">4</span>, y: <span class="number">17</span> &#125;</span><br><span class="line">        ],</span><br><span class="line">        [</span><br><span class="line">                &#123; x: <span class="number">0</span>, y: <span class="number">22</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">1</span>, y: <span class="number">28</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">2</span>, y: <span class="number">32</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">3</span>, y: <span class="number">35</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">4</span>, y: <span class="number">43</span> &#125;</span><br><span class="line">        ]</span><br><span class="line">];  <span class="comment">// 转换后的数据</span></span><br></pre></td></tr></table></figure>
+<p>要使用 Stack Layout，首先要把我们的数据处理一遍，把相同类型的数据归为一组，例如上面代码所示那样，第一组数据是 apples，第二组数据是 oranges， 第三组数据室 grapes。注意，分组后的数据必须同时包含 x 和 y，其中 x 只是代表他们的 id，y 才是真正的数据。</p>
+<p>处理好数据之后我们可以试试调用 stack 方法。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> stack = d3.layout.stack();</span><br><span class="line">stack(dataset);</span><br></pre></td></tr></table></figure>
+<p>之后我们可以看到下面的结果：<br><img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-03.png" alt=""></p>
+<p>看到规律了吗？用 stack 方法处理过的数据，都会多了一个 <code>y0</code> 的键。而这个键的值刚好就是前面数据的 y 值之和。利用这个 <code>y0</code>，我们就可以很方便的创建“叠加柱形图”了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Width and height</span></span><br><span class="line"><span class="keyword">var</span> w = <span class="number">500</span>;</span><br><span class="line"><span class="keyword">var</span> h = <span class="number">300</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Original data</span></span><br><span class="line"><span class="keyword">var</span> dataset = [</span><br><span class="line">    [</span><br><span class="line">        &#123; x: <span class="number">0</span>, y: <span class="number">5</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">1</span>, y: <span class="number">4</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">2</span>, y: <span class="number">2</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">3</span>, y: <span class="number">7</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">4</span>, y: <span class="number">23</span> &#125;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &#123; x: <span class="number">0</span>, y: <span class="number">10</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">1</span>, y: <span class="number">12</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">2</span>, y: <span class="number">19</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">3</span>, y: <span class="number">23</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">4</span>, y: <span class="number">17</span> &#125;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &#123; x: <span class="number">0</span>, y: <span class="number">22</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">1</span>, y: <span class="number">28</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">2</span>, y: <span class="number">32</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">3</span>, y: <span class="number">35</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">4</span>, y: <span class="number">43</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">//Set up stack method</span></span><br><span class="line"><span class="keyword">var</span> stack = d3.layout.stack();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Data, stacked</span></span><br><span class="line">stack(dataset);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Set up scales</span></span><br><span class="line"><span class="keyword">var</span> xScale = d3.scale.ordinal()</span><br><span class="line">    .domain(d3.range(dataset[<span class="number">0</span>].length))</span><br><span class="line">    .rangeRoundBands([<span class="number">0</span>, w], <span class="number">0.05</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">    .domain([<span class="number">0</span>,</span><br><span class="line">        d3.max(dataset, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> d3.max(d, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> d.y0 + d.y;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)</span><br><span class="line">    ])</span><br><span class="line">    .range([<span class="number">0</span>, h]);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Easy colors accessible via a 10-step ordinal scale</span></span><br><span class="line"><span class="keyword">var</span> colors = d3.scale.category10();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Create SVG element</span></span><br><span class="line"><span class="keyword">var</span> svg = d3.select(<span class="string">"body"</span>)</span><br><span class="line">            .append(<span class="string">"svg"</span>)</span><br><span class="line">            .attr(<span class="string">"width"</span>, w)</span><br><span class="line">            .attr(<span class="string">"height"</span>, h);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add a group for each row of data</span></span><br><span class="line"><span class="keyword">var</span> groups = svg.selectAll(<span class="string">"g"</span>)</span><br><span class="line">    .data(dataset)</span><br><span class="line">    .enter()</span><br><span class="line">    .append(<span class="string">"g"</span>)</span><br><span class="line">    .style(<span class="string">"fill"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d, i</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> colors(i);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add a rect for each data value</span></span><br><span class="line"><span class="keyword">var</span> rects = groups.selectAll(<span class="string">"rect"</span>)</span><br><span class="line">    .data(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d; &#125;)</span><br><span class="line">    .enter()</span><br><span class="line">    .append(<span class="string">"rect"</span>)</span><br><span class="line">    .attr(<span class="string">"x"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d, i</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> xScale(i);</span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"y"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> yScale(d.y0);</span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"height"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> yScale(d.y);</span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"width"</span>, xScale.rangeBand());</span><br></pre></td></tr></table></figure>
+<p>结果可以看看下面连接：<br><a href="http://examples.oreilly.com/0636920026938/chapter_11/03_stacked_bar.html" target="_blank" rel="external">http://examples.oreilly.com/0636920026938/chapter_11/03_stacked_bar.html</a></p>
+<p>什么？你不想要从上往下的柱形图？你想要从下往上的柱形图？</p>
+<p>其实要生成从下往上的柱形图很简单，只需要把 yScale 的 range 反过来，然后画图的时候调整一下 y 和 height 属性就好了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">    ...</span><br><span class="line">    .range([h, <span class="number">0</span>]); <span class="comment">// 原来是 [0, h]</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="keyword">var</span> rects = groups.selectAll(<span class="string">"rect"</span>)</span><br><span class="line">    ...</span><br><span class="line">    .attr(<span class="string">"y"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> yScale(d.y0) - (h - yScale(d.y)); <span class="comment">// 原来是 return yScale(d.y0)</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"height"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> h - yScale(d.y);  <span class="comment">// 原来是 return yScale(d.y)</span></span><br><span class="line">    &#125;)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><p><a href="http://chimera.labs.oreilly.com/books/1230000000345/ch11.html" target="_blank" rel="external">http://chimera.labs.oreilly.com/books/1230000000345/ch11.html</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="Layout">Layout</h1><p>和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加方便处理的数据。</p>
+<p>D3 中包含的全部]]>
+    </summary>
+    
+      <category term="d3.js" scheme="http://scarletsky.github.io/tags/d3-js/"/>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[D3.js 学习笔记1]]></title>
+    <link href="http://scarletsky.github.io/2014/12/29/2014-12-29-d3js-learning-1/"/>
+    <id>http://scarletsky.github.io/2014/12/29/2014-12-29-d3js-learning-1/</id>
+    <published>2014-12-29T08:28:04.000Z</published>
+    <updated>2015-08-11T04:40:04.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="基础操作">基础操作</h1><ul>
+<li><code>d3.select</code>, <code>d3.selectAll</code> 选择元素</li>
+<li><code>selection.append</code> 在选择集合中添加元素</li>
+<li><code>selection.data</code> 为选择元素进行数据绑定，常与 <code>enter</code> 和 <code>exit</code> 一起使用</li>
+<li><code>selection.data(data).enter</code> 返回缺失元素集合</li>
+<li><code>selection.data(data).exit</code> 返回多余元素集合</li>
+<li><code>selection.text</code> 设置或获取选定元素的标签体文本内容</li>
+<li><code>selection.attr</code> 设置或获取指定属性</li>
+<li><code>selection.transition</code> 启用动画效果，只要设置前和设置后的属性发生变化就会发生动画，一般和 <code>duration</code>，<code>delay</code> 一起用。</li>
+</ul>
+<p>更多操作可以参考本文末尾的官方 API 文档。</p>
+<h1 id="尺度(Scale)">尺度(Scale)</h1><p>尺度(Scale)在 D3 中是一个很重要的概念。</p>
+<p>根据官方的定义，尺度是将输入域映射为输出范围的函数。尺度可以让用户定义参数的函数。一旦生成一个尺度，你可以调用此尺度函数，传入一个数据值，然后它会返回一个缩放后的值。你可以任意定义和使用尺度。</p>
+<p>D3 中有两种尺度，分别是 <strong>定量变换(Quantitative)</strong> 和 <strong>序数变换(Ordinal)</strong>。</p>
+<h1 id="定量变换(Quantitative)">定量变换(Quantitative)</h1><p>定量变换有一个连续的域，如 [0, 1000] 这种线性区间，它可以很方便的进行数据转换。</p>
+<p>例如当我们有一个 [0, 1000] 的区间，但我们在作图的时候不想显示这么大的区间，只想让它显示 [0, 100] 的区间，这时候我们就可以利用定量变换进行数据转换了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 创建定量变换</span></span><br><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">                     .domain([<span class="number">0</span>, <span class="number">1000</span>])</span><br><span class="line">                     .range([<span class="number">0</span>, <span class="number">100</span>])</span><br><span class="line"><span class="comment">// 使用定量变换</span></span><br><span class="line">yScale(<span class="number">1000</span>) <span class="comment">// 100</span></span><br><span class="line">yScale(<span class="number">50</span>) <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line">yScale.domain() <span class="comment">// [0, 1000]</span></span><br><span class="line">yScale.range() <span class="comment">// [0, 100]</span></span><br></pre></td></tr></table></figure>
+<h1 id="序数变换(Ordinal)">序数变换(Ordinal)</h1><p>序数变换是包含一组离散的值，如 [‘January’, ‘February’, ‘March’]，像这样的值是无法创建连续区间的，只能用来创建离散区间。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [<span class="string">'January'</span>, <span class="string">'February'</span>, <span class="string">'March'</span>];</span><br><span class="line"><span class="keyword">var</span> xScale = d3.scale.ordinal()</span><br><span class="line">                     .domain(d3.range(dataset.length))</span><br><span class="line">                     .rangeBands([<span class="number">0</span>, <span class="number">100</span> * dataset.length]);</span><br><span class="line"></span><br><span class="line">xScale.range() <span class="comment">// [0, 100, 200];</span></span><br><span class="line">xScale.rangeBand() <span class="comment">// 100</span></span><br><span class="line">xScale(<span class="number">0</span>) <span class="comment">// 0</span></span><br><span class="line">xScale(<span class="number">1</span>) <span class="comment">// 100</span></span><br><span class="line">xScale(<span class="number">2</span>) <span class="comment">// 200</span></span><br><span class="line">xScale(<span class="number">3</span>) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>看了上面代码之后可以发现，序数变换和定量变换在创建和使用上都是不同的。</p>
+<p>创建定量变换时传进 <code>.domain</code> 中的是一个区间，而创建序数变换时传进去的是一组数，序数变换利用这组数去创建一个等宽度的区间。</p>
+<p>使用定量变换时，无论我们传什么数值进去，它都能返回一个和 <code>domain</code> 对应的值。但使用序数变换时，我们只能通过下标去获取值，当下标大于数组长度时，它会返回 <code>undefined</code> ，和数组类似。</p>
+<h1 id="坐标轴">坐标轴</h1><p>利用尺度(Scale)，我们可以很轻松的创建坐标轴。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> xAxis = d3.svg.axis()  <span class="comment">// 创建坐标轴</span></span><br><span class="line">                  .scale(xScale) <span class="comment">// 设置坐标轴的尺度变换，该尺度变换设定了数值和像素位置的转换规则</span></span><br><span class="line">                  .orient(<span class="string">'bottom'</span>) <span class="comment">// 设置坐标轴刻度的方向</span></span><br><span class="line">                  .ticks(<span class="number">3</span>) <span class="comment">// 控制坐标轴刻度的产生方式，需要注意的是这个只是建议值，D3 会自动判断最合适的值</span></span><br><span class="line">                  .tickFormat(<span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> dataset[d].keyword; <span class="comment">// 设置刻度文字的格式，注意这里的 d 的值是索引值。</span></span><br><span class="line">                  &#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="绘图">绘图</h1><p>D3 是利用 svg 进行绘图的，在操作上和用 <code>jQuery</code> 操作 <code>dom</code> 类似。</p>
+<p>在进行绘图的时候需要注意一点：绘图方向是从上往下，从左往右的。也就是左上角的坐标是 (0, 0)，右下角的坐标是 (width, height)。</p>
+<p>我们先看看如何用 D3 生成一个柱形图。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [</span><br><span class="line">    &#123;keyword: <span class="string">'未检查人数'</span>, value: <span class="number">2345</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'已检查人数'</span>, value: <span class="number">1232</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'放弃治疗人数'</span>, value: <span class="number">4562</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'未知人数'</span>, value: <span class="number">562</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'测试人数'</span>, value: <span class="number">2462</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'全部人数'</span>, value: <span class="number">8678</span>&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> chartPadding = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> barLabelWidth = <span class="number">200</span>; <span class="comment">// space reserved for bar labels</span></span><br><span class="line"><span class="keyword">var</span> barLabelOffset = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">var</span> valueLabelWidth = <span class="number">40</span>; <span class="comment">// space reserved for value labels (right)</span></span><br><span class="line"><span class="keyword">var</span> maxBarHeight = <span class="number">500</span>;</span><br><span class="line"><span class="keyword">var</span> barHeight = <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> xScale = d3.scale.ordinal()</span><br><span class="line">                     .domain(d3.range(dataset.length))</span><br><span class="line">                     .rangeBands([<span class="number">0</span>, barLabelWidth * dataset.length])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">                     .domain([<span class="number">0</span>, (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                        <span class="keyword">var</span> maxValue = d3.max(dataset, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d.value; &#125;);</span><br><span class="line">                        <span class="keyword">var</span> valueLength = (maxValue + <span class="string">''</span>).length;</span><br><span class="line">                        <span class="keyword">return</span> <span class="built_in">Math</span>.ceil(maxValue / <span class="built_in">Math</span>.pow(<span class="number">10</span>, valueLength - <span class="number">1</span>)) * <span class="built_in">Math</span>.pow(<span class="number">10</span>, valueLength - <span class="number">1</span>);</span><br><span class="line">                      &#125;)()])</span><br><span class="line">                     .range([maxBarHeight, <span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> xAxis = d3.svg.axis()</span><br><span class="line">                  .scale(xScale)</span><br><span class="line">                  .orient(<span class="string">'bottom'</span>)</span><br><span class="line">                  .ticks(<span class="number">3</span>)</span><br><span class="line">                  .tickFormat(<span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> dataset[d].keyword;</span><br><span class="line">                  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yAxis = d3.svg.axis()</span><br><span class="line">                  .scale(yScale)</span><br><span class="line">                  .orient(<span class="string">'left'</span>)</span><br><span class="line">                  .ticks(<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.select(<span class="string">'#chart2'</span>).append(<span class="string">'svg'</span>);</span><br><span class="line">svg.attr(<span class="string">'width'</span>, chartPadding * <span class="number">2</span> + barLabelWidth * dataset.length)</span><br><span class="line">   .attr(<span class="string">'height'</span>, chartPadding * <span class="number">2</span> + maxBarHeight + barLabelOffset);</span><br><span class="line"></span><br><span class="line">svg.selectAll(<span class="string">'rect'</span>).data(dataset).enter().append(<span class="string">'rect'</span>)</span><br><span class="line">   .attr(<span class="string">'x'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d, i</span>) </span>&#123; <span class="keyword">return</span> chartPadding + xScale(i) + xScale.rangeBand() / <span class="number">4</span>; &#125;)</span><br><span class="line">   .attr(<span class="string">'height'</span>, <span class="number">0</span>)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + maxBarHeight; &#125;)</span><br><span class="line">   .transition()</span><br><span class="line">   .duration(<span class="number">1000</span>)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + yScale(d[<span class="string">'value'</span>]); &#125;)</span><br><span class="line">   .attr(<span class="string">'width'</span>, xScale.rangeBand() / <span class="number">2</span>)</span><br><span class="line">   .attr(<span class="string">'height'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d, i</span>) </span>&#123; <span class="keyword">return</span> maxBarHeight - yScale(d[<span class="string">'value'</span>]); &#125;)</span><br><span class="line"></span><br><span class="line">svg.selectAll(<span class="string">'text'</span>).data(dataset).enter().append(<span class="string">'text'</span>)</span><br><span class="line">   .attr(<span class="string">'x'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d, i</span>) </span>&#123; <span class="keyword">return</span> chartPadding + xScale(i) + xScale.rangeBand() / <span class="number">2</span>; &#125;)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + maxBarHeight - barLabelOffset; &#125;)</span><br><span class="line">   .attr(<span class="string">'fill'</span>, <span class="string">'red'</span>)</span><br><span class="line">   .transition()</span><br><span class="line">   .duration(<span class="number">1000</span>)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + yScale(d[<span class="string">'value'</span>]) - barLabelOffset; &#125;)</span><br><span class="line">   .attr(<span class="string">'width'</span>, xScale.rangeBand() / <span class="number">2</span>)</span><br><span class="line">   .attr(<span class="string">'text-anchor'</span>, <span class="string">'middle'</span>)</span><br><span class="line">   .tween(<span class="string">"text"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> i = d3.interpolateRound(<span class="number">0</span>, d[<span class="string">'value'</span>]);</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">t</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.textContent = i(t);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">svg.append(<span class="string">'g'</span>)</span><br><span class="line">   .attr(<span class="string">'class'</span>, <span class="string">'axis'</span>)</span><br><span class="line">   .attr(<span class="string">"transform"</span>, <span class="string">"translate("</span> + chartPadding +<span class="string">", "</span> + (maxBarHeight + chartPadding) + <span class="string">")"</span>)</span><br><span class="line">   .call(xAxis);</span><br><span class="line"></span><br><span class="line">svg.append(<span class="string">'g'</span>)</span><br><span class="line">   .attr(<span class="string">'class'</span>, <span class="string">'axis'</span>)</span><br><span class="line">   .attr(<span class="string">"transform"</span>, <span class="string">"translate("</span> + chartPadding +<span class="string">", "</span> + chartPadding + <span class="string">")"</span>)</span><br><span class="line">   .call(yAxis);</span><br></pre></td></tr></table></figure>
+<p>上面的代码有几个地方是需要注意的。</p>
+<ul>
+<li><strong>为什么定义 yScale 的时候，domain 是一个正向的区间，但 range 是一个反向的区间呢？</strong></li>
+</ul>
+<p>还记得我们之前说过左上角的坐标是(0, 0)，右下角的坐标是(width, height) 吗？细心想想就可以发现，这和我们平时绘制柱形图时用的纵坐标是相反的。因此，我们需要定义一个符合我们使用习惯的尺度。</p>
+<ul>
+<li><strong>为什么我们的柱形图是从下往上画出来的吗？之前不是说绘图是从上往下，从左往右的吗？怎么会变成从下往上的呢？</strong></li>
+</ul>
+<p>实际上，绘图确实是从上往下画的，之所以看到柱形图从下往上，是由于我们的绘图的起始位置一直往上移动，而且柱形的高度也在一直变化，这样就做成了一种错觉。</p>
+<p>很多时候，我们只需要换一种思路，就能实现我们想要的效果了。</p>
+<ul>
+<li><strong>为什么坐标轴要最后才添加？一开始就添加坐标轴会有问题吗？</strong></li>
+</ul>
+<p>假设我们先画坐标轴，再画柱形图，最后画柱形图上面的文字。<br>如果我们用上面的方式去生成柱形图上的文字的话，<code>svg.selectAll(&#39;text&#39;)</code> 会把坐标轴里面的文字都选上，数据绑定就会失效(因为元素数量大于数据数量)。这样结果就是不能生成柱形上面的文字了。</p>
+<p>要解决的话其实也很简单，只要能区分柱形图上的文字和坐标轴上的文字就行了。怎么区分？加个 <code>id</code>, <code>class</code> 什么的，或者该结构也行。</p>
+<h1 id="事件绑定">事件绑定</h1><p>D3 的事件绑定和 jQuery 类似，如果熟悉 jQuery 的事件绑定的话，可以很快掌握 D3 的事件绑定。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基本用法</span></span><br><span class="line">d3.select(<span class="string">'p'</span>)</span><br><span class="line">  .on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// do some thing</span></span><br><span class="line">  &#125;)；</span><br><span class="line"></span><br><span class="line"><span class="comment">// 常见用法</span></span><br><span class="line">svg.selectAll(<span class="string">'rect'</span>)</span><br><span class="line">   .data(dataset)</span><br><span class="line">   .enter()</span><br><span class="line">   .append(<span class="string">'rect'</span>)</span><br><span class="line">   ... <span class="comment">// 设置属性</span></span><br><span class="line">   .on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">     <span class="built_in">console</span>.log(d); <span class="comment">// 该矩形对应的数据</span></span><br><span class="line">   &#125;)</span><br><span class="line">   .on(<span class="string">'mouseover'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">     d3.select(<span class="keyword">this</span>)</span><br><span class="line">       .attr(<span class="string">'fill'</span>, <span class="string">'orange'</span>);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><ul>
+<li><a href="https://github.com/mbostock/d3/wiki/Api-%E5%8F%82%E8%80%83" target="_blank" rel="external">官方 API 文档</a></li>
+<li><a href="http://pkuwwt.gitcafe.com/d3-tutorial-cn/scales.html" target="_blank" rel="external">D3 中文教程</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="基础操作">基础操作</h1><ul>
+<li><code>d3.select</code>, <code>d3.selectAll</code> 选择元素</li>
+<li><code>selection.append</code> 在选择集合中添加元素</li]]>
+    </summary>
+    
+      <category term="d3.js" scheme="http://scarletsky.github.io/tags/d3-js/"/>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+  </entry>
+  
+</feed>

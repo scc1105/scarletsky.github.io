@@ -41,10 +41,12 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="localtunnel," />
 
 
 
+
+  
 
 
   <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml" />
@@ -59,19 +61,28 @@
 
 
 
-<meta name="description" content="安全和认证要开启安全检查，需要在启动 mongod 时添加 —auth 选项admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。在开启安全检查之前，一定要有一个管理员帐号。数据库的用户存储在 admin 的 db.system.users 集合中。
-创建管理员&amp;gt; use admin&amp;gt; db.createUser(&amp;#123;user: &apos;root&apos;, pwd:">
+<meta name="description" content="简介Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。
+客户端安装$ npm install -g localtunnel
+使用假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露到公网中
+$ lt --port 8000&amp;#10;your url is: https://uhhzexcifv.localtunnel.me
+通过上面的命令，我们不需要做其他设">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MongoDB 安全与认证">
-<meta property="og:url" content="http://scarletsky.github.io/2014/10/25/2014-10-25-mongodb-security-and-auth/index.html">
+<meta property="og:title" content="Localtunnel（Node.js 版） 使用教程">
+<meta property="og:url" content="http://scarletsky.github.io/2016/01/17/2016-01-17-localtunnel-usage/index.html">
 <meta property="og:site_name" content="Scarletsky">
-<meta property="og:description" content="安全和认证要开启安全检查，需要在启动 mongod 时添加 —auth 选项admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。在开启安全检查之前，一定要有一个管理员帐号。数据库的用户存储在 admin 的 db.system.users 集合中。
-创建管理员&amp;gt; use admin&amp;gt; db.createUser(&amp;#123;user: &apos;root&apos;, pwd:">
-<meta property="og:updated_time" content="2015-06-26T07:57:01.000Z">
+<meta property="og:description" content="简介Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。
+客户端安装$ npm install -g localtunnel
+使用假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露到公网中
+$ lt --port 8000&amp;#10;your url is: https://uhhzexcifv.localtunnel.me
+通过上面的命令，我们不需要做其他设">
+<meta property="og:updated_time" content="2016-01-17T11:10:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MongoDB 安全与认证">
-<meta name="twitter:description" content="安全和认证要开启安全检查，需要在启动 mongod 时添加 —auth 选项admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。在开启安全检查之前，一定要有一个管理员帐号。数据库的用户存储在 admin 的 db.system.users 集合中。
-创建管理员&amp;gt; use admin&amp;gt; db.createUser(&amp;#123;user: &apos;root&apos;, pwd:">
+<meta name="twitter:title" content="Localtunnel（Node.js 版） 使用教程">
+<meta name="twitter:description" content="简介Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。
+客户端安装$ npm install -g localtunnel
+使用假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露到公网中
+$ lt --port 8000&amp;#10;your url is: https://uhhzexcifv.localtunnel.me
+通过上面的命令，我们不需要做其他设">
 
 
 
@@ -83,7 +94,7 @@
   };
 </script>
 
-  <title> MongoDB 安全与认证 | Scarletsky </title>
+  <title> Localtunnel（Node.js 版） 使用教程 | Scarletsky </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -199,7 +210,7 @@
             
             
               
-                MongoDB 安全与认证
+                Localtunnel（Node.js 版） 使用教程
               
             
           </h1>
@@ -208,34 +219,19 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2014-10-25T17:18:00+08:00" content="2014-10-25">
-              2014-10-25
+            <time itemprop="dateCreated" datetime="2016-01-17T17:07:06+08:00" content="2016-01-17">
+              2016-01-17
             </time>
           </span>
 
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/mongodb/" itemprop="url" rel="index">
-                    <span itemprop="name">mongodb</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
           
 
           
             
               <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2014/10/25/2014-10-25-mongodb-security-and-auth/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/25/2014-10-25-mongodb-security-and-auth/" itemprop="commentsCount"></span>
+              <a href="/2016/01/17/2016-01-17-localtunnel-usage/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/01/17/2016-01-17-localtunnel-usage/" itemprop="commentsCount"></span>
               </a>
             </span>
             
@@ -254,43 +250,52 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="安全和认证">安全和认证</h1><p>要开启安全检查，需要在启动 mongod 时添加 —auth 选项<br>admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。<br>在开启安全检查之前，一定要有一个管理员帐号。<br>数据库的用户存储在 admin 的 <code>db.system.users</code> 集合中。</p>
-<p>创建管理员<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.createUser(&#123;user: <span class="string">'root'</span>, <span class="built_in">pwd</span>: <span class="string">'password'</span>, roles: [<span class="string">'root'</span>]&#125;) <span class="comment"># 添加管理员</span></span><br></pre></td></tr></table></figure></p>
-<p>开启验证<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mongod --config /usr/<span class="built_in">local</span>/etc/mongod.conf --auth</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证方法1</span></span><br><span class="line">$ mongo admin -u <span class="string">'username'</span> -p <span class="string">'password'</span> <span class="comment"># 必须指定该用户有权限访问的数据库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证方法2</span></span><br><span class="line">$ mongo</span><br><span class="line">&gt; use admin</span><br><span class="line">&gt; db.auth(<span class="string">'username'</span>, <span class="string">'password'</span>)</span><br><span class="line">&gt; use otherDatabase</span><br><span class="line">&gt; db.users.find().....</span><br></pre></td></tr></table></figure></p>
-<p>开启验证后，我们在使用 URI 去连接数据库的时候需要注意，要加上 authSource=admin 参数才能通过验证。这里以 mongoose 为例。<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line">mongoose.connect(<span class="string">'mongodb://user:pass@server:port/database?authSource=admin'</span>);</span><br></pre></td></tr></table></figure></p>
-<h1 id="用户角色权限">用户角色权限</h1><p>Mongodb 内建了很多角色，详细可以去看看 <a href="http://docs.mongodb.org/manual/reference/built-in-roles/#built-in-roles" target="_blank" rel="external">built-in-roles</a></p>
-<p>这里只说说 Superuser roles。下面几种角色可以为任何用户分配任何权限在任何数据库上，这意味着拥有以下其中一种角色的用户可以分配他们自己的任何权限在任何数据库上面。</p>
-<ul>
-<li>dbOwner 角色，在 admin 数据库作用域中</li>
-<li>userAdmin 角色，在 admin 数据库作用域中</li>
-<li>userAdminAnyDatabase 角色</li>
-<li>root 角色拥有全部的权限</li>
-</ul>
-<p>需要注意的是，root 角色并没有在 <code>system.users</code> 和 <code>system.roles</code> 集合中直接插入数据的能力。因此， root 并不适合用 mongorestore 恢复那些包含了这两个集合的数据。如果你需要进行这些操作，请给用户加上 <code>restore</code> 角色。</p>
-<h1 id="其他安全考虑">其他安全考虑</h1><p>mongodb 传输协议是不加密的，如果需要加密，可以试用 <code>ssh</code> 或者类似的技术进行加密。<br>另外建议把 mongo 服务器布置在防火墙后或者布置在只有应用服务器能访问的网络中。同时建议使用 <code>--bindip</code> 选项，这样可以限制 ip 访问。运行 <code>mongod --bindip localhost</code> 后，只有本机的应用可以访问服务器。<br>最后，还可以用 <code>--noscripting</code> 选项完全禁止服务端 <code>JavaScript</code> 的执行。</p>
-<h1 id="参考文献">参考文献</h1><p><a href="http://docs.mongodb.org/manual/reference/method/js-user-management/" target="_blank" rel="external">Mongodb 官方文档</a></p>
+        <span itemprop="articleBody"><h2 id="简介">简介</h2><p>Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。</p>
+<h2 id="客户端">客户端</h2><h3 id="安装">安装</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ npm install -g localtunnel</span><br></pre></td></tr></table></figure>
+<h3 id="使用">使用</h3><p>假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露到公网中</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ lt --port 8000&#10;your url is: https://uhhzexcifv.localtunnel.me</span><br></pre></td></tr></table></figure>
+<p>通过上面的命令，我们不需要做其他设置就可以通过 <code>https://uhhzexcifv.localtunnel.me</code> 来访问我们本地服务器了。</p>
+<p>由于 <code>localtunnel.me</code> 是国外的服务器，访问速度有时候不太理想，这时候我们可以自己搭建 localtunnel 的服务端。</p>
+<h2 id="服务端">服务端</h2><h3 id="安装-1">安装</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ git clone git://github.com/defunctzombie/localtunnel-server.git&#10;$ cd localtunnel-server&#10;$ npm install</span><br></pre></td></tr></table></figure>
+<h3 id="使用-1">使用</h3><p>以监听 2000 端口为例：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># &#30452;&#25509;&#20351;&#29992;&#10;$ bin/server --port 2000&#10;&#10;# &#37197;&#21512; pm2 &#20351;&#29992;&#10;$ pm2 start bin/server --name lt -- --port 2000</span><br></pre></td></tr></table></figure>
+<p>启动服务端程序后，我们只要在使用客户端 <code>lt</code> 时加上 <code>--host</code> 参数，就可以指定服务端了。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># host &#21518;&#38754;&#19981;&#35201;&#21152; /&#10;$ lt --host http://helloworld.com:2000 --port 8000&#10;your url is: http://jhuyudvlum.helloworld.com:2000</span><br></pre></td></tr></table></figure>
+<p>这样，我们就可以通过自己的代理服务器来访问本地服务器了，不用经过第三方代理服务器，不必担心代理服务器的安全问题。</p>
+<h2 id="高级用法">高级用法</h2><h3 id="反向代理">反向代理</h3><p>在 Github 上面有一份 Nginx 的<a href="https://github.com/localtunnel/server/blob/master/devops/nginx/sites/localtunnel" target="_blank" rel="external">配置</a>，我们可以直接使用，或者按照自己的需要做些修改。</p>
+<h3 id="指定子域名">指定子域名</h3><p>有时候，用随机字符串作为子域名并不是一件好事，我们可能需要固定的域名来访问本地服务器。这时，<code>lt --subdomain</code> 就可以派上用场了。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># subdomain &#38480;&#21046;&#38271;&#24230;&#20026; 4 ~ 63&#10;$ lt --host http://helloworld.com:2000 --port 8000 --subdomain mysubdomain&#10;your url is: http://mysubdomain.helloworld.com:2000</span><br></pre></td></tr></table></figure>
+<p>看到了吗？通过 <code>--subdomain</code>，我们就可以指定自己喜欢的子域名了。</p>
+<h2 id="坑">坑</h2><p><strong>然而</strong>，如果我们通过 <code>--host</code> 来指定子域名，会发生什么？</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ lt --host http://mysubdomain.hello.com --port 8000&#10;Error: localtunnel server returned an error, please try again</span><br></pre></td></tr></table></figure>
+<p>就算配置了 Nginx 的反向代理，你依然会得到这个错误。可以查看 <a href="https://github.com/localtunnel/server/issues/21" target="_blank" rel="external">#21</a> 和  <a href="https://github.com/localtunnel/server/issues/31" target="_blank" rel="external">#31</a> 来看更多的细节。</p>
+<p>要解决这个问题，最简单的就是 <strong>不用</strong> <code>--host</code> 来指定子域名，而用 <code>--subdomain</code> 来指定。</p>
+<p>其实有好几个 pull request 都尝试去解决这个问题的，但不知道什么原因，作者一直没去合并。或者再过一段时间，这个问题就会解决，到时候， localtunnel 就会变得更加好用了。</p>
+<h2 id="参考资料">参考资料</h2><p><a href="https://github.com/localtunnel/localtunnel" target="_blank" rel="external">https://github.com/localtunnel/localtunnel</a><br><a href="https://github.com/localtunnel/server" target="_blank" rel="external">https://github.com/localtunnel/server</a></p>
 </span>
       
     </div>
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/localtunnel/" rel="tag">#localtunnel</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2014/10/16/2014-10-16-mongodb-operation-and-maintenance-basic/" rel="next" title="MongoDB 运维基础">
-                <i class="fa fa-chevron-left"></i> MongoDB 运维基础
+              <a href="/2015/12/02/2015-12-02-the-little-javascript-closures/" rel="next" title="The Little JavaScript Closures">
+                <i class="fa fa-chevron-left"></i> The Little JavaScript Closures
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2014/12/29/2014-12-29-d3js-learning-1/" rel="prev" title="D3.js 学习笔记1">
-                D3.js 学习笔记1 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -413,7 +418,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安全和认证"><span class="nav-number">1.</span> <span class="nav-text">安全和认证</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用户角色权限"><span class="nav-number">2.</span> <span class="nav-text">用户角色权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他安全考虑"><span class="nav-number">3.</span> <span class="nav-text">其他安全考虑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端"><span class="nav-number">2.</span> <span class="nav-text">客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">2.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端"><span class="nav-number">3.</span> <span class="nav-text">服务端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-1"><span class="nav-number">3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-1"><span class="nav-number">3.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级用法"><span class="nav-number">4.</span> <span class="nav-text">高级用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#反向代理"><span class="nav-number">4.1.</span> <span class="nav-text">反向代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指定子域名"><span class="nav-number">4.2.</span> <span class="nav-text">指定子域名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#坑"><span class="nav-number">5.</span> <span class="nav-text">坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -471,9 +476,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'scarletskygithubio';
-      var disqus_identifier = '2014/10/25/2014-10-25-mongodb-security-and-auth/';
-      var disqus_title = 'MongoDB 安全与认证';
-      var disqus_url = 'http://scarletsky.github.io/2014/10/25/2014-10-25-mongodb-security-and-auth/';
+      var disqus_identifier = '2016/01/17/2016-01-17-localtunnel-usage/';
+      var disqus_title = 'Localtunnel（Node.js 版） 使用教程';
+      var disqus_url = 'http://scarletsky.github.io/2016/01/17/2016-01-17-localtunnel-usage/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
