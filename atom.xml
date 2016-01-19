@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-01-17T11:10:02.000Z</updated>
+  <updated>2016-01-19T06:39:22.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://scarletsky.github.io/2016/01/17/2016-01-17-localtunnel-usage/"/>
     <id>http://scarletsky.github.io/2016/01/17/2016-01-17-localtunnel-usage/</id>
     <published>2016-01-17T09:07:06.000Z</published>
-    <updated>2016-01-17T11:10:02.000Z</updated>
+    <updated>2016-01-19T06:39:22.000Z</updated>
     <content type="html"><![CDATA[<h2 id="简介">简介</h2><p>Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。</p>
 <h2 id="客户端">客户端</h2><h3 id="安装">安装</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ npm install -g localtunnel</span><br></pre></td></tr></table></figure>
 <h3 id="使用">使用</h3><p>假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露到公网中</p>
@@ -57,7 +57,7 @@
     <link href="http://scarletsky.github.io/2015/12/02/2015-12-02-the-little-javascript-closures/"/>
     <id>http://scarletsky.github.io/2015/12/02/2015-12-02-the-little-javascript-closures/</id>
     <published>2015-12-02T12:55:54.000Z</published>
-    <updated>2015-12-04T08:57:51.000Z</updated>
+    <updated>2016-01-19T06:39:26.000Z</updated>
     <content type="html"><![CDATA[<h2 id="写在前面">写在前面</h2><p>本文尝试模仿 <a href="http://uternet.github.io/TLS/" target="_blank" rel="external">The Little Schema</a> 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。</p>
 <h2 id="简介">简介</h2><p>什么是闭包？</p>
 <blockquote>
@@ -1169,7 +1169,7 @@
     <link href="http://scarletsky.github.io/2015/07/05/2015-07-06-android-support-design-library-experience/"/>
     <id>http://scarletsky.github.io/2015/07/05/2015-07-06-android-support-design-library-experience/</id>
     <published>2015-07-05T15:45:02.000Z</published>
-    <updated>2015-07-07T14:15:30.000Z</updated>
+    <updated>2016-01-19T06:39:13.000Z</updated>
     <content type="html"><![CDATA[<h1 id="CoordinatorLayout">CoordinatorLayout</h1><p>这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。</p>
 <p>常见的用法如下：</p>
 <figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">&lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CoordinatorLayout</span></span><br><span class="line">    xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.NestedScrollView</span></span><br><span class="line">        xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">        xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_gravity=<span class="string">"fill_vertical"</span></span><br><span class="line">        android:layout_marginBottom=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">        android:<span class="attribute">background</span>=<span class="string">"@android:color/white"</span></span><br><span class="line">        app:layout_behavior=<span class="string">"@string/appbar_scrolling_view_behavior"</span></span><br><span class="line">        &gt;</span><br><span class="line"></span><br><span class="line">        &lt;FrameLayout</span><br><span class="line">            android:id=<span class="string">"@+id/frame_image_toolbar_content"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            &gt;</span><br><span class="line">        &lt;/FrameLayout&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.NestedScrollView</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.AppBarLayout</span></span><br><span class="line">        android:id=<span class="string">"@+id/appbar"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"256dp"</span></span><br><span class="line">        android:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CollapsingToolbarLayout</span></span><br><span class="line">            android:id=<span class="string">"@+id/collapsing_toolbar_wrapper"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            app:contentScrim=<span class="string">"?attr/colorPrimary"</span></span><br><span class="line">            app:expandedTitleMarginEnd=<span class="string">"64dp"</span></span><br><span class="line">            app:expandedTitleMarginStart=<span class="string">"48dp"</span></span><br><span class="line">            app:layout_scrollFlags=<span class="string">"scroll|exitUntilCollapsed"</span></span><br><span class="line">            &gt;</span><br><span class="line"></span><br><span class="line">            &lt;ImageView</span><br><span class="line">                android:id=<span class="string">"@+id/collapsing_toolbar_image"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">                android:scaleType=<span class="string">"centerCrop"</span></span><br><span class="line">                app:layout_collapseMode=<span class="string">"parallax"</span></span><br><span class="line">                /&gt;</span><br><span class="line"></span><br><span class="line">            &lt;android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.Toolbar</span></span><br><span class="line">                android:id=<span class="string">"@+id/collapsing_toolbar"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">                app:layout_collapseMode=<span class="string">"pin"</span></span><br><span class="line">                app:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span></span><br><span class="line">                app:popupTheme=<span class="string">"@style/ThemeOverlay.AppCompat.Light"</span></span><br><span class="line">                /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CollapsingToolbarLayout</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.AppBarLayout</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CoordinatorLayout</span>&gt;</span><br></pre></td></tr></table></figure>
@@ -1193,7 +1193,7 @@
     <link href="http://scarletsky.github.io/2015/06/29/2015-06-29-recyclerview-basic-usage/"/>
     <id>http://scarletsky.github.io/2015/06/29/2015-06-29-recyclerview-basic-usage/</id>
     <published>2015-06-29T12:55:00.000Z</published>
-    <updated>2015-06-30T04:33:25.000Z</updated>
+    <updated>2016-01-19T06:39:04.000Z</updated>
     <content type="html"><![CDATA[<h1 id="基本用法">基本用法</h1><ul>
 <li><p>在 XML 中添加 <code>&lt;android.support.v7.widget.RecyclerView/&gt;</code></p>
 </li>
@@ -1249,7 +1249,7 @@
     <link href="http://scarletsky.github.io/2015/03/15/2015-03-15-html5-canvas-tricks/"/>
     <id>http://scarletsky.github.io/2015/03/15/2015-03-15-html5-canvas-tricks/</id>
     <published>2015-03-15T12:55:00.000Z</published>
-    <updated>2015-08-11T04:38:25.000Z</updated>
+    <updated>2016-01-19T06:38:53.000Z</updated>
     <content type="html"><![CDATA[<h1 id="注意事项">注意事项</h1><p>用 <code>&lt;canvas&gt;</code> 标签进行绘图时必须要设置 <code>width</code> 和 <code>height</code> 属性，这里并不是指 CSS 属性中的 <code>width</code> 和 <code>height</code>，而是 <code>&lt;canvas&gt;</code> 标签本身的属性！</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 正确 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">width</span>=<span class="value">"500"</span> <span class="attribute">height</span>=<span class="value">"500"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 错误 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">style</span>=<span class="value">"width: 500px; height: 500px;"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 正确 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas"</span> <span class="attribute">style</span>=<span class="value">"width: 500px; height: 500px;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="mel"></span><br><span class="line">var <span class="keyword">canvas</span> = document.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">canvas</span>.setAttribute(<span class="string">'width'</span>, <span class="string">'500'</span>);</span><br><span class="line"><span class="keyword">canvas</span>.setAttribute(<span class="string">'height'</span>, <span class="string">'500'</span>);</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>我以前一直以为 <code>&lt;canvas&gt;</code> 的 <code>width</code> 和 <code>height</code> 属性和 CSS 中的 <code>width</code> 和 <code>height</code> 是同一个东西，直到我看到 Stackoverflow 上面的<a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">这个帖子</a>…</p>
@@ -1274,7 +1274,7 @@
     <link href="http://scarletsky.github.io/2015/01/27/2015-01-27-javascript-upload-slice-file-using-blob/"/>
     <id>http://scarletsky.github.io/2015/01/27/2015-01-27-javascript-upload-slice-file-using-blob/</id>
     <published>2015-01-27T09:28:00.000Z</published>
-    <updated>2015-06-26T07:57:37.000Z</updated>
+    <updated>2016-01-19T06:38:42.000Z</updated>
     <content type="html"><![CDATA[<h1 id="基本流程">基本流程</h1><ul>
 <li><p>用户选择文件</p>
 </li>
@@ -1344,7 +1344,7 @@
     <link href="http://scarletsky.github.io/2015/01/26/2015-01-26-javascript-tricks/"/>
     <id>http://scarletsky.github.io/2015/01/26/2015-01-26-javascript-tricks/</id>
     <published>2015-01-26T10:05:00.000Z</published>
-    <updated>2015-11-28T03:02:19.000Z</updated>
+    <updated>2016-01-19T06:37:47.000Z</updated>
     <content type="html"><![CDATA[<h1 id="字符串操作">字符串操作</h1><h2 id="首字母大写">首字母大写</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="截取字符串最后几位">截取字符串最后几位</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.substring(str.length-X)</span><br></pre></td></tr></table></figure>
 <h2 id="进制转换">进制转换</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">d.toString(<span class="number">16</span>)    (十进制 -&gt; 十六进制)</span><br><span class="line"><span class="built_in">parseInt</span>(‘ff’, <span class="number">16</span>) (十六进制 -&gt; 十进制)</span><br></pre></td></tr></table></figure>
@@ -1372,7 +1372,7 @@
     <link href="http://scarletsky.github.io/2015/01/13/2015-01-13-html5-drag-and-drop-api/"/>
     <id>http://scarletsky.github.io/2015/01/13/2015-01-13-html5-drag-and-drop-api/</id>
     <published>2015-01-13T10:28:04.000Z</published>
-    <updated>2015-08-11T04:39:29.000Z</updated>
+    <updated>2016-01-19T06:38:29.000Z</updated>
     <content type="html"><![CDATA[<h1 id="基本使用">基本使用</h1><h2 id="创建可拖放对象">创建可拖放对象</h2><p>在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 <code>draggable=&quot;true&quot;</code> 就能创建可拖放对象了。</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect red"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect green"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect blue"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="如何拖动">如何拖动</h2><p>有了可拖放对象之后，我们还需要处理拖放事件才能实现拖放。拖放包含下面的事件：</p>
@@ -1432,7 +1432,7 @@
     <link href="http://scarletsky.github.io/2015/01/04/2015-01-04-d3js-learning-2/"/>
     <id>http://scarletsky.github.io/2015/01/04/2015-01-04-d3js-learning-2/</id>
     <published>2015-01-04T09:28:04.000Z</published>
-    <updated>2015-08-11T04:39:46.000Z</updated>
+    <updated>2016-01-19T06:37:29.000Z</updated>
     <content type="html"><![CDATA[<h1 id="Layout">Layout</h1><p>和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加方便处理的数据。</p>
 <p>D3 中包含的全部的 Layout 列表如下：</p>
 <ul>
@@ -1488,7 +1488,7 @@
     <link href="http://scarletsky.github.io/2014/12/29/2014-12-29-d3js-learning-1/"/>
     <id>http://scarletsky.github.io/2014/12/29/2014-12-29-d3js-learning-1/</id>
     <published>2014-12-29T08:28:04.000Z</published>
-    <updated>2015-08-11T04:40:04.000Z</updated>
+    <updated>2016-01-19T06:38:24.000Z</updated>
     <content type="html"><![CDATA[<h1 id="基础操作">基础操作</h1><ul>
 <li><code>d3.select</code>, <code>d3.selectAll</code> 选择元素</li>
 <li><code>selection.append</code> 在选择集合中添加元素</li>
