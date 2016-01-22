@@ -197,6 +197,152 @@
             
             
               
+                <a class="post-title-link" href="/2014/12/29/2014-12-29-d3js-learning-1/" itemprop="url">
+                  D3.js 学习笔记1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-12-29T16:28:04+08:00" content="2014-12-29">
+              2014-12-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/12/29/2014-12-29-d3js-learning-1/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/12/29/2014-12-29-d3js-learning-1/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="基础操作">基础操作</h1><ul>
+<li><code>d3.select</code>, <code>d3.selectAll</code> 选择元素</li>
+<li><code>selection.append</code> 在选择集合中添加元素</li>
+<li><code>selection.data</code> 为选择元素进行数据绑定，常与 <code>enter</code> 和 <code>exit</code> 一起使用</li>
+<li><code>selection.data(data).enter</code> 返回缺失元素集合</li>
+<li><code>selection.data(data).exit</code> 返回多余元素集合</li>
+<li><code>selection.text</code> 设置或获取选定元素的标签体文本内容</li>
+<li><code>selection.attr</code> 设置或获取指定属性</li>
+<li><code>selection.transition</code> 启用动画效果，只要设置前和设置后的属性发生变化就会发生动画，一般和 <code>duration</code>，<code>delay</code> 一起用。</li>
+</ul>
+<p>更多操作可以参考本文末尾的官方 API 文档。</p>
+<h1 id="尺度(Scale)">尺度(Scale)</h1><p>尺度(Scale)在 D3 中是一个很重要的概念。</p>
+<p>根据官方的定义，尺度是将输入域映射为输出范围的函数。尺度可以让用户定义参数的函数。一旦生成一个尺度，你可以调用此尺度函数，传入一个数据值，然后它会返回一个缩放后的值。你可以任意定义和使用尺度。</p>
+<p>D3 中有两种尺度，分别是 <strong>定量变换(Quantitative)</strong> 和 <strong>序数变换(Ordinal)</strong>。</p>
+<h1 id="定量变换(Quantitative)">定量变换(Quantitative)</h1><p>定量变换有一个连续的域，如 [0, 1000] 这种线性区间，它可以很方便的进行数据转换。</p>
+<p>例如当我们有一个 [0, 1000] 的区间，但我们在作图的时候不想显示这么大的区间，只想让它显示 [0, 100] 的区间，这时候我们就可以利用定量变换进行数据转换了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 创建定量变换</span></span><br><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">                     .domain([<span class="number">0</span>, <span class="number">1000</span>])</span><br><span class="line">                     .range([<span class="number">0</span>, <span class="number">100</span>])</span><br><span class="line"><span class="comment">// 使用定量变换</span></span><br><span class="line">yScale(<span class="number">1000</span>) <span class="comment">// 100</span></span><br><span class="line">yScale(<span class="number">50</span>) <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line">yScale.domain() <span class="comment">// [0, 1000]</span></span><br><span class="line">yScale.range() <span class="comment">// [0, 100]</span></span><br></pre></td></tr></table></figure>
+<h1 id="序数变换(Ordinal)">序数变换(Ordinal)</h1><p>序数变换是包含一组离散的值，如 [‘January’, ‘February’, ‘March’]，像这样的值是无法创建连续区间的，只能用来创建离散区间。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [<span class="string">'January'</span>, <span class="string">'February'</span>, <span class="string">'March'</span>];</span><br><span class="line"><span class="keyword">var</span> xScale = d3.scale.ordinal()</span><br><span class="line">                     .domain(d3.range(dataset.length))</span><br><span class="line">                     .rangeBands([<span class="number">0</span>, <span class="number">100</span> * dataset.length]);</span><br><span class="line"></span><br><span class="line">xScale.range() <span class="comment">// [0, 100, 200];</span></span><br><span class="line">xScale.rangeBand() <span class="comment">// 100</span></span><br><span class="line">xScale(<span class="number">0</span>) <span class="comment">// 0</span></span><br><span class="line">xScale(<span class="number">1</span>) <span class="comment">// 100</span></span><br><span class="line">xScale(<span class="number">2</span>) <span class="comment">// 200</span></span><br><span class="line">xScale(<span class="number">3</span>) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>看了上面代码之后可以发现，序数变换和定量变换在创建和使用上都是不同的。</p>
+<p>创建定量变换时传进 <code>.domain</code> 中的是一个区间，而创建序数变换时传进去的是一组数，序数变换利用这组数去创建一个等宽度的区间。</p>
+<p>使用定量变换时，无论我们传什么数值进去，它都能返回一个和 <code>domain</code> 对应的值。但使用序数变换时，我们只能通过下标去获取值，当下标大于数组长度时，它会返回 <code>undefined</code> ，和数组类似。</p>
+<h1 id="坐标轴">坐标轴</h1><p>利用尺度(Scale)，我们可以很轻松的创建坐标轴。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> xAxis = d3.svg.axis()  <span class="comment">// 创建坐标轴</span></span><br><span class="line">                  .scale(xScale) <span class="comment">// 设置坐标轴的尺度变换，该尺度变换设定了数值和像素位置的转换规则</span></span><br><span class="line">                  .orient(<span class="string">'bottom'</span>) <span class="comment">// 设置坐标轴刻度的方向</span></span><br><span class="line">                  .ticks(<span class="number">3</span>) <span class="comment">// 控制坐标轴刻度的产生方式，需要注意的是这个只是建议值，D3 会自动判断最合适的值</span></span><br><span class="line">                  .tickFormat(<span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> dataset[d].keyword; <span class="comment">// 设置刻度文字的格式，注意这里的 d 的值是索引值。</span></span><br><span class="line">                  &#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="绘图">绘图</h1><p>D3 是利用 svg 进行绘图的，在操作上和用 <code>jQuery</code> 操作 <code>dom</code> 类似。</p>
+<p>在进行绘图的时候需要注意一点：绘图方向是从上往下，从左往右的。也就是左上角的坐标是 (0, 0)，右下角的坐标是 (width, height)。</p>
+<p>我们先看看如何用 D3 生成一个柱形图。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [</span><br><span class="line">    &#123;keyword: <span class="string">'未检查人数'</span>, value: <span class="number">2345</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'已检查人数'</span>, value: <span class="number">1232</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'放弃治疗人数'</span>, value: <span class="number">4562</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'未知人数'</span>, value: <span class="number">562</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'测试人数'</span>, value: <span class="number">2462</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'全部人数'</span>, value: <span class="number">8678</span>&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> chartPadding = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> barLabelWidth = <span class="number">200</span>; <span class="comment">// space reserved for bar labels</span></span><br><span class="line"><span class="keyword">var</span> barLabelOffset = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">var</span> valueLabelWidth = <span class="number">40</span>; <span class="comment">// space reserved for value labels (right)</span></span><br><span class="line"><span class="keyword">var</span> maxBarHeight = <span class="number">500</span>;</span><br><span class="line"><span class="keyword">var</span> barHeight = <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> xScale = d3.scale.ordinal()</span><br><span class="line">                     .domain(d3.range(dataset.length))</span><br><span class="line">                     .rangeBands([<span class="number">0</span>, barLabelWidth * dataset.length])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">                     .domain([<span class="number">0</span>, (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                        <span class="keyword">var</span> maxValue = d3.max(dataset, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d.value; &#125;);</span><br><span class="line">                        <span class="keyword">var</span> valueLength = (maxValue + <span class="string">''</span>).length;</span><br><span class="line">                        <span class="keyword">return</span> <span class="built_in">Math</span>.ceil(maxValue / <span class="built_in">Math</span>.pow(<span class="number">10</span>, valueLength - <span class="number">1</span>)) * <span class="built_in">Math</span>.pow(<span class="number">10</span>, valueLength - <span class="number">1</span>);</span><br><span class="line">                      &#125;)()])</span><br><span class="line">                     .range([maxBarHeight, <span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> xAxis = d3.svg.axis()</span><br><span class="line">                  .scale(xScale)</span><br><span class="line">                  .orient(<span class="string">'bottom'</span>)</span><br><span class="line">                  .ticks(<span class="number">3</span>)</span><br><span class="line">                  .tickFormat(<span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> dataset[d].keyword;</span><br><span class="line">                  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yAxis = d3.svg.axis()</span><br><span class="line">                  .scale(yScale)</span><br><span class="line">                  .orient(<span class="string">'left'</span>)</span><br><span class="line">                  .ticks(<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.select(<span class="string">'#chart2'</span>).append(<span class="string">'svg'</span>);</span><br><span class="line">svg.attr(<span class="string">'width'</span>, chartPadding * <span class="number">2</span> + barLabelWidth * dataset.length)</span><br><span class="line">   .attr(<span class="string">'height'</span>, chartPadding * <span class="number">2</span> + maxBarHeight + barLabelOffset);</span><br><span class="line"></span><br><span class="line">svg.selectAll(<span class="string">'rect'</span>).data(dataset).enter().append(<span class="string">'rect'</span>)</span><br><span class="line">   .attr(<span class="string">'x'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d, i</span>) </span>&#123; <span class="keyword">return</span> chartPadding + xScale(i) + xScale.rangeBand() / <span class="number">4</span>; &#125;)</span><br><span class="line">   .attr(<span class="string">'height'</span>, <span class="number">0</span>)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + maxBarHeight; &#125;)</span><br><span class="line">   .transition()</span><br><span class="line">   .duration(<span class="number">1000</span>)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + yScale(d[<span class="string">'value'</span>]); &#125;)</span><br><span class="line">   .attr(<span class="string">'width'</span>, xScale.rangeBand() / <span class="number">2</span>)</span><br><span class="line">   .attr(<span class="string">'height'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d, i</span>) </span>&#123; <span class="keyword">return</span> maxBarHeight - yScale(d[<span class="string">'value'</span>]); &#125;)</span><br><span class="line"></span><br><span class="line">svg.selectAll(<span class="string">'text'</span>).data(dataset).enter().append(<span class="string">'text'</span>)</span><br><span class="line">   .attr(<span class="string">'x'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d, i</span>) </span>&#123; <span class="keyword">return</span> chartPadding + xScale(i) + xScale.rangeBand() / <span class="number">2</span>; &#125;)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + maxBarHeight - barLabelOffset; &#125;)</span><br><span class="line">   .attr(<span class="string">'fill'</span>, <span class="string">'red'</span>)</span><br><span class="line">   .transition()</span><br><span class="line">   .duration(<span class="number">1000</span>)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + yScale(d[<span class="string">'value'</span>]) - barLabelOffset; &#125;)</span><br><span class="line">   .attr(<span class="string">'width'</span>, xScale.rangeBand() / <span class="number">2</span>)</span><br><span class="line">   .attr(<span class="string">'text-anchor'</span>, <span class="string">'middle'</span>)</span><br><span class="line">   .tween(<span class="string">"text"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> i = d3.interpolateRound(<span class="number">0</span>, d[<span class="string">'value'</span>]);</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">t</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.textContent = i(t);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">svg.append(<span class="string">'g'</span>)</span><br><span class="line">   .attr(<span class="string">'class'</span>, <span class="string">'axis'</span>)</span><br><span class="line">   .attr(<span class="string">"transform"</span>, <span class="string">"translate("</span> + chartPadding +<span class="string">", "</span> + (maxBarHeight + chartPadding) + <span class="string">")"</span>)</span><br><span class="line">   .call(xAxis);</span><br><span class="line"></span><br><span class="line">svg.append(<span class="string">'g'</span>)</span><br><span class="line">   .attr(<span class="string">'class'</span>, <span class="string">'axis'</span>)</span><br><span class="line">   .attr(<span class="string">"transform"</span>, <span class="string">"translate("</span> + chartPadding +<span class="string">", "</span> + chartPadding + <span class="string">")"</span>)</span><br><span class="line">   .call(yAxis);</span><br></pre></td></tr></table></figure>
+<p>上面的代码有几个地方是需要注意的。</p>
+<ul>
+<li><strong>为什么定义 yScale 的时候，domain 是一个正向的区间，但 range 是一个反向的区间呢？</strong></li>
+</ul>
+<p>还记得我们之前说过左上角的坐标是(0, 0)，右下角的坐标是(width, height) 吗？细心想想就可以发现，这和我们平时绘制柱形图时用的纵坐标是相反的。因此，我们需要定义一个符合我们使用习惯的尺度。</p>
+<ul>
+<li><strong>为什么我们的柱形图是从下往上画出来的吗？之前不是说绘图是从上往下，从左往右的吗？怎么会变成从下往上的呢？</strong></li>
+</ul>
+<p>实际上，绘图确实是从上往下画的，之所以看到柱形图从下往上，是由于我们的绘图的起始位置一直往上移动，而且柱形的高度也在一直变化，这样就做成了一种错觉。</p>
+<p>很多时候，我们只需要换一种思路，就能实现我们想要的效果了。</p>
+<ul>
+<li><strong>为什么坐标轴要最后才添加？一开始就添加坐标轴会有问题吗？</strong></li>
+</ul>
+<p>假设我们先画坐标轴，再画柱形图，最后画柱形图上面的文字。<br>如果我们用上面的方式去生成柱形图上的文字的话，<code>svg.selectAll(&#39;text&#39;)</code> 会把坐标轴里面的文字都选上，数据绑定就会失效(因为元素数量大于数据数量)。这样结果就是不能生成柱形上面的文字了。</p>
+<p>要解决的话其实也很简单，只要能区分柱形图上的文字和坐标轴上的文字就行了。怎么区分？加个 <code>id</code>, <code>class</code> 什么的，或者该结构也行。</p>
+<h1 id="事件绑定">事件绑定</h1><p>D3 的事件绑定和 jQuery 类似，如果熟悉 jQuery 的事件绑定的话，可以很快掌握 D3 的事件绑定。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基本用法</span></span><br><span class="line">d3.select(<span class="string">'p'</span>)</span><br><span class="line">  .on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// do some thing</span></span><br><span class="line">  &#125;)；</span><br><span class="line"></span><br><span class="line"><span class="comment">// 常见用法</span></span><br><span class="line">svg.selectAll(<span class="string">'rect'</span>)</span><br><span class="line">   .data(dataset)</span><br><span class="line">   .enter()</span><br><span class="line">   .append(<span class="string">'rect'</span>)</span><br><span class="line">   ... <span class="comment">// 设置属性</span></span><br><span class="line">   .on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">     <span class="built_in">console</span>.log(d); <span class="comment">// 该矩形对应的数据</span></span><br><span class="line">   &#125;)</span><br><span class="line">   .on(<span class="string">'mouseover'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">     d3.select(<span class="keyword">this</span>)</span><br><span class="line">       .attr(<span class="string">'fill'</span>, <span class="string">'orange'</span>);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><ul>
+<li><a href="https://github.com/mbostock/d3/wiki/Api-%E5%8F%82%E8%80%83" target="_blank" rel="external">官方 API 文档</a></li>
+<li><a href="http://pkuwwt.gitcafe.com/d3-tutorial-cn/scales.html" target="_blank" rel="external">D3 中文教程</a></li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
                 <a class="post-title-link" href="/2014/10/25/2014-10-25-mongodb-security-and-auth/" itemprop="url">
                   MongoDB 安全与认证
                 </a>
@@ -575,7 +721,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -589,7 +735,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
