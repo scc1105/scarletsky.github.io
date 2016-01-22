@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-01-22T14:18:06.000Z</updated>
+  <updated>2016-01-22T15:08:28.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://scarletsky.github.io/2016/01/22/2016-01-22-spacemacs-usage/"/>
     <id>http://scarletsky.github.io/2016/01/22/2016-01-22-spacemacs-usage/</id>
     <published>2016-01-22T07:20:38.000Z</published>
-    <updated>2016-01-22T14:18:06.000Z</updated>
+    <updated>2016-01-22T15:08:28.000Z</updated>
     <content type="html"><![CDATA[<h2 id="简介">简介</h2><p>Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。</p>
 <h2 id="安装_&amp;_使用">安装 &amp; 使用</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/syl20bnr/spacemacs ~/.emacs.d</span><br><span class="line">$ emacs</span><br></pre></td></tr></table></figure>
 <h2 id="配置文件">配置文件</h2><p>Spacemacs 的配置文件位于 <code>~/.spacemacs</code> 中，我们只需要修改这个文件就可以制定自己的配置了。</p>
@@ -43,6 +43,11 @@
 </li>
 <li>完。</li>
 </ol>
+<h2 id="设置文件默认的主模式">设置文件默认的主模式</h2><p>虽然我们可以通过 <code>M-x</code> 来设置文件的主模式，但这种方式只是在单独修改某个文件的主模式时好用，如果要把所有同类型的文件都改成其他模式，这种方式的效率就太低了。</p>
+<p>在 Spacemacs 中，我们可以用 <code>auto-mode-alist</code> 来设置某一类文件默认的主模式。</p>
+<p>我们只需要在 <code>~/.spacemacs</code> 中的 <code>user-config</code> 中加入下面代码即可：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">(add-to-list &#39;auto-mode-alist &#39;(&#34;\\.js\\&#39;&#34; . react-mode))</span><br></pre></td></tr></table></figure>
+<p>上面代码会用 <code>react-mode</code> 打开所有 <code>.js</code> 文件。</p>
 <h2 id="Emacs_服务器">Emacs 服务器</h2><p>Spacemacs 会在启动时启动服务器，这个服务器会在 Spacemacs 关闭的时候被杀掉。</p>
 <h3 id="使用_Emacs_服务器">使用 Emacs 服务器</h3><p>当 Emacs 服务器启动的时候，我们可以在命令行中使用 <code>emacsclient</code> 命令：</p>
 <ul>
