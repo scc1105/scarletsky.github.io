@@ -1,5 +1,11 @@
 <!doctype html>
-<html class="theme-next   use-motion ">
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -26,19 +32,13 @@
 
 
 
-  
-    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-  
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 
 
 
 <link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
-
-
-
-
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -52,7 +52,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
 
 
 
@@ -72,10 +72,16 @@
 
 
 <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: '',
-    sidebar: 'post',
-    motion: true
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
   };
 </script>
 
@@ -84,15 +90,6 @@
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
-    </a>
-  </div>
-<![endif]-->
   
 
 
@@ -100,9 +97,16 @@
 
 
 
-  <div class="container one-column 
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left 
    page-home 
-">
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -166,6 +170,7 @@
 
       
       
+      
     </ul>
   
 
@@ -177,12 +182,23 @@
 
     <main id="main" class="main">
       <div class="main-inner">
-        <div id="content" class="content">
-          
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
   <section id="posts" class="posts-expand">
+
+    
+
+    
+    
+
     
       
 
+  
+  
+
+  
   
   
 
@@ -197,6 +213,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/" itemprop="url">
                   利用 Gulp 处理前端工作流程
                 </a>
@@ -207,7 +224,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-08-14T16:57:33+08:00" content="2015-08-14">
               2015-08-14
             </time>
@@ -215,7 +235,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -233,31 +257,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/14/2015-08-14-use-gulp-for-front-end-workflow/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="基本用法">基本用法</h1><figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line"><span class="comment">// gulpfile.js</span></span><br><span class="line">gulp.task<span class="params">('foo', function<span class="params">()</span> &#123;</span><br><span class="line">    gulp.src<span class="params">(glob)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">&#125;)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// shell</span></span><br><span class="line">$ gulp foo</span><br></pre></td></tr></table></figure>
+          
+            <h1 id="基本用法">基本用法</h1><figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line"><span class="comment">// gulpfile.js</span></span><br><span class="line">gulp.task<span class="params">('foo', function<span class="params">()</span> &#123;</span><br><span class="line">    gulp.src<span class="params">(glob)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">&#125;)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// shell</span></span><br><span class="line">$ gulp foo</span><br></pre></td></tr></table></figure>
 <h1 id="基本_API">基本 API</h1><ul>
 <li><p><code>gulp.src(glob[, options])</code></p>
 <ul>
@@ -353,8 +378,7 @@
 <h3 id="实例代码">实例代码</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">gulp.task(<span class="string">'clean:build'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    del.sync(<span class="string">'dist/'</span>, &#123;force: <span class="literal">true</span>&#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'minify'</span>, [<span class="string">'clean:build'</span>, <span class="string">'less'</span>], <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp</span><br><span class="line">        .src(<span class="string">'app/views/**/*.html'</span>)</span><br><span class="line">        .pipe(htmlmin(&#123;collapseWhitespace: <span class="literal">true</span>&#125;))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist/views'</span>));</span><br><span class="line"></span><br><span class="line">    gulp</span><br><span class="line">        .src(<span class="string">'app/index.html'</span>)</span><br><span class="line">        .pipe(usemin(&#123;</span><br><span class="line">            js: [uglify(), rev()],</span><br><span class="line">            css: [minifyCss(), <span class="string">'concat'</span>, rev()]</span><br><span class="line">        &#125;))</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist/'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'copyfonts'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    gulp</span><br><span class="line">        .src(<span class="string">'app/styles/fonts/*'</span>)</span><br><span class="line">        .pipe(gulp.dest(<span class="string">'dist/fonts/'</span>));</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">gulp.task(<span class="string">'build'</span>, [<span class="string">'clean:build'</span>, <span class="string">'minify'</span>, <span class="string">'copyfonts'</span>]);</span><br></pre></td></tr></table></figure>
 <h1 id="参考资料">参考资料</h1><p><a href="https://github.com/gulpjs/gulp/blob/master/docs/API.md" target="_blank" rel="external">英文文档</a><br><a href="http://www.gulpjs.com.cn/docs/api/" target="_blank" rel="external">中文文档</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -378,6 +402,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -389,6 +417,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/08/11/2015-08-11-mongo-shell-trap/" itemprop="url">
                   Mongo Shell 使用过程中遇到的坑
                 </a>
@@ -399,7 +428,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-08-11T12:17:47+08:00" content="2015-08-11">
               2015-08-11
             </time>
@@ -407,7 +439,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/mongodb/" itemprop="url" rel="index">
@@ -425,31 +461,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/11/2015-08-11-mongo-shell-trap/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/2015-08-11-mongo-shell-trap/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/08/11/2015-08-11-mongo-shell-trap/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/11/2015-08-11-mongo-shell-trap/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="编写_js_脚本">编写 js 脚本</h1><ul>
+          
+            <h1 id="编写_js_脚本">编写 js 脚本</h1><ul>
 <li><p>js 脚本中不能包含 <code>use</code> 关键字，需要用 <code>$ mongo mydb xxx.js</code> 这样的方式来指定数据库</p>
 </li>
 <li><p>不能用 <code>console.log</code>，需要用 <code>print</code> 代替</p>
@@ -463,8 +500,7 @@
 <h1 id="参考资料">参考资料</h1><p><a href="http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer" target="_blank" rel="external">http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer</a></p>
 <p><a href="http://docs.mongodb.org/manual/core/shell-types/" target="_blank" rel="external">http://docs.mongodb.org/manual/core/shell-types/</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -488,6 +524,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -499,6 +539,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/08/07/2015-08-07-interview-summary/" itemprop="url">
                   面试总结
                 </a>
@@ -509,7 +550,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-08-07T21:32:41+08:00" content="2015-08-07">
               2015-08-07
             </time>
@@ -517,7 +561,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/life/" itemprop="url" rel="index">
@@ -535,31 +583,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/07/2015-08-07-interview-summary/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/07/2015-08-07-interview-summary/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/08/07/2015-08-07-interview-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/07/2015-08-07-interview-summary/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="面试前的准备">面试前的准备</h1><ul>
+          
+            <h1 id="面试前的准备">面试前的准备</h1><ul>
 <li><p>了解该公司的业务</p>
 <ul>
 <li>如果不了解的话，面试的时候 HR 们那些一系列专业的术语会让你头晕</li>
@@ -683,8 +732,7 @@
 </li>
 </ul>
 
-            
-          </span>
+          
         
       
     </div>
@@ -708,6 +756,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -719,6 +771,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/07/05/2015-07-06-android-support-design-library-experience/" itemprop="url">
                   Android Support Design Library 注意事项
                 </a>
@@ -729,7 +782,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-07-05T23:45:02+08:00" content="2015-07-05">
               2015-07-05
             </time>
@@ -737,7 +793,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/android/" itemprop="url" rel="index">
@@ -755,31 +815,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/07/05/2015-07-06-android-support-design-library-experience/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/05/2015-07-06-android-support-design-library-experience/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/07/05/2015-07-06-android-support-design-library-experience/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/05/2015-07-06-android-support-design-library-experience/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="CoordinatorLayout">CoordinatorLayout</h1><p>这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。</p>
+          
+            <h1 id="CoordinatorLayout">CoordinatorLayout</h1><p>这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。</p>
 <p>常见的用法如下：</p>
 <figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">&lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CoordinatorLayout</span></span><br><span class="line">    xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.NestedScrollView</span></span><br><span class="line">        xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">        xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_gravity=<span class="string">"fill_vertical"</span></span><br><span class="line">        android:layout_marginBottom=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">        android:<span class="attribute">background</span>=<span class="string">"@android:color/white"</span></span><br><span class="line">        app:layout_behavior=<span class="string">"@string/appbar_scrolling_view_behavior"</span></span><br><span class="line">        &gt;</span><br><span class="line"></span><br><span class="line">        &lt;FrameLayout</span><br><span class="line">            android:id=<span class="string">"@+id/frame_image_toolbar_content"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            &gt;</span><br><span class="line">        &lt;/FrameLayout&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android<span class="class">.support</span><span class="class">.v4</span><span class="class">.widget</span><span class="class">.NestedScrollView</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.AppBarLayout</span></span><br><span class="line">        android:id=<span class="string">"@+id/appbar"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"256dp"</span></span><br><span class="line">        android:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CollapsingToolbarLayout</span></span><br><span class="line">            android:id=<span class="string">"@+id/collapsing_toolbar_wrapper"</span></span><br><span class="line">            android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">            android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">            app:contentScrim=<span class="string">"?attr/colorPrimary"</span></span><br><span class="line">            app:expandedTitleMarginEnd=<span class="string">"64dp"</span></span><br><span class="line">            app:expandedTitleMarginStart=<span class="string">"48dp"</span></span><br><span class="line">            app:layout_scrollFlags=<span class="string">"scroll|exitUntilCollapsed"</span></span><br><span class="line">            &gt;</span><br><span class="line"></span><br><span class="line">            &lt;ImageView</span><br><span class="line">                android:id=<span class="string">"@+id/collapsing_toolbar_image"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">                android:scaleType=<span class="string">"centerCrop"</span></span><br><span class="line">                app:layout_collapseMode=<span class="string">"parallax"</span></span><br><span class="line">                /&gt;</span><br><span class="line"></span><br><span class="line">            &lt;android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.Toolbar</span></span><br><span class="line">                android:id=<span class="string">"@+id/collapsing_toolbar"</span></span><br><span class="line">                android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">                android:layout_height=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">                app:layout_collapseMode=<span class="string">"pin"</span></span><br><span class="line">                app:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span></span><br><span class="line">                app:popupTheme=<span class="string">"@style/ThemeOverlay.AppCompat.Light"</span></span><br><span class="line">                /&gt;</span><br><span class="line"></span><br><span class="line">        &lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CollapsingToolbarLayout</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.AppBarLayout</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;/android<span class="class">.support</span><span class="class">.design</span><span class="class">.widget</span><span class="class">.CoordinatorLayout</span>&gt;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -789,8 +850,7 @@
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://segmentfault.com/a/1190000002888109" target="_blank" rel="external">Android Support Design 中 CoordinatorLayout 与 Behaviors 初探</a><br><a href="http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior" target="_blank" rel="external">http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -814,6 +874,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -825,6 +889,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/06/29/2015-06-29-recyclerview-basic-usage/" itemprop="url">
                   RecyclerView 基本用法
                 </a>
@@ -835,7 +900,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-06-29T20:55:00+08:00" content="2015-06-29">
               2015-06-29
             </time>
@@ -843,7 +911,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/android/" itemprop="url" rel="index">
@@ -861,31 +933,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/06/29/2015-06-29-recyclerview-basic-usage/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/29/2015-06-29-recyclerview-basic-usage/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/06/29/2015-06-29-recyclerview-basic-usage/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/06/29/2015-06-29-recyclerview-basic-usage/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="基本用法">基本用法</h1><ul>
+          
+            <h1 id="基本用法">基本用法</h1><ul>
 <li><p>在 XML 中添加 <code>&lt;android.support.v7.widget.RecyclerView/&gt;</code></p>
 </li>
 <li><p>编写继承 <code>RecyclerView.Adapter&lt;RecyclerViewAdapter.ViewHolder&gt;</code> 的 <code>Adapter</code></p>
@@ -924,8 +997,7 @@
 <figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line">RecyclerView mRecyclerView = <span class="params">(RecyclerView)</span> findViewById<span class="params">(R.id.my_recyclerview)</span>;</span><br><span class="line">mRecyclerView.setLayoutManager<span class="params">(new LinearLayoutManager<span class="params">(this)</span>)</span>;</span><br><span class="line">mRecyclerView.setAdapter<span class="params">(adapter)</span>;</span><br></pre></td></tr></table></figure>
 <h1 id="参考资料">参考资料</h1><p><a href="http://wobushi.ren/recyclerview.html" target="_blank" rel="external">RecyclerView全攻略</a><br><a href="http://blog.csdn.net/lmj623565791/article/details/45059587" target="_blank" rel="external">Android RecyclerView 使用完全解析 体验艺术般的控件</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -949,6 +1021,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -960,6 +1036,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/03/15/2015-03-15-html5-canvas-tricks/" itemprop="url">
                   HTML5 Canvas 技巧
                 </a>
@@ -970,7 +1047,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-03-15T20:55:00+08:00" content="2015-03-15">
               2015-03-15
             </time>
@@ -978,7 +1058,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -996,31 +1080,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/03/15/2015-03-15-html5-canvas-tricks/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/15/2015-03-15-html5-canvas-tricks/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/03/15/2015-03-15-html5-canvas-tricks/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/03/15/2015-03-15-html5-canvas-tricks/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="注意事项">注意事项</h1><p>用 <code>&lt;canvas&gt;</code> 标签进行绘图时必须要设置 <code>width</code> 和 <code>height</code> 属性，这里并不是指 CSS 属性中的 <code>width</code> 和 <code>height</code>，而是 <code>&lt;canvas&gt;</code> 标签本身的属性！</p>
+          
+            <h1 id="注意事项">注意事项</h1><p>用 <code>&lt;canvas&gt;</code> 标签进行绘图时必须要设置 <code>width</code> 和 <code>height</code> 属性，这里并不是指 CSS 属性中的 <code>width</code> 和 <code>height</code>，而是 <code>&lt;canvas&gt;</code> 标签本身的属性！</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 正确 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">width</span>=<span class="value">"500"</span> <span class="attribute">height</span>=<span class="value">"500"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 错误 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">style</span>=<span class="value">"width: 500px; height: 500px;"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 正确 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">canvas</span> <span class="attribute">id</span>=<span class="value">"canvas"</span> <span class="attribute">style</span>=<span class="value">"width: 500px; height: 500px;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="mel"></span><br><span class="line">var <span class="keyword">canvas</span> = document.getElementById(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">canvas</span>.setAttribute(<span class="string">'width'</span>, <span class="string">'500'</span>);</span><br><span class="line"><span class="keyword">canvas</span>.setAttribute(<span class="string">'height'</span>, <span class="string">'500'</span>);</span><br><span class="line"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>我以前一直以为 <code>&lt;canvas&gt;</code> 的 <code>width</code> 和 <code>height</code> 属性和 CSS 中的 <code>width</code> 和 <code>height</code> 是同一个东西，直到我看到 Stackoverflow 上面的<a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">这个帖子</a>…</p>
 <h1 id="读取图像文件，并绘制到_canvas_的中央">读取图像文件，并绘制到 canvas 的中央</h1><p>下面演示一下如何让用户选择一张图片，然后把图片绘制到 canvas 中央。</p>
@@ -1029,8 +1114,7 @@
 <h1 id="参考资料：">参考资料：</h1><p><a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties</a></p>
 <p><a href="http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties" target="_blank" rel="external">http://stackoverflow.com/questions/2588181/canvas-is-stretched-when-using-css-but-normal-with-width-height-properties</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -1054,6 +1138,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -1065,6 +1153,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/01/27/2015-01-27-javascript-upload-slice-file-using-blob/" itemprop="url">
                   JavaScript 利用 Blob 进行分片上传
                 </a>
@@ -1075,7 +1164,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-01-27T17:28:00+08:00" content="2015-01-27">
               2015-01-27
             </time>
@@ -1083,7 +1175,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -1101,31 +1197,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/01/27/2015-01-27-javascript-upload-slice-file-using-blob/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/27/2015-01-27-javascript-upload-slice-file-using-blob/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/01/27/2015-01-27-javascript-upload-slice-file-using-blob/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/27/2015-01-27-javascript-upload-slice-file-using-blob/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="基本流程">基本流程</h1><ul>
+          
+            <h1 id="基本流程">基本流程</h1><ul>
 <li><p>用户选择文件</p>
 </li>
 <li><p>判断文件大小</p>
@@ -1172,8 +1269,7 @@
 <h2 id="客户端代码_-_JavaScript">客户端代码 - JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">uploadFile</span> (<span class="params">url, blob, callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> perFileSize = <span class="number">2097152</span>; <span class="comment">// 2 * 1024 * 1024</span></span><br><span class="line">    <span class="keyword">var</span> blobParts = <span class="built_in">Math</span>.ceil(blob.size / perFileSize);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; blobParts; i++) &#123;</span><br><span class="line">        (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> fd = <span class="keyword">new</span> FormData();</span><br><span class="line">            <span class="keyword">var</span> _blob = blob.slice(i * perFileSize, (i + <span class="number">1</span>) * perFileSize);</span><br><span class="line"></span><br><span class="line">            fd.append(<span class="string">'_blob'</span>, _blob);</span><br><span class="line">            fd.append(<span class="string">'filename'</span>, blob.name);</span><br><span class="line">            fd.append(<span class="string">'index'</span>, i + <span class="number">1</span>);</span><br><span class="line">            fd.append(<span class="string">'total'</span>, blobParts);</span><br><span class="line"></span><br><span class="line">            $.ajax(&#123;</span><br><span class="line">                type: <span class="string">'POST'</span>,</span><br><span class="line">                url: url,</span><br><span class="line">                data: fd,</span><br><span class="line">                processData: <span class="literal">false</span>,</span><br><span class="line">                contentType: <span class="literal">false</span></span><br><span class="line">            &#125;).done(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'upload status: '</span>);</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'this is '</span> + (i + <span class="number">1</span>) + <span class="string">'part, total '</span> + blobParts + <span class="string">' part(s).'</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (res.statusCode === <span class="number">200</span>) &#123;</span><br><span class="line">                    callback(<span class="literal">null</span>, res);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).fail(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">                callback(err, <span class="literal">null</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$(<span class="string">'#upload'</span>).on(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> file = e.target.files[<span class="number">0</span>];</span><br><span class="line">    uploadFile(<span class="string">'/upload'</span>, file, <span class="function"><span class="keyword">function</span> (<span class="params">err, res</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123; <span class="keyword">return</span> <span class="built_in">console</span>.log(err); &#125;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'upload successfully!'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="服务端代码_-_NodeJS">服务端代码 - NodeJS</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Expressjs</span></span><br><span class="line"><span class="keyword">var</span> multipart = <span class="built_in">require</span>(<span class="string">'connect-multiparty'</span>);</span><br><span class="line"><span class="keyword">var</span> multipartMiddleware = multipart();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> uploadDir = <span class="string">'./upload/'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 合并文件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeFiles</span>(<span class="params">fileName, fileParts</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> buffers = [];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取各个部分的路径</span></span><br><span class="line">    <span class="keyword">var</span> filePartsPaths = fileParts.map(<span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> path.join(uploadDir, name);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取各个 part 的 buffer，并保存到 buffers 中</span></span><br><span class="line">    filePartsPaths.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> buffer = fs.readFileSync(path);</span><br><span class="line">        buffers.push(buffer);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 合并文件</span></span><br><span class="line">    <span class="keyword">var</span> concatBuffer = Buffer.concat(buffers);</span><br><span class="line">    <span class="keyword">var</span> concatFilePath = path.join(uploadDir, fileName);</span><br><span class="line">    fs.writeFileSync(concatFilePath, concatBuffer);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除各个 part 的文件</span></span><br><span class="line">    filePartsPaths.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">        fs.unlinkSync(path);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">upload</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (req.method === <span class="string">'POST'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> data = req.body;</span><br><span class="line">        <span class="keyword">var</span> _blobPath = req.files._blob.path;</span><br><span class="line">        <span class="keyword">var</span> fileName = data.filename;</span><br><span class="line">        <span class="keyword">var</span> filePath;</span><br><span class="line">        <span class="keyword">var</span> total = <span class="built_in">parseInt</span>(data.total);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理文件路径</span></span><br><span class="line">        <span class="keyword">if</span> (total === <span class="number">1</span>) &#123;</span><br><span class="line">            filePath = path.join(uploadDir, fileName);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> fileNameWithPart = fileName + <span class="string">'.part'</span> + data.index;</span><br><span class="line">            filePath = path.join(uploadDir, fileNameWithPart);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 读取上传的数据，保存到指定路径</span></span><br><span class="line">        <span class="keyword">var</span> tmpBuffer = fs.readFileSync(_blobPath);</span><br><span class="line">        fs.writeFileSync(filePath, tmpBuffer);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断是否上传完成</span></span><br><span class="line">        <span class="keyword">if</span> (total === <span class="number">1</span>) &#123;</span><br><span class="line">            res.send(<span class="number">200</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 获取指定目录下的所有文件名</span></span><br><span class="line">            <span class="keyword">var</span> filesInDir = fs.readdirSync(uploadDir);</span><br><span class="line">            <span class="comment">// 找出指定文件名中带有 .part 的文件</span></span><br><span class="line">            <span class="keyword">var</span> fileParts = filesInDir.filter(<span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> name.substring(<span class="number">0</span>, fileName.length + <span class="number">5</span>) === (fileName + <span class="string">'.part'</span>);</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 判断是否需要合并文件</span></span><br><span class="line">            <span class="keyword">if</span> (fileParts.length === total) &#123;</span><br><span class="line">                mergeFiles(fileName, fileParts);</span><br><span class="line">                res.send(<span class="number">200</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                res.send(<span class="number">204</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.send(<span class="number">405</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/upload'</span>, multipartMiddleware, upload);</span><br></pre></td></tr></table></figure>
 
-            
-          </span>
+          
         
       
     </div>
@@ -1197,6 +1293,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -1208,6 +1308,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/01/26/2015-01-26-javascript-tricks/" itemprop="url">
                   JavaScript 常用技巧
                 </a>
@@ -1218,7 +1319,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-01-26T18:05:00+08:00" content="2015-01-26">
               2015-01-26
             </time>
@@ -1226,7 +1330,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -1244,31 +1352,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/01/26/2015-01-26-javascript-tricks/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/26/2015-01-26-javascript-tricks/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/01/26/2015-01-26-javascript-tricks/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/26/2015-01-26-javascript-tricks/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="字符串操作">字符串操作</h1><h2 id="首字母大写">首字母大写</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+          
+            <h1 id="字符串操作">字符串操作</h1><h2 id="首字母大写">首字母大写</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="截取字符串最后几位">截取字符串最后几位</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.substring(str.length-X)</span><br></pre></td></tr></table></figure>
 <h2 id="进制转换">进制转换</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">d.toString(<span class="number">16</span>)    (十进制 -&gt; 十六进制)</span><br><span class="line"><span class="built_in">parseInt</span>(‘ff’, <span class="number">16</span>) (十六进制 -&gt; 十进制)</span><br></pre></td></tr></table></figure>
 <h2 id="移除左边多余的_0">移除左边多余的 0</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 用正则, '000.00' -&gt; 0.00</span></span><br><span class="line"><span class="comment">// 基于 http://stackoverflow.com/questions/594325/truncate-leading-zeros-of-a-string-in-javascript</span></span><br><span class="line">str.replace(<span class="regexp">/^[0]&#123;2&#125;/</span>, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 parseInt , '000123' -&gt; '123'</span></span><br><span class="line"><span class="comment">// http://stackoverflow.com/questions/6676488/remove-leading-zeros-from-a-number-in-javascript</span></span><br><span class="line"><span class="built_in">parseInt</span>(str, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
@@ -1282,8 +1391,7 @@
 <hr>
 <h1 id="日期操作">日期操作</h1><h2 id="获取当前时间戳">获取当前时间戳</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">+<span class="keyword">new</span> <span class="built_in">Date</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript</span></span><br></pre></td></tr></table></figure>
 
-            
-          </span>
+          
         
       
     </div>
@@ -1307,6 +1415,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -1318,6 +1430,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/01/13/2015-01-13-html5-drag-and-drop-api/" itemprop="url">
                   HTML5 Drag and Drop API
                 </a>
@@ -1328,7 +1441,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-01-13T18:28:04+08:00" content="2015-01-13">
               2015-01-13
             </time>
@@ -1336,7 +1452,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/HTML5/" itemprop="url" rel="index">
@@ -1354,31 +1474,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/01/13/2015-01-13-html5-drag-and-drop-api/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/13/2015-01-13-html5-drag-and-drop-api/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/01/13/2015-01-13-html5-drag-and-drop-api/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/13/2015-01-13-html5-drag-and-drop-api/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="基本使用">基本使用</h1><h2 id="创建可拖放对象">创建可拖放对象</h2><p>在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 <code>draggable=&quot;true&quot;</code> 就能创建可拖放对象了。</p>
+          
+            <h1 id="基本使用">基本使用</h1><h2 id="创建可拖放对象">创建可拖放对象</h2><p>在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 <code>draggable=&quot;true&quot;</code> 就能创建可拖放对象了。</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect red"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect green"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect blue"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="如何拖动">如何拖动</h2><p>有了可拖放对象之后，我们还需要处理拖放事件才能实现拖放。拖放包含下面的事件：</p>
 <ul>
@@ -1422,8 +1543,7 @@
 <h2 id="使用示例">使用示例</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="doctype">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">        <span class="attr_selector">[draggable]</span> <span class="rules">&#123;<span class="rule"><span class="attribute">cursor</span>:<span class="value"> move</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.dragging</span> <span class="rules">&#123;<span class="rule"><span class="attribute">opacity</span>:<span class="value"> <span class="number">0.2</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.over</span> <span class="rules">&#123;<span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> dashed black</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.rect</span> <span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">500px</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>; <span class="rule"><span class="attribute">margin</span>:<span class="value"> auto</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.red</span>, <span class="class">.green</span>, <span class="class">.blue</span>, <span class="class">.black</span> <span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.red</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#FF8C8C</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.green</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#8CFFB5</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.blue</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#8CA3FF</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.black</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#3A3C44</span></span></span>;&#125;</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"red"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"green"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"blue"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"black"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="keyword">var</span> dragSrc = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">var</span> draggableElements = <span class="built_in">document</span>.querySelectorAll(<span class="string">'[draggable]'</span>);</span><br><span class="line">        <span class="comment">// draggableElements 是 NodeList 对象，并不是 Array，所以没有 forEach 方法。</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">resetDragSrc</span> (<span class="params"></span>) </span>&#123;dragSrc = <span class="literal">null</span>;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragStart</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag start'</span>);</span><br><span class="line">            dragSrc = <span class="keyword">this</span>;</span><br><span class="line">            e.dataTransfer.effectAllowed = <span class="string">'move'</span>;</span><br><span class="line">            e.dataTransfer.setData(<span class="string">'text/html'</span>, <span class="keyword">this</span>.innerHTML);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">this</span>.classList.add(<span class="string">'dragging'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragOver</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag over'</span>);</span><br><span class="line">            <span class="keyword">if</span> (e.preventDefault) &#123;</span><br><span class="line">                e.preventDefault(); <span class="comment">// Necessary. Allows us to drop.</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            e.dataTransfer.dropEffect = <span class="string">'move'</span>;  <span class="comment">// See the section on the DataTransfer object.</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragEnter</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag enter'</span>);</span><br><span class="line">            <span class="keyword">this</span>.classList.add(<span class="string">'over'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragLeave</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag leave'</span>);</span><br><span class="line">            <span class="keyword">this</span>.classList.remove(<span class="string">'over'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drop</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drop!'</span>);</span><br><span class="line">            <span class="keyword">if</span> (e.stopPropagation) &#123;</span><br><span class="line">                e.stopPropagation(); <span class="comment">// stops the browser from redirecting.</span></span><br><span class="line">            &#125;</span><br><span class="line">            dragSrc.innerHTML = <span class="keyword">this</span>.innerHTML;</span><br><span class="line">            <span class="keyword">this</span>.innerHTML = e.dataTransfer.getData(<span class="string">'text/html'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragEnd</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag end!'</span>);</span><br><span class="line">            [].forEach.call(draggableElements, <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">                element.classList.remove(<span class="string">'over'</span>);</span><br><span class="line">                element.classList.remove(<span class="string">'dragging'</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">            resetDragSrc();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drag</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'dragging!'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        [].forEach.call(draggableElements, <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">            element.addEventListener(<span class="string">'dragstart'</span>, dragStart, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragenter'</span>, dragEnter, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragleave'</span>, dragLeave, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragover'</span>, dragOver, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'drag'</span>, drag, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'drop'</span>, drop, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragend'</span>, dragEnd, <span class="literal">false</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h1 id="参考资料">参考资料</h1><p><a href="http://www.html5rocks.com/zh/tutorials/dnd/basics/" target="_blank" rel="external">http://www.html5rocks.com/zh/tutorials/dnd/basics/</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/Events</a><br><a href="http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements" target="_blank" rel="external">http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements</a><br><a href="http://www.cnblogs.com/fsjohnhuang/p/3961066.html" target="_blank" rel="external">http://www.cnblogs.com/fsjohnhuang/p/3961066.html</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -1447,6 +1567,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -1458,6 +1582,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/01/04/2015-01-04-d3js-learning-2/" itemprop="url">
                   D3.js 学习笔记2
                 </a>
@@ -1468,7 +1593,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-01-04T17:28:04+08:00" content="2015-01-04">
               2015-01-04
             </time>
@@ -1476,7 +1604,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -1494,31 +1626,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/01/04/2015-01-04-d3js-learning-2/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/04/2015-01-04-d3js-learning-2/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/01/04/2015-01-04-d3js-learning-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/04/2015-01-04-d3js-learning-2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="Layout">Layout</h1><p>和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加方便处理的数据。</p>
+          
+            <h1 id="Layout">Layout</h1><p>和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加方便处理的数据。</p>
 <p>D3 中包含的全部的 Layout 列表如下：</p>
 <ul>
 <li>Bundle</li>
@@ -1557,8 +1690,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">    ...</span><br><span class="line">    .range([h, <span class="number">0</span>]); <span class="comment">// 原来是 [0, h]</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="keyword">var</span> rects = groups.selectAll(<span class="string">"rect"</span>)</span><br><span class="line">    ...</span><br><span class="line">    .attr(<span class="string">"y"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> yScale(d.y0) - (h - yScale(d.y)); <span class="comment">// 原来是 return yScale(d.y0)</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"height"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> h - yScale(d.y);  <span class="comment">// 原来是 return yScale(d.y)</span></span><br><span class="line">    &#125;)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
 <h1 id="参考资料">参考资料</h1><p><a href="http://chimera.labs.oreilly.com/books/1230000000345/ch11.html" target="_blank" rel="external">http://chimera.labs.oreilly.com/books/1230000000345/ch11.html</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -1577,6 +1709,7 @@
 
 
     
+
   </section>
 
   
@@ -1586,17 +1719,15 @@
 
 
 
+          </div>
+          
+
+
+          
+
         </div>
-
         
-
-
-        
-
-      </div>
-
-      
-        
+          
   
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
@@ -1615,10 +1746,12 @@
 
       <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/2386165" alt="Scarletsky" itemprop="image"/>
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/2386165"
+               alt="Scarletsky" />
           <p class="site-author-name" itemprop="name">Scarletsky</p>
+          <p class="site-description motion-element" itemprop="description"></p>
         </div>
-        <p class="site-description motion-element" itemprop="description"></p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
@@ -1671,7 +1804,8 @@
   </aside>
 
 
-      
+        
+      </div>
     </main>
 
     <footer id="footer" class="footer">
@@ -1693,7 +1827,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Muse
   </a>
 </div>
 
@@ -1705,14 +1839,50 @@
     <div class="back-to-top"></div>
   </div>
 
+  
+
+
+  
+
+
+
   <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
 
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
   
   
 
   
-    
-    
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
 
   
 
@@ -1736,32 +1906,13 @@
   
 
 
-  
-
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
-
-
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
-
-
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-
-  <script type="text/javascript" src="/js/bootstrap.js"></script>
 
   
   
 
   
   
+
 
 </body>
 </html>

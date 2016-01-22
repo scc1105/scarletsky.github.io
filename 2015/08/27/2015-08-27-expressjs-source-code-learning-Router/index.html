@@ -1,5 +1,11 @@
 <!doctype html>
-<html class="theme-next   use-motion ">
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -26,19 +32,13 @@
 
 
 
-  
-    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-  
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 
 
 
 <link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
-
-
-
-
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -52,7 +52,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
 
 
 
@@ -76,10 +76,16 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
 
 <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: '',
-    sidebar: 'post',
-    motion: true
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
   };
 </script>
 
@@ -88,15 +94,6 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
-    </a>
-  </div>
-<![endif]-->
   
 
 
@@ -104,7 +101,14 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
 
 
-  <div class="container one-column page-post-detail">
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -168,6 +172,7 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
       
       
+      
     </ul>
   
 
@@ -179,12 +184,17 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
     <main id="main" class="main">
       <div class="main-inner">
-        <div id="content" class="content">
-          
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
 
   <div id="posts" class="posts-expand">
     
 
+  
+  
+
+  
   
   
 
@@ -207,7 +217,10 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-08-27T00:36:54+08:00" content="2015-08-27">
               2015-08-27
             </time>
@@ -215,7 +228,11 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -233,28 +250,30 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
-        <span itemprop="articleBody"><h1 id="概述">概述</h1><p>Router 分为三个部分，分别是：Layer, Route, Router。</p>
+        <h1 id="概述">概述</h1><p>Router 分为三个部分，分别是：Layer, Route, Router。</p>
 <h1 id="Layer">Layer</h1><h2 id="构造函数">构造函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Layer</span>(<span class="params">path, options, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Layer)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Layer(path, options, fn);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  debug(<span class="string">'new %s'</span>, path);</span><br><span class="line">  <span class="comment">// Route 中会传一个空的对象进来</span></span><br><span class="line">  <span class="keyword">var</span> opts = options || &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.handle = fn;</span><br><span class="line">  <span class="keyword">this</span>.name = fn.name || <span class="string">'&lt;anonymous&gt;'</span>;</span><br><span class="line">  <span class="keyword">this</span>.params = <span class="literal">undefined</span>;</span><br><span class="line">  <span class="comment">// 不会受到传进来的 path 的影响</span></span><br><span class="line">  <span class="comment">// 这个值会在 layer.match(path) 中修改</span></span><br><span class="line">  <span class="keyword">this</span>.path = <span class="literal">undefined</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 定义 this.keys</span></span><br><span class="line">  <span class="comment">// pathRegexp(path, keys, options) 会把路径转换成正则表达式，express 通过这个库来解析路由</span></span><br><span class="line">  <span class="comment">// 转换后，this.regexp 为正则表达式，如果 path 中带有 express 路由风格的参数(/:foo/:bar)，则 this.keys 会变成 [&#123;name: 'foo'...&#125;, &#123;name: 'bar'...&#125;]，如果没有匹配的话，则 this.keys 就会是空数组</span></span><br><span class="line">  <span class="comment">// 如果想知道更多这个库的信息，请到 https://github.com/pillarjs/path-to-regexp</span></span><br><span class="line">  <span class="keyword">this</span>.regexp = pathRegexp(path, <span class="keyword">this</span>.keys = [], opts);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// router.route 中会把 opts.end 设置成 true</span></span><br><span class="line">  <span class="keyword">if</span> (path === <span class="string">'/'</span> &amp;&amp; opts.end === <span class="literal">false</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.regexp.fast_slash = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Layer-prototype-handle_error_处理错误">Layer.prototype.handle_error 处理错误</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Handle the error for the layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Error&#125; error</span><br><span class="line"> * @param &#123;Request&#125; req</span><br><span class="line"> * @param &#123;Response&#125; res</span><br><span class="line"> * @param &#123;function&#125; next</span><br><span class="line"> * @api private</span><br><span class="line"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// route.dispatch 中调用这个方法</span></span><br><span class="line">Layer.prototype.handle_error = <span class="function"><span class="keyword">function</span> <span class="title">handle_error</span>(<span class="params">error, req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>.handle;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// fn 必须要有 4 个参数</span></span><br><span class="line">  <span class="keyword">if</span> (fn.length !== <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="comment">// not a standard error handler</span></span><br><span class="line">    <span class="keyword">return</span> next(error);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    fn(error, req, res, next);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="Layer-prototype-handle_request_处理请求">Layer.prototype.handle_request 处理请求</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Handle the request for the layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Request&#125; req</span><br><span class="line"> * @param &#123;Response&#125; res</span><br><span class="line"> * @param &#123;function&#125; next</span><br><span class="line"> * @api private</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// route.dispatch 中会调用这个方法</span></span><br><span class="line">Layer.prototype.handle_request = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>.handle;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// fn 如果参数多余三个，那么它就不是一个标准的处理器</span></span><br><span class="line">  <span class="keyword">if</span> (fn.length &gt; <span class="number">3</span>) &#123;</span><br><span class="line">    <span class="comment">// not a standard request handler</span></span><br><span class="line">    <span class="keyword">return</span> next();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    fn(req, res, next);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -274,7 +293,7 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 <h2 id="Router-use_加载特定中间件">Router.use 加载特定中间件</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Use the given middleware function, with optional path, defaulting to "/".</span><br><span class="line"> *</span><br><span class="line"> * Use (like `.all`) will run for any http METHOD, but it will not add</span><br><span class="line"> * handlers for those methods so OPTIONS requests will not consider `.use`</span><br><span class="line"> * functions even if they could respond.</span><br><span class="line"> *</span><br><span class="line"> * The other difference is that _route_ path is stripped and not visible</span><br><span class="line"> * to the handler function. The main effect of this feature is that mounted</span><br><span class="line"> * handlers can operate without any code changes regardless of the "prefix"</span><br><span class="line"> * pathname.</span><br><span class="line"> *</span><br><span class="line"> * @public</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 中间件默认挂载在 / 下</span></span><br><span class="line">proto.use = <span class="function"><span class="keyword">function</span> <span class="title">use</span>(<span class="params">fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> offset = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> path = <span class="string">'/'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// default path to '/'</span></span><br><span class="line">  <span class="comment">// disambiguate router.use([fn])</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> arg = fn;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">Array</span>.isArray(arg) &amp;&amp; arg.length !== <span class="number">0</span>) &#123;</span><br><span class="line">      arg = arg[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// first arg is the path</span></span><br><span class="line">    <span class="comment">// 处理 router.use('/foo', bar)</span></span><br><span class="line">    <span class="comment">// 注意这里只是设置了偏移值</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> arg !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      offset = <span class="number">1</span>;</span><br><span class="line">      path = fn;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取 .use 中所有函数</span></span><br><span class="line">  <span class="comment">// 如 router.use('/test', fn1, fn2, fn3); </span></span><br><span class="line">  <span class="comment">// callbacks = [fn1, fn2, fn3]</span></span><br><span class="line">  <span class="keyword">var</span> callbacks = flatten(slice.call(<span class="built_in">arguments</span>, offset));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (callbacks.length === <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Router.use() requires middleware functions'</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 遍历 callbacks，每个 callback 都会成为一个 layer，并按顺序进入 Router.stack</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; callbacks.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> fn = callbacks[i];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'Router.use() requires middleware function but got a '</span> + gettype(fn));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// add the middleware</span></span><br><span class="line">    debug(<span class="string">'use %s %s'</span>, path, fn.name || <span class="string">'&lt;anonymous&gt;'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> layer = <span class="keyword">new</span> Layer(path, &#123;</span><br><span class="line">      sensitive: <span class="keyword">this</span>.caseSensitive,</span><br><span class="line">      strict: <span class="literal">false</span>,</span><br><span class="line">      end: <span class="literal">false</span></span><br><span class="line">    &#125;, fn);</span><br><span class="line"></span><br><span class="line">    layer.route = <span class="literal">undefined</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">this</span>.stack.push(layer);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="Router-route_为_router_创建新的路由">Router.route 为 router 创建新的路由</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Create a new Route for the given path.</span><br><span class="line"> *</span><br><span class="line"> * Each route contains a separate middleware stack and VERB handlers.</span><br><span class="line"> *</span><br><span class="line"> * See the Route api documentation for details on adding handlers</span><br><span class="line"> * and middleware to routes.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;String&#125; path</span><br><span class="line"> * @return &#123;Route&#125;</span><br><span class="line"> * @public</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">proto.route = <span class="function"><span class="keyword">function</span> <span class="title">route</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 创建新的路由</span></span><br><span class="line">  <span class="keyword">var</span> route = <span class="keyword">new</span> Route(path);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建新的 layer</span></span><br><span class="line">  <span class="keyword">var</span> layer = <span class="keyword">new</span> Layer(path, &#123;</span><br><span class="line">    sensitive: <span class="keyword">this</span>.caseSensitive,</span><br><span class="line">    strict: <span class="keyword">this</span>.strict,</span><br><span class="line">    end: <span class="literal">true</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 为这个特殊的 layer 提供分发 req，res 的能力</span></span><br><span class="line">  &#125;, route.dispatch.bind(route));</span><br><span class="line"></span><br><span class="line">  layer.route = route;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 其实 route 也是一个 layer</span></span><br><span class="line">  <span class="keyword">this</span>.stack.push(layer);</span><br><span class="line">  <span class="keyword">return</span> route;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="Router-VERB_为_router_提供_VERB_方法">Router.VERB 为 router 提供 VERB 方法</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// create Router#VERB functions</span></span><br><span class="line"><span class="comment">// 提供方便的语法来创建 route</span></span><br><span class="line">methods.concat(<span class="string">'all'</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">method</span>)</span>&#123;</span><br><span class="line">  proto[method] = <span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 只是简单的调用上面提到的 Router.route</span></span><br><span class="line">    <span class="keyword">var</span> route = <span class="keyword">this</span>.route(path)</span><br><span class="line">    route[method].apply(route, slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="helpers_只有_Router_中才用到的_helpers，属于私有_API">helpers 只有 Router 中才用到的 helpers，属于私有 API</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// append methods to a list of methods</span></span><br><span class="line"><span class="comment">// 为给定列表添加不重复的元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">appendMethods</span>(<span class="params">list, addition</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; addition.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> method = addition[i];</span><br><span class="line">    <span class="keyword">if</span> (list.indexOf(method) === -<span class="number">1</span>) &#123;</span><br><span class="line">      list.push(method);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get pathname of request</span></span><br><span class="line"><span class="comment">// 获取请求中的 pathname</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPathname</span>(<span class="params">req</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> parseUrl(req).pathname;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get type for error message</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gettype</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = <span class="keyword">typeof</span> obj;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type !== <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> type;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// inspect [[Class]] for objects</span></span><br><span class="line">  <span class="keyword">return</span> toString.call(obj)</span><br><span class="line">    .replace(objectRegExp, <span class="string">'$1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Match path to a layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Layer&#125; layer</span><br><span class="line"> * @param &#123;string&#125; path</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"><span class="comment">// 判断给定的 layer 是否与路径匹配</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">matchLayer</span>(<span class="params">layer, path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> layer.match(path);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> err;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// merge params with parent params</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeParams</span>(<span class="params">params, parent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> parent !== <span class="string">'object'</span> || !parent) &#123;</span><br><span class="line">    <span class="keyword">return</span> params;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// make copy of parent for base</span></span><br><span class="line">  <span class="keyword">var</span> obj = mixin(&#123;&#125;, parent);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// simple non-numeric merging</span></span><br><span class="line">  <span class="keyword">if</span> (!(<span class="number">0</span> <span class="keyword">in</span> params) || !(<span class="number">0</span> <span class="keyword">in</span> parent)) &#123;</span><br><span class="line">    <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// determine numeric gaps</span></span><br><span class="line">  <span class="keyword">while</span> (i <span class="keyword">in</span> params) &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (o <span class="keyword">in</span> parent) &#123;</span><br><span class="line">    o++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// offset numeric indices in params before merge</span></span><br><span class="line">  <span class="keyword">for</span> (i--; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    params[i + o] = params[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create holes for the merge when necessary</span></span><br><span class="line">    <span class="keyword">if</span> (i &lt; o) &#123;</span><br><span class="line">      <span class="keyword">delete</span> params[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// restore obj props after function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">restore</span>(<span class="params">fn, obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> props = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">var</span> vals = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">    props[i] = <span class="built_in">arguments</span>[i + <span class="number">2</span>];</span><br><span class="line">    vals[i] = obj[props[i]];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// restore vals</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">      obj[props[i]] = vals[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// send an OPTIONS response</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendOptionsResponse</span>(<span class="params">res, options, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body = options.join(<span class="string">','</span>);</span><br><span class="line">    res.set(<span class="string">'Allow'</span>, body);</span><br><span class="line">    res.send(body);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// wrap a function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrap</span>(<span class="params">old, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">proxy</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    args[<span class="number">0</span>] = old;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="built_in">arguments</span>.length; i &lt; len; i++) &#123;</span><br><span class="line">      args[i + <span class="number">1</span>] = <span class="built_in">arguments</span>[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fn.apply(<span class="keyword">this</span>, args);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+<h2 id="helpers_只有_Router_中才用到的_helpers，属于私有_API">helpers 只有 Router 中才用到的 helpers，属于私有 API</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// append methods to a list of methods</span></span><br><span class="line"><span class="comment">// 为给定列表添加不重复的元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">appendMethods</span>(<span class="params">list, addition</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; addition.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> method = addition[i];</span><br><span class="line">    <span class="keyword">if</span> (list.indexOf(method) === -<span class="number">1</span>) &#123;</span><br><span class="line">      list.push(method);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get pathname of request</span></span><br><span class="line"><span class="comment">// 获取请求中的 pathname</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPathname</span>(<span class="params">req</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> parseUrl(req).pathname;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get type for error message</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gettype</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = <span class="keyword">typeof</span> obj;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type !== <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> type;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// inspect [[Class]] for objects</span></span><br><span class="line">  <span class="keyword">return</span> toString.call(obj)</span><br><span class="line">    .replace(objectRegExp, <span class="string">'$1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Match path to a layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Layer&#125; layer</span><br><span class="line"> * @param &#123;string&#125; path</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"><span class="comment">// 判断给定的 layer 是否与路径匹配</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">matchLayer</span>(<span class="params">layer, path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> layer.match(path);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> err;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// merge params with parent params</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeParams</span>(<span class="params">params, parent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> parent !== <span class="string">'object'</span> || !parent) &#123;</span><br><span class="line">    <span class="keyword">return</span> params;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// make copy of parent for base</span></span><br><span class="line">  <span class="keyword">var</span> obj = mixin(&#123;&#125;, parent);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// simple non-numeric merging</span></span><br><span class="line">  <span class="keyword">if</span> (!(<span class="number">0</span> <span class="keyword">in</span> params) || !(<span class="number">0</span> <span class="keyword">in</span> parent)) &#123;</span><br><span class="line">    <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// determine numeric gaps</span></span><br><span class="line">  <span class="keyword">while</span> (i <span class="keyword">in</span> params) &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (o <span class="keyword">in</span> parent) &#123;</span><br><span class="line">    o++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// offset numeric indices in params before merge</span></span><br><span class="line">  <span class="keyword">for</span> (i--; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    params[i + o] = params[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create holes for the merge when necessary</span></span><br><span class="line">    <span class="keyword">if</span> (i &lt; o) &#123;</span><br><span class="line">      <span class="keyword">delete</span> params[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// restore obj props after function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">restore</span>(<span class="params">fn, obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> props = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">var</span> vals = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">    props[i] = <span class="built_in">arguments</span>[i + <span class="number">2</span>];</span><br><span class="line">    vals[i] = obj[props[i]];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// restore vals</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">      obj[props[i]] = vals[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// send an OPTIONS response</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendOptionsResponse</span>(<span class="params">res, options, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body = options.join(<span class="string">','</span>);</span><br><span class="line">    res.set(<span class="string">'Allow'</span>, body);</span><br><span class="line">    res.send(body);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// wrap a function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrap</span>(<span class="params">old, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">proxy</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    args[<span class="number">0</span>] = old;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="built_in">arguments</span>.length; i &lt; len; i++) &#123;</span><br><span class="line">      args[i + <span class="number">1</span>] = <span class="built_in">arguments</span>[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fn.apply(<span class="keyword">this</span>, args);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -314,25 +333,26 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
   </div>
 
 
-        </div>
+          </div>
+          
 
-        
 
-
-        
+          
   <div class="comments" id="comments">
     
       <div id="disqus_thread">
-        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
       </div>
     
   </div>
 
 
-      </div>
-
-      
+        </div>
         
+          
   
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
@@ -360,10 +380,12 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
       <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/2386165" alt="Scarletsky" itemprop="image"/>
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/2386165"
+               alt="Scarletsky" />
           <p class="site-author-name" itemprop="name">Scarletsky</p>
+          <p class="site-description motion-element" itemprop="description"></p>
         </div>
-        <p class="site-description motion-element" itemprop="description"></p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
@@ -412,7 +434,9 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
       
         <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
           <div class="post-toc">
             
               
@@ -421,7 +445,9 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Layer"><span class="nav-number">2.</span> <span class="nav-text">Layer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数"><span class="nav-number">2.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-prototype-handle_error_处理错误"><span class="nav-number">2.2.</span> <span class="nav-text">Layer.prototype.handle_error 处理错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-prototype-handle_request_处理请求"><span class="nav-number">2.3.</span> <span class="nav-text">Layer.prototype.handle_request 处理请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-prototype-match_检查是否匹配指定路径，同时会把获取_URL_中变量的实际值"><span class="nav-number">2.4.</span> <span class="nav-text">Layer.prototype.match 检查是否匹配指定路径，同时会把获取 URL 中变量的实际值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decode_param_解析路径中的参数"><span class="nav-number">2.5.</span> <span class="nav-text">decode_param 解析路径中的参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Route"><span class="nav-number">3.</span> <span class="nav-text">Route</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数-1"><span class="nav-number">3.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Route-prototype-_handles_method_判断该路由是否能处理指定的_HTTP_方法"><span class="nav-number">3.2.</span> <span class="nav-text">Route.prototype._handles_method 判断该路由是否能处理指定的 HTTP 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Route-prototype-_options_返回该路由支持的_HTTP_方法"><span class="nav-number">3.3.</span> <span class="nav-text">Route.prototype._options 返回该路由支持的 HTTP 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Route-prototype-dispatch_分发_req,_res"><span class="nav-number">3.4.</span> <span class="nav-text">Route.prototype.dispatch 分发 req, res</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Route-prototype[method]_&&_Route-prototype-all_为所有_HTTP_方法添加处理(handler)方法"><span class="nav-number">3.5.</span> <span class="nav-text">Route.prototype[method] && Route.prototype.all 为所有 HTTP 方法添加处理(handler)方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Router"><span class="nav-number">4.</span> <span class="nav-text">Router</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数-2"><span class="nav-number">4.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-handle_把_req，res_分发到_router_中"><span class="nav-number">4.2.</span> <span class="nav-text">Router.handle 把 req，res 分发到 router 中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-param_获取指定参数的值"><span class="nav-number">4.3.</span> <span class="nav-text">Router.param 获取指定参数的值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-process_params_为_layer_处理参数"><span class="nav-number">4.4.</span> <span class="nav-text">Router.process_params 为 layer 处理参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-use_加载特定中间件"><span class="nav-number">4.5.</span> <span class="nav-text">Router.use 加载特定中间件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-route_为_router_创建新的路由"><span class="nav-number">4.6.</span> <span class="nav-text">Router.route 为 router 创建新的路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router-VERB_为_router_提供_VERB_方法"><span class="nav-number">4.7.</span> <span class="nav-text">Router.VERB 为 router 提供 VERB 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#helpers_只有_Router_中才用到的_helpers，属于私有_API"><span class="nav-number">4.8.</span> <span class="nav-text">helpers 只有 Router 中才用到的 helpers，属于私有 API</span></a></li></ol></li></ol></div>
             
           </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
         </section>
       
 
@@ -429,7 +455,8 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
   </aside>
 
 
-      
+        
+      </div>
     </main>
 
     <footer id="footer" class="footer">
@@ -451,7 +478,7 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Muse
   </a>
 </div>
 
@@ -463,60 +490,41 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
     <div class="back-to-top"></div>
   </div>
 
+  
+
+
+  
+
+
+
   <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
 
-  
-  
-
-  
-    
-    
-
-  
-
-    <script type="text/javascript">
-      var disqus_shortname = 'scarletskygithubio';
-      var disqus_identifier = '2015/08/27/2015-08-27-expressjs-source-code-learning-Router/';
-      var disqus_title = 'ExpressJS 源码学习 —— Router 篇';
-      var disqus_url = 'http://scarletsky.github.io/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/';
-
-      function run_disqus_script(disqus_script){
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      }
-
-      run_disqus_script('count.js');
-      
-        run_disqus_script('embed.js');
-      
-    </script>
-  
-
-
-  
-
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
-
-
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
-
-
   <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
   <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
-  
-  
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
 
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
 
 <script type="text/javascript" id="sidebar.toc.highlight">
   $(document).ready(function () {
@@ -596,7 +604,7 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
     function tocOverflowIndicator (indicator, action) {
       var $indicator = $(indicator);
-      var opacity = action === 'show' ? 0.4 : 0;
+      var opacity = action === 'show' ? 1 : 0;
       $indicator.velocity ?
         $indicator.velocity('stop').velocity({
           opacity: opacity
@@ -650,7 +658,7 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
     $('.post-toc a').on('click', function (e) {
       e.preventDefault();
-      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
       var offset = $(targetSelector).offset().top;
       hasVelocity ?
         html.velocity('stop').velocity('scroll', {
@@ -663,11 +671,12 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
     });
 
     // Expand sidebar on post detail page by default, when post has a toc.
-    motionMiddleWares.sidebar = function () {
+    NexT.motion.middleWares.sidebar = function () {
       var $tocContent = $('.post-toc-content');
+
       if (CONFIG.sidebar === 'post') {
         if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-          displaySidebar();
+          NexT.utils.displaySidebar();
         }
       }
     };
@@ -676,13 +685,48 @@ Layer构造函数function Layer(path, options, fn) &amp;#123;  if (!(this instan
 
 
 
-  <script type="text/javascript" src="/js/bootstrap.js"></script>
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'scarletskygithubio';
+      var disqus_identifier = '2015/08/27/2015-08-27-expressjs-source-code-learning-Router/';
+      var disqus_title = 'ExpressJS 源码学习 —— Router 篇';
+      var disqus_url = 'http://scarletsky.github.io/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
 
   
   
 
   
   
+
 
 </body>
 </html>

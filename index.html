@@ -1,5 +1,11 @@
 <!doctype html>
-<html class="theme-next   use-motion ">
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -26,19 +32,13 @@
 
 
 
-  
-    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-  
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 
 
 
 <link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
-
-
-
-
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -52,7 +52,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
 
 
 
@@ -72,10 +72,16 @@
 
 
 <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: '',
-    sidebar: 'post',
-    motion: true
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
   };
 </script>
 
@@ -84,15 +90,6 @@
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
-    </a>
-  </div>
-<![endif]-->
   
 
 
@@ -100,9 +97,16 @@
 
 
 
-  <div class="container one-column 
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left 
    page-home 
-">
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -166,6 +170,7 @@
 
       
       
+      
     </ul>
   
 
@@ -177,12 +182,23 @@
 
     <main id="main" class="main">
       <div class="main-inner">
-        <div id="content" class="content">
-          
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
   <section id="posts" class="posts-expand">
+
+    
+
+    
+    
+
     
       
 
+  
+  
+
+  
   
   
 
@@ -197,6 +213,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2016/01/22/2016-01-22-spacemacs-usage/" itemprop="url">
                   Spacemacs 使用总结
                 </a>
@@ -207,7 +224,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2016-01-22T15:20:38+08:00" content="2016-01-22">
               2016-01-22
             </time>
@@ -218,31 +238,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2016/01/22/2016-01-22-spacemacs-usage/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/01/22/2016-01-22-spacemacs-usage/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2016/01/22/2016-01-22-spacemacs-usage/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/01/22/2016-01-22-spacemacs-usage/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h2 id="简介">简介</h2><p>Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。</p>
+          
+            <h2 id="简介">简介</h2><p>Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。</p>
 <h2 id="安装_&amp;_使用">安装 &amp; 使用</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/syl20bnr/spacemacs ~/.emacs.d</span><br><span class="line">$ emacs</span><br></pre></td></tr></table></figure>
 <h2 id="常用快捷键">常用快捷键</h2><h4 id="配置文件管理">配置文件管理</h4><p><code>SPC f e d</code> 快速打开配置文件 <code>.spacemacs</code><br><code>SPC f e R</code> 同步配置文件</p>
 <h4 id="文件管理">文件管理</h4><p><code>SPC f f</code> 打开文件（夹），相当于 <code>$ open xxx</code> 或 <code>$ cd /path/to/project</code><br><code>SPC p f</code> 搜索文件名，相当于 ST / Atom 中的 <code>Ctrl + p</code><br><code>SPC s a p</code> 搜索内容，相当于 <code>$ ag xxx</code> 或 ST / Atom 中的 <code>Ctrl + Shift + f</code></p>
@@ -269,8 +290,7 @@
 </ul>
 <h2 id="参考资料">参考资料</h2><p><a href="https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org" target="_blank" rel="external">https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -294,6 +314,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -305,6 +329,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2016/01/17/2016-01-17-localtunnel-usage/" itemprop="url">
                   Localtunnel（Node.js 版） 使用教程
                 </a>
@@ -315,7 +340,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2016-01-17T17:07:06+08:00" content="2016-01-17">
               2016-01-17
             </time>
@@ -326,31 +354,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2016/01/17/2016-01-17-localtunnel-usage/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/01/17/2016-01-17-localtunnel-usage/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2016/01/17/2016-01-17-localtunnel-usage/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/01/17/2016-01-17-localtunnel-usage/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h2 id="简介">简介</h2><p>Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。</p>
+          
+            <h2 id="简介">简介</h2><p>Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。</p>
 <h2 id="客户端">客户端</h2><h3 id="安装">安装</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ npm install -g localtunnel</span><br></pre></td></tr></table></figure>
 <h3 id="使用">使用</h3><p>假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露到公网中</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ lt --port 8000&#10;your url is: https://uhhzexcifv.localtunnel.me</span><br></pre></td></tr></table></figure>
@@ -373,8 +402,7 @@
 <p>其实有好几个 pull request 都尝试去解决这个问题的，但不知道什么原因，作者一直没去合并。或者再过一段时间，这个问题就会解决，到时候， localtunnel 就会变得更加好用了。</p>
 <h2 id="参考资料">参考资料</h2><p><a href="https://github.com/localtunnel/localtunnel" target="_blank" rel="external">https://github.com/localtunnel/localtunnel</a><br><a href="https://github.com/localtunnel/server" target="_blank" rel="external">https://github.com/localtunnel/server</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -398,6 +426,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -409,6 +441,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/12/02/2015-12-02-the-little-javascript-closures/" itemprop="url">
                   The Little JavaScript Closures
                 </a>
@@ -419,7 +452,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-12-02T20:55:54+08:00" content="2015-12-02">
               2015-12-02
             </time>
@@ -430,31 +466,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/12/02/2015-12-02-the-little-javascript-closures/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/12/02/2015-12-02-the-little-javascript-closures/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/12/02/2015-12-02-the-little-javascript-closures/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/12/02/2015-12-02-the-little-javascript-closures/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h2 id="写在前面">写在前面</h2><p>本文尝试模仿 <a href="http://uternet.github.io/TLS/" target="_blank" rel="external">The Little Schema</a> 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。</p>
+          
+            <h2 id="写在前面">写在前面</h2><p>本文尝试模仿 <a href="http://uternet.github.io/TLS/" target="_blank" rel="external">The Little Schema</a> 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。</p>
 <h2 id="简介">简介</h2><p>什么是闭包？</p>
 <blockquote>
 <p>闭包是一个函数</p>
@@ -717,8 +754,7 @@
 <h2 id="One_More_Thing">One More Thing</h2><p>[注1] 根据 <a href="https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/" target="_blank" rel="external">Understanding JavaScript Closures</a> 这篇文章，事实上所有函数在创建的时候都会形成闭包。但这种闭包并没什么趣味，也没什么特别的用途，所以我们更关注的是由内部函数形成的闭包。</p>
 <h2 id="参考资料">参考资料</h2><p><a href="http://uternet.github.io/TLS/" target="_blank" rel="external">http://uternet.github.io/TLS/</a><br><a href="http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting</a><br><a href="http://javascriptissexy.com/understand-javascript-closures-with-ease/" target="_blank" rel="external">http://javascriptissexy.com/understand-javascript-closures-with-ease/</a><br><a href="http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/" target="_blank" rel="external">http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/</a><br><a href="http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions" target="_blank" rel="external">http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions</a><br><a href="https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/" target="_blank" rel="external">https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/</a><br><a href="http://www.moye.me/2014/12/29/closure_higher-order-function/" target="_blank" rel="external">http://www.moye.me/2014/12/29/closure_higher-order-function/</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -742,6 +778,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -753,6 +793,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/11/17/2015-11-17-react-dnd-usage/" itemprop="url">
                   React-DnD 的使用
                 </a>
@@ -763,7 +804,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-11-17T10:59:31+08:00" content="2015-11-17">
               2015-11-17
             </time>
@@ -774,31 +818,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/11/17/2015-11-17-react-dnd-usage/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/11/17/2015-11-17-react-dnd-usage/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/11/17/2015-11-17-react-dnd-usage/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/11/17/2015-11-17-react-dnd-usage/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h2 id="介绍">介绍</h2><p>React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数据，而组件会改变它们的外观和应用的状态来响应拖拽事件。</p>
+          
+            <h2 id="介绍">介绍</h2><p>React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数据，而组件会改变它们的外观和应用的状态来响应拖拽事件。</p>
 <h2 id="基本用法">基本用法</h2><ol>
 <li>把应用的根组件包装在 <code>DragDropContext</code> 中</li>
 <li>把可以拖拽的组件包装在 <code>DragSource</code> 中<ol>
@@ -882,8 +927,7 @@
 </ul>
 <h2 id="参考资料">参考资料</h2><p><a href="http://gaearon.github.io/react-dnd/" target="_blank" rel="external">官方文档</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -907,6 +951,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -918,6 +966,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/10/25/2015-10-25-birthday-summary/" itemprop="url">
                   写在二十四岁生日
                 </a>
@@ -928,7 +977,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-10-25T17:38:50+08:00" content="2015-10-25">
               2015-10-25
             </time>
@@ -936,7 +988,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/life/" itemprop="url" rel="index">
@@ -954,31 +1010,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/25/2015-10-25-birthday-summary/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/25/2015-10-25-birthday-summary/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/10/25/2015-10-25-birthday-summary/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/25/2015-10-25-birthday-summary/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <p>又一年过去了，今年是第四年。<br>今年的生日是和女朋友一起，平平淡淡地过的。<br>回顾今年，我做的事情基本都是读书，学习，工作，陪妹子。</p>
+          
+            <p>又一年过去了，今年是第四年。<br>今年的生日是和女朋友一起，平平淡淡地过的。<br>回顾今年，我做的事情基本都是读书，学习，工作，陪妹子。</p>
 <p>相信大家都知道读书的好处，但很多人在工作之后都会抱怨没时间读书，包括我自己。但人们常说，时间是挤出来的。所以，我也试着去挤时间——把上下班坐地铁/公交的时间利用起来。于是乎，这一年下来看的书大概有：</p>
 <ul>
 <li>《三体系列》</li>
@@ -999,8 +1056,7 @@
 <p>另外，我今年还试着做了一个开源的网站，<a href="http://aniquo.com" target="_blank" rel="external">http://aniquo.com</a> 大家有兴趣的可以去围观一下。没什么特别有趣的东西，只有我自己收录的一些经典的语录而已。本来是想把它做成一个语录搜索系统的，但精力有限，现阶段大概算是一个可用的版本。至于用户量，从头到尾都只有我一个，233. 继续做这个的原因，只剩下情怀了。如果有人有兴趣的话，联系我吧~至于源码，到 github 搜下就找到了，写的很烂的东西。</p>
 <p>今年的总结大概就这些了~</p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -1024,6 +1080,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -1035,6 +1095,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/10/22/2015-10-22-node-stream-api-learning/" itemprop="url">
                   Node.js 中 Stream API 的使用
                 </a>
@@ -1045,7 +1106,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-10-22T17:09:06+08:00" content="2015-10-22">
               2015-10-22
             </time>
@@ -1053,7 +1117,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -1071,31 +1139,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/10/22/2015-10-22-node-stream-api-learning/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/22/2015-10-22-node-stream-api-learning/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/10/22/2015-10-22-node-stream-api-learning/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/22/2015-10-22-node-stream-api-learning/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h2 id="基本介绍">基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
+          
+            <h2 id="基本介绍">基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
 <p><code>fs.readFile</code> 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。</p>
 <p>而 <code>fs.createReadStream</code> 则是通过 Stream 来读取数据，它会把文件（数据）分割成小块，然后触发一些特定的事件，我们可以监听这些事件，编写特定的处理函数。这种方式相对上面来说，并不好上手，但它效率非常高。</p>
 <p>事实上， Stream 在 Node.js 中并非仅仅用在文件处理上，其他地方也可以看到它的身影，如 <code>process.stdin/stdout</code>, <code>http</code>, <code>tcp sockets</code>, <code>zlib</code>, <code>crypto</code> 等都有用到。</p>
@@ -1158,8 +1227,7 @@
 </ul>
 <h2 id="参考资料">参考资料</h2><p><a href="http://javascript.ruanyifeng.com/nodejs/stream.html" target="_blank" rel="external">阮一峰 - stream接口</a><br><a href="https://nodejs.org/api/stream.html" target="_blank" rel="external">nodejs.org Stream</a><br><a href="http://codewinds.com/blog/2013-08-20-nodejs-transform-streams.html" target="_blank" rel="external">Transforming data with Node.js transform streams</a><br><a href="http://stackoverflow.com/questions/18335499/nodejs-whats-the-difference-between-a-duplex-stream-and-a-transform-stream" target="_blank" rel="external">NodeJS: What’s the difference between a Duplex stream and a Transform stream?</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -1183,6 +1251,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -1194,6 +1266,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="url">
                   ExpressJS 源码学习 —— Router 篇
                 </a>
@@ -1204,7 +1277,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-08-27T00:36:54+08:00" content="2015-08-27">
               2015-08-27
             </time>
@@ -1212,7 +1288,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -1230,31 +1310,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/08/27/2015-08-27-expressjs-source-code-learning-Router/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/27/2015-08-27-expressjs-source-code-learning-Router/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="概述">概述</h1><p>Router 分为三个部分，分别是：Layer, Route, Router。</p>
+          
+            <h1 id="概述">概述</h1><p>Router 分为三个部分，分别是：Layer, Route, Router。</p>
 <h1 id="Layer">Layer</h1><h2 id="构造函数">构造函数</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Layer</span>(<span class="params">path, options, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Layer)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Layer(path, options, fn);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  debug(<span class="string">'new %s'</span>, path);</span><br><span class="line">  <span class="comment">// Route 中会传一个空的对象进来</span></span><br><span class="line">  <span class="keyword">var</span> opts = options || &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">this</span>.handle = fn;</span><br><span class="line">  <span class="keyword">this</span>.name = fn.name || <span class="string">'&lt;anonymous&gt;'</span>;</span><br><span class="line">  <span class="keyword">this</span>.params = <span class="literal">undefined</span>;</span><br><span class="line">  <span class="comment">// 不会受到传进来的 path 的影响</span></span><br><span class="line">  <span class="comment">// 这个值会在 layer.match(path) 中修改</span></span><br><span class="line">  <span class="keyword">this</span>.path = <span class="literal">undefined</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 定义 this.keys</span></span><br><span class="line">  <span class="comment">// pathRegexp(path, keys, options) 会把路径转换成正则表达式，express 通过这个库来解析路由</span></span><br><span class="line">  <span class="comment">// 转换后，this.regexp 为正则表达式，如果 path 中带有 express 路由风格的参数(/:foo/:bar)，则 this.keys 会变成 [&#123;name: 'foo'...&#125;, &#123;name: 'bar'...&#125;]，如果没有匹配的话，则 this.keys 就会是空数组</span></span><br><span class="line">  <span class="comment">// 如果想知道更多这个库的信息，请到 https://github.com/pillarjs/path-to-regexp</span></span><br><span class="line">  <span class="keyword">this</span>.regexp = pathRegexp(path, <span class="keyword">this</span>.keys = [], opts);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// router.route 中会把 opts.end 设置成 true</span></span><br><span class="line">  <span class="keyword">if</span> (path === <span class="string">'/'</span> &amp;&amp; opts.end === <span class="literal">false</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.regexp.fast_slash = <span class="literal">true</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="Layer-prototype-handle_error_处理错误">Layer.prototype.handle_error 处理错误</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Handle the error for the layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Error&#125; error</span><br><span class="line"> * @param &#123;Request&#125; req</span><br><span class="line"> * @param &#123;Response&#125; res</span><br><span class="line"> * @param &#123;function&#125; next</span><br><span class="line"> * @api private</span><br><span class="line"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// route.dispatch 中调用这个方法</span></span><br><span class="line">Layer.prototype.handle_error = <span class="function"><span class="keyword">function</span> <span class="title">handle_error</span>(<span class="params">error, req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>.handle;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// fn 必须要有 4 个参数</span></span><br><span class="line">  <span class="keyword">if</span> (fn.length !== <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="comment">// not a standard error handler</span></span><br><span class="line">    <span class="keyword">return</span> next(error);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    fn(error, req, res, next);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="Layer-prototype-handle_request_处理请求">Layer.prototype.handle_request 处理请求</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Handle the request for the layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Request&#125; req</span><br><span class="line"> * @param &#123;Response&#125; res</span><br><span class="line"> * @param &#123;function&#125; next</span><br><span class="line"> * @api private</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// route.dispatch 中会调用这个方法</span></span><br><span class="line">Layer.prototype.handle_request = <span class="function"><span class="keyword">function</span> <span class="title">handle</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> fn = <span class="keyword">this</span>.handle;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// fn 如果参数多余三个，那么它就不是一个标准的处理器</span></span><br><span class="line">  <span class="keyword">if</span> (fn.length &gt; <span class="number">3</span>) &#123;</span><br><span class="line">    <span class="comment">// not a standard request handler</span></span><br><span class="line">    <span class="keyword">return</span> next();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    fn(req, res, next);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -1275,8 +1356,7 @@
 <h2 id="Router-route_为_router_创建新的路由">Router.route 为 router 创建新的路由</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Create a new Route for the given path.</span><br><span class="line"> *</span><br><span class="line"> * Each route contains a separate middleware stack and VERB handlers.</span><br><span class="line"> *</span><br><span class="line"> * See the Route api documentation for details on adding handlers</span><br><span class="line"> * and middleware to routes.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;String&#125; path</span><br><span class="line"> * @return &#123;Route&#125;</span><br><span class="line"> * @public</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line">proto.route = <span class="function"><span class="keyword">function</span> <span class="title">route</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 创建新的路由</span></span><br><span class="line">  <span class="keyword">var</span> route = <span class="keyword">new</span> Route(path);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 创建新的 layer</span></span><br><span class="line">  <span class="keyword">var</span> layer = <span class="keyword">new</span> Layer(path, &#123;</span><br><span class="line">    sensitive: <span class="keyword">this</span>.caseSensitive,</span><br><span class="line">    strict: <span class="keyword">this</span>.strict,</span><br><span class="line">    end: <span class="literal">true</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 为这个特殊的 layer 提供分发 req，res 的能力</span></span><br><span class="line">  &#125;, route.dispatch.bind(route));</span><br><span class="line"></span><br><span class="line">  layer.route = route;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 其实 route 也是一个 layer</span></span><br><span class="line">  <span class="keyword">this</span>.stack.push(layer);</span><br><span class="line">  <span class="keyword">return</span> route;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="Router-VERB_为_router_提供_VERB_方法">Router.VERB 为 router 提供 VERB 方法</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// create Router#VERB functions</span></span><br><span class="line"><span class="comment">// 提供方便的语法来创建 route</span></span><br><span class="line">methods.concat(<span class="string">'all'</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">method</span>)</span>&#123;</span><br><span class="line">  proto[method] = <span class="function"><span class="keyword">function</span>(<span class="params">path</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 只是简单的调用上面提到的 Router.route</span></span><br><span class="line">    <span class="keyword">var</span> route = <span class="keyword">this</span>.route(path)</span><br><span class="line">    route[method].apply(route, slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="helpers_只有_Router_中才用到的_helpers，属于私有_API">helpers 只有 Router 中才用到的 helpers，属于私有 API</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// append methods to a list of methods</span></span><br><span class="line"><span class="comment">// 为给定列表添加不重复的元素</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">appendMethods</span>(<span class="params">list, addition</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; addition.length; i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> method = addition[i];</span><br><span class="line">    <span class="keyword">if</span> (list.indexOf(method) === -<span class="number">1</span>) &#123;</span><br><span class="line">      list.push(method);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get pathname of request</span></span><br><span class="line"><span class="comment">// 获取请求中的 pathname</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getPathname</span>(<span class="params">req</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> parseUrl(req).pathname;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// get type for error message</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gettype</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> type = <span class="keyword">typeof</span> obj;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (type !== <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> type;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// inspect [[Class]] for objects</span></span><br><span class="line">  <span class="keyword">return</span> toString.call(obj)</span><br><span class="line">    .replace(objectRegExp, <span class="string">'$1'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * Match path to a layer.</span><br><span class="line"> *</span><br><span class="line"> * @param &#123;Layer&#125; layer</span><br><span class="line"> * @param &#123;string&#125; path</span><br><span class="line"> * @private</span><br><span class="line"> */</span></span><br><span class="line"><span class="comment">// 判断给定的 layer 是否与路径匹配</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">matchLayer</span>(<span class="params">layer, path</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> layer.match(path);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> err;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// merge params with parent params</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeParams</span>(<span class="params">params, parent</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> parent !== <span class="string">'object'</span> || !parent) &#123;</span><br><span class="line">    <span class="keyword">return</span> params;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// make copy of parent for base</span></span><br><span class="line">  <span class="keyword">var</span> obj = mixin(&#123;&#125;, parent);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// simple non-numeric merging</span></span><br><span class="line">  <span class="keyword">if</span> (!(<span class="number">0</span> <span class="keyword">in</span> params) || !(<span class="number">0</span> <span class="keyword">in</span> parent)) &#123;</span><br><span class="line">    <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// determine numeric gaps</span></span><br><span class="line">  <span class="keyword">while</span> (i <span class="keyword">in</span> params) &#123;</span><br><span class="line">    i++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (o <span class="keyword">in</span> parent) &#123;</span><br><span class="line">    o++;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// offset numeric indices in params before merge</span></span><br><span class="line">  <span class="keyword">for</span> (i--; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">    params[i + o] = params[i];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create holes for the merge when necessary</span></span><br><span class="line">    <span class="keyword">if</span> (i &lt; o) &#123;</span><br><span class="line">      <span class="keyword">delete</span> params[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> mixin(obj, params);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// restore obj props after function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">restore</span>(<span class="params">fn, obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> props = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">var</span> vals = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length - <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">    props[i] = <span class="built_in">arguments</span>[i + <span class="number">2</span>];</span><br><span class="line">    vals[i] = obj[props[i]];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// restore vals</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.length; i++) &#123;</span><br><span class="line">      obj[props[i]] = vals[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// send an OPTIONS response</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendOptionsResponse</span>(<span class="params">res, options, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body = options.join(<span class="string">','</span>);</span><br><span class="line">    res.set(<span class="string">'Allow'</span>, body);</span><br><span class="line">    res.send(body);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// wrap a function</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">wrap</span>(<span class="params">old, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">proxy</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> args = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="built_in">arguments</span>.length + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    args[<span class="number">0</span>] = old;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = <span class="built_in">arguments</span>.length; i &lt; len; i++) &#123;</span><br><span class="line">      args[i + <span class="number">1</span>] = <span class="built_in">arguments</span>[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fn.apply(<span class="keyword">this</span>, args);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-            
-          </span>
+          
         
       
     </div>
@@ -1300,6 +1380,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -1311,6 +1395,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/" itemprop="url">
                   ExpressJS 源码学习 —— Application 篇
                 </a>
@@ -1321,7 +1406,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-08-20T10:11:10+08:00" content="2015-08-20">
               2015-08-20
             </time>
@@ -1329,7 +1417,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -1347,31 +1439,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/20/2015-08-20-expressjs-source-code-learning-Application/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/08/20/2015-08-20-expressjs-source-code-learning-Application/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/20/2015-08-20-expressjs-source-code-learning-Application/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="概述">概述</h1><p>ExpressJS 是 NodeJS 世界中使用最广泛的 Web 框架。它非常轻量，最大的特点是可以组合各种各样的中间件来处理请求，每个中间件都会对请求进行处理，最后再返回给客户端。目前最新版的 ExpressJS 是 4.13.3。</p>
+          
+            <h1 id="概述">概述</h1><p>ExpressJS 是 NodeJS 世界中使用最广泛的 Web 框架。它非常轻量，最大的特点是可以组合各种各样的中间件来处理请求，每个中间件都会对请求进行处理，最后再返回给客户端。目前最新版的 ExpressJS 是 4.13.3。</p>
 <p>这系列的文章是出于学习目的而写的，主要是想了解目前主流的 JavaScript 框架是如何设计的，使用了哪些我还不知道的技术。希望写完这系列的文章之后，对我自己的水平会有一定的提高。这系列的文章会先分析各个模块的 API 的工作流程，最后再作总结。</p>
 <p>本文先从 application.js 文件开始分析。</p>
 <h1 id="私有_API">私有 API</h1><ul>
@@ -1541,8 +1634,7 @@
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="https://github.com/strongloop/express" target="_blank" rel="external">https://github.com/strongloop/express</a><br><a href="http://expressjs.com/api.html" target="_blank" rel="external">http://expressjs.com/api.html</a><br><a href="https://cnodejs.org/topic/545720506537f4d52c414d87" target="_blank" rel="external">https://cnodejs.org/topic/545720506537f4d52c414d87</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -1566,6 +1658,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -1577,6 +1673,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/08/19/2015-08-19-commonjs-learning/" itemprop="url">
                   CommonJS 学习笔记
                 </a>
@@ -1587,7 +1684,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-08-19T10:11:10+08:00" content="2015-08-19">
               2015-08-19
             </time>
@@ -1595,7 +1695,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -1613,31 +1717,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/19/2015-08-19-commonjs-learning/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/19/2015-08-19-commonjs-learning/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/08/19/2015-08-19-commonjs-learning/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/19/2015-08-19-commonjs-learning/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="概述">概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
+          
+            <h1 id="概述">概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
 <p>根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 <code>require</code> 来获取 <code>module.exports</code> 中暴露的内容，而其他部分都是私有的，其他模块不能访问。</p>
 <h1 id="module_对象">module 对象</h1><p>每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是每个模块都有的本地变量。</p>
 <ul>
@@ -1670,8 +1775,7 @@
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://javascript.ruanyifeng.com/nodejs/commonjs.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/nodejs/commonjs.html</a><br><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">http://www.infoq.com/cn/articles/nodejs-module-mechanism/</a><br><a href="http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js" target="_blank" rel="external">http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -1695,6 +1799,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -1706,6 +1814,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2015/08/18/2015-08-18-Object-learning-in-javascript/" itemprop="url">
                   JavaScript 中 Object.defineProperty 的使用
                 </a>
@@ -1716,7 +1825,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2015-08-18T17:57:31+08:00" content="2015-08-18">
               2015-08-18
             </time>
@@ -1724,7 +1836,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -1742,31 +1858,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/08/18/2015-08-18-Object-learning-in-javascript/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/18/2015-08-18-Object-learning-in-javascript/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2015/08/18/2015-08-18-Object-learning-in-javascript/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/18/2015-08-18-Object-learning-in-javascript/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="Object-defineProperty">Object.defineProperty</h1><blockquote>
+          
+            <h1 id="Object-defineProperty">Object.defineProperty</h1><blockquote>
 <p>The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, and returns the object.</p>
 </blockquote>
 <p>直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。</p>
@@ -1809,8 +1926,7 @@
 </ul>
 <h1 id="参考资料">参考资料</h1><p><a href="http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html" target="_blank" rel="external">http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object</a><br><a href="https://github.com/strongloop/express/blob/master/lib/express.js" target="_blank" rel="external">https://github.com/strongloop/express/blob/master/lib/express.js</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -1829,6 +1945,7 @@
 
 
     
+
   </section>
 
   
@@ -1838,17 +1955,15 @@
 
 
 
+          </div>
+          
+
+
+          
+
         </div>
-
         
-
-
-        
-
-      </div>
-
-      
-        
+          
   
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
@@ -1867,10 +1982,12 @@
 
       <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/2386165" alt="Scarletsky" itemprop="image"/>
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/2386165"
+               alt="Scarletsky" />
           <p class="site-author-name" itemprop="name">Scarletsky</p>
+          <p class="site-description motion-element" itemprop="description"></p>
         </div>
-        <p class="site-description motion-element" itemprop="description"></p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
@@ -1923,7 +2040,8 @@
   </aside>
 
 
-      
+        
+      </div>
     </main>
 
     <footer id="footer" class="footer">
@@ -1945,7 +2063,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Muse
   </a>
 </div>
 
@@ -1957,14 +2075,50 @@
     <div class="back-to-top"></div>
   </div>
 
+  
+
+
+  
+
+
+
   <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
 
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
   
   
 
   
-    
-    
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
 
   
 
@@ -1988,32 +2142,13 @@
   
 
 
-  
-
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
-
-
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
-
-
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-
-  <script type="text/javascript" src="/js/bootstrap.js"></script>
 
   
   
 
   
   
+
 
 </body>
 </html>

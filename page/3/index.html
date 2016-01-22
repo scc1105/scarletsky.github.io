@@ -1,5 +1,11 @@
 <!doctype html>
-<html class="theme-next   use-motion ">
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -26,19 +32,13 @@
 
 
 
-  
-    <link href='//fonts.lug.ustc.edu.cn/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-  
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 
 
 
 <link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
-
-
-
-
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -52,7 +52,7 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
 
 
 
@@ -72,10 +72,16 @@
 
 
 <script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: '',
-    sidebar: 'post',
-    motion: true
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
   };
 </script>
 
@@ -84,15 +90,6 @@
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-  <!--[if lte IE 8]>
-  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
-    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
-           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
-           style='margin-left:auto;margin-right:auto;display: block;'/>
-    </a>
-  </div>
-<![endif]-->
   
 
 
@@ -100,9 +97,16 @@
 
 
 
-  <div class="container one-column 
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left 
    page-home 
-">
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -166,6 +170,7 @@
 
       
       
+      
     </ul>
   
 
@@ -177,12 +182,23 @@
 
     <main id="main" class="main">
       <div class="main-inner">
-        <div id="content" class="content">
-          
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
   <section id="posts" class="posts-expand">
+
+    
+
+    
+    
+
     
       
 
+  
+  
+
+  
   
   
 
@@ -197,6 +213,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2014/12/29/2014-12-29-d3js-learning-1/" itemprop="url">
                   D3.js 学习笔记1
                 </a>
@@ -207,7 +224,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2014-12-29T16:28:04+08:00" content="2014-12-29">
               2014-12-29
             </time>
@@ -215,7 +235,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -233,31 +257,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/12/29/2014-12-29-d3js-learning-1/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/12/29/2014-12-29-d3js-learning-1/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2014/12/29/2014-12-29-d3js-learning-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/12/29/2014-12-29-d3js-learning-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="基础操作">基础操作</h1><ul>
+          
+            <h1 id="基础操作">基础操作</h1><ul>
 <li><code>d3.select</code>, <code>d3.selectAll</code> 选择元素</li>
 <li><code>selection.append</code> 在选择集合中添加元素</li>
 <li><code>selection.data</code> 为选择元素进行数据绑定，常与 <code>enter</code> 和 <code>exit</code> 一起使用</li>
@@ -307,8 +332,7 @@
 <li><a href="http://pkuwwt.gitcafe.com/d3-tutorial-cn/scales.html" target="_blank" rel="external">D3 中文教程</a></li>
 </ul>
 
-            
-          </span>
+          
         
       
     </div>
@@ -332,6 +356,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -343,6 +371,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2014/10/25/2014-10-25-mongodb-security-and-auth/" itemprop="url">
                   MongoDB 安全与认证
                 </a>
@@ -353,7 +382,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2014-10-25T17:18:00+08:00" content="2014-10-25">
               2014-10-25
             </time>
@@ -361,7 +393,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/mongodb/" itemprop="url" rel="index">
@@ -379,31 +415,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/10/25/2014-10-25-mongodb-security-and-auth/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/25/2014-10-25-mongodb-security-and-auth/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2014/10/25/2014-10-25-mongodb-security-and-auth/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/25/2014-10-25-mongodb-security-and-auth/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <h1 id="安全和认证">安全和认证</h1><p>要开启安全检查，需要在启动 mongod 时添加 —auth 选项<br>admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。<br>在开启安全检查之前，一定要有一个管理员帐号。<br>数据库的用户存储在 admin 的 <code>db.system.users</code> 集合中。</p>
+          
+            <h1 id="安全和认证">安全和认证</h1><p>要开启安全检查，需要在启动 mongod 时添加 —auth 选项<br>admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。<br>在开启安全检查之前，一定要有一个管理员帐号。<br>数据库的用户存储在 admin 的 <code>db.system.users</code> 集合中。</p>
 <p>创建管理员<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.createUser(&#123;user: <span class="string">'root'</span>, <span class="built_in">pwd</span>: <span class="string">'password'</span>, roles: [<span class="string">'root'</span>]&#125;) <span class="comment"># 添加管理员</span></span><br></pre></td></tr></table></figure></p>
 <p>开启验证<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mongod --config /usr/<span class="built_in">local</span>/etc/mongod.conf --auth</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证方法1</span></span><br><span class="line">$ mongo admin -u <span class="string">'username'</span> -p <span class="string">'password'</span> <span class="comment"># 必须指定该用户有权限访问的数据库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证方法2</span></span><br><span class="line">$ mongo</span><br><span class="line">&gt; use admin</span><br><span class="line">&gt; db.auth(<span class="string">'username'</span>, <span class="string">'password'</span>)</span><br><span class="line">&gt; use otherDatabase</span><br><span class="line">&gt; db.users.find().....</span><br></pre></td></tr></table></figure></p>
 <p>开启验证后，我们在使用 URI 去连接数据库的时候需要注意，要加上 authSource=admin 参数才能通过验证。这里以 mongoose 为例。<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line">mongoose.connect(<span class="string">'mongodb://user:pass@server:port/database?authSource=admin'</span>);</span><br></pre></td></tr></table></figure></p>
@@ -419,8 +456,7 @@
 <h1 id="其他安全考虑">其他安全考虑</h1><p>mongodb 传输协议是不加密的，如果需要加密，可以试用 <code>ssh</code> 或者类似的技术进行加密。<br>另外建议把 mongo 服务器布置在防火墙后或者布置在只有应用服务器能访问的网络中。同时建议使用 <code>--bindip</code> 选项，这样可以限制 ip 访问。运行 <code>mongod --bindip localhost</code> 后，只有本机的应用可以访问服务器。<br>最后，还可以用 <code>--noscripting</code> 选项完全禁止服务端 <code>JavaScript</code> 的执行。</p>
 <h1 id="参考文献">参考文献</h1><p><a href="http://docs.mongodb.org/manual/reference/method/js-user-management/" target="_blank" rel="external">Mongodb 官方文档</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -444,6 +480,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -455,6 +495,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2014/10/16/2014-10-16-mongodb-operation-and-maintenance-basic/" itemprop="url">
                   MongoDB 运维基础
                 </a>
@@ -465,7 +506,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2014-10-16T17:59:00+08:00" content="2014-10-16">
               2014-10-16
             </time>
@@ -473,7 +517,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/mongodb/" itemprop="url" rel="index">
@@ -491,31 +539,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/10/16/2014-10-16-mongodb-operation-and-maintenance-basic/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/16/2014-10-16-mongodb-operation-and-maintenance-basic/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2014/10/16/2014-10-16-mongodb-operation-and-maintenance-basic/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/16/2014-10-16-mongodb-operation-and-maintenance-basic/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <p>可以试用 <code>mongod --help</code> 查看所有选项</p>
+          
+            <p>可以试用 <code>mongod --help</code> 查看所有选项</p>
 <h1 id="启动_MongoDB:">启动 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mongod --dbpath xxx --port <span class="number">1111</span> --config yyy.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#for ubuntu</span></span><br><span class="line">service mongod start</span><br></pre></td></tr></table></figure>
 <h1 id="使用配置文件获取配置信息(-f_或者_—config):">使用配置文件获取配置信息(-f  或者 —config):</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mongod --config ~/.mongodb.conf</span><br></pre></td></tr></table></figure>
 <h1 id="停止_MongoDB:">停止 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">kill</span> -<span class="number">2</span> pid (SIGINT)</span><br><span class="line"><span class="built_in">kill</span> pid (SIGTEAM)</span><br></pre></td></tr></table></figure>
@@ -533,8 +582,7 @@
 <h1 id="删除_MongoDB">删除 MongoDB</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#for ubuntu</span></span><br><span class="line">sudo service mongod stop</span><br><span class="line">sudo apt-get purge mongodb-org*</span><br><span class="line">sudo rm -r /var/<span class="built_in">log</span>/mongodb</span><br><span class="line">sudo rm -r /var/lib/mongodb</span><br></pre></td></tr></table></figure>
 <h1 id="参考资料">参考资料</h1><p><a href="http://book.douban.com/subject/6068947/" target="_blank" rel="external">MongoDB权威指南</a><br><a href="http://docs.mongodb.org/" target="_blank" rel="external">MongoDB官方文档</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -558,6 +606,10 @@
   
   
 
+  
+  
+  
+
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
 
     
@@ -569,6 +621,7 @@
             
             
               
+                
                 <a class="post-title-link" href="/2014/10/16/2014-10-16-the-digest-loop-and-apply/" itemprop="url">
                   The Digest Loop and $apply
                 </a>
@@ -579,7 +632,10 @@
 
         <div class="post-meta">
           <span class="post-time">
-            发表于
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
             <time itemprop="dateCreated" datetime="2014-10-16T11:12:00+08:00" content="2014-10-16">
               2014-10-16
             </time>
@@ -587,7 +643,11 @@
 
           
             <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
                   <a href="/categories/javascript/" itemprop="url" rel="index">
@@ -605,31 +665,32 @@
           
             
               <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/10/16/2014-10-16-the-digest-loop-and-apply/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/16/2014-10-16-the-digest-loop-and-apply/" itemprop="commentsCount"></span>
-              </a>
-            </span>
+                &nbsp; | &nbsp;
+                <a href="/2014/10/16/2014-10-16-the-digest-loop-and-apply/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/16/2014-10-16-the-digest-loop-and-apply/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
           
 
+          
+          
         </div>
       </header>
     
 
 
-    <div class="post-body">
+    <div class="post-body" itemprop="articleBody">
 
       
       
 
       
         
-          <span itemprop="articleBody">
-            
-              <p>让我们来看一下 <code>Angular</code> 底下是怎么工作的。我们是怎样通过几行代码让神奇的数据绑定起作用的呢？我们先来理解一下 <code>$digest</code> 循环和 <code>$apply</code> 方法是怎样工作的。</p>
+          
+            <p>让我们来看一下 <code>Angular</code> 底下是怎么工作的。我们是怎样通过几行代码让神奇的数据绑定起作用的呢？我们先来理解一下 <code>$digest</code> 循环和 <code>$apply</code> 方法是怎样工作的。</p>
 <p>在通常的浏览器工作流程中，当一个事件发生（例如 click），浏览器就会执行该事件注册过的回调函数。</p>
 <p>当页面被加载，当一个 <code>$http</code> 请求被响应，当鼠标移动或者一个按钮被点击等等，都会触发事件。</p>
 <p>当事件被触发后，JavaScript 就会创建一个 event object 并通过这个 event object 去执行任何监听该事件的函数。这个回调函数会运行在一个会返回给浏览器，可能更新 DOM 的 JavaScript 函数里面。</p>
@@ -656,8 +717,7 @@
 <p>一旦 Angular 检查完整个 <code>$watch list</code>，如果任何值改变了，app 就会回到 <code>$watch</code> 循环中，直到它检测到没有东西改变。</p>
 <h1 id="参考资料">参考资料</h1><p><a href="https://www.ng-book.com/p/The-Digest-Loop-and-apply/" target="_blank" rel="external">The Digest Loop and $apply</a></p>
 
-            
-          </span>
+          
         
       
     </div>
@@ -676,6 +736,7 @@
 
 
     
+
   </section>
 
   
@@ -685,17 +746,15 @@
 
 
 
+          </div>
+          
+
+
+          
+
         </div>
-
         
-
-
-        
-
-      </div>
-
-      
-        
+          
   
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
@@ -714,10 +773,12 @@
 
       <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/2386165" alt="Scarletsky" itemprop="image"/>
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/2386165"
+               alt="Scarletsky" />
           <p class="site-author-name" itemprop="name">Scarletsky</p>
+          <p class="site-description motion-element" itemprop="description"></p>
         </div>
-        <p class="site-description motion-element" itemprop="description"></p>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
@@ -770,7 +831,8 @@
   </aside>
 
 
-      
+        
+      </div>
     </main>
 
     <footer id="footer" class="footer">
@@ -792,7 +854,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Muse
   </a>
 </div>
 
@@ -804,14 +866,50 @@
     <div class="back-to-top"></div>
   </div>
 
+  
+
+
+  
+
+
+
   <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
 
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
   
   
 
   
-    
-    
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
 
   
 
@@ -835,32 +933,13 @@
   
 
 
-  
-
-  
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
-
-
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
-
-
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-
-  <script type="text/javascript" src="/js/bootstrap.js"></script>
 
   
   
 
   
   
+
 
 </body>
 </html>
