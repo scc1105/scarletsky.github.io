@@ -63,23 +63,23 @@
 
 <meta name="description" content="简介Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。
 安装 &amp;amp; 使用$ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d$ emacs
-常用快捷键配置文件管理SPC f e d 快速打开配置文件 .spacemacsSPC f e R 同步配置文件
-文件管理SPC f f 打开文件（夹">
+配置文件Spacemacs 的配置文件位于 ~/.spacemacs 中，我们只需要修改这个文件就可以制定自己的配置了。
+一般情况下，我们只需要在 d">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spacemacs 使用总结">
 <meta property="og:url" content="http://scarletsky.github.io/2016/01/22/2016-01-22-spacemacs-usage/index.html">
 <meta property="og:site_name" content="Scarletsky">
 <meta property="og:description" content="简介Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。
 安装 &amp;amp; 使用$ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d$ emacs
-常用快捷键配置文件管理SPC f e d 快速打开配置文件 .spacemacsSPC f e R 同步配置文件
-文件管理SPC f f 打开文件（夹">
-<meta property="og:updated_time" content="2016-01-22T08:34:08.000Z">
+配置文件Spacemacs 的配置文件位于 ~/.spacemacs 中，我们只需要修改这个文件就可以制定自己的配置了。
+一般情况下，我们只需要在 d">
+<meta property="og:updated_time" content="2016-01-22T14:18:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spacemacs 使用总结">
 <meta name="twitter:description" content="简介Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。
 安装 &amp;amp; 使用$ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d$ emacs
-常用快捷键配置文件管理SPC f e d 快速打开配置文件 .spacemacsSPC f e R 同步配置文件
-文件管理SPC f f 打开文件（夹">
+配置文件Spacemacs 的配置文件位于 ~/.spacemacs 中，我们只需要修改这个文件就可以制定自己的配置了。
+一般情况下，我们只需要在 d">
 
 
 
@@ -264,6 +264,8 @@
       
         <h2 id="简介">简介</h2><p>Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。</p>
 <h2 id="安装_&amp;_使用">安装 &amp; 使用</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/syl20bnr/spacemacs ~/.emacs.d</span><br><span class="line">$ emacs</span><br></pre></td></tr></table></figure>
+<h2 id="配置文件">配置文件</h2><p>Spacemacs 的配置文件位于 <code>~/.spacemacs</code> 中，我们只需要修改这个文件就可以制定自己的配置了。</p>
+<p>一般情况下，我们只需要在 <code>dotspacemacs-configuration-layers</code> 中添加自己需要的 layer 就可以了。</p>
 <h2 id="常用快捷键">常用快捷键</h2><h4 id="配置文件管理">配置文件管理</h4><p><code>SPC f e d</code> 快速打开配置文件 <code>.spacemacs</code><br><code>SPC f e R</code> 同步配置文件</p>
 <h4 id="文件管理">文件管理</h4><p><code>SPC f f</code> 打开文件（夹），相当于 <code>$ open xxx</code> 或 <code>$ cd /path/to/project</code><br><code>SPC p f</code> 搜索文件名，相当于 ST / Atom 中的 <code>Ctrl + p</code><br><code>SPC s a p</code> 搜索内容，相当于 <code>$ ag xxx</code> 或 ST / Atom 中的 <code>Ctrl + Shift + f</code></p>
 <p><code>SPC b k</code> 关闭当前 buffer<br><code>SPC SPC</code> 搜索当前文件 </p>
@@ -271,6 +273,18 @@
 <p><code>SPC 0</code> 光标跳转到侧边栏（NeoTree）中<br><code>SPC n(数字)</code> 光标跳转到第 n 个 buffer 中</p>
 <p><code>SPC w s | SPC w -</code> 水平分割窗口<br><code>SPC w v | SPC w /</code> 垂直分割窗口<br><code>SPC w c</code> 关闭当前窗口</p>
 <h4 id="对齐">对齐</h4><p><code>SPC j =</code> 自动对齐，相当于 beautify</p>
+<h4 id="Shell_集成_(必须先配置_Shell_layer)">Shell 集成 (必须先配置 Shell layer)</h4><p><code>SPC &#39;(单引号)</code> 打开/关闭 Shell<br><code>C-k</code> 前一条 shell 命令，相当于在 shell 中按上箭头<br><code>C-j</code> 后一条 shell 命令，相当于在 shell 中按下箭头</p>
+<h2 id="让_Spacemacs_支持_EditorConfig">让 Spacemacs 支持 EditorConfig</h2><p>EditorConfig 是一个配置文件，一般位于项目的根目录，它可以让不同的编辑器和IDE 都按照相同的格式来格式化代码，对于项目的维护者来说是一个很好的工具。</p>
+<p>Spacemacs 也支持 EditorConfig，只需要在配置文件中添加配置即可。下面以 OS X 为例，通过以下步骤即可让 Spacemacs 支持 EditorConfig：</p>
+<ol>
+<li><code>$ brew install editorconfig</code></li>
+<li><p>在 <code>~/.spacemacs</code> 中的 <code>dotspacemacs-additional-packages</code> 中添加 <code>editorconfig</code>：</p>
+<figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="label">dotspacemacs</span>-<span class="keyword">additional-packages</span><br><span class="line"></span> <span class="string">'(</span><br><span class="line">   editorconfig</span><br><span class="line">   )</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建 .editorconfig 文件，写上自己喜欢的配置。</p>
+</li>
+<li>完。</li>
+</ol>
 <h2 id="Emacs_服务器">Emacs 服务器</h2><p>Spacemacs 会在启动时启动服务器，这个服务器会在 Spacemacs 关闭的时候被杀掉。</p>
 <h3 id="使用_Emacs_服务器">使用 Emacs 服务器</h3><p>当 Emacs 服务器启动的时候，我们可以在命令行中使用 <code>emacsclient</code> 命令：</p>
 <ul>
@@ -287,7 +301,7 @@
 <li><code>SPC q q</code> 退出 Emacs 并杀掉服务器，会对已修改的 Buffer 给出保存的提示。</li>
 <li><code>SPC q Q</code> 同上，但会丢失所有未保存的修改。</li>
 </ul>
-<h2 id="参考资料">参考资料</h2><p><a href="https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org" target="_blank" rel="external">https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org</a></p>
+<h2 id="参考资料">参考资料</h2><p><a href="https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org" target="_blank" rel="external">https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org</a><br><a href="http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/" target="_blank" rel="external">http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/</a></p>
 
       
     </div>
@@ -441,7 +455,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装_&_使用"><span class="nav-number">2.</span> <span class="nav-text">安装 & 使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用快捷键"><span class="nav-number">3.</span> <span class="nav-text">常用快捷键</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置文件管理"><span class="nav-number">3.0.1.</span> <span class="nav-text">配置文件管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件管理"><span class="nav-number">3.0.2.</span> <span class="nav-text">文件管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#窗口管理"><span class="nav-number">3.0.3.</span> <span class="nav-text">窗口管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对齐"><span class="nav-number">3.0.4.</span> <span class="nav-text">对齐</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Emacs_服务器"><span class="nav-number">4.</span> <span class="nav-text">Emacs 服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用_Emacs_服务器"><span class="nav-number">4.1.</span> <span class="nav-text">使用 Emacs 服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#杀掉_Emacs_服务器"><span class="nav-number">4.2.</span> <span class="nav-text">杀掉 Emacs 服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持久化_Emacs_服务器"><span class="nav-number">4.3.</span> <span class="nav-text">持久化 Emacs 服务器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装_&_使用"><span class="nav-number">2.</span> <span class="nav-text">安装 & 使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件"><span class="nav-number">3.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用快捷键"><span class="nav-number">4.</span> <span class="nav-text">常用快捷键</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置文件管理"><span class="nav-number">4.0.1.</span> <span class="nav-text">配置文件管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件管理"><span class="nav-number">4.0.2.</span> <span class="nav-text">文件管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#窗口管理"><span class="nav-number">4.0.3.</span> <span class="nav-text">窗口管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对齐"><span class="nav-number">4.0.4.</span> <span class="nav-text">对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Shell_集成_(必须先配置_Shell_layer)"><span class="nav-number">4.0.5.</span> <span class="nav-text">Shell 集成 (必须先配置 Shell layer)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#让_Spacemacs_支持_EditorConfig"><span class="nav-number">5.</span> <span class="nav-text">让 Spacemacs 支持 EditorConfig</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Emacs_服务器"><span class="nav-number">6.</span> <span class="nav-text">Emacs 服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用_Emacs_服务器"><span class="nav-number">6.1.</span> <span class="nav-text">使用 Emacs 服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#杀掉_Emacs_服务器"><span class="nav-number">6.2.</span> <span class="nav-text">杀掉 Emacs 服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持久化_Emacs_服务器"><span class="nav-number">6.3.</span> <span class="nav-text">持久化 Emacs 服务器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
