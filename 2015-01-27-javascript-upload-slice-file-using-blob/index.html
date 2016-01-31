@@ -1,0 +1,840 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="基本流程
+用户选择文件
+
+判断文件大小
+
+如果文件小于限定文件大小，则直接上传
+
+否则进行分片上传
+
+
+
+
+
+分片流程
+给定限定大小。
+
+利用 Blob 对象的 slice 方法把文件分成 N 份。
+
+遍历 N 次，利用 FormData 创建需要提交的数据，上传数据。
+
+
+
+服务端处理流程
+接收数据
+
+判断数据总份数
+
+如果总份数为 1，则直接保存成文件，文件名不需要改变。保存完成后，直接返回信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 利用 Blob 进行分片上传">
+<meta property="og:url" content="http://scarletsky.github.io/2015-01-27-javascript-upload-slice-file-using-blob/index.html">
+<meta property="og:site_name" content="Scarletsky">
+<meta property="og:description" content="基本流程
+用户选择文件
+
+判断文件大小
+
+如果文件小于限定文件大小，则直接上传
+
+否则进行分片上传
+
+
+
+
+
+分片流程
+给定限定大小。
+
+利用 Blob 对象的 slice 方法把文件分成 N 份。
+
+遍历 N 次，利用 FormData 创建需要提交的数据，上传数据。
+
+
+
+服务端处理流程
+接收数据
+
+判断数据总份数
+
+如果总份数为 1，则直接保存成文件，文件名不需要改变。保存完成后，直接返回信">
+<meta property="og:updated_time" content="2016-01-19T06:38:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript 利用 Blob 进行分片上传">
+<meta name="twitter:description" content="基本流程
+用户选择文件
+
+判断文件大小
+
+如果文件小于限定文件大小，则直接上传
+
+否则进行分片上传
+
+
+
+
+
+分片流程
+给定限定大小。
+
+利用 Blob 对象的 slice 方法把文件分成 N 份。
+
+遍历 N 次，利用 FormData 创建需要提交的数据，上传数据。
+
+
+
+服务端处理流程
+接收数据
+
+判断数据总份数
+
+如果总份数为 1，则直接保存成文件，文件名不需要改变。保存完成后，直接返回信">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> JavaScript 利用 Blob 进行分片上传 | Scarletsky </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Scarletsky</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaScript 利用 Blob 进行分片上传
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-01-27T17:28:00+08:00" content="2015-01-27">
+              2015-01-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015-01-27-javascript-upload-slice-file-using-blob/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015-01-27-javascript-upload-slice-file-using-blob/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="基本流程">基本流程</h1><ul>
+<li><p>用户选择文件</p>
+</li>
+<li><p>判断文件大小</p>
+<ul>
+<li><p>如果文件小于限定文件大小，则直接上传</p>
+</li>
+<li><p>否则进行分片上传</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="分片流程">分片流程</h1><ul>
+<li><p>给定限定大小。</p>
+</li>
+<li><p>利用 <code>Blob</code> 对象的 <code>slice</code> 方法把文件分成 N 份。</p>
+</li>
+<li><p>遍历 N 次，利用 <code>FormData</code> 创建需要提交的数据，上传数据。</p>
+</li>
+</ul>
+<hr>
+<h1 id="服务端处理流程">服务端处理流程</h1><ul>
+<li><p>接收数据</p>
+</li>
+<li><p>判断数据总份数</p>
+<ul>
+<li><p>如果总份数为 1，则直接保存成文件，文件名不需要改变。保存完成后，直接返回信息给客户端。</p>
+</li>
+<li><p>否则保存成文件时，文件名后缀名需要带上 .partX 来表示该文件为第几部分。</p>
+</li>
+</ul>
+</li>
+<li><p>判断已上传的数据是否等于总份数。</p>
+<ul>
+<li><p>如果相等，则合并文件。</p>
+</li>
+<li><p>合并完成后，删除带有 .partX 的文件。</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="代码实例">代码实例</h1><h2 id="客户端代码_-_html">客户端代码 - html</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">input</span> <span class="attribute">type</span>=<span class="value">"file"</span> <span class="attribute">id</span>=<span class="value">"upload"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="客户端代码_-_JavaScript">客户端代码 - JavaScript</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">uploadFile</span> (<span class="params">url, blob, callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> perFileSize = <span class="number">2097152</span>; <span class="comment">// 2 * 1024 * 1024</span></span><br><span class="line">    <span class="keyword">var</span> blobParts = <span class="built_in">Math</span>.ceil(blob.size / perFileSize);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; blobParts; i++) &#123;</span><br><span class="line">        (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> fd = <span class="keyword">new</span> FormData();</span><br><span class="line">            <span class="keyword">var</span> _blob = blob.slice(i * perFileSize, (i + <span class="number">1</span>) * perFileSize);</span><br><span class="line"></span><br><span class="line">            fd.append(<span class="string">'_blob'</span>, _blob);</span><br><span class="line">            fd.append(<span class="string">'filename'</span>, blob.name);</span><br><span class="line">            fd.append(<span class="string">'index'</span>, i + <span class="number">1</span>);</span><br><span class="line">            fd.append(<span class="string">'total'</span>, blobParts);</span><br><span class="line"></span><br><span class="line">            $.ajax(&#123;</span><br><span class="line">                type: <span class="string">'POST'</span>,</span><br><span class="line">                url: url,</span><br><span class="line">                data: fd,</span><br><span class="line">                processData: <span class="literal">false</span>,</span><br><span class="line">                contentType: <span class="literal">false</span></span><br><span class="line">            &#125;).done(<span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'upload status: '</span>);</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'this is '</span> + (i + <span class="number">1</span>) + <span class="string">'part, total '</span> + blobParts + <span class="string">' part(s).'</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (res.statusCode === <span class="number">200</span>) &#123;</span><br><span class="line">                    callback(<span class="literal">null</span>, res);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;).fail(<span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">                callback(err, <span class="literal">null</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$(<span class="string">'#upload'</span>).on(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> file = e.target.files[<span class="number">0</span>];</span><br><span class="line">    uploadFile(<span class="string">'/upload'</span>, file, <span class="function"><span class="keyword">function</span> (<span class="params">err, res</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123; <span class="keyword">return</span> <span class="built_in">console</span>.log(err); &#125;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'upload successfully!'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="服务端代码_-_NodeJS">服务端代码 - NodeJS</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Expressjs</span></span><br><span class="line"><span class="keyword">var</span> multipart = <span class="built_in">require</span>(<span class="string">'connect-multiparty'</span>);</span><br><span class="line"><span class="keyword">var</span> multipartMiddleware = multipart();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> uploadDir = <span class="string">'./upload/'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 合并文件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeFiles</span>(<span class="params">fileName, fileParts</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> buffers = [];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取各个部分的路径</span></span><br><span class="line">    <span class="keyword">var</span> filePartsPaths = fileParts.map(<span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> path.join(uploadDir, name);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取各个 part 的 buffer，并保存到 buffers 中</span></span><br><span class="line">    filePartsPaths.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> buffer = fs.readFileSync(path);</span><br><span class="line">        buffers.push(buffer);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 合并文件</span></span><br><span class="line">    <span class="keyword">var</span> concatBuffer = Buffer.concat(buffers);</span><br><span class="line">    <span class="keyword">var</span> concatFilePath = path.join(uploadDir, fileName);</span><br><span class="line">    fs.writeFileSync(concatFilePath, concatBuffer);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除各个 part 的文件</span></span><br><span class="line">    filePartsPaths.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">path</span>) </span>&#123;</span><br><span class="line">        fs.unlinkSync(path);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">upload</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (req.method === <span class="string">'POST'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> data = req.body;</span><br><span class="line">        <span class="keyword">var</span> _blobPath = req.files._blob.path;</span><br><span class="line">        <span class="keyword">var</span> fileName = data.filename;</span><br><span class="line">        <span class="keyword">var</span> filePath;</span><br><span class="line">        <span class="keyword">var</span> total = <span class="built_in">parseInt</span>(data.total);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理文件路径</span></span><br><span class="line">        <span class="keyword">if</span> (total === <span class="number">1</span>) &#123;</span><br><span class="line">            filePath = path.join(uploadDir, fileName);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> fileNameWithPart = fileName + <span class="string">'.part'</span> + data.index;</span><br><span class="line">            filePath = path.join(uploadDir, fileNameWithPart);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 读取上传的数据，保存到指定路径</span></span><br><span class="line">        <span class="keyword">var</span> tmpBuffer = fs.readFileSync(_blobPath);</span><br><span class="line">        fs.writeFileSync(filePath, tmpBuffer);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 判断是否上传完成</span></span><br><span class="line">        <span class="keyword">if</span> (total === <span class="number">1</span>) &#123;</span><br><span class="line">            res.send(<span class="number">200</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 获取指定目录下的所有文件名</span></span><br><span class="line">            <span class="keyword">var</span> filesInDir = fs.readdirSync(uploadDir);</span><br><span class="line">            <span class="comment">// 找出指定文件名中带有 .part 的文件</span></span><br><span class="line">            <span class="keyword">var</span> fileParts = filesInDir.filter(<span class="function"><span class="keyword">function</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> name.substring(<span class="number">0</span>, fileName.length + <span class="number">5</span>) === (fileName + <span class="string">'.part'</span>);</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 判断是否需要合并文件</span></span><br><span class="line">            <span class="keyword">if</span> (fileParts.length === total) &#123;</span><br><span class="line">                mergeFiles(fileName, fileParts);</span><br><span class="line">                res.send(<span class="number">200</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                res.send(<span class="number">204</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.send(<span class="number">405</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/upload'</span>, multipartMiddleware, upload);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015-01-26-javascript-tricks/" rel="next" title="JavaScript 常用技巧">
+                <i class="fa fa-chevron-left"></i> JavaScript 常用技巧
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015-03-15-html5-canvas-tricks/" rel="prev" title="HTML5 Canvas 技巧">
+                HTML5 Canvas 技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/2386165"
+               alt="Scarletsky" />
+          <p class="site-author-name" itemprop="name">Scarletsky</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本流程"><span class="nav-number">1.</span> <span class="nav-text">基本流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分片流程"><span class="nav-number">2.</span> <span class="nav-text">分片流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务端处理流程"><span class="nav-number">3.</span> <span class="nav-text">服务端处理流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实例"><span class="nav-number">4.</span> <span class="nav-text">代码实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端代码_-_html"><span class="nav-number">4.1.</span> <span class="nav-text">客户端代码 - html</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端代码_-_JavaScript"><span class="nav-number">4.2.</span> <span class="nav-text">客户端代码 - JavaScript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端代码_-_NodeJS"><span class="nav-number">4.3.</span> <span class="nav-text">服务端代码 - NodeJS</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Scarletsky</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'scarletskygithubio';
+      var disqus_identifier = '2015-01-27-javascript-upload-slice-file-using-blob/';
+      var disqus_title = 'JavaScript 利用 Blob 进行分片上传';
+      var disqus_url = 'http://scarletsky.github.io/2015-01-27-javascript-upload-slice-file-using-blob/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>
