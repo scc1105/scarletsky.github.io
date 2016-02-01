@@ -1,0 +1,786 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="d3.js," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="基础操作
+d3.select, d3.selectAll 选择元素
+selection.append 在选择集合中添加元素
+selection.data 为选择元素进行数据绑定，常与 enter 和 exit 一起使用
+selection.data(data).enter 返回缺失元素集合
+selection.data(data).exit 返回多余元素集合
+selection.text 设置或获">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D3.js 学习笔记1">
+<meta property="og:url" content="http://scarletsky.github.io/2014/12/29/d3js-learning-1/index.html">
+<meta property="og:site_name" content="Scarletsky">
+<meta property="og:description" content="基础操作
+d3.select, d3.selectAll 选择元素
+selection.append 在选择集合中添加元素
+selection.data 为选择元素进行数据绑定，常与 enter 和 exit 一起使用
+selection.data(data).enter 返回缺失元素集合
+selection.data(data).exit 返回多余元素集合
+selection.text 设置或获">
+<meta property="og:updated_time" content="2016-01-19T06:38:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="D3.js 学习笔记1">
+<meta name="twitter:description" content="基础操作
+d3.select, d3.selectAll 选择元素
+selection.append 在选择集合中添加元素
+selection.data 为选择元素进行数据绑定，常与 enter 和 exit 一起使用
+selection.data(data).enter 返回缺失元素集合
+selection.data(data).exit 返回多余元素集合
+selection.text 设置或获">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> D3.js 学习笔记1 | Scarletsky </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Scarletsky</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                D3.js 学习笔记1
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-12-29T16:28:04+08:00" content="2014-12-29">
+              2014-12-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/29/d3js-learning-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/12/29/d3js-learning-1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="基础操作">基础操作</h1><ul>
+<li><code>d3.select</code>, <code>d3.selectAll</code> 选择元素</li>
+<li><code>selection.append</code> 在选择集合中添加元素</li>
+<li><code>selection.data</code> 为选择元素进行数据绑定，常与 <code>enter</code> 和 <code>exit</code> 一起使用</li>
+<li><code>selection.data(data).enter</code> 返回缺失元素集合</li>
+<li><code>selection.data(data).exit</code> 返回多余元素集合</li>
+<li><code>selection.text</code> 设置或获取选定元素的标签体文本内容</li>
+<li><code>selection.attr</code> 设置或获取指定属性</li>
+<li><code>selection.transition</code> 启用动画效果，只要设置前和设置后的属性发生变化就会发生动画，一般和 <code>duration</code>，<code>delay</code> 一起用。</li>
+</ul>
+<p>更多操作可以参考本文末尾的官方 API 文档。</p>
+<h1 id="尺度(Scale)">尺度(Scale)</h1><p>尺度(Scale)在 D3 中是一个很重要的概念。</p>
+<p>根据官方的定义，尺度是将输入域映射为输出范围的函数。尺度可以让用户定义参数的函数。一旦生成一个尺度，你可以调用此尺度函数，传入一个数据值，然后它会返回一个缩放后的值。你可以任意定义和使用尺度。</p>
+<p>D3 中有两种尺度，分别是 <strong>定量变换(Quantitative)</strong> 和 <strong>序数变换(Ordinal)</strong>。</p>
+<h1 id="定量变换(Quantitative)">定量变换(Quantitative)</h1><p>定量变换有一个连续的域，如 [0, 1000] 这种线性区间，它可以很方便的进行数据转换。</p>
+<p>例如当我们有一个 [0, 1000] 的区间，但我们在作图的时候不想显示这么大的区间，只想让它显示 [0, 100] 的区间，这时候我们就可以利用定量变换进行数据转换了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 创建定量变换</span></span><br><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">                     .domain([<span class="number">0</span>, <span class="number">1000</span>])</span><br><span class="line">                     .range([<span class="number">0</span>, <span class="number">100</span>])</span><br><span class="line"><span class="comment">// 使用定量变换</span></span><br><span class="line">yScale(<span class="number">1000</span>) <span class="comment">// 100</span></span><br><span class="line">yScale(<span class="number">50</span>) <span class="comment">// 5</span></span><br><span class="line"></span><br><span class="line">yScale.domain() <span class="comment">// [0, 1000]</span></span><br><span class="line">yScale.range() <span class="comment">// [0, 100]</span></span><br></pre></td></tr></table></figure>
+<h1 id="序数变换(Ordinal)">序数变换(Ordinal)</h1><p>序数变换是包含一组离散的值，如 [‘January’, ‘February’, ‘March’]，像这样的值是无法创建连续区间的，只能用来创建离散区间。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [<span class="string">'January'</span>, <span class="string">'February'</span>, <span class="string">'March'</span>];</span><br><span class="line"><span class="keyword">var</span> xScale = d3.scale.ordinal()</span><br><span class="line">                     .domain(d3.range(dataset.length))</span><br><span class="line">                     .rangeBands([<span class="number">0</span>, <span class="number">100</span> * dataset.length]);</span><br><span class="line"></span><br><span class="line">xScale.range() <span class="comment">// [0, 100, 200];</span></span><br><span class="line">xScale.rangeBand() <span class="comment">// 100</span></span><br><span class="line">xScale(<span class="number">0</span>) <span class="comment">// 0</span></span><br><span class="line">xScale(<span class="number">1</span>) <span class="comment">// 100</span></span><br><span class="line">xScale(<span class="number">2</span>) <span class="comment">// 200</span></span><br><span class="line">xScale(<span class="number">3</span>) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+<p>看了上面代码之后可以发现，序数变换和定量变换在创建和使用上都是不同的。</p>
+<p>创建定量变换时传进 <code>.domain</code> 中的是一个区间，而创建序数变换时传进去的是一组数，序数变换利用这组数去创建一个等宽度的区间。</p>
+<p>使用定量变换时，无论我们传什么数值进去，它都能返回一个和 <code>domain</code> 对应的值。但使用序数变换时，我们只能通过下标去获取值，当下标大于数组长度时，它会返回 <code>undefined</code> ，和数组类似。</p>
+<h1 id="坐标轴">坐标轴</h1><p>利用尺度(Scale)，我们可以很轻松的创建坐标轴。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> xAxis = d3.svg.axis()  <span class="comment">// 创建坐标轴</span></span><br><span class="line">                  .scale(xScale) <span class="comment">// 设置坐标轴的尺度变换，该尺度变换设定了数值和像素位置的转换规则</span></span><br><span class="line">                  .orient(<span class="string">'bottom'</span>) <span class="comment">// 设置坐标轴刻度的方向</span></span><br><span class="line">                  .ticks(<span class="number">3</span>) <span class="comment">// 控制坐标轴刻度的产生方式，需要注意的是这个只是建议值，D3 会自动判断最合适的值</span></span><br><span class="line">                  .tickFormat(<span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> dataset[d].keyword; <span class="comment">// 设置刻度文字的格式，注意这里的 d 的值是索引值。</span></span><br><span class="line">                  &#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="绘图">绘图</h1><p>D3 是利用 svg 进行绘图的，在操作上和用 <code>jQuery</code> 操作 <code>dom</code> 类似。</p>
+<p>在进行绘图的时候需要注意一点：绘图方向是从上往下，从左往右的。也就是左上角的坐标是 (0, 0)，右下角的坐标是 (width, height)。</p>
+<p>我们先看看如何用 D3 生成一个柱形图。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [</span><br><span class="line">    &#123;keyword: <span class="string">'未检查人数'</span>, value: <span class="number">2345</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'已检查人数'</span>, value: <span class="number">1232</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'放弃治疗人数'</span>, value: <span class="number">4562</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'未知人数'</span>, value: <span class="number">562</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'测试人数'</span>, value: <span class="number">2462</span>&#125;,</span><br><span class="line">    &#123;keyword: <span class="string">'全部人数'</span>, value: <span class="number">8678</span>&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> chartPadding = <span class="number">100</span>;</span><br><span class="line"><span class="keyword">var</span> barLabelWidth = <span class="number">200</span>; <span class="comment">// space reserved for bar labels</span></span><br><span class="line"><span class="keyword">var</span> barLabelOffset = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">var</span> valueLabelWidth = <span class="number">40</span>; <span class="comment">// space reserved for value labels (right)</span></span><br><span class="line"><span class="keyword">var</span> maxBarHeight = <span class="number">500</span>;</span><br><span class="line"><span class="keyword">var</span> barHeight = <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> xScale = d3.scale.ordinal()</span><br><span class="line">                     .domain(d3.range(dataset.length))</span><br><span class="line">                     .rangeBands([<span class="number">0</span>, barLabelWidth * dataset.length])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">                     .domain([<span class="number">0</span>, (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                        <span class="keyword">var</span> maxValue = d3.max(dataset, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d.value; &#125;);</span><br><span class="line">                        <span class="keyword">var</span> valueLength = (maxValue + <span class="string">''</span>).length;</span><br><span class="line">                        <span class="keyword">return</span> <span class="built_in">Math</span>.ceil(maxValue / <span class="built_in">Math</span>.pow(<span class="number">10</span>, valueLength - <span class="number">1</span>)) * <span class="built_in">Math</span>.pow(<span class="number">10</span>, valueLength - <span class="number">1</span>);</span><br><span class="line">                      &#125;)()])</span><br><span class="line">                     .range([maxBarHeight, <span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> xAxis = d3.svg.axis()</span><br><span class="line">                  .scale(xScale)</span><br><span class="line">                  .orient(<span class="string">'bottom'</span>)</span><br><span class="line">                  .ticks(<span class="number">3</span>)</span><br><span class="line">                  .tickFormat(<span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> dataset[d].keyword;</span><br><span class="line">                  &#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yAxis = d3.svg.axis()</span><br><span class="line">                  .scale(yScale)</span><br><span class="line">                  .orient(<span class="string">'left'</span>)</span><br><span class="line">                  .ticks(<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3.select(<span class="string">'#chart2'</span>).append(<span class="string">'svg'</span>);</span><br><span class="line">svg.attr(<span class="string">'width'</span>, chartPadding * <span class="number">2</span> + barLabelWidth * dataset.length)</span><br><span class="line">   .attr(<span class="string">'height'</span>, chartPadding * <span class="number">2</span> + maxBarHeight + barLabelOffset);</span><br><span class="line"></span><br><span class="line">svg.selectAll(<span class="string">'rect'</span>).data(dataset).enter().append(<span class="string">'rect'</span>)</span><br><span class="line">   .attr(<span class="string">'x'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d, i</span>) </span>&#123; <span class="keyword">return</span> chartPadding + xScale(i) + xScale.rangeBand() / <span class="number">4</span>; &#125;)</span><br><span class="line">   .attr(<span class="string">'height'</span>, <span class="number">0</span>)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + maxBarHeight; &#125;)</span><br><span class="line">   .transition()</span><br><span class="line">   .duration(<span class="number">1000</span>)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + yScale(d[<span class="string">'value'</span>]); &#125;)</span><br><span class="line">   .attr(<span class="string">'width'</span>, xScale.rangeBand() / <span class="number">2</span>)</span><br><span class="line">   .attr(<span class="string">'height'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d, i</span>) </span>&#123; <span class="keyword">return</span> maxBarHeight - yScale(d[<span class="string">'value'</span>]); &#125;)</span><br><span class="line"></span><br><span class="line">svg.selectAll(<span class="string">'text'</span>).data(dataset).enter().append(<span class="string">'text'</span>)</span><br><span class="line">   .attr(<span class="string">'x'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d, i</span>) </span>&#123; <span class="keyword">return</span> chartPadding + xScale(i) + xScale.rangeBand() / <span class="number">2</span>; &#125;)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + maxBarHeight - barLabelOffset; &#125;)</span><br><span class="line">   .attr(<span class="string">'fill'</span>, <span class="string">'red'</span>)</span><br><span class="line">   .transition()</span><br><span class="line">   .duration(<span class="number">1000</span>)</span><br><span class="line">   .attr(<span class="string">'y'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> chartPadding + yScale(d[<span class="string">'value'</span>]) - barLabelOffset; &#125;)</span><br><span class="line">   .attr(<span class="string">'width'</span>, xScale.rangeBand() / <span class="number">2</span>)</span><br><span class="line">   .attr(<span class="string">'text-anchor'</span>, <span class="string">'middle'</span>)</span><br><span class="line">   .tween(<span class="string">"text"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> i = d3.interpolateRound(<span class="number">0</span>, d[<span class="string">'value'</span>]);</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">t</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.textContent = i(t);</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">svg.append(<span class="string">'g'</span>)</span><br><span class="line">   .attr(<span class="string">'class'</span>, <span class="string">'axis'</span>)</span><br><span class="line">   .attr(<span class="string">"transform"</span>, <span class="string">"translate("</span> + chartPadding +<span class="string">", "</span> + (maxBarHeight + chartPadding) + <span class="string">")"</span>)</span><br><span class="line">   .call(xAxis);</span><br><span class="line"></span><br><span class="line">svg.append(<span class="string">'g'</span>)</span><br><span class="line">   .attr(<span class="string">'class'</span>, <span class="string">'axis'</span>)</span><br><span class="line">   .attr(<span class="string">"transform"</span>, <span class="string">"translate("</span> + chartPadding +<span class="string">", "</span> + chartPadding + <span class="string">")"</span>)</span><br><span class="line">   .call(yAxis);</span><br></pre></td></tr></table></figure>
+<p>上面的代码有几个地方是需要注意的。</p>
+<ul>
+<li><strong>为什么定义 yScale 的时候，domain 是一个正向的区间，但 range 是一个反向的区间呢？</strong></li>
+</ul>
+<p>还记得我们之前说过左上角的坐标是(0, 0)，右下角的坐标是(width, height) 吗？细心想想就可以发现，这和我们平时绘制柱形图时用的纵坐标是相反的。因此，我们需要定义一个符合我们使用习惯的尺度。</p>
+<ul>
+<li><strong>为什么我们的柱形图是从下往上画出来的吗？之前不是说绘图是从上往下，从左往右的吗？怎么会变成从下往上的呢？</strong></li>
+</ul>
+<p>实际上，绘图确实是从上往下画的，之所以看到柱形图从下往上，是由于我们的绘图的起始位置一直往上移动，而且柱形的高度也在一直变化，这样就做成了一种错觉。</p>
+<p>很多时候，我们只需要换一种思路，就能实现我们想要的效果了。</p>
+<ul>
+<li><strong>为什么坐标轴要最后才添加？一开始就添加坐标轴会有问题吗？</strong></li>
+</ul>
+<p>假设我们先画坐标轴，再画柱形图，最后画柱形图上面的文字。<br>如果我们用上面的方式去生成柱形图上的文字的话，<code>svg.selectAll(&#39;text&#39;)</code> 会把坐标轴里面的文字都选上，数据绑定就会失效(因为元素数量大于数据数量)。这样结果就是不能生成柱形上面的文字了。</p>
+<p>要解决的话其实也很简单，只要能区分柱形图上的文字和坐标轴上的文字就行了。怎么区分？加个 <code>id</code>, <code>class</code> 什么的，或者该结构也行。</p>
+<h1 id="事件绑定">事件绑定</h1><p>D3 的事件绑定和 jQuery 类似，如果熟悉 jQuery 的事件绑定的话，可以很快掌握 D3 的事件绑定。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基本用法</span></span><br><span class="line">d3.select(<span class="string">'p'</span>)</span><br><span class="line">  .on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// do some thing</span></span><br><span class="line">  &#125;)；</span><br><span class="line"></span><br><span class="line"><span class="comment">// 常见用法</span></span><br><span class="line">svg.selectAll(<span class="string">'rect'</span>)</span><br><span class="line">   .data(dataset)</span><br><span class="line">   .enter()</span><br><span class="line">   .append(<span class="string">'rect'</span>)</span><br><span class="line">   ... <span class="comment">// 设置属性</span></span><br><span class="line">   .on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">     <span class="built_in">console</span>.log(d); <span class="comment">// 该矩形对应的数据</span></span><br><span class="line">   &#125;)</span><br><span class="line">   .on(<span class="string">'mouseover'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">     d3.select(<span class="keyword">this</span>)</span><br><span class="line">       .attr(<span class="string">'fill'</span>, <span class="string">'orange'</span>);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="参考资料">参考资料</h1><ul>
+<li><a href="https://github.com/mbostock/d3/wiki/Api-%E5%8F%82%E8%80%83" target="_blank" rel="external">官方 API 文档</a></li>
+<li><a href="http://pkuwwt.gitcafe.com/d3-tutorial-cn/scales.html" target="_blank" rel="external">D3 中文教程</a></li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/d3-js/" rel="tag">#d3.js</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/10/25/mongodb-security-and-auth/" rel="next" title="MongoDB 安全与认证">
+                <i class="fa fa-chevron-left"></i> MongoDB 安全与认证
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/01/04/d3js-learning-2/" rel="prev" title="D3.js 学习笔记2">
+                D3.js 学习笔记2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/2386165"
+               alt="Scarletsky" />
+          <p class="site-author-name" itemprop="name">Scarletsky</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础操作"><span class="nav-number">1.</span> <span class="nav-text">基础操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#尺度(Scale)"><span class="nav-number">2.</span> <span class="nav-text">尺度(Scale)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定量变换(Quantitative)"><span class="nav-number">3.</span> <span class="nav-text">定量变换(Quantitative)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#序数变换(Ordinal)"><span class="nav-number">4.</span> <span class="nav-text">序数变换(Ordinal)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#坐标轴"><span class="nav-number">5.</span> <span class="nav-text">坐标轴</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绘图"><span class="nav-number">6.</span> <span class="nav-text">绘图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#事件绑定"><span class="nav-number">7.</span> <span class="nav-text">事件绑定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">8.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Scarletsky</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'scarletskygithubio';
+      var disqus_identifier = '2014/12/29/d3js-learning-1/';
+      var disqus_title = 'D3.js 学习笔记1';
+      var disqus_url = 'http://scarletsky.github.io/2014/12/29/d3js-learning-1/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>

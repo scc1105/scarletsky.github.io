@@ -16,8 +16,8 @@
   
   <entry>
     <title><![CDATA[在 Node.js 中利用 js-xlsx 处理 Excel 文件]]></title>
-    <link href="http://scarletsky.github.io/2016-01-30-nodejs-process-excel/"/>
-    <id>http://scarletsky.github.io/2016-01-30-nodejs-process-excel/</id>
+    <link href="http://scarletsky.github.io/2016/01/30/nodejs-process-excel/"/>
+    <id>http://scarletsky.github.io/2016/01/30/nodejs-process-excel/</id>
     <published>2016-01-30T03:31:46.000Z</published>
     <updated>2016-01-31T12:48:04.000Z</updated>
     <content type="html"><![CDATA[<h2 id="简介">简介</h2><p>本文介绍用 Node.js 中的 <code>js-xlsx</code> 库来处理 Excel 文件。<br><code>js-xlsx</code> 库是目前 Github 上 star 数量最多的处理 Excel 的库，功能强大，但上手难度稍大。文档有些乱，不适合快速上手。<br>本文对 <code>js-xlsx</code> 库进行一定的总结，并提供几个实用的例子供读者测试，学习，交流。</p>
@@ -135,8 +135,8 @@
   
   <entry>
     <title><![CDATA[简单易懂的 Flexbox]]></title>
-    <link href="http://scarletsky.github.io/2016-01-23-simple-flexbox/"/>
-    <id>http://scarletsky.github.io/2016-01-23-simple-flexbox/</id>
+    <link href="http://scarletsky.github.io/2016/01/23/simple-flexbox/"/>
+    <id>http://scarletsky.github.io/2016/01/23/simple-flexbox/</id>
     <published>2016-01-23T01:58:37.000Z</published>
     <updated>2016-01-23T06:06:27.000Z</updated>
     <content type="html"><![CDATA[<h2 id="简介">简介</h2><p>Flexbox 是 CSS 3 的布局方式，可以轻松实现传统布局中难以实现的布局。</p>
@@ -227,8 +227,8 @@
   
   <entry>
     <title><![CDATA[Spacemacs 使用总结]]></title>
-    <link href="http://scarletsky.github.io/2016-01-22-spacemacs-usage/"/>
-    <id>http://scarletsky.github.io/2016-01-22-spacemacs-usage/</id>
+    <link href="http://scarletsky.github.io/2016/01/22/spacemacs-usage/"/>
+    <id>http://scarletsky.github.io/2016/01/22/spacemacs-usage/</id>
     <published>2016-01-22T07:20:38.000Z</published>
     <updated>2016-01-23T02:49:07.000Z</updated>
     <content type="html"><![CDATA[<h2 id="简介">简介</h2><p>Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。</p>
@@ -290,8 +290,8 @@
   
   <entry>
     <title><![CDATA[Localtunnel（Node.js 版） 使用教程]]></title>
-    <link href="http://scarletsky.github.io/2016-01-17-localtunnel-usage/"/>
-    <id>http://scarletsky.github.io/2016-01-17-localtunnel-usage/</id>
+    <link href="http://scarletsky.github.io/2016/01/17/localtunnel-usage/"/>
+    <id>http://scarletsky.github.io/2016/01/17/localtunnel-usage/</id>
     <published>2016-01-17T09:07:06.000Z</published>
     <updated>2016-01-19T06:39:22.000Z</updated>
     <content type="html"><![CDATA[<h2 id="简介">简介</h2><p>Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。</p>
@@ -328,8 +328,8 @@
   
   <entry>
     <title><![CDATA[The Little JavaScript Closures]]></title>
-    <link href="http://scarletsky.github.io/2015-12-02-the-little-javascript-closures/"/>
-    <id>http://scarletsky.github.io/2015-12-02-the-little-javascript-closures/</id>
+    <link href="http://scarletsky.github.io/2015/12/02/the-little-javascript-closures/"/>
+    <id>http://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</id>
     <published>2015-12-02T12:55:54.000Z</published>
     <updated>2016-01-19T06:39:26.000Z</updated>
     <content type="html"><![CDATA[<h2 id="写在前面">写在前面</h2><p>本文尝试模仿 <a href="http://uternet.github.io/TLS/" target="_blank" rel="external">The Little Schema</a> 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。</p>
@@ -605,8 +605,8 @@
   
   <entry>
     <title><![CDATA[React-DnD 的使用]]></title>
-    <link href="http://scarletsky.github.io/2015-11-17-react-dnd-usage/"/>
-    <id>http://scarletsky.github.io/2015-11-17-react-dnd-usage/</id>
+    <link href="http://scarletsky.github.io/2015/11/17/react-dnd-usage/"/>
+    <id>http://scarletsky.github.io/2015/11/17/react-dnd-usage/</id>
     <published>2015-11-17T02:59:31.000Z</published>
     <updated>2016-01-17T15:44:01.000Z</updated>
     <content type="html"><![CDATA[<h2 id="介绍">介绍</h2><p>React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数据，而组件会改变它们的外观和应用的状态来响应拖拽事件。</p>
@@ -703,8 +703,8 @@
   
   <entry>
     <title><![CDATA[写在二十四岁生日]]></title>
-    <link href="http://scarletsky.github.io/2015-10-25-birthday-summary/"/>
-    <id>http://scarletsky.github.io/2015-10-25-birthday-summary/</id>
+    <link href="http://scarletsky.github.io/2015/10/25/birthday-summary/"/>
+    <id>http://scarletsky.github.io/2015/10/25/birthday-summary/</id>
     <published>2015-10-25T09:38:50.000Z</published>
     <updated>2016-01-17T15:44:01.000Z</updated>
     <content type="html"><![CDATA[<p>又一年过去了，今年是第四年。<br>今年的生日是和女朋友一起，平平淡淡地过的。<br>回顾今年，我做的事情基本都是读书，学习，工作，陪妹子。</p>
@@ -741,8 +741,8 @@
   
   <entry>
     <title><![CDATA[Node.js 中 Stream API 的使用]]></title>
-    <link href="http://scarletsky.github.io/2015-10-22-node-stream-api-learning/"/>
-    <id>http://scarletsky.github.io/2015-10-22-node-stream-api-learning/</id>
+    <link href="http://scarletsky.github.io/2015/10/22/node-stream-api-learning/"/>
+    <id>http://scarletsky.github.io/2015/10/22/node-stream-api-learning/</id>
     <published>2015-10-22T09:09:06.000Z</published>
     <updated>2016-01-17T15:44:01.000Z</updated>
     <content type="html"><![CDATA[<h2 id="基本介绍">基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
@@ -821,8 +821,8 @@
   
   <entry>
     <title><![CDATA[CommonJS 学习笔记]]></title>
-    <link href="http://scarletsky.github.io/2015-08-19-commonjs-learning/"/>
-    <id>http://scarletsky.github.io/2015-08-19-commonjs-learning/</id>
+    <link href="http://scarletsky.github.io/2015/08/19/commonjs-learning/"/>
+    <id>http://scarletsky.github.io/2015/08/19/commonjs-learning/</id>
     <published>2015-08-19T02:11:10.000Z</published>
     <updated>2016-01-17T15:44:01.000Z</updated>
     <content type="html"><![CDATA[<h1 id="概述">概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
@@ -869,8 +869,8 @@
   
   <entry>
     <title><![CDATA[JavaScript 中 Object.defineProperty 的使用]]></title>
-    <link href="http://scarletsky.github.io/2015-08-18-Object-learning-in-javascript/"/>
-    <id>http://scarletsky.github.io/2015-08-18-Object-learning-in-javascript/</id>
+    <link href="http://scarletsky.github.io/2015/08/18/Object-learning-in-javascript/"/>
+    <id>http://scarletsky.github.io/2015/08/18/Object-learning-in-javascript/</id>
     <published>2015-08-18T09:57:31.000Z</published>
     <updated>2016-01-17T15:44:01.000Z</updated>
     <content type="html"><![CDATA[<h1 id="Object-defineProperty">Object.defineProperty</h1><blockquote>
@@ -929,8 +929,8 @@
   
   <entry>
     <title><![CDATA[利用 Gulp 处理前端工作流程]]></title>
-    <link href="http://scarletsky.github.io/2015-08-14-use-gulp-for-front-end-workflow/"/>
-    <id>http://scarletsky.github.io/2015-08-14-use-gulp-for-front-end-workflow/</id>
+    <link href="http://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/"/>
+    <id>http://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/</id>
     <published>2015-08-14T08:57:33.000Z</published>
     <updated>2016-01-17T15:44:01.000Z</updated>
     <content type="html"><![CDATA[<h1 id="基本用法">基本用法</h1><figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line"><span class="comment">// gulpfile.js</span></span><br><span class="line">gulp.task<span class="params">('foo', function<span class="params">()</span> &#123;</span><br><span class="line">    gulp.src<span class="params">(glob)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">        .pipe<span class="params">(...)</span></span><br><span class="line">        .pipe<span class="params">(gulp.dest<span class="params">(...)</span>)</span></span><br><span class="line">&#125;)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// shell</span></span><br><span class="line">$ gulp foo</span><br></pre></td></tr></table></figure>
@@ -1041,8 +1041,8 @@
   
   <entry>
     <title><![CDATA[Mongo Shell 使用过程中遇到的坑]]></title>
-    <link href="http://scarletsky.github.io/2015-08-11-mongo-shell-trap/"/>
-    <id>http://scarletsky.github.io/2015-08-11-mongo-shell-trap/</id>
+    <link href="http://scarletsky.github.io/2015/08/11/mongo-shell-trap/"/>
+    <id>http://scarletsky.github.io/2015/08/11/mongo-shell-trap/</id>
     <published>2015-08-11T04:17:47.000Z</published>
     <updated>2016-01-17T15:44:01.000Z</updated>
     <content type="html"><![CDATA[<h1 id="编写_js_脚本">编写 js 脚本</h1><ul>
@@ -1074,8 +1074,8 @@
   
   <entry>
     <title><![CDATA[面试总结]]></title>
-    <link href="http://scarletsky.github.io/2015-08-07-interview-summary/"/>
-    <id>http://scarletsky.github.io/2015-08-07-interview-summary/</id>
+    <link href="http://scarletsky.github.io/2015/08/07/interview-summary/"/>
+    <id>http://scarletsky.github.io/2015/08/07/interview-summary/</id>
     <published>2015-08-07T13:32:41.000Z</published>
     <updated>2016-01-17T15:44:01.000Z</updated>
     <content type="html"><![CDATA[<h1 id="面试前的准备">面试前的准备</h1><ul>
@@ -1220,8 +1220,8 @@
   
   <entry>
     <title><![CDATA[Android Support Design Library 注意事项]]></title>
-    <link href="http://scarletsky.github.io/2015-07-06-android-support-design-library-experience/"/>
-    <id>http://scarletsky.github.io/2015-07-06-android-support-design-library-experience/</id>
+    <link href="http://scarletsky.github.io/2015/07/05/android-support-design-library-experience/"/>
+    <id>http://scarletsky.github.io/2015/07/05/android-support-design-library-experience/</id>
     <published>2015-07-05T15:45:02.000Z</published>
     <updated>2016-01-19T06:39:13.000Z</updated>
     <content type="html"><![CDATA[<h1 id="CoordinatorLayout">CoordinatorLayout</h1><p>这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。</p>
@@ -1244,8 +1244,8 @@
   
   <entry>
     <title><![CDATA[RecyclerView 基本用法]]></title>
-    <link href="http://scarletsky.github.io/2015-06-29-recyclerview-basic-usage/"/>
-    <id>http://scarletsky.github.io/2015-06-29-recyclerview-basic-usage/</id>
+    <link href="http://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/"/>
+    <id>http://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/</id>
     <published>2015-06-29T12:55:00.000Z</published>
     <updated>2016-01-19T06:39:04.000Z</updated>
     <content type="html"><![CDATA[<h1 id="基本用法">基本用法</h1><ul>
@@ -1300,8 +1300,8 @@
   
   <entry>
     <title><![CDATA[HTML5 Canvas 技巧]]></title>
-    <link href="http://scarletsky.github.io/2015-03-15-html5-canvas-tricks/"/>
-    <id>http://scarletsky.github.io/2015-03-15-html5-canvas-tricks/</id>
+    <link href="http://scarletsky.github.io/2015/03/15/html5-canvas-tricks/"/>
+    <id>http://scarletsky.github.io/2015/03/15/html5-canvas-tricks/</id>
     <published>2015-03-15T12:55:00.000Z</published>
     <updated>2016-01-19T06:38:53.000Z</updated>
     <content type="html"><![CDATA[<h1 id="注意事项">注意事项</h1><p>用 <code>&lt;canvas&gt;</code> 标签进行绘图时必须要设置 <code>width</code> 和 <code>height</code> 属性，这里并不是指 CSS 属性中的 <code>width</code> 和 <code>height</code>，而是 <code>&lt;canvas&gt;</code> 标签本身的属性！</p>
@@ -1325,8 +1325,8 @@
   
   <entry>
     <title><![CDATA[JavaScript 利用 Blob 进行分片上传]]></title>
-    <link href="http://scarletsky.github.io/2015-01-27-javascript-upload-slice-file-using-blob/"/>
-    <id>http://scarletsky.github.io/2015-01-27-javascript-upload-slice-file-using-blob/</id>
+    <link href="http://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/"/>
+    <id>http://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/</id>
     <published>2015-01-27T09:28:00.000Z</published>
     <updated>2016-01-19T06:38:42.000Z</updated>
     <content type="html"><![CDATA[<h1 id="基本流程">基本流程</h1><ul>
@@ -1395,8 +1395,8 @@
   
   <entry>
     <title><![CDATA[JavaScript 常用技巧]]></title>
-    <link href="http://scarletsky.github.io/2015-01-26-javascript-tricks/"/>
-    <id>http://scarletsky.github.io/2015-01-26-javascript-tricks/</id>
+    <link href="http://scarletsky.github.io/2015/01/26/javascript-tricks/"/>
+    <id>http://scarletsky.github.io/2015/01/26/javascript-tricks/</id>
     <published>2015-01-26T10:05:00.000Z</published>
     <updated>2016-01-19T06:37:47.000Z</updated>
     <content type="html"><![CDATA[<h1 id="字符串操作">字符串操作</h1><h2 id="首字母大写">首字母大写</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
@@ -1423,8 +1423,8 @@
   
   <entry>
     <title><![CDATA[HTML5 Drag and Drop API]]></title>
-    <link href="http://scarletsky.github.io/2015-01-13-html5-drag-and-drop-api/"/>
-    <id>http://scarletsky.github.io/2015-01-13-html5-drag-and-drop-api/</id>
+    <link href="http://scarletsky.github.io/2015/01/13/html5-drag-and-drop-api/"/>
+    <id>http://scarletsky.github.io/2015/01/13/html5-drag-and-drop-api/</id>
     <published>2015-01-13T10:28:04.000Z</published>
     <updated>2016-01-19T06:38:29.000Z</updated>
     <content type="html"><![CDATA[<h1 id="基本使用">基本使用</h1><h2 id="创建可拖放对象">创建可拖放对象</h2><p>在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 <code>draggable=&quot;true&quot;</code> 就能创建可拖放对象了。</p>
@@ -1483,8 +1483,8 @@
   
   <entry>
     <title><![CDATA[D3.js 学习笔记2]]></title>
-    <link href="http://scarletsky.github.io/2015-01-04-d3js-learning-2/"/>
-    <id>http://scarletsky.github.io/2015-01-04-d3js-learning-2/</id>
+    <link href="http://scarletsky.github.io/2015/01/04/d3js-learning-2/"/>
+    <id>http://scarletsky.github.io/2015/01/04/d3js-learning-2/</id>
     <published>2015-01-04T09:28:04.000Z</published>
     <updated>2016-01-19T06:37:29.000Z</updated>
     <content type="html"><![CDATA[<h1 id="Layout">Layout</h1><p>和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加方便处理的数据。</p>
