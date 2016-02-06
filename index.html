@@ -223,6 +223,157 @@
             
               
                 
+                <a class="post-title-link" href="/2016/02/06/random-numbers-in-haskell/" itemprop="url">
+                  (译) Haskell 中随机数的使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-06T17:35:18+08:00" content="2016-02-06">
+              2016-02-06
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/02/06/random-numbers-in-haskell/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/02/06/random-numbers-in-haskell/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 <code>System.Random</code> 库）是伴随着状态的传递的。 </p>
+<p>大部分需要获得帮助的人都有命令式编程的背景，因此，我会先用命令式的方式，然后再用函数式的方式来教大家在 Haskell 中使用随机数。</p>
+<h2 id="任务">任务</h2><p>我会生成满足以下条件的随机列表：</p>
+<ul>
+<li>列表长度是 1 到 7 </li>
+<li>列表中的每一项都是 0.0 到 1.0 之间的浮点数</li>
+</ul>
+<h2 id="命令式">命令式</h2><p>在 IO monad 中有一个全局的生成器，你可以初始化它，然后获取随机数。下面有一些常用的函数：</p>
+<h3 id="setStdGen_::_StdGen_-&gt;_IO_()"><code>setStdGen :: StdGen -&gt; IO ()</code></h3><p>初始化或者设置全局生成器，我们可以用 <code>mkStdGen</code> 来生成随机种子。因此，有一个很傻瓜式的用法：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">setStdGen</span> (mkStdGen <span class="number">42</span>)</span><br></pre></td></tr></table></figure>
+<p>当然，你可以用任意的 <code>Int</code> 来替换 <code>42</code>。</p>
+<p>其实，你可以选择是否调用 <code>setStdGen</code>，如果你不调用的话，全局的生成器还是可用的。因为在 runtime 会在启动的时候用一个任意的种子去初始化它，所以每次启动的时候，都会有一个不同的种子。</p>
+<h3 id="randomRIO_::_(Random_a)_=&gt;_(a,a)_-&gt;_IO_a"><code>randomRIO :: (Random a) =&gt; (a,a) -&gt; IO a</code></h3><p>在给定范围随机返回一个类型为 <code>a</code> 的值，同时全局生成器也会更新。你可以通过一个元组来指定范围。下面这个例子会返回 <code>a</code> 到 <code>z</code> 之间的随机值（包含 <code>a</code> 和 <code>z</code>）：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">c</span> &lt;- randomRIO ('a', 'z')</span><br></pre></td></tr></table></figure>
+<p><code>a</code> 可以是任意类型吗？并非如此。在 Haskell 98 标准中， <code>Random</code> 库只支持 <code>Bool</code>, <code>Char</code>,  <code>Int</code>, <code>Integer</code>, <code>Float</code>, <code>Double</code>（你可以自己去扩展这个支持的范围，但这是另外一个话题了）。</p>
+<h3 id="randomIO_::_(Random_a)_=&gt;_IO_a"><code>randomIO :: (Random a) =&gt; IO a</code></h3><p>返回一个类型为 <code>a</code> 的随机数（<code>a</code> 可以是任意类型吗？看上文），全局的生成器也会更新。下面这个例子会返回一个 <code>Double</code> 类型的随机数：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">x</span> &lt;- randomIO :: <span class="type">IO</span> <span class="type">Double</span></span><br></pre></td></tr></table></figure>
+<p>随机数返回的范围由类型决定。</p>
+<p>需要注意的是，这些都是 IO 函数，因此你只可以在 IO 函数中使用它们。换句话说，如果你写了一个要使用它们的函数，它的返回类型也会变成是 IO 函数。</p>
+<p>举个例子，上面提到的代码片段都要写在 <code>do block</code> 中。这只是一个提醒，因为我们想要用命令式的方式来生成随机数。</p>
+<p>下面这个例子展示如何在 IO monad 中完成之前的任务：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="import"><span class="keyword">import</span> System.Random</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">    setStdGen (mkStdGen <span class="number">42</span>)  <span class="comment">-- 这步是可选的，如果有这一步，你每一次运行的结果都是一样的，因为随机种子固定是 42</span></span><br><span class="line">    s &lt;- randomStuff</span><br><span class="line">    print s</span><br><span class="line"></span><br><span class="line"><span class="title">randomStuff</span> :: <span class="type">IO</span> [<span class="type">Float</span>]</span><br><span class="line"><span class="title">randomStuff</span> = <span class="keyword">do</span></span><br><span class="line">    n &lt;- randomRIO (<span class="number">1</span>, <span class="number">7</span>)</span><br><span class="line">    sequence (replicate n (randomRIO (<span class="number">0</span>, <span class="number">1</span>)))</span><br></pre></td></tr></table></figure>
+<h2 id="纯函数式">纯函数式</h2><p>你可能有以下原因想知道如何用函数式的方式生成随机数：</p>
+<ul>
+<li>你有好奇心</li>
+<li>你不想用 IO monad</li>
+<li>因为一些并发或者其他原因，你想几个生成器同时存在，共享全局生成器不能解决你的问题</li>
+</ul>
+<p>实际上，有两种方法来用函数式的方式去生成随机数：</p>
+<ul>
+<li>从 stream（无限列表） 中提取随机数</li>
+<li>把生成器当成函数参数的一部分，然后返回随机数</li>
+</ul>
+<p>这里有一些常用的函数用来创建生成器和包含随机数的无限列表。</p>
+<h3 id="mkStdGen_::_Int_-&gt;_StdGen"><code>mkStdGen :: Int -&gt; StdGen</code></h3><p>用随机种子创建生成器。</p>
+<h3 id="randomRs_::_(Random_a,_RandomGen_g)_=&gt;_(a,_a)_-&gt;_g_-&gt;_[a]"><code>randomRs :: (Random a, RandomGen g) =&gt; (a, a) -&gt; g -&gt; [a]</code></h3><p>用生成器生成给定范围的无限列表。例子：用 <code>42</code> 作为随机种子，返回 <code>a</code> 到 <code>z</code> 之间包含 <code>a</code> 和 <code>z</code> 的无限列表：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">randomRs</span> ('a', 'z') (mkStdGen <span class="number">42</span>)</span><br></pre></td></tr></table></figure>
+<p>类型 <code>a</code> 是随机数的类型。类型 <code>g</code> 看起来是通用的，但实际上它总是 <code>StdGen</code>。</p>
+<h3 id="randoms_::_(Random_a,_RandomGen_g)_=&gt;_g_-&gt;_[a]"><code>randoms :: (Random a, RandomGen g) =&gt; g -&gt; [a]</code></h3><p>用给定的生成器生成随机数的无限列表。例如：用 <code>42</code> 作为随机种子生成 <code>Double</code> 类型的列表：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">randoms</span> (mkStdGen <span class="number">42</span>) :: [<span class="type">Double</span>]</span><br></pre></td></tr></table></figure>
+<p>随机数的范围由类型决定，你需要查文档来确定具体范围，或者直接用 <code>randomRs</code>。</p>
+<p>注意，这些都是函数式的 —— 意味着这里面没有副作用，特别是生成器并不会更新。如果你用一个生成器去生成第一个列表，然后用相同的生成器去生成第二个列表…</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">g</span> = mkStdGen <span class="number">42</span></span><br><span class="line"><span class="title">a</span> = randoms g :: [<span class="type">Double</span>]</span><br><span class="line"><span class="title">b</span> = randoms g :: [<span class="type">Double</span>]</span><br></pre></td></tr></table></figure>
+<p>猜猜结果，由于透明引用，这两个列表的结果是一样的！（如果你想用一个随机种子来生成两个不同的列表，我等下告诉你一个方法）。</p>
+<p>下面一种方法来完成创建 <code>1</code> 到 <code>7</code> 的随机列表：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="import"><span class="keyword">import</span> System.Random</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">let</span> g   = mkStdGen <span class="number">42</span></span><br><span class="line">    <span class="keyword">let</span> [s] = take <span class="number">1</span> (randomStuff g)</span><br><span class="line">    print s</span><br><span class="line"></span><br><span class="line"><span class="title">randomStuff</span> :: <span class="type">RandomGen</span> g =&gt; g -&gt; [[<span class="type">Float</span>]]</span><br><span class="line"><span class="title">randomStuff</span> g = work (randomRs (<span class="number">0.0</span>, <span class="number">1.0</span>) g)</span><br><span class="line"></span><br><span class="line"><span class="title">work</span> :: [<span class="type">Float</span>] -&gt; [[<span class="type">Float</span>]]</span><br><span class="line"><span class="title">work</span> (r:rs)      =</span><br><span class="line">    <span class="keyword">let</span> n        = truncate (r * <span class="number">7.0</span>) + <span class="number">1</span></span><br><span class="line">        (xs, ys) = splitAt n rs</span><br><span class="line">    <span class="keyword">in</span> xs : work ys</span><br></pre></td></tr></table></figure>
+<p>除了必要的打印操作外，这是纯函数式的。它用生成器生成了无限列表，然后再用这个无限列表来生成另一个无限列表作为答案，最后取第一个作为返回值。</p>
+<p>我这样做是因为尽管我们今天的人物是生成一个随机数，但你通常会需要很多个，我希望这个例子可以对你有点帮助。</p>
+<p>上面的代码的工作原理是：用一个生成器，创建一个包含 <code>Float</code> 的无限列表。截取第一个值，并扩大这个值到 <code>1</code> 到 <code>7</code>，然后用剩下的列表来生成答案。换句话说，把输入的列表分成 <code>(r:rs)</code>，<code>r</code> 决定生成列表的长度（<code>1</code> 到 <code>7</code>），<code>rs</code> 之后会被计算答案。</p>
+<h3 id="split_::_(RandomGen_g)_=&gt;_g_-&gt;_(g,_g)"><code>split :: (RandomGen g) =&gt; g -&gt; (g, g)</code></h3><p>用一个随机种子创建两个不同的生成器，其他情况下重用相同的种子是不明智的。</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">g</span> = mkStdGen <span class="number">42</span></span><br><span class="line">(ga, gb) = split g</span><br><span class="line"><span class="comment">-- do not use g elsewhere</span></span><br></pre></td></tr></table></figure>
+<p>如果你想创建多余两个的生成器，你可以对新的生成器中的其中一个使用 <code>split</code>：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">g</span> = mkStdGen <span class="number">42</span></span><br><span class="line">(ga, g') = split g</span><br><span class="line">(gb, gc) = split g'</span><br><span class="line"><span class="comment">-- do not use g, g' elsewhere</span></span><br></pre></td></tr></table></figure>
+<p>我们可以用 <code>split</code> 来获得两个生成器，这样我们就可以产生两个随机列表了。</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">randomStuff</span> :: <span class="type">RandomGen</span> g =&gt; g -&gt; [[<span class="type">Float</span>]]</span><br><span class="line"><span class="title">randomStuff</span> g = work (randomRs (<span class="number">1</span>, <span class="number">7</span>) ga) (randomRs (<span class="number">0.0</span>, <span class="number">1.0</span>) gb)</span><br><span class="line">    <span class="keyword">where</span> (ga,gb) = split g</span><br><span class="line"></span><br><span class="line"><span class="title">work</span> :: [<span class="type">Int</span>] -&gt; [<span class="type">Float</span>] -&gt; [[<span class="type">Float</span>]]</span><br><span class="line"><span class="title">work</span> (n:ns) rs =</span><br><span class="line">    <span class="keyword">let</span> (xs,ys) = splitAt n rs</span><br><span class="line">    <span class="keyword">in</span> xs : work ns ys</span><br></pre></td></tr></table></figure>
+<p>它把生成器分成两个，然后产生两个列表。</p>
+<p>我在主程序中硬编码了随机种子。正常情况下你可以在其他地方获取随机种子 —— 从输入中获取，从文件中获取，从时间上获取，或者从某些设备中获取。</p>
+<p>这些在主程序中都是 do-able 的，因为它们都可以在 IO monad 中访问。</p>
+<p>你也可以通过 <code>getStdGen</code> 获取全局生成器：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">    g &lt;- getStdGen</span><br><span class="line">    <span class="keyword">let</span> [s] = take randomStuff g</span><br><span class="line">    print s</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2><p><a href="http://www.vex.net/~trebla/haskell/random.xhtml" target="_blank" rel="external">原文</a></p>
+
+          
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/01/30/nodejs-process-excel/" itemprop="url">
                   在 Node.js 中利用 js-xlsx 处理 Excel 文件
                 </a>
@@ -1766,157 +1917,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/18/Object-learning-in-javascript/" itemprop="url">
-                  JavaScript 中 Object.defineProperty 的使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-08-18T17:57:31+08:00" content="2015-08-18">
-              2015-08-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/18/Object-learning-in-javascript/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/18/Object-learning-in-javascript/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Object-defineProperty">Object.defineProperty</h1><blockquote>
-<p>The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, and returns the object.</p>
-</blockquote>
-<p>直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。</p>
-<h3 id="语法">语法</h3><p><code>Object.defineProperty(obj, prop, descriptor)</code></p>
-<h3 id="参数">参数</h3><ul>
-<li><p><code>Object obj</code> 目标对象</p>
-</li>
-<li><p><code>String prop</code> 需要定义的属性</p>
-</li>
-<li><p><code>Object descriptor</code> 该属性拥有的特性，可设置的值有：</p>
-<ul>
-<li><p><code>value</code> 属性的值，默认为 <code>undefined</code>。</p>
-</li>
-<li><p><code>writable</code> 该属性是否可写，如果设置成 <code>false</code>，则任何对该属性改写的操作都无效（但不会报错），默认为 <code>false</code>。</p>
-</li>
-<li><p><code>get</code> 一旦目标对象访问该属性，就会调用这个方法，并返回结果。默认为 <code>undefined</code>。</p>
-</li>
-<li><p><code>set</code> 一旦目标对象设置该属性，就会调用这个方法。默认为 <code>undeinfed</code>。</p>
-</li>
-<li><p><code>configurable</code> 如果为false，则任何尝试删除目标属性或修改属性以下特性（writable, configurable, enumerable）的行为将被无效化，默认为 <code>false</code>。</p>
-</li>
-<li><p><code>enumerable</code> 是否能在for…in循环中遍历出来或在Object.keys中列举出来。默认为 <code>false</code>。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="注意"><strong>注意</strong></h4><p>在 <code>descriptor</code> 中不能<strong>同时</strong>设置访问器 (<code>get</code> 和 <code>set</code>) 和 <code>wriable</code> 或 <code>value</code>，否则会报以下错误：<br><figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">Invalid <span class="keyword">property</span>.  A <span class="keyword">property</span> cannot both have accessors <span class="keyword">and</span> be writable <span class="keyword">or</span> have a value</span><br></pre></td></tr></table></figure></p>
-<h3 id="实际应用">实际应用</h3><p>我们知道，在 <code>Express.js</code> 升级到 4.0 之后，它把很多功能从核心库中移除了。当我们访问那些被移除的属性时，它会报错，告诉我们该属性已经被移除了。这个功能就是通过 <code>Object.defineProperty</code> 来实现的。看看源码吧：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">  <span class="string">'json'</span>,</span><br><span class="line">  <span class="string">'urlencoded'</span>,</span><br><span class="line">  <span class="string">'bodyParser'</span>,</span><br><span class="line">  <span class="string">'compress'</span>,</span><br><span class="line">  <span class="string">'cookieSession'</span>,</span><br><span class="line">  <span class="string">'session'</span>,</span><br><span class="line">  <span class="string">'logger'</span>,</span><br><span class="line">  <span class="string">'cookieParser'</span>,</span><br><span class="line">  <span class="string">'favicon'</span>,</span><br><span class="line">  <span class="string">'responseTime'</span>,</span><br><span class="line">  <span class="string">'errorHandler'</span>,</span><br><span class="line">  <span class="string">'timeout'</span>,</span><br><span class="line">  <span class="string">'methodOverride'</span>,</span><br><span class="line">  <span class="string">'vhost'</span>,</span><br><span class="line">  <span class="string">'csrf'</span>,</span><br><span class="line">  <span class="string">'directory'</span>,</span><br><span class="line">  <span class="string">'limit'</span>,</span><br><span class="line">  <span class="string">'multipart'</span>,</span><br><span class="line">  <span class="string">'staticCache'</span>,</span><br><span class="line">].forEach(<span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(exports, name, &#123;</span><br><span class="line">    get: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Most middleware (like '</span> + name + <span class="string">') is no longer bundled with Express and must be installed separately. Please see https://github.com/senchalabs/connect#middleware.'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h1 id="Object-defineProperties">Object.defineProperties</h1><blockquote>
-<p>The Object.defineProperties() method defines new or modifies existing properties directly on an object, returning the object.</p>
-</blockquote>
-<p>和 <code>Object.defineProperty</code> 类似，只不过这个方法可以设置多个属性。</p>
-<h3 id="语法-1">语法</h3><p><code>Object.defineProperties(obj, props)</code></p>
-<h3 id="参数-1">参数</h3><ul>
-<li><p><code>Object obj</code> 目标对象</p>
-</li>
-<li><p><code>Object props</code> 要为目标对象添加的属性，其中 <code>key</code> 和 <code>value</code> 分别代表 <code>Object.defineProperty</code> 中的第二和第三个参数。</p>
-</li>
-</ul>
-<h1 id="参考资料">参考资料</h1><p><a href="http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html" target="_blank" rel="external">http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object</a><br><a href="https://github.com/strongloop/express/blob/master/lib/express.js" target="_blank" rel="external">https://github.com/strongloop/express/blob/master/lib/express.js</a></p>
-
-          
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1963,7 +1963,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1980,7 +1980,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-01-31T12:48:04.000Z</updated>
+  <updated>2016-02-06T14:25:51.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -13,6 +13,85 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[(译) Haskell 中随机数的使用]]></title>
+    <link href="http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/"/>
+    <id>http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</id>
+    <published>2016-02-06T09:35:18.000Z</published>
+    <updated>2016-02-06T14:25:51.000Z</updated>
+    <content type="html"><![CDATA[<p>随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 <code>System.Random</code> 库）是伴随着状态的传递的。 </p>
+<p>大部分需要获得帮助的人都有命令式编程的背景，因此，我会先用命令式的方式，然后再用函数式的方式来教大家在 Haskell 中使用随机数。</p>
+<h2 id="任务">任务</h2><p>我会生成满足以下条件的随机列表：</p>
+<ul>
+<li>列表长度是 1 到 7 </li>
+<li>列表中的每一项都是 0.0 到 1.0 之间的浮点数</li>
+</ul>
+<h2 id="命令式">命令式</h2><p>在 IO monad 中有一个全局的生成器，你可以初始化它，然后获取随机数。下面有一些常用的函数：</p>
+<h3 id="setStdGen_::_StdGen_-&gt;_IO_()"><code>setStdGen :: StdGen -&gt; IO ()</code></h3><p>初始化或者设置全局生成器，我们可以用 <code>mkStdGen</code> 来生成随机种子。因此，有一个很傻瓜式的用法：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">setStdGen</span> (mkStdGen <span class="number">42</span>)</span><br></pre></td></tr></table></figure>
+<p>当然，你可以用任意的 <code>Int</code> 来替换 <code>42</code>。</p>
+<p>其实，你可以选择是否调用 <code>setStdGen</code>，如果你不调用的话，全局的生成器还是可用的。因为在 runtime 会在启动的时候用一个任意的种子去初始化它，所以每次启动的时候，都会有一个不同的种子。</p>
+<h3 id="randomRIO_::_(Random_a)_=&gt;_(a,a)_-&gt;_IO_a"><code>randomRIO :: (Random a) =&gt; (a,a) -&gt; IO a</code></h3><p>在给定范围随机返回一个类型为 <code>a</code> 的值，同时全局生成器也会更新。你可以通过一个元组来指定范围。下面这个例子会返回 <code>a</code> 到 <code>z</code> 之间的随机值（包含 <code>a</code> 和 <code>z</code>）：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">c</span> &lt;- randomRIO ('a', 'z')</span><br></pre></td></tr></table></figure>
+<p><code>a</code> 可以是任意类型吗？并非如此。在 Haskell 98 标准中， <code>Random</code> 库只支持 <code>Bool</code>, <code>Char</code>,  <code>Int</code>, <code>Integer</code>, <code>Float</code>, <code>Double</code>（你可以自己去扩展这个支持的范围，但这是另外一个话题了）。</p>
+<h3 id="randomIO_::_(Random_a)_=&gt;_IO_a"><code>randomIO :: (Random a) =&gt; IO a</code></h3><p>返回一个类型为 <code>a</code> 的随机数（<code>a</code> 可以是任意类型吗？看上文），全局的生成器也会更新。下面这个例子会返回一个 <code>Double</code> 类型的随机数：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">x</span> &lt;- randomIO :: <span class="type">IO</span> <span class="type">Double</span></span><br></pre></td></tr></table></figure>
+<p>随机数返回的范围由类型决定。</p>
+<p>需要注意的是，这些都是 IO 函数，因此你只可以在 IO 函数中使用它们。换句话说，如果你写了一个要使用它们的函数，它的返回类型也会变成是 IO 函数。</p>
+<p>举个例子，上面提到的代码片段都要写在 <code>do block</code> 中。这只是一个提醒，因为我们想要用命令式的方式来生成随机数。</p>
+<p>下面这个例子展示如何在 IO monad 中完成之前的任务：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="import"><span class="keyword">import</span> System.Random</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">    setStdGen (mkStdGen <span class="number">42</span>)  <span class="comment">-- 这步是可选的，如果有这一步，你每一次运行的结果都是一样的，因为随机种子固定是 42</span></span><br><span class="line">    s &lt;- randomStuff</span><br><span class="line">    print s</span><br><span class="line"></span><br><span class="line"><span class="title">randomStuff</span> :: <span class="type">IO</span> [<span class="type">Float</span>]</span><br><span class="line"><span class="title">randomStuff</span> = <span class="keyword">do</span></span><br><span class="line">    n &lt;- randomRIO (<span class="number">1</span>, <span class="number">7</span>)</span><br><span class="line">    sequence (replicate n (randomRIO (<span class="number">0</span>, <span class="number">1</span>)))</span><br></pre></td></tr></table></figure>
+<h2 id="纯函数式">纯函数式</h2><p>你可能有以下原因想知道如何用函数式的方式生成随机数：</p>
+<ul>
+<li>你有好奇心</li>
+<li>你不想用 IO monad</li>
+<li>因为一些并发或者其他原因，你想几个生成器同时存在，共享全局生成器不能解决你的问题</li>
+</ul>
+<p>实际上，有两种方法来用函数式的方式去生成随机数：</p>
+<ul>
+<li>从 stream（无限列表） 中提取随机数</li>
+<li>把生成器当成函数参数的一部分，然后返回随机数</li>
+</ul>
+<p>这里有一些常用的函数用来创建生成器和包含随机数的无限列表。</p>
+<h3 id="mkStdGen_::_Int_-&gt;_StdGen"><code>mkStdGen :: Int -&gt; StdGen</code></h3><p>用随机种子创建生成器。</p>
+<h3 id="randomRs_::_(Random_a,_RandomGen_g)_=&gt;_(a,_a)_-&gt;_g_-&gt;_[a]"><code>randomRs :: (Random a, RandomGen g) =&gt; (a, a) -&gt; g -&gt; [a]</code></h3><p>用生成器生成给定范围的无限列表。例子：用 <code>42</code> 作为随机种子，返回 <code>a</code> 到 <code>z</code> 之间包含 <code>a</code> 和 <code>z</code> 的无限列表：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">randomRs</span> ('a', 'z') (mkStdGen <span class="number">42</span>)</span><br></pre></td></tr></table></figure>
+<p>类型 <code>a</code> 是随机数的类型。类型 <code>g</code> 看起来是通用的，但实际上它总是 <code>StdGen</code>。</p>
+<h3 id="randoms_::_(Random_a,_RandomGen_g)_=&gt;_g_-&gt;_[a]"><code>randoms :: (Random a, RandomGen g) =&gt; g -&gt; [a]</code></h3><p>用给定的生成器生成随机数的无限列表。例如：用 <code>42</code> 作为随机种子生成 <code>Double</code> 类型的列表：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">randoms</span> (mkStdGen <span class="number">42</span>) :: [<span class="type">Double</span>]</span><br></pre></td></tr></table></figure>
+<p>随机数的范围由类型决定，你需要查文档来确定具体范围，或者直接用 <code>randomRs</code>。</p>
+<p>注意，这些都是函数式的 —— 意味着这里面没有副作用，特别是生成器并不会更新。如果你用一个生成器去生成第一个列表，然后用相同的生成器去生成第二个列表…</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">g</span> = mkStdGen <span class="number">42</span></span><br><span class="line"><span class="title">a</span> = randoms g :: [<span class="type">Double</span>]</span><br><span class="line"><span class="title">b</span> = randoms g :: [<span class="type">Double</span>]</span><br></pre></td></tr></table></figure>
+<p>猜猜结果，由于透明引用，这两个列表的结果是一样的！（如果你想用一个随机种子来生成两个不同的列表，我等下告诉你一个方法）。</p>
+<p>下面一种方法来完成创建 <code>1</code> 到 <code>7</code> 的随机列表：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="import"><span class="keyword">import</span> System.Random</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">let</span> g   = mkStdGen <span class="number">42</span></span><br><span class="line">    <span class="keyword">let</span> [s] = take <span class="number">1</span> (randomStuff g)</span><br><span class="line">    print s</span><br><span class="line"></span><br><span class="line"><span class="title">randomStuff</span> :: <span class="type">RandomGen</span> g =&gt; g -&gt; [[<span class="type">Float</span>]]</span><br><span class="line"><span class="title">randomStuff</span> g = work (randomRs (<span class="number">0.0</span>, <span class="number">1.0</span>) g)</span><br><span class="line"></span><br><span class="line"><span class="title">work</span> :: [<span class="type">Float</span>] -&gt; [[<span class="type">Float</span>]]</span><br><span class="line"><span class="title">work</span> (r:rs)      =</span><br><span class="line">    <span class="keyword">let</span> n        = truncate (r * <span class="number">7.0</span>) + <span class="number">1</span></span><br><span class="line">        (xs, ys) = splitAt n rs</span><br><span class="line">    <span class="keyword">in</span> xs : work ys</span><br></pre></td></tr></table></figure>
+<p>除了必要的打印操作外，这是纯函数式的。它用生成器生成了无限列表，然后再用这个无限列表来生成另一个无限列表作为答案，最后取第一个作为返回值。</p>
+<p>我这样做是因为尽管我们今天的人物是生成一个随机数，但你通常会需要很多个，我希望这个例子可以对你有点帮助。</p>
+<p>上面的代码的工作原理是：用一个生成器，创建一个包含 <code>Float</code> 的无限列表。截取第一个值，并扩大这个值到 <code>1</code> 到 <code>7</code>，然后用剩下的列表来生成答案。换句话说，把输入的列表分成 <code>(r:rs)</code>，<code>r</code> 决定生成列表的长度（<code>1</code> 到 <code>7</code>），<code>rs</code> 之后会被计算答案。</p>
+<h3 id="split_::_(RandomGen_g)_=&gt;_g_-&gt;_(g,_g)"><code>split :: (RandomGen g) =&gt; g -&gt; (g, g)</code></h3><p>用一个随机种子创建两个不同的生成器，其他情况下重用相同的种子是不明智的。</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">g</span> = mkStdGen <span class="number">42</span></span><br><span class="line">(ga, gb) = split g</span><br><span class="line"><span class="comment">-- do not use g elsewhere</span></span><br></pre></td></tr></table></figure>
+<p>如果你想创建多余两个的生成器，你可以对新的生成器中的其中一个使用 <code>split</code>：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">g</span> = mkStdGen <span class="number">42</span></span><br><span class="line">(ga, g') = split g</span><br><span class="line">(gb, gc) = split g'</span><br><span class="line"><span class="comment">-- do not use g, g' elsewhere</span></span><br></pre></td></tr></table></figure>
+<p>我们可以用 <code>split</code> 来获得两个生成器，这样我们就可以产生两个随机列表了。</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">randomStuff</span> :: <span class="type">RandomGen</span> g =&gt; g -&gt; [[<span class="type">Float</span>]]</span><br><span class="line"><span class="title">randomStuff</span> g = work (randomRs (<span class="number">1</span>, <span class="number">7</span>) ga) (randomRs (<span class="number">0.0</span>, <span class="number">1.0</span>) gb)</span><br><span class="line">    <span class="keyword">where</span> (ga,gb) = split g</span><br><span class="line"></span><br><span class="line"><span class="title">work</span> :: [<span class="type">Int</span>] -&gt; [<span class="type">Float</span>] -&gt; [[<span class="type">Float</span>]]</span><br><span class="line"><span class="title">work</span> (n:ns) rs =</span><br><span class="line">    <span class="keyword">let</span> (xs,ys) = splitAt n rs</span><br><span class="line">    <span class="keyword">in</span> xs : work ns ys</span><br></pre></td></tr></table></figure>
+<p>它把生成器分成两个，然后产生两个列表。</p>
+<p>我在主程序中硬编码了随机种子。正常情况下你可以在其他地方获取随机种子 —— 从输入中获取，从文件中获取，从时间上获取，或者从某些设备中获取。</p>
+<p>这些在主程序中都是 do-able 的，因为它们都可以在 IO monad 中访问。</p>
+<p>你也可以通过 <code>getStdGen</code> 获取全局生成器：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">    g &lt;- getStdGen</span><br><span class="line">    <span class="keyword">let</span> [s] = take randomStuff g</span><br><span class="line">    print s</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2><p><a href="http://www.vex.net/~trebla/haskell/random.xhtml" target="_blank" rel="external">原文</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 <code>System.Random</code> 库）是伴随着状态的传递的。 </p>
+<p>大部分需要获得帮助的人都有命令式编程的背景，因此，我会先用命令式的]]>
+    </summary>
+    
+      <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
+    
+      <category term="random" scheme="http://scarletsky.github.io/tags/random/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[在 Node.js 中利用 js-xlsx 处理 Excel 文件]]></title>
@@ -1478,62 +1557,6 @@
       <category term="drag-and-drop" scheme="http://scarletsky.github.io/tags/drag-and-drop/"/>
     
       <category term="HTML5" scheme="http://scarletsky.github.io/categories/HTML5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[D3.js 学习笔记2]]></title>
-    <link href="http://scarletsky.github.io/2015/01/04/d3js-learning-2/"/>
-    <id>http://scarletsky.github.io/2015/01/04/d3js-learning-2/</id>
-    <published>2015-01-04T09:28:04.000Z</published>
-    <updated>2016-01-19T06:37:29.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="Layout">Layout</h1><p>和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加方便处理的数据。</p>
-<p>D3 中包含的全部的 Layout 列表如下：</p>
-<ul>
-<li>Bundle</li>
-<li>Chord</li>
-<li>Cluster</li>
-<li>Force</li>
-<li>Histogram</li>
-<li>Pack</li>
-<li>Partition</li>
-<li>Pie</li>
-<li>Stack</li>
-<li>Tree</li>
-<li>Treemap</li>
-</ul>
-<p>每一种 Layout 都会提供一些特别的方法帮助你处理数据。</p>
-<p>本文主要介绍一下 <code>Pie Layout</code> 和 <code>Stack Layout</code>。</p>
-<h2 id="Pie_Layout">Pie Layout</h2><p>Pie Layout 可以帮助你生成类似饼状图的数据结构。我们先看看它的使用方法。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [ <span class="number">5</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">45</span>, <span class="number">6</span>, <span class="number">25</span> ];</span><br><span class="line"><span class="keyword">var</span> pie = d3.layout.pie();</span><br></pre></td></tr></table></figure>
-<p>如下图所示，你会看到 Pie Layout 会帮助你生成新的数据。<br><img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-01.png" alt=""></p>
-<p>我们来看看如何用这些数据来生成饼状图。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> dataset = [ <span class="number">5</span>, <span class="number">10</span>, <span class="number">20</span>, <span class="number">45</span>, <span class="number">6</span>, <span class="number">25</span> ];</span><br><span class="line"><span class="keyword">var</span> pie = d3.layout.pie();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> w = <span class="number">300</span>;</span><br><span class="line"><span class="keyword">var</span> h = <span class="number">300</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> outerRadius = w / <span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> innerRadius = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> arc = d3.svg.arc()  <span class="comment">// 创建弧形。</span></span><br><span class="line">                .innerRadius(innerRadius)  <span class="comment">// 内径</span></span><br><span class="line">                .outerRadius(outerRadius); <span class="comment">// 外径</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Create SVG element</span></span><br><span class="line"><span class="keyword">var</span> svg = d3.select(<span class="string">"body"</span>)</span><br><span class="line">            .append(<span class="string">"svg"</span>)</span><br><span class="line">            .attr(<span class="string">"width"</span>, w)</span><br><span class="line">            .attr(<span class="string">"height"</span>, h);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arcs = svg.selectAll(<span class="string">"g.arc"</span>)</span><br><span class="line">        .data(pie(dataset))</span><br><span class="line">        .enter()</span><br><span class="line">        .append(<span class="string">"g"</span>)</span><br><span class="line">        .attr(<span class="string">"class"</span>, <span class="string">"arc"</span>)</span><br><span class="line">        .attr(<span class="string">"transform"</span>, <span class="string">"translate("</span> + outerRadius + <span class="string">", "</span> + outerRadius + <span class="string">")"</span>);  <span class="comment">// 圆心位置</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> color = d3.scale.category10();  <span class="comment">// 创建颜色</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Draw arc paths</span></span><br><span class="line">arcs.append(<span class="string">"path"</span>)</span><br><span class="line">    .attr(<span class="string">"fill"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d, i</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> color(i);  <span class="comment">// 会返回不同的颜色</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"d"</span>, arc);  <span class="comment">// d 是 path 的属性，用来定义路径的生成规则。</span></span><br><span class="line"></span><br><span class="line">arcs.append(<span class="string">"text"</span>)</span><br><span class="line">    .attr(<span class="string">"transform"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"translate("</span> + arc.centroid(d) + <span class="string">")"</span>;  <span class="comment">// arc.centroid 是弧形中一个重要方法，会返回该弧形的中心位置。</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"text-anchor"</span>, <span class="string">"middle"</span>)</span><br><span class="line">    .text(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> d.value;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
-<p>你可以在下面这个连接里看到效果：<br><a href="http://examples.oreilly.com/0636920026938/chapter_11/01_pie.html" target="_blank" rel="external">http://examples.oreilly.com/0636920026938/chapter_11/01_pie.html</a></p>
-<h2 id="Stack_Layout">Stack Layout</h2><p>Stack Layout 可以帮你处理如下图所示的类似“叠加柱形图”那样的数据结构。</p>
-<p><img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-02.png" alt=""></p>
-<p>我们先来看看一组数据：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> _dataset = [</span><br><span class="line">        &#123; apples: <span class="number">5</span>, oranges: <span class="number">10</span>, grapes: <span class="number">22</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">4</span>, oranges: <span class="number">12</span>, grapes: <span class="number">28</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">2</span>, oranges: <span class="number">19</span>, grapes: <span class="number">32</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">7</span>, oranges: <span class="number">23</span>, grapes: <span class="number">35</span> &#125;,</span><br><span class="line">        &#123; apples: <span class="number">23</span>, oranges: <span class="number">17</span>, grapes: <span class="number">43</span> &#125;</span><br><span class="line">];  <span class="comment">// 转换前的数据</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> dataset = [</span><br><span class="line">        [</span><br><span class="line">                &#123; x: <span class="number">0</span>, y: <span class="number">5</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">1</span>, y: <span class="number">4</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">2</span>, y: <span class="number">2</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">3</span>, y: <span class="number">7</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">4</span>, y: <span class="number">23</span> &#125;</span><br><span class="line">        ],</span><br><span class="line">        [</span><br><span class="line">                &#123; x: <span class="number">0</span>, y: <span class="number">10</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">1</span>, y: <span class="number">12</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">2</span>, y: <span class="number">19</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">3</span>, y: <span class="number">23</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">4</span>, y: <span class="number">17</span> &#125;</span><br><span class="line">        ],</span><br><span class="line">        [</span><br><span class="line">                &#123; x: <span class="number">0</span>, y: <span class="number">22</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">1</span>, y: <span class="number">28</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">2</span>, y: <span class="number">32</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">3</span>, y: <span class="number">35</span> &#125;,</span><br><span class="line">                &#123; x: <span class="number">4</span>, y: <span class="number">43</span> &#125;</span><br><span class="line">        ]</span><br><span class="line">];  <span class="comment">// 转换后的数据</span></span><br></pre></td></tr></table></figure>
-<p>要使用 Stack Layout，首先要把我们的数据处理一遍，把相同类型的数据归为一组，例如上面代码所示那样，第一组数据是 apples，第二组数据是 oranges， 第三组数据室 grapes。注意，分组后的数据必须同时包含 x 和 y，其中 x 只是代表他们的 id，y 才是真正的数据。</p>
-<p>处理好数据之后我们可以试试调用 stack 方法。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> stack = d3.layout.stack();</span><br><span class="line">stack(dataset);</span><br></pre></td></tr></table></figure>
-<p>之后我们可以看到下面的结果：<br><img src="http://7tebgv.com1.z0.glb.clouddn.com/d3js-learning-2-03.png" alt=""></p>
-<p>看到规律了吗？用 stack 方法处理过的数据，都会多了一个 <code>y0</code> 的键。而这个键的值刚好就是前面数据的 y 值之和。利用这个 <code>y0</code>，我们就可以很方便的创建“叠加柱形图”了。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Width and height</span></span><br><span class="line"><span class="keyword">var</span> w = <span class="number">500</span>;</span><br><span class="line"><span class="keyword">var</span> h = <span class="number">300</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Original data</span></span><br><span class="line"><span class="keyword">var</span> dataset = [</span><br><span class="line">    [</span><br><span class="line">        &#123; x: <span class="number">0</span>, y: <span class="number">5</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">1</span>, y: <span class="number">4</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">2</span>, y: <span class="number">2</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">3</span>, y: <span class="number">7</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">4</span>, y: <span class="number">23</span> &#125;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &#123; x: <span class="number">0</span>, y: <span class="number">10</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">1</span>, y: <span class="number">12</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">2</span>, y: <span class="number">19</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">3</span>, y: <span class="number">23</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">4</span>, y: <span class="number">17</span> &#125;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &#123; x: <span class="number">0</span>, y: <span class="number">22</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">1</span>, y: <span class="number">28</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">2</span>, y: <span class="number">32</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">3</span>, y: <span class="number">35</span> &#125;,</span><br><span class="line">        &#123; x: <span class="number">4</span>, y: <span class="number">43</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">//Set up stack method</span></span><br><span class="line"><span class="keyword">var</span> stack = d3.layout.stack();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Data, stacked</span></span><br><span class="line">stack(dataset);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Set up scales</span></span><br><span class="line"><span class="keyword">var</span> xScale = d3.scale.ordinal()</span><br><span class="line">    .domain(d3.range(dataset[<span class="number">0</span>].length))</span><br><span class="line">    .rangeRoundBands([<span class="number">0</span>, w], <span class="number">0.05</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">    .domain([<span class="number">0</span>,</span><br><span class="line">        d3.max(dataset, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> d3.max(d, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> d.y0 + d.y;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;)</span><br><span class="line">    ])</span><br><span class="line">    .range([<span class="number">0</span>, h]);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Easy colors accessible via a 10-step ordinal scale</span></span><br><span class="line"><span class="keyword">var</span> colors = d3.scale.category10();</span><br><span class="line"></span><br><span class="line"><span class="comment">//Create SVG element</span></span><br><span class="line"><span class="keyword">var</span> svg = d3.select(<span class="string">"body"</span>)</span><br><span class="line">            .append(<span class="string">"svg"</span>)</span><br><span class="line">            .attr(<span class="string">"width"</span>, w)</span><br><span class="line">            .attr(<span class="string">"height"</span>, h);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add a group for each row of data</span></span><br><span class="line"><span class="keyword">var</span> groups = svg.selectAll(<span class="string">"g"</span>)</span><br><span class="line">    .data(dataset)</span><br><span class="line">    .enter()</span><br><span class="line">    .append(<span class="string">"g"</span>)</span><br><span class="line">    .style(<span class="string">"fill"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d, i</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> colors(i);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add a rect for each data value</span></span><br><span class="line"><span class="keyword">var</span> rects = groups.selectAll(<span class="string">"rect"</span>)</span><br><span class="line">    .data(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123; <span class="keyword">return</span> d; &#125;)</span><br><span class="line">    .enter()</span><br><span class="line">    .append(<span class="string">"rect"</span>)</span><br><span class="line">    .attr(<span class="string">"x"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d, i</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> xScale(i);</span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"y"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> yScale(d.y0);</span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"height"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> yScale(d.y);</span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"width"</span>, xScale.rangeBand());</span><br></pre></td></tr></table></figure>
-<p>结果可以看看下面连接：<br><a href="http://examples.oreilly.com/0636920026938/chapter_11/03_stacked_bar.html" target="_blank" rel="external">http://examples.oreilly.com/0636920026938/chapter_11/03_stacked_bar.html</a></p>
-<p>什么？你不想要从上往下的柱形图？你想要从下往上的柱形图？</p>
-<p>其实要生成从下往上的柱形图很简单，只需要把 yScale 的 range 反过来，然后画图的时候调整一下 y 和 height 属性就好了。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> yScale = d3.scale.linear()</span><br><span class="line">    ...</span><br><span class="line">    .range([h, <span class="number">0</span>]); <span class="comment">// 原来是 [0, h]</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"><span class="keyword">var</span> rects = groups.selectAll(<span class="string">"rect"</span>)</span><br><span class="line">    ...</span><br><span class="line">    .attr(<span class="string">"y"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> yScale(d.y0) - (h - yScale(d.y)); <span class="comment">// 原来是 return yScale(d.y0)</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"height"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> h - yScale(d.y);  <span class="comment">// 原来是 return yScale(d.y)</span></span><br><span class="line">    &#125;)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
-<h1 id="参考资料">参考资料</h1><p><a href="http://chimera.labs.oreilly.com/books/1230000000345/ch11.html" target="_blank" rel="external">http://chimera.labs.oreilly.com/books/1230000000345/ch11.html</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h1 id="Layout">Layout</h1><p>和它的名字相比，D3 中的 Layout 并不会放任何东西在屏幕上。实际上，Layout 方法和可视化输出并没有直接关系。D3 Layout 会把你交给它的数据转换成更加方便处理的数据。</p>
-<p>D3 中包含的全部]]>
-    </summary>
-    
-      <category term="d3.js" scheme="http://scarletsky.github.io/tags/d3-js/"/>
-    
-      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
     
   </entry>
   
