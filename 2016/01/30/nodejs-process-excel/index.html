@@ -69,7 +69,7 @@
 <meta property="og:description" content="简介本文介绍用 Node.js 中的 js-xlsx 库来处理 Excel 文件。js-xlsx 库是目前 Github 上 star 数量最多的处理 Excel 的库，功能强大，但上手难度稍大。文档有些乱，不适合快速上手。本文对 js-xlsx 库进行一定的总结，并提供几个实用的例子供读者测试，学习，交流。
 安装$ npm install xlsx
 一些概念在使用这个库之前，先介绍库中的一些概念">
-<meta property="og:updated_time" content="2016-01-31T12:48:04.000Z">
+<meta property="og:updated_time" content="2016-02-11T03:42:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Node.js 中利用 js-xlsx 处理 Excel 文件">
 <meta name="twitter:description" content="简介本文介绍用 Node.js 中的 js-xlsx 库来处理 Excel 文件。js-xlsx 库是目前 Github 上 star 数量最多的处理 Excel 的库，功能强大，但上手难度稍大。文档有些乱，不适合快速上手。本文对 js-xlsx 库进行一定的总结，并提供几个实用的例子供读者测试，学习，交流。
@@ -283,7 +283,9 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取 Excel 中所有表名</span></span><br><span class="line"><span class="keyword">const</span> sheetNames = workbook.SheetNames; <span class="comment">// 返回 ['sheet1', 'sheet2']</span></span><br><span class="line"><span class="comment">// 根据表名获取对应某张表</span></span><br><span class="line"><span class="keyword">const</span> worksheet = workbook.Sheets[sheetNames[<span class="number">0</span>]];</span><br></pre></td></tr></table></figure>
 <p>通过 <code>worksheet[address]</code> 来操作表格，以 <code>!</code> 开头的 key 是特殊的字段。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取 A1 单元格对象</span></span><br><span class="line"><span class="keyword">let</span> a1 = worksheet[<span class="string">'A1'</span>]; <span class="comment">// 返回 &#123; v: 'hello', t: 's', ... &#125;</span></span><br><span class="line"><span class="comment">// 获取 A1 中的值</span></span><br><span class="line">a1.v <span class="comment">// 返回 'hello'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取表的有效范围</span></span><br><span class="line">worksheet[<span class="string">'!ref'</span>] <span class="comment">// 返回 'A1:B20'</span></span><br><span class="line">worksheet[<span class="string">'!range'</span>] <span class="comment">// 返回 range 对象，&#123; s: &#123; r: 0, c: 0&#125;, e: &#123; r: 100, c: 2 &#125; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取合并过的单元格</span></span><br><span class="line">worksheet[<span class="string">'!merges'</span>] <span class="comment">// 返回一个包含 range 对象的列表，[ &#123;s: &#123; r: 0, c: 0 &#125;, c: &#123; r: 2, c: 1 &#125; &#125; ]</span></span><br></pre></td></tr></table></figure>
-<h3 id="实战">实战</h3><h4 id="解析_Excel_生成_JSON">解析 Excel 生成 JSON</h4><p><strong>Tips</strong> 事实上，你可以直接通过 <code>XLSX.utils.sheet_to_json(worksheet)</code> 获得同样的结果</p>
+<h3 id="实战">实战</h3><h4 id="解析_Excel_生成_JSON">解析 Excel 生成 JSON</h4><blockquote>
+<p><strong>Tips</strong> 事实上，你可以直接通过 <code>XLSX.utils.sheet_to_json(worksheet)</code> 获得同样的结果</p>
+</blockquote>
 <p><strong>注意</strong> 本例子中假设表的第一行为字段名</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> headers = &#123;&#125;;</span><br><span class="line"><span class="keyword">const</span> data = [];</span><br><span class="line"><span class="keyword">const</span> keys = <span class="built_in">Object</span>.keys(worksheet);</span><br><span class="line">keys</span><br><span class="line">    <span class="comment">// 过滤以 ! 开头的 key</span></span><br><span class="line">    .filter(k =&gt; k[<span class="number">0</span>] !== <span class="string">'!'</span>)</span><br><span class="line">    <span class="comment">// 遍历所有单元格</span></span><br><span class="line">    .forEach(k =&gt; &#123;</span><br><span class="line">        <span class="comment">// 如 A11 中的 A</span></span><br><span class="line">        <span class="keyword">let</span> col = k.substring(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 如 A11 中的 11</span></span><br><span class="line">        <span class="keyword">let</span> row = <span class="built_in">parseInt</span>(k.substring(<span class="number">1</span>));</span><br><span class="line">        <span class="comment">// 当前单元格的值</span></span><br><span class="line">        <span class="keyword">let</span> value = worksheet[k].v;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 保存字段名</span></span><br><span class="line">        <span class="keyword">if</span> (row === <span class="number">1</span>) &#123;</span><br><span class="line">            headers[col] = value;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 解析成 JSON</span></span><br><span class="line">        <span class="keyword">if</span> (!data[row]) &#123;</span><br><span class="line">            data[row] = &#123;&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        data[row][headers[col]] = value;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(data); <span class="comment">// [ &#123; '姓名': 'test1', '年龄': 20 &#125;, &#123; '姓名': 'test2', '年龄': 10 &#125; ... ]</span></span><br></pre></td></tr></table></figure>
 <h4 id="合并表格">合并表格</h4><p>步骤：</p>
@@ -463,7 +465,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -480,7 +482,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

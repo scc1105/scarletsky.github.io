@@ -223,6 +223,257 @@
             
               
                 
+                <a class="post-title-link" href="/2016/02/09/what-is-functor-in-haskell/" itemprop="url">
+                  What is functor in Haskell ?
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-09T22:50:13+08:00" content="2016-02-09">
+              2016-02-09
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/02/09/what-is-functor-in-haskell/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/02/09/what-is-functor-in-haskell/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Functor_简介">Functor 简介</h2><p>什么是 Functor ?</p>
+<blockquote>
+<p>现在你可以认为 Functor 是一种数据类型。</p>
+</blockquote>
+<p>Functor 有什么用 ?</p>
+<blockquote>
+<p>我们可以对 Functor 使用 <code>fmap</code>。</p>
+</blockquote>
+<p><code>fmap</code> 是什么东西 ?</p>
+<blockquote>
+<p><code>fmap</code> 是一个函数。</p>
+</blockquote>
+<p><code>fmap</code> 是函数的话，那它的类型签名是什么 ?</p>
+<blockquote>
+<p><code>fmap :: (a -&gt; b) -&gt; f a -&gt; f b</code>。</p>
+</blockquote>
+<p>我应该怎么看这个类型签名 ?</p>
+<blockquote>
+<p>它接受一个函数和一个 Functor 类型作为参数，然后返回另一个 Functor 。</p>
+</blockquote>
+<p><code>fmap</code> 有什么用 ?</p>
+<blockquote>
+<p>类似于 <code>map</code><br><code>map (+1) [1,2,3,4,5]  -- 返回 [2,3,4,5,6]</code><br><code>fmap (+1) [1,2,3,4,5] -- 返回 [2,3,4,5,6]</code></p>
+</blockquote>
+<p>所以列表是 Functor ?</p>
+<blockquote>
+<p>是的，List 是 Functor。</p>
+</blockquote>
+<p>为什么列表是 Functor ?</p>
+<blockquote>
+<p>因为列表实现了 <code>fmap</code>。</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> [] <span class="keyword">where</span></span></span><br><span class="line">  fmap = map</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>实现了 <code>fmap</code> 的数据类型都是 Functor ?</p>
+<blockquote>
+<p>不一定。</p>
+</blockquote>
+<p>为什么 ?</p>
+<blockquote>
+<p>除了要实现 <code>fmap</code> 之外，还需要满足一些条件才能成为 Functor。</p>
+</blockquote>
+<p>满足什么条件 ?</p>
+<blockquote>
+<ol>
+<li>必须保证 <code>fmap id = id</code>，也就是说 <code>fmap id xs</code> 和 <code>id xs</code> 必须返回相同的值。</li>
+<li>必须是可组合的，两个 <code>fmap</code> 组合使用的结果应该和两个函数组合起来再用 <code>fmap</code> 的结果相同。<br>也就是说 <code>fmap f . fmap g</code> 必须等于 <code>fmap (f . g)</code>。</li>
+</ol>
+</blockquote>
+<p>条件一是什么意思 ?</p>
+<blockquote>
+<p>意思是 <code>fmap</code> 只能对值调用 <code>f</code>，不能做额外的事情。</p>
+</blockquote>
+<p>有具体例子吗 ?</p>
+<blockquote>
+<p>看看这个经典的自定义数据类型，C表示计数器：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">CMaybe</span> a = <span class="type">CNothing</span> | <span class="type">CJust</span> <span class="type">Int</span> a <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">CMaybe</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f <span class="type">CNothing</span>          = <span class="type">CNothing</span></span><br><span class="line">  fmap f (<span class="type">CJust</span> counter x) = <span class="type">CJust</span> (counter + <span class="number">1</span>) (f x)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ghci</span></span><br><span class="line"></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"hoha"</span></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"he"</span>) (fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>))</span><br><span class="line"><span class="type">CJust</span> <span class="number">2</span> <span class="string">"hohahe"</span></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"blah"</span>) <span class="type">CNothing</span></span><br><span class="line"><span class="type">CNothing</span></span><br></pre></td></tr></table></figure>
+<p>这里的 <code>fmap</code> 除了对值调用 <code>f</code> 之外，还对 <code>counter</code> 加一。</p>
+</blockquote>
+<p>这有什么问题吗 ?</p>
+<blockquote>
+<p>再看看 <code>fmap id</code> 和 <code>id</code><br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; fmap id (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"haha"</span></span><br><span class="line"><span class="title">ghci</span>&gt; id (<span class="type">Cjust</span> <span class="number">0</span> <span class="string">"haha"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span></span><br></pre></td></tr></table></figure></p>
+<p>看出问题了吗 ?</p>
+</blockquote>
+<p><code>fmap id</code> 和 <code>id</code> 返回的结果不相等 ?</p>
+<blockquote>
+<p>是的，所以即便 <code>CMaybe a</code> 实现了 <code>fmap</code>，但它也不是 Functor。</p>
+</blockquote>
+<p>条件二有点像乘法分配律。</p>
+<blockquote>
+<p>是的。<br>乘法分配律是 <code>(a + b) x c = a x c + b x c</code>。<br>而条件二是 <code>fmap (f . g) = fmap f . fmap g</code>。</p>
+</blockquote>
+<p>条件二有具体例子吗 ?</p>
+<blockquote>
+<p>可以类比函数，因为函数本身也是 Functor，所以函数会满足<strong>可组合</strong>这个条件。<br>而实际应用中，我们也经常使用到函数组合这个特性。</p>
+</blockquote>
+<p>实现了 <code>fmap</code> ，同时满足两个条件的数据类型就是 Functor 吗？</p>
+<blockquote>
+<p>不，还有一个规则，就是该数据类型要有一个类型参数。</p>
+</blockquote>
+<p>能举个例子吗 ?</p>
+<blockquote>
+<p>我们已经知道 List 是一个 Functor，先看看 List 的定义：<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> [] a = [] | a : [a]</span></span><br></pre></td></tr></table></figure></p>
+<p>列表有一个类型参数 a，表示一个列表中可以包含相同类型的元素。</p>
+</blockquote>
+<p>Functor 只能有一个类型参数吗？</p>
+<blockquote>
+<p>不是，我们可以通过其他方法让多于一个类型参数的数据类型都能成为 Functor 的实例。</p>
+</blockquote>
+<p>什么手段 ?</p>
+<blockquote>
+<p>你需要先知道怎么定义一个 Functor。</p>
+</blockquote>
+<h2 id="自定义_Functor">自定义 Functor</h2><p>我应该怎么自定义 Functor ?</p>
+<blockquote>
+<p>先定义一个数据类型，再让该类型成为 Functor 的实例。<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">MyFunctor</span> a = <span class="type">Data</span> a <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">MyFunctor</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f (<span class="type">Data</span> x) = <span class="type">Data</span> (f x)</span><br></pre></td></tr></table></figure></p>
+<p>这样，我们定义的 MyFunctor 就是一个 Functor 了。</p>
+</blockquote>
+<p>刚才提到的让多于一个类型参数的数据类型成为 Functor 实例的方法是？</p>
+<blockquote>
+<p>利用 Haskell 中不全调用的特性。</p>
+</blockquote>
+<p>可以给个例子吗？</p>
+<blockquote>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">MyFunctor2</span> a b = <span class="type">Data2</span> a b <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="container">(<span class="type">MyFunctor2</span> <span class="title">a</span>)</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f (<span class="type">Data2</span> x y) = <span class="type">Data2</span> x (f y)</span><br></pre></td></tr></table></figure>
+<p>在 Haskell 中，我们可以利用 Haskell 不全调用的特性，把 MyFunctor2 a 当成一个整体，这样就相当于只有 b 一个类型参数了。</p>
+</blockquote>
+<h2 id="真_·_Functor">真 · Functor</h2><p>我从上面看到，Functor 是一个类型类？</p>
+<blockquote>
+<p>是的。事实上，<strong>Functor 是一个类型类，表示满足一些条件的数据类型。</strong></p>
+</blockquote>
+<p>满足上面提到的条件？</p>
+<blockquote>
+<p>是的！</p>
+</blockquote>
+<p>有哪些常见的 Functor ？</p>
+<blockquote>
+<p><code>List</code>, <code>Maybe</code>等等。<br>你可以在 ghci 中输入 <code>:i Functor</code> 来查看更多预定义的 Functor。</p>
+</blockquote>
+<p>这些 Functor 有什么特点？</p>
+<blockquote>
+<p>它们都带有上下文：即可以表示有值，也可以表示空值。<br>[] 表示空值，[a] 表示有值；<br>Nothing 表示空值，Just a表示有值；</p>
+</blockquote>
+<p>这样有什么好处吗？</p>
+<blockquote>
+<p>好处是显然易见的。考虑下下面的伪代码：<br><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">post = Posts.find_by_id(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">if</span> post</span><br><span class="line">  <span class="keyword">return</span> post.title</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">None</span></span><br></pre></td></tr></table></figure></p>
+<p>为什么这段伪代码需要判断 post 是否为空？因为 post 没有上下文环境，不能表示空值。<br>如果 post 有上下文环境 (也就是 post 可以表示空值)，那么我们的代码就可以直接写成：<br><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">post = Posts.find_by_id(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">return</span> post.title</span><br></pre></td></tr></table></figure></p>
+<p>因此，如果一个值可以带有上下文环境的话，我们的代码就可以写的非常简洁。</p>
+</blockquote>
+<p>把刚才的伪代码写成 Haskell 代码 ?</p>
+<blockquote>
+<p><code>fmap (getPostTitle) (findPosts 1)</code></p>
+</blockquote>
+<p><code>if else</code> 不见了？</p>
+<blockquote>
+<p>是的，这里假设 post 是一个 Functor，它可以表示带有空值的情况。所以 <code>if else</code> 就不需要了。</p>
+</blockquote>
+<p>那 <code>fmap</code> 呢？ 它事实上是什么东西？</p>
+<blockquote>
+<p><code>fmap</code> 确确实实是一个函数，它知道怎么把传进的函数应用到 Functor 中，并返回一个新的 Functor。</p>
+</blockquote>
+<p><code>fmap</code> 对 Functor 调用函数的过程发生了什么？</p>
+<blockquote>
+<p>看下面两张图 (图出自 <a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">Functors, Applicatives, And Monads In Pictures</a>)：<br><img src="https://cloud.githubusercontent.com/assets/2386165/12949440/c8753e16-d042-11e5-84ff-b47753d65c52.png" alt="fmap_just"><br><img src="https://cloud.githubusercontent.com/assets/2386165/12949441/c87a69b8-d042-11e5-80d6-2ee458e13e37.png" alt="fmap_nothing"><br>实际上，<code>fmap</code> 先取出 Functor 中的值，然后把值传进函数中，再把函数的返回值放回到 Functor 中，最后返回新的 Functor。</p>
+</blockquote>
+<p>Functor 有什么限制？</p>
+<blockquote>
+<p><code>fmap f x</code> 中的 <code>f</code> 只接受一个参数。<br><code>fmap f x</code> 中的 <code>f</code> 不能带有上下文 (换句话说只能是 (+42) 不能是 <code>Just (+42)</code>)。</p>
+</blockquote>
+<p>关于 Functor 的知识，还有什么我是需要知道的 ？</p>
+<blockquote>
+<p><code>fmap</code> 可以中缀调用，即 <code>f `fmap` xs</code><br><code>&lt;$&gt;</code> 是 <code>fmap</code> 的别名，一般用于中缀调用，即 <code>f &lt;$&gt; xs</code>。</p>
+</blockquote>
+<h2 id="总结">总结</h2><p>Functor 是类型类，只要满足以下条件的数据类型都可以成为 Functor 的实例：</p>
+<ul>
+<li>实现 <code>fmap</code>。</li>
+<li>保证 <code>fmap id = id</code>。</li>
+<li>保证 <code>fmap (f . g) = fmap f . fmap g</code>。</li>
+<li>该数据类型必须有一个以上的类型参数。</li>
+</ul>
+<p>最后，强烈建议看看 <a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">这篇文章</a>，相当形象生动。</p>
+<h2 id="参考资料">参考资料</h2><p><a href="http://learnyouahaskell.com/functors-applicative-functors-and-monoids" target="_blank" rel="external">Functors, Applicative Functors and Monoids</a><br><a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">Functors, Applicatives, And Monads In Pictures</a><br><a href="http://cnhaskell.com/chp/10.html#functor" target="_blank" rel="external">Functor 简介</a><br><a href="http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor" target="_blank" rel="external">http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor</a></p>
+
+          
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/02/06/random-numbers-in-haskell/" itemprop="url">
                   (译) Haskell 中随机数的使用
                 </a>
@@ -333,194 +584,6 @@
 <p>你也可以通过 <code>getStdGen</code> 获取全局生成器：</p>
 <figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">    g &lt;- getStdGen</span><br><span class="line">    <span class="keyword">let</span> [s] = take randomStuff g</span><br><span class="line">    print s</span><br></pre></td></tr></table></figure>
 <h2 id="参考资料">参考资料</h2><p><a href="http://www.vex.net/~trebla/haskell/random.xhtml" target="_blank" rel="external">原文</a></p>
-
-          
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/30/nodejs-process-excel/" itemprop="url">
-                  在 Node.js 中利用 js-xlsx 处理 Excel 文件
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-01-30T11:31:46+08:00" content="2016-01-30">
-              2016-01-30
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/01/30/nodejs-process-excel/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/01/30/nodejs-process-excel/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="简介">简介</h2><p>本文介绍用 Node.js 中的 <code>js-xlsx</code> 库来处理 Excel 文件。<br><code>js-xlsx</code> 库是目前 Github 上 star 数量最多的处理 Excel 的库，功能强大，但上手难度稍大。文档有些乱，不适合快速上手。<br>本文对 <code>js-xlsx</code> 库进行一定的总结，并提供几个实用的例子供读者测试，学习，交流。</p>
-<h2 id="安装">安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install xlsx</span><br></pre></td></tr></table></figure>
-<h2 id="一些概念">一些概念</h2><p>在使用这个库之前，先介绍库中的一些概念。</p>
-<ul>
-<li><p><code>workbook</code> 对象，指的是整份 Excel 文档。我们在使用 <code>js-xlsx</code> 读取 Excel 文档之后就会获得 <code>workbook</code> 对象。</p>
-</li>
-<li><p><code>worksheet</code> 对象，指的是 Excel 文档中的表。我们知道一份 Excel 文档中可以包含很多张表，而每张表对应的就是 <code>worksheet</code> 对象。</p>
-</li>
-<li><p><code>cell</code> 对象，指的就是 <code>worksheet</code> 中的单元格，一个单元格就是一个 <code>cell</code> 对象。</p>
-</li>
-</ul>
-<p>它们的关系如下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// workbook</span></span><br><span class="line">&#123;</span><br><span class="line">    SheetNames: [<span class="string">'sheet1'</span>, <span class="string">'sheet2'</span>],</span><br><span class="line">    Sheets: &#123;</span><br><span class="line">        <span class="comment">// worksheet</span></span><br><span class="line">        <span class="string">'sheet1'</span>: &#123;</span><br><span class="line">            <span class="comment">// cell</span></span><br><span class="line">            <span class="string">'A1'</span>: &#123; ... &#125;,</span><br><span class="line">            <span class="comment">// cell</span></span><br><span class="line">            <span class="string">'A2'</span>: &#123; ... &#125;,</span><br><span class="line">            ...</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// worksheet</span></span><br><span class="line">        <span class="string">'sheet2'</span>: &#123;</span><br><span class="line">            <span class="comment">// cell</span></span><br><span class="line">            <span class="string">'A1'</span>: &#123; ... &#125;,</span><br><span class="line">            <span class="comment">// cell</span></span><br><span class="line">            <span class="string">'A2'</span>: &#123; ... &#125;,</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="用法">用法</h2><h3 id="基本用法">基本用法</h3><ol>
-<li>用 <code>XLSX.readFile</code> 打开 Excel 文件，返回 <code>workbook</code></li>
-<li>用 <code>workbook.SheetNames</code> 获取表名</li>
-<li>用 <code>workbook.Sheets[xxx]</code> 通过表名获取表格</li>
-<li>按自己的需求去处理表格</li>
-<li>生成新的 Excel 文件</li>
-</ol>
-<h3 id="具体用法">具体用法</h3><p>读取 Excel 文件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> XLSX <span class="keyword">from</span> <span class="string">'xlsx'</span>;</span><br><span class="line"><span class="keyword">const</span> workbook = XLSX.readFile(<span class="string">'someExcel.xlsx'</span>, opts);</span><br></pre></td></tr></table></figure>
-<p>获取 Excel 文件中的表</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取 Excel 中所有表名</span></span><br><span class="line"><span class="keyword">const</span> sheetNames = workbook.SheetNames; <span class="comment">// 返回 ['sheet1', 'sheet2']</span></span><br><span class="line"><span class="comment">// 根据表名获取对应某张表</span></span><br><span class="line"><span class="keyword">const</span> worksheet = workbook.Sheets[sheetNames[<span class="number">0</span>]];</span><br></pre></td></tr></table></figure>
-<p>通过 <code>worksheet[address]</code> 来操作表格，以 <code>!</code> 开头的 key 是特殊的字段。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取 A1 单元格对象</span></span><br><span class="line"><span class="keyword">let</span> a1 = worksheet[<span class="string">'A1'</span>]; <span class="comment">// 返回 &#123; v: 'hello', t: 's', ... &#125;</span></span><br><span class="line"><span class="comment">// 获取 A1 中的值</span></span><br><span class="line">a1.v <span class="comment">// 返回 'hello'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取表的有效范围</span></span><br><span class="line">worksheet[<span class="string">'!ref'</span>] <span class="comment">// 返回 'A1:B20'</span></span><br><span class="line">worksheet[<span class="string">'!range'</span>] <span class="comment">// 返回 range 对象，&#123; s: &#123; r: 0, c: 0&#125;, e: &#123; r: 100, c: 2 &#125; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取合并过的单元格</span></span><br><span class="line">worksheet[<span class="string">'!merges'</span>] <span class="comment">// 返回一个包含 range 对象的列表，[ &#123;s: &#123; r: 0, c: 0 &#125;, c: &#123; r: 2, c: 1 &#125; &#125; ]</span></span><br></pre></td></tr></table></figure>
-<h3 id="实战">实战</h3><h4 id="解析_Excel_生成_JSON">解析 Excel 生成 JSON</h4><p><strong>Tips</strong> 事实上，你可以直接通过 <code>XLSX.utils.sheet_to_json(worksheet)</code> 获得同样的结果</p>
-<p><strong>注意</strong> 本例子中假设表的第一行为字段名</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> headers = &#123;&#125;;</span><br><span class="line"><span class="keyword">const</span> data = [];</span><br><span class="line"><span class="keyword">const</span> keys = <span class="built_in">Object</span>.keys(worksheet);</span><br><span class="line">keys</span><br><span class="line">    <span class="comment">// 过滤以 ! 开头的 key</span></span><br><span class="line">    .filter(k =&gt; k[<span class="number">0</span>] !== <span class="string">'!'</span>)</span><br><span class="line">    <span class="comment">// 遍历所有单元格</span></span><br><span class="line">    .forEach(k =&gt; &#123;</span><br><span class="line">        <span class="comment">// 如 A11 中的 A</span></span><br><span class="line">        <span class="keyword">let</span> col = k.substring(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 如 A11 中的 11</span></span><br><span class="line">        <span class="keyword">let</span> row = <span class="built_in">parseInt</span>(k.substring(<span class="number">1</span>));</span><br><span class="line">        <span class="comment">// 当前单元格的值</span></span><br><span class="line">        <span class="keyword">let</span> value = worksheet[k].v;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 保存字段名</span></span><br><span class="line">        <span class="keyword">if</span> (row === <span class="number">1</span>) &#123;</span><br><span class="line">            headers[col] = value;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 解析成 JSON</span></span><br><span class="line">        <span class="keyword">if</span> (!data[row]) &#123;</span><br><span class="line">            data[row] = &#123;&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        data[row][headers[col]] = value;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(data); <span class="comment">// [ &#123; '姓名': 'test1', '年龄': 20 &#125;, &#123; '姓名': 'test2', '年龄': 10 &#125; ... ]</span></span><br></pre></td></tr></table></figure>
-<h4 id="合并表格">合并表格</h4><p>步骤：</p>
-<ol>
-<li>读取多份表格</li>
-<li>合并数组</li>
-</ol>
-<p><strong>Tips:</strong> 其实合并表格跟 <code>XLSX</code> 没什么关系，只是处理几个数组而已。</p>
-<p>sheet1</p>
-<table>
-<thead>
-<tr>
-<th>id</th>
-<th>name</th>
-<th>age</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>test1</td>
-<td>30</td>
-</tr>
-<tr>
-<td>2</td>
-<td>test2</td>
-<td>20</td>
-</tr>
-<tr>
-<td>3</td>
-<td>test3</td>
-<td>18</td>
-</tr>
-</tbody>
-</table>
-<p>sheet2</p>
-<table>
-<thead>
-<tr>
-<th>id</th>
-<th>country</th>
-<th>remark</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>China</td>
-<td>hello</td>
-</tr>
-<tr>
-<td>2</td>
-<td>America</td>
-<td>world</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Unkonw</td>
-<td>???</td>
-</tr>
-</tbody>
-</table>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> sheet1 = XLSX.utils.sheet_to_json(sheet1);</span><br><span class="line"><span class="keyword">let</span> sheet2 = XLSX.utils.sheet_to_json(sheet2);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先合并 sheet1 和 sheet2，再对统一处理</span></span><br><span class="line"><span class="keyword">const</span> result = sheet1.concat(sheet2).reduce((prev, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> index = prev.findIndex((elem, i) =&gt; elem.id === next.id);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (index === -<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> prev.concat(next);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        prev[index] = <span class="built_in">Object</span>.assign(&#123;&#125;, prev[index], next);</span><br><span class="line">        <span class="keyword">return</span> prev;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;, []);</span><br><span class="line"><span class="built_in">console</span>.log(result);</span><br><span class="line"></span><br><span class="line"><span class="comment">// [ &#123; id: '1',</span></span><br><span class="line"><span class="comment">//    name: 'test1',</span></span><br><span class="line"><span class="comment">//    age: '30',</span></span><br><span class="line"><span class="comment">//    country: 'China',</span></span><br><span class="line"><span class="comment">//    remark: 'hello' &#125;,</span></span><br><span class="line"><span class="comment">//  &#123; id: '2',</span></span><br><span class="line"><span class="comment">//    name: 'test2',</span></span><br><span class="line"><span class="comment">//    age: '20',</span></span><br><span class="line"><span class="comment">//    country: 'America',</span></span><br><span class="line"><span class="comment">//    remark: 'world' &#125;,</span></span><br><span class="line"><span class="comment">//  &#123; id: '3',</span></span><br><span class="line"><span class="comment">//    name: 'test3',</span></span><br><span class="line"><span class="comment">//    age: '18',</span></span><br><span class="line"><span class="comment">//    country: 'Unkonw',</span></span><br><span class="line"><span class="comment">//    remark: '???' &#125; ]</span></span><br></pre></td></tr></table></figure>
-<h4 id="导出表格">导出表格</h4><p>步骤：</p>
-<ol>
-<li>构建特定的数据结构，如下。</li>
-<li>调用 <code>XLSX.writeFile(workbook, filename)</code> 即可。</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// workbook</span></span><br><span class="line">&#123;</span><br><span class="line">    SheetNames: [<span class="string">'mySheet'</span>],</span><br><span class="line">    Sheets: &#123;</span><br><span class="line">        <span class="string">'mySheet'</span>: &#123;</span><br><span class="line">            <span class="string">'!ref'</span>: <span class="string">'A1:E4'</span>, <span class="comment">// 必须要有这个范围才能输出，否则导出的 excel 会是一个空表</span></span><br><span class="line">            A1: &#123; v: <span class="string">'id'</span> &#125;,</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> _headers = [<span class="string">'id'</span>, <span class="string">'name'</span>, <span class="string">'age'</span>, <span class="string">'country'</span>, <span class="string">'remark'</span>]</span><br><span class="line"><span class="keyword">var</span> _data = [ &#123; id: <span class="string">'1'</span>,</span><br><span class="line">                name: <span class="string">'test1'</span>,</span><br><span class="line">                age: <span class="string">'30'</span>,</span><br><span class="line">                country: <span class="string">'China'</span>,</span><br><span class="line">                remark: <span class="string">'hello'</span> &#125;,</span><br><span class="line">              &#123; id: <span class="string">'2'</span>,</span><br><span class="line">                name: <span class="string">'test2'</span>,</span><br><span class="line">                age: <span class="string">'20'</span>,</span><br><span class="line">                country: <span class="string">'America'</span>,</span><br><span class="line">                remark: <span class="string">'world'</span> &#125;,</span><br><span class="line">              &#123; id: <span class="string">'3'</span>,</span><br><span class="line">                name: <span class="string">'test3'</span>,</span><br><span class="line">                age: <span class="string">'18'</span>,</span><br><span class="line">                country: <span class="string">'Unkonw'</span>,</span><br><span class="line">                remark: <span class="string">'???'</span> &#125; ];</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> headers = _headers</span><br><span class="line">                <span class="comment">// 为 _headers 添加对应的单元格位置</span></span><br><span class="line">                <span class="comment">// [ &#123; v: 'id', position: 'A1' &#125;,</span></span><br><span class="line">                <span class="comment">//   &#123; v: 'name', position: 'B1' &#125;,</span></span><br><span class="line">                <span class="comment">//   &#123; v: 'age', position: 'C1' &#125;,</span></span><br><span class="line">                <span class="comment">//   &#123; v: 'country', position: 'D1' &#125;,</span></span><br><span class="line">                <span class="comment">//   &#123; v: 'remark', position: 'E1' &#125; ]</span></span><br><span class="line">                .map((v, i) =&gt; <span class="built_in">Object</span>.assign(&#123;&#125;, &#123;v: v, position: <span class="built_in">String</span>.fromCharCode(<span class="number">65</span>+i) + <span class="number">1</span> &#125;))</span><br><span class="line">                <span class="comment">// 转换成 worksheet 需要的结构</span></span><br><span class="line">                <span class="comment">// &#123; A1: &#123; v: 'id' &#125;,</span></span><br><span class="line">                <span class="comment">//   B1: &#123; v: 'name' &#125;,</span></span><br><span class="line">                <span class="comment">//   C1: &#123; v: 'age' &#125;,</span></span><br><span class="line">                <span class="comment">//   D1: &#123; v: 'country' &#125;,</span></span><br><span class="line">                <span class="comment">//   E1: &#123; v: 'remark' &#125; &#125;</span></span><br><span class="line">                .reduce((prev, next) =&gt; <span class="built_in">Object</span>.assign(&#123;&#125;, prev, &#123;[next.position]: &#123;v: next.v&#125;&#125;), &#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> data = _data</span><br><span class="line">              <span class="comment">// 匹配 headers 的位置，生成对应的单元格数据</span></span><br><span class="line">              <span class="comment">// [ [ &#123; v: '1', position: 'A2' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: 'test1', position: 'B2' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: '30', position: 'C2' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: 'China', position: 'D2' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: 'hello', position: 'E2' &#125; ],</span></span><br><span class="line">              <span class="comment">//   [ &#123; v: '2', position: 'A3' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: 'test2', position: 'B3' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: '20', position: 'C3' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: 'America', position: 'D3' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: 'world', position: 'E3' &#125; ],</span></span><br><span class="line">              <span class="comment">//   [ &#123; v: '3', position: 'A4' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: 'test3', position: 'B4' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: '18', position: 'C4' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: 'Unkonw', position: 'D4' &#125;,</span></span><br><span class="line">              <span class="comment">//     &#123; v: '???', position: 'E4' &#125; ] ]</span></span><br><span class="line">              .map((v, i) =&gt; _headers.map((k, j) =&gt; <span class="built_in">Object</span>.assign(&#123;&#125;, &#123; v: v[k], position: <span class="built_in">String</span>.fromCharCode(<span class="number">65</span>+j) + (i+<span class="number">2</span>) &#125;)))</span><br><span class="line">              <span class="comment">// 对刚才的结果进行降维处理（二维数组变成一维数组）</span></span><br><span class="line">              <span class="comment">// [ &#123; v: '1', position: 'A2' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: 'test1', position: 'B2' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: '30', position: 'C2' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: 'China', position: 'D2' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: 'hello', position: 'E2' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: '2', position: 'A3' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: 'test2', position: 'B3' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: '20', position: 'C3' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: 'America', position: 'D3' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: 'world', position: 'E3' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: '3', position: 'A4' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: 'test3', position: 'B4' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: '18', position: 'C4' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: 'Unkonw', position: 'D4' &#125;,</span></span><br><span class="line">              <span class="comment">//   &#123; v: '???', position: 'E4' &#125; ]</span></span><br><span class="line">              .reduce((prev, next) =&gt; prev.concat(next))</span><br><span class="line">              <span class="comment">// 转换成 worksheet 需要的结构</span></span><br><span class="line">              <span class="comment">//   &#123; A2: &#123; v: '1' &#125;,</span></span><br><span class="line">              <span class="comment">//     B2: &#123; v: 'test1' &#125;,</span></span><br><span class="line">              <span class="comment">//     C2: &#123; v: '30' &#125;,</span></span><br><span class="line">              <span class="comment">//     D2: &#123; v: 'China' &#125;,</span></span><br><span class="line">              <span class="comment">//     E2: &#123; v: 'hello' &#125;,</span></span><br><span class="line">              <span class="comment">//     A3: &#123; v: '2' &#125;,</span></span><br><span class="line">              <span class="comment">//     B3: &#123; v: 'test2' &#125;,</span></span><br><span class="line">              <span class="comment">//     C3: &#123; v: '20' &#125;,</span></span><br><span class="line">              <span class="comment">//     D3: &#123; v: 'America' &#125;,</span></span><br><span class="line">              <span class="comment">//     E3: &#123; v: 'world' &#125;,</span></span><br><span class="line">              <span class="comment">//     A4: &#123; v: '3' &#125;,</span></span><br><span class="line">              <span class="comment">//     B4: &#123; v: 'test3' &#125;,</span></span><br><span class="line">              <span class="comment">//     C4: &#123; v: '18' &#125;,</span></span><br><span class="line">              <span class="comment">//     D4: &#123; v: 'Unkonw' &#125;,</span></span><br><span class="line">              <span class="comment">//     E4: &#123; v: '???' &#125; &#125;</span></span><br><span class="line">              .reduce((prev, next) =&gt; <span class="built_in">Object</span>.assign(&#123;&#125;, prev, &#123;[next.position]: &#123;v: next.v&#125;&#125;), &#123;&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 合并 headers 和 data</span></span><br><span class="line"><span class="keyword">var</span> output = <span class="built_in">Object</span>.assign(&#123;&#125;, headers, data);</span><br><span class="line"><span class="comment">// 获取所有单元格的位置</span></span><br><span class="line"><span class="keyword">var</span> outputPos = <span class="built_in">Object</span>.keys(output);</span><br><span class="line"><span class="comment">// 计算出范围</span></span><br><span class="line"><span class="keyword">var</span> ref = outputPos[<span class="number">0</span>] + <span class="string">':'</span> + outputPos[outputPos.length - <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 构建 workbook 对象</span></span><br><span class="line"><span class="keyword">var</span> wb = &#123;</span><br><span class="line">    SheetNames: [<span class="string">'mySheet'</span>],</span><br><span class="line">    Sheets: &#123;</span><br><span class="line">        <span class="string">'mySheet'</span>: <span class="built_in">Object</span>.assign(&#123;&#125;, output, &#123; <span class="string">'!ref'</span>: ref &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 导出 Excel</span></span><br><span class="line">XLSX.writeFile(wb, <span class="string">'output.xlsx'</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="参考资料">参考资料</h2><p><a href="https://github.com/SheetJS/js-xlsx" target="_blank" rel="external">https://github.com/SheetJS/js-xlsx</a><br><a href="http://stackoverflow.com/questions/30859901/parse-xlsx-with-node-and-create-json" target="_blank" rel="external">http://stackoverflow.com/questions/30859901/parse-xlsx-with-node-and-create-json</a></p>
 
           
         
@@ -1776,147 +1839,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/19/commonjs-learning/" itemprop="url">
-                  CommonJS 学习笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-08-19T10:11:10+08:00" content="2015-08-19">
-              2015-08-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/19/commonjs-learning/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/19/commonjs-learning/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="概述">概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
-<p>根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 <code>require</code> 来获取 <code>module.exports</code> 中暴露的内容，而其他部分都是私有的，其他模块不能访问。</p>
-<h1 id="module_对象">module 对象</h1><p>每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是每个模块都有的本地变量。</p>
-<ul>
-<li><p><code>module.id</code> 模块的识别符，通常是带有绝对路径的模块文件名。</p>
-</li>
-<li><p><code>module.filename</code> 模块的文件名。</p>
-</li>
-<li><p><code>module.loaded</code> 返回一个布尔值，表示模块是否已经完成加载。</p>
-</li>
-<li><p><code>module.parent</code> 返回一个对象，表示调用该模块的模块。</p>
-</li>
-<li><p><code>module.children</code> 返回一个数组，表示该模块要用到的其他模块。数组中的内容是其他要用到的模块的 <code>module</code> 对象。</p>
-</li>
-<li><p><code>module.paths</code> 返回一个数组，表示模块查找路径，排在越前面的优先级越高。具体请查看 <a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">这里</a></p>
-</li>
-<li><p><code>module.exports</code> 表示其他模块可以通过 <code>require</code> 获取的内容。默认情况下是一个空对象，即 <code>{}</code>。</p>
-</li>
-</ul>
-<h1 id="module-exports_和_exports">module.exports 和 exports</h1><p>默认情况下，<code>module.exports</code> 和 <code>exports</code> 两者是等价的，即 <code>module.exports === exports</code></p>
-<p><code>exports</code> 只是为了方便我们编码而添加的，相当于在每个文件中自动添加了 <code>var exports = module.exports</code>。</p>
-<p>我们可以根据个人喜好，把需要暴露的东西挂在 <code>exports</code> 或 <code>module.exports</code> 下。</p>
-<p><strong>但是</strong>，必须注意以下几点：</p>
-<ul>
-<li><p>不能把 <code>exports</code> 重新赋值，因为这样会令 <code>exports</code> 不再指向 <code>module.exports</code>，这样 <code>exports</code> 就没用了。</p>
-</li>
-<li><p>我们可以通过 <code>module.exports = function() {...}</code> 这种方式指定 <code>module.exports</code> 的指向，这样在其他模块中 <code>require</code> 这个模块，获得的就是一个 <code>function</code>，而不是一个对象。这样做也会导致 <code>exports</code> 失效。</p>
-</li>
-<li><p>由于上面的原因，我们会在很多地方看到 <code>module.exports = exports = xxx</code> 这样的代码。</p>
-</li>
-</ul>
-<h1 id="参考资料">参考资料</h1><p><a href="http://javascript.ruanyifeng.com/nodejs/commonjs.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/nodejs/commonjs.html</a><br><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">http://www.infoq.com/cn/articles/nodejs-module-mechanism/</a><br><a href="http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js" target="_blank" rel="external">http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js</a></p>
-
-          
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1963,7 +1885,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1980,7 +1902,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

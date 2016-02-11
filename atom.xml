@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-02-06T14:25:51.000Z</updated>
+  <updated>2016-02-11T02:42:31.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -15,11 +15,194 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[What is functor in Haskell ?]]></title>
+    <link href="http://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/"/>
+    <id>http://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/</id>
+    <published>2016-02-09T14:50:13.000Z</published>
+    <updated>2016-02-11T02:42:31.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Functor_简介">Functor 简介</h2><p>什么是 Functor ?</p>
+<blockquote>
+<p>现在你可以认为 Functor 是一种数据类型。</p>
+</blockquote>
+<p>Functor 有什么用 ?</p>
+<blockquote>
+<p>我们可以对 Functor 使用 <code>fmap</code>。</p>
+</blockquote>
+<p><code>fmap</code> 是什么东西 ?</p>
+<blockquote>
+<p><code>fmap</code> 是一个函数。</p>
+</blockquote>
+<p><code>fmap</code> 是函数的话，那它的类型签名是什么 ?</p>
+<blockquote>
+<p><code>fmap :: (a -&gt; b) -&gt; f a -&gt; f b</code>。</p>
+</blockquote>
+<p>我应该怎么看这个类型签名 ?</p>
+<blockquote>
+<p>它接受一个函数和一个 Functor 类型作为参数，然后返回另一个 Functor 。</p>
+</blockquote>
+<p><code>fmap</code> 有什么用 ?</p>
+<blockquote>
+<p>类似于 <code>map</code><br><code>map (+1) [1,2,3,4,5]  -- 返回 [2,3,4,5,6]</code><br><code>fmap (+1) [1,2,3,4,5] -- 返回 [2,3,4,5,6]</code></p>
+</blockquote>
+<p>所以列表是 Functor ?</p>
+<blockquote>
+<p>是的，List 是 Functor。</p>
+</blockquote>
+<p>为什么列表是 Functor ?</p>
+<blockquote>
+<p>因为列表实现了 <code>fmap</code>。</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> [] <span class="keyword">where</span></span></span><br><span class="line">  fmap = map</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>实现了 <code>fmap</code> 的数据类型都是 Functor ?</p>
+<blockquote>
+<p>不一定。</p>
+</blockquote>
+<p>为什么 ?</p>
+<blockquote>
+<p>除了要实现 <code>fmap</code> 之外，还需要满足一些条件才能成为 Functor。</p>
+</blockquote>
+<p>满足什么条件 ?</p>
+<blockquote>
+<ol>
+<li>必须保证 <code>fmap id = id</code>，也就是说 <code>fmap id xs</code> 和 <code>id xs</code> 必须返回相同的值。</li>
+<li>必须是可组合的，两个 <code>fmap</code> 组合使用的结果应该和两个函数组合起来再用 <code>fmap</code> 的结果相同。<br>也就是说 <code>fmap f . fmap g</code> 必须等于 <code>fmap (f . g)</code>。</li>
+</ol>
+</blockquote>
+<p>条件一是什么意思 ?</p>
+<blockquote>
+<p>意思是 <code>fmap</code> 只能对值调用 <code>f</code>，不能做额外的事情。</p>
+</blockquote>
+<p>有具体例子吗 ?</p>
+<blockquote>
+<p>看看这个经典的自定义数据类型，C表示计数器：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">CMaybe</span> a = <span class="type">CNothing</span> | <span class="type">CJust</span> <span class="type">Int</span> a <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">CMaybe</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f <span class="type">CNothing</span>          = <span class="type">CNothing</span></span><br><span class="line">  fmap f (<span class="type">CJust</span> counter x) = <span class="type">CJust</span> (counter + <span class="number">1</span>) (f x)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ghci</span></span><br><span class="line"></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"hoha"</span></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"he"</span>) (fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>))</span><br><span class="line"><span class="type">CJust</span> <span class="number">2</span> <span class="string">"hohahe"</span></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"blah"</span>) <span class="type">CNothing</span></span><br><span class="line"><span class="type">CNothing</span></span><br></pre></td></tr></table></figure>
+<p>这里的 <code>fmap</code> 除了对值调用 <code>f</code> 之外，还对 <code>counter</code> 加一。</p>
+</blockquote>
+<p>这有什么问题吗 ?</p>
+<blockquote>
+<p>再看看 <code>fmap id</code> 和 <code>id</code><br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; fmap id (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"haha"</span></span><br><span class="line"><span class="title">ghci</span>&gt; id (<span class="type">Cjust</span> <span class="number">0</span> <span class="string">"haha"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span></span><br></pre></td></tr></table></figure></p>
+<p>看出问题了吗 ?</p>
+</blockquote>
+<p><code>fmap id</code> 和 <code>id</code> 返回的结果不相等 ?</p>
+<blockquote>
+<p>是的，所以即便 <code>CMaybe a</code> 实现了 <code>fmap</code>，但它也不是 Functor。</p>
+</blockquote>
+<p>条件二有点像乘法分配律。</p>
+<blockquote>
+<p>是的。<br>乘法分配律是 <code>(a + b) x c = a x c + b x c</code>。<br>而条件二是 <code>fmap (f . g) = fmap f . fmap g</code>。</p>
+</blockquote>
+<p>条件二有具体例子吗 ?</p>
+<blockquote>
+<p>可以类比函数，因为函数本身也是 Functor，所以函数会满足<strong>可组合</strong>这个条件。<br>而实际应用中，我们也经常使用到函数组合这个特性。</p>
+</blockquote>
+<p>实现了 <code>fmap</code> ，同时满足两个条件的数据类型就是 Functor 吗？</p>
+<blockquote>
+<p>不，还有一个规则，就是该数据类型要有一个类型参数。</p>
+</blockquote>
+<p>能举个例子吗 ?</p>
+<blockquote>
+<p>我们已经知道 List 是一个 Functor，先看看 List 的定义：<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> [] a = [] | a : [a]</span></span><br></pre></td></tr></table></figure></p>
+<p>列表有一个类型参数 a，表示一个列表中可以包含相同类型的元素。</p>
+</blockquote>
+<p>Functor 只能有一个类型参数吗？</p>
+<blockquote>
+<p>不是，我们可以通过其他方法让多于一个类型参数的数据类型都能成为 Functor 的实例。</p>
+</blockquote>
+<p>什么手段 ?</p>
+<blockquote>
+<p>你需要先知道怎么定义一个 Functor。</p>
+</blockquote>
+<h2 id="自定义_Functor">自定义 Functor</h2><p>我应该怎么自定义 Functor ?</p>
+<blockquote>
+<p>先定义一个数据类型，再让该类型成为 Functor 的实例。<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">MyFunctor</span> a = <span class="type">Data</span> a <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">MyFunctor</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f (<span class="type">Data</span> x) = <span class="type">Data</span> (f x)</span><br></pre></td></tr></table></figure></p>
+<p>这样，我们定义的 MyFunctor 就是一个 Functor 了。</p>
+</blockquote>
+<p>刚才提到的让多于一个类型参数的数据类型成为 Functor 实例的方法是？</p>
+<blockquote>
+<p>利用 Haskell 中不全调用的特性。</p>
+</blockquote>
+<p>可以给个例子吗？</p>
+<blockquote>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">MyFunctor2</span> a b = <span class="type">Data2</span> a b <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="container">(<span class="type">MyFunctor2</span> <span class="title">a</span>)</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f (<span class="type">Data2</span> x y) = <span class="type">Data2</span> x (f y)</span><br></pre></td></tr></table></figure>
+<p>在 Haskell 中，我们可以利用 Haskell 不全调用的特性，把 MyFunctor2 a 当成一个整体，这样就相当于只有 b 一个类型参数了。</p>
+</blockquote>
+<h2 id="真_·_Functor">真 · Functor</h2><p>我从上面看到，Functor 是一个类型类？</p>
+<blockquote>
+<p>是的。事实上，<strong>Functor 是一个类型类，表示满足一些条件的数据类型。</strong></p>
+</blockquote>
+<p>满足上面提到的条件？</p>
+<blockquote>
+<p>是的！</p>
+</blockquote>
+<p>有哪些常见的 Functor ？</p>
+<blockquote>
+<p><code>List</code>, <code>Maybe</code>等等。<br>你可以在 ghci 中输入 <code>:i Functor</code> 来查看更多预定义的 Functor。</p>
+</blockquote>
+<p>这些 Functor 有什么特点？</p>
+<blockquote>
+<p>它们都带有上下文：即可以表示有值，也可以表示空值。<br>[] 表示空值，[a] 表示有值；<br>Nothing 表示空值，Just a表示有值；</p>
+</blockquote>
+<p>这样有什么好处吗？</p>
+<blockquote>
+<p>好处是显然易见的。考虑下下面的伪代码：<br><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">post = Posts.find_by_id(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">if</span> post</span><br><span class="line">  <span class="keyword">return</span> post.title</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">None</span></span><br></pre></td></tr></table></figure></p>
+<p>为什么这段伪代码需要判断 post 是否为空？因为 post 没有上下文环境，不能表示空值。<br>如果 post 有上下文环境 (也就是 post 可以表示空值)，那么我们的代码就可以直接写成：<br><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">post = Posts.find_by_id(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">return</span> post.title</span><br></pre></td></tr></table></figure></p>
+<p>因此，如果一个值可以带有上下文环境的话，我们的代码就可以写的非常简洁。</p>
+</blockquote>
+<p>把刚才的伪代码写成 Haskell 代码 ?</p>
+<blockquote>
+<p><code>fmap (getPostTitle) (findPosts 1)</code></p>
+</blockquote>
+<p><code>if else</code> 不见了？</p>
+<blockquote>
+<p>是的，这里假设 post 是一个 Functor，它可以表示带有空值的情况。所以 <code>if else</code> 就不需要了。</p>
+</blockquote>
+<p>那 <code>fmap</code> 呢？ 它事实上是什么东西？</p>
+<blockquote>
+<p><code>fmap</code> 确确实实是一个函数，它知道怎么把传进的函数应用到 Functor 中，并返回一个新的 Functor。</p>
+</blockquote>
+<p><code>fmap</code> 对 Functor 调用函数的过程发生了什么？</p>
+<blockquote>
+<p>看下面两张图 (图出自 <a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">Functors, Applicatives, And Monads In Pictures</a>)：<br><img src="https://cloud.githubusercontent.com/assets/2386165/12949440/c8753e16-d042-11e5-84ff-b47753d65c52.png" alt="fmap_just"><br><img src="https://cloud.githubusercontent.com/assets/2386165/12949441/c87a69b8-d042-11e5-80d6-2ee458e13e37.png" alt="fmap_nothing"><br>实际上，<code>fmap</code> 先取出 Functor 中的值，然后把值传进函数中，再把函数的返回值放回到 Functor 中，最后返回新的 Functor。</p>
+</blockquote>
+<p>Functor 有什么限制？</p>
+<blockquote>
+<p><code>fmap f x</code> 中的 <code>f</code> 只接受一个参数。<br><code>fmap f x</code> 中的 <code>f</code> 不能带有上下文 (换句话说只能是 (+42) 不能是 <code>Just (+42)</code>)。</p>
+</blockquote>
+<p>关于 Functor 的知识，还有什么我是需要知道的 ？</p>
+<blockquote>
+<p><code>fmap</code> 可以中缀调用，即 <code>f `fmap` xs</code><br><code>&lt;$&gt;</code> 是 <code>fmap</code> 的别名，一般用于中缀调用，即 <code>f &lt;$&gt; xs</code>。</p>
+</blockquote>
+<h2 id="总结">总结</h2><p>Functor 是类型类，只要满足以下条件的数据类型都可以成为 Functor 的实例：</p>
+<ul>
+<li>实现 <code>fmap</code>。</li>
+<li>保证 <code>fmap id = id</code>。</li>
+<li>保证 <code>fmap (f . g) = fmap f . fmap g</code>。</li>
+<li>该数据类型必须有一个以上的类型参数。</li>
+</ul>
+<p>最后，强烈建议看看 <a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">这篇文章</a>，相当形象生动。</p>
+<h2 id="参考资料">参考资料</h2><p><a href="http://learnyouahaskell.com/functors-applicative-functors-and-monoids" target="_blank" rel="external">Functors, Applicative Functors and Monoids</a><br><a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">Functors, Applicatives, And Monads In Pictures</a><br><a href="http://cnhaskell.com/chp/10.html#functor" target="_blank" rel="external">Functor 简介</a><br><a href="http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor" target="_blank" rel="external">http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Functor_简介">Functor 简介</h2><p>什么是 Functor ?</p>
+<blockquote>
+<p>现在你可以认为 Functor 是一种数据类型。</p>
+</blockquote>
+<p>Functor 有什么用 ?</p>
+<bl]]>
+    </summary>
+    
+      <category term="functor" scheme="http://scarletsky.github.io/tags/functor/"/>
+    
+      <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[(译) Haskell 中随机数的使用]]></title>
     <link href="http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/"/>
     <id>http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</id>
     <published>2016-02-06T09:35:18.000Z</published>
-    <updated>2016-02-06T14:25:51.000Z</updated>
+    <updated>2016-02-06T14:25:55.000Z</updated>
     <content type="html"><![CDATA[<p>随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 <code>System.Random</code> 库）是伴随着状态的传递的。 </p>
 <p>大部分需要获得帮助的人都有命令式编程的背景，因此，我会先用命令式的方式，然后再用函数式的方式来教大家在 Haskell 中使用随机数。</p>
 <h2 id="任务">任务</h2><p>我会生成满足以下条件的随机列表：</p>
@@ -98,7 +281,7 @@
     <link href="http://scarletsky.github.io/2016/01/30/nodejs-process-excel/"/>
     <id>http://scarletsky.github.io/2016/01/30/nodejs-process-excel/</id>
     <published>2016-01-30T03:31:46.000Z</published>
-    <updated>2016-01-31T12:48:04.000Z</updated>
+    <updated>2016-02-11T03:42:40.000Z</updated>
     <content type="html"><![CDATA[<h2 id="简介">简介</h2><p>本文介绍用 Node.js 中的 <code>js-xlsx</code> 库来处理 Excel 文件。<br><code>js-xlsx</code> 库是目前 Github 上 star 数量最多的处理 Excel 的库，功能强大，但上手难度稍大。文档有些乱，不适合快速上手。<br>本文对 <code>js-xlsx</code> 库进行一定的总结，并提供几个实用的例子供读者测试，学习，交流。</p>
 <h2 id="安装">安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm install xlsx</span><br></pre></td></tr></table></figure>
 <h2 id="一些概念">一些概念</h2><p>在使用这个库之前，先介绍库中的一些概念。</p>
@@ -125,7 +308,9 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取 Excel 中所有表名</span></span><br><span class="line"><span class="keyword">const</span> sheetNames = workbook.SheetNames; <span class="comment">// 返回 ['sheet1', 'sheet2']</span></span><br><span class="line"><span class="comment">// 根据表名获取对应某张表</span></span><br><span class="line"><span class="keyword">const</span> worksheet = workbook.Sheets[sheetNames[<span class="number">0</span>]];</span><br></pre></td></tr></table></figure>
 <p>通过 <code>worksheet[address]</code> 来操作表格，以 <code>!</code> 开头的 key 是特殊的字段。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 获取 A1 单元格对象</span></span><br><span class="line"><span class="keyword">let</span> a1 = worksheet[<span class="string">'A1'</span>]; <span class="comment">// 返回 &#123; v: 'hello', t: 's', ... &#125;</span></span><br><span class="line"><span class="comment">// 获取 A1 中的值</span></span><br><span class="line">a1.v <span class="comment">// 返回 'hello'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取表的有效范围</span></span><br><span class="line">worksheet[<span class="string">'!ref'</span>] <span class="comment">// 返回 'A1:B20'</span></span><br><span class="line">worksheet[<span class="string">'!range'</span>] <span class="comment">// 返回 range 对象，&#123; s: &#123; r: 0, c: 0&#125;, e: &#123; r: 100, c: 2 &#125; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取合并过的单元格</span></span><br><span class="line">worksheet[<span class="string">'!merges'</span>] <span class="comment">// 返回一个包含 range 对象的列表，[ &#123;s: &#123; r: 0, c: 0 &#125;, c: &#123; r: 2, c: 1 &#125; &#125; ]</span></span><br></pre></td></tr></table></figure>
-<h3 id="实战">实战</h3><h4 id="解析_Excel_生成_JSON">解析 Excel 生成 JSON</h4><p><strong>Tips</strong> 事实上，你可以直接通过 <code>XLSX.utils.sheet_to_json(worksheet)</code> 获得同样的结果</p>
+<h3 id="实战">实战</h3><h4 id="解析_Excel_生成_JSON">解析 Excel 生成 JSON</h4><blockquote>
+<p><strong>Tips</strong> 事实上，你可以直接通过 <code>XLSX.utils.sheet_to_json(worksheet)</code> 获得同样的结果</p>
+</blockquote>
 <p><strong>注意</strong> 本例子中假设表的第一行为字段名</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> headers = &#123;&#125;;</span><br><span class="line"><span class="keyword">const</span> data = [];</span><br><span class="line"><span class="keyword">const</span> keys = <span class="built_in">Object</span>.keys(worksheet);</span><br><span class="line">keys</span><br><span class="line">    <span class="comment">// 过滤以 ! 开头的 key</span></span><br><span class="line">    .filter(k =&gt; k[<span class="number">0</span>] !== <span class="string">'!'</span>)</span><br><span class="line">    <span class="comment">// 遍历所有单元格</span></span><br><span class="line">    .forEach(k =&gt; &#123;</span><br><span class="line">        <span class="comment">// 如 A11 中的 A</span></span><br><span class="line">        <span class="keyword">let</span> col = k.substring(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 如 A11 中的 11</span></span><br><span class="line">        <span class="keyword">let</span> row = <span class="built_in">parseInt</span>(k.substring(<span class="number">1</span>));</span><br><span class="line">        <span class="comment">// 当前单元格的值</span></span><br><span class="line">        <span class="keyword">let</span> value = worksheet[k].v;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 保存字段名</span></span><br><span class="line">        <span class="keyword">if</span> (row === <span class="number">1</span>) &#123;</span><br><span class="line">            headers[col] = value;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 解析成 JSON</span></span><br><span class="line">        <span class="keyword">if</span> (!data[row]) &#123;</span><br><span class="line">            data[row] = &#123;&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        data[row][headers[col]] = value;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(data); <span class="comment">// [ &#123; '姓名': 'test1', '年龄': 20 &#125;, &#123; '姓名': 'test2', '年龄': 10 &#125; ... ]</span></span><br></pre></td></tr></table></figure>
 <h4 id="合并表格">合并表格</h4><p>步骤：</p>
@@ -1497,66 +1682,6 @@
     </summary>
     
       <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[HTML5 Drag and Drop API]]></title>
-    <link href="http://scarletsky.github.io/2015/01/13/html5-drag-and-drop-api/"/>
-    <id>http://scarletsky.github.io/2015/01/13/html5-drag-and-drop-api/</id>
-    <published>2015-01-13T10:28:04.000Z</published>
-    <updated>2016-01-19T06:38:29.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="基本使用">基本使用</h1><h2 id="创建可拖放对象">创建可拖放对象</h2><p>在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 <code>draggable=&quot;true&quot;</code> 就能创建可拖放对象了。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect red"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect green"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect blue"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="如何拖动">如何拖动</h2><p>有了可拖放对象之后，我们还需要处理拖放事件才能实现拖放。拖放包含下面的事件：</p>
-<ul>
-<li><code>dragstart</code> 发生在元素开始被拖动时</li>
-<li><code>drag</code> 发生在元素被拖动(按着鼠标不放时)</li>
-<li><code>dragenter</code> 发生在有元素被拖进一个可放区域</li>
-<li><code>dragover</code> 发生在有元素被拖在可放区域的上面</li>
-<li><code>dragleave</code> 发生在有元素被拖离一个可放区域</li>
-<li><code>drop</code> 发生在元素被放到可放区域内</li>
-<li><code>dragend</code> 发生在拖放事件结束(松开鼠标或者按 esc 键)</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> draggableElements = <span class="built_in">document</span>.querySelectorAll(<span class="string">'[draggable]'</span>);</span><br><span class="line"><span class="comment">// draggableElements 是 NodeList 对象，并不是 Array，因此没有 forEach 方法。</span></span><br><span class="line">[].forEach.call(draggableElements, <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">    element.addEventListener(<span class="string">'drag'</span>, drag, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragstart'</span>, dragStart, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragenter'</span>, dragEnter, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragleave'</span>, dragLeave, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragover'</span>, dragOver, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'drop'</span>, drop, <span class="literal">false</span>);</span><br><span class="line">    element.addEventListener(<span class="string">'dragend'</span>, dragEnd, <span class="literal">false</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="DataTransfer_对象">DataTransfer 对象</h2><p>dataTransfer 属性正是这一神奇 DnD 功能的动力来源，控制着拖动操作中发送的数据。dataTransfer 可在 dragstart 事件中进行设置，并在 drop 事件中读取/处理。调用 e.dataTransfer.setData(format, data) 会将对象内容设置成 MIME 类型，并将数据有效负载作为参数传递。</p>
-<p>拖放不同对象需要设置不同的格式，下面是 MDN 推荐 drag types。</p>
-<ul>
-<li>文字：<code>text/plain</code></li>
-<li>超链接：<code>text/uri-list</code>, <code>text/plain</code></li>
-<li>HTML &amp; XML：<code>text/html</code>, <code>text/plain</code></li>
-</ul>
-<p>其他类型可以查看 MDN 上面的文档：<a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Recommended_Drag_Types" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Recommended_Drag_Types</a></p>
-<p><strong>PS：综合自己试验和网上的说法，其实设置 <code>setData</code> 的 format 设置成自定义值也是可以使用的。</strong></p>
-<h2 id="DataTransfer_属性">DataTransfer 属性</h2><p><code>effectAllowed</code> 和 <code>dropEffect</code> 是 DnD 里面常看见的属性，也是对新手来说最摸不着头脑的属性。</p>
-<p>这两个属性最主要的作用是，用于配置拖放过程中鼠标的指针的类型，以便提示用户操作。其次作用是用来控制 <code>drop</code> 事件是否触发。</p>
-<p>这两个属性的有效值可以查阅 <a href="https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer</a>。</p>
-<h2 id="注意"><strong>注意</strong></h2><ul>
-<li><p><code>effectAllowed</code> 只能在 <code>dragstart</code> 事件中设置</p>
-</li>
-<li><p><code>dropEffect</code> 只能在 <code>dragenter</code> 和 <code>dragover</code> 事件中设置</p>
-</li>
-<li><p><code>dropEffect</code> 和 <code>effectAllowed</code> 不相等时，不会触发 <code>drop</code> 事件</p>
-</li>
-</ul>
-<h2 id="使用心得">使用心得</h2><ul>
-<li><p>必须禁止 <code>dragover</code> 的默认事件才能正常触发 <code>drop</code> 事件</p>
-</li>
-<li><p><code>e.dataTransfer.getData</code> 只能在 <code>drop</code> 事件中正常访问，在其他事件中访问的话会返回空值。具体请看 <a href="http://stackoverflow.com/questions/11927309/html5-dnd-datatransfer-setdata-or-getdata-not-working-in-every-browser-except-fi" target="_blank" rel="external">http://stackoverflow.com/questions/11927309/html5-dnd-datatransfer-setdata-or-getdata-not-working-in-every-browser-except-fi</a></p>
-</li>
-<li><p>拖放操作的结果一般情况下会产生新的 <code>DOM</code> 结构，因此不能使用 <code>$(selector).on(event, fn)</code> 来进行事件绑定，因为这样对新产生的 DOM 不起作用。要进行动态绑定的话，可以使用下面的写法：<code>$(document).on(event, selector, fn)</code>。</p>
-</li>
-</ul>
-<h2 id="使用示例">使用示例</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="doctype">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"></span><br><span class="line">        <span class="attr_selector">[draggable]</span> <span class="rules">&#123;<span class="rule"><span class="attribute">cursor</span>:<span class="value"> move</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.dragging</span> <span class="rules">&#123;<span class="rule"><span class="attribute">opacity</span>:<span class="value"> <span class="number">0.2</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.over</span> <span class="rules">&#123;<span class="rule"><span class="attribute">border</span>:<span class="value"> <span class="number">1px</span> dashed black</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.rect</span> <span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">500px</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100px</span></span></span>; <span class="rule"><span class="attribute">margin</span>:<span class="value"> auto</span></span>;&#125;</span></span><br><span class="line">        <span class="class">.red</span>, <span class="class">.green</span>, <span class="class">.blue</span>, <span class="class">.black</span> <span class="rules">&#123;<span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">100%</span></span></span>; <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">100%</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.red</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#FF8C8C</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.green</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#8CFFB5</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.blue</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#8CA3FF</span></span></span>;&#125;</span></span><br><span class="line">        <span class="class">.black</span> <span class="rules">&#123;<span class="rule"><span class="attribute">background-color</span>:<span class="value"> <span class="hexcolor">#3A3C44</span></span></span>;&#125;</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"red"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"green"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"blue"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"rect"</span> <span class="attribute">draggable</span>=<span class="value">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"black"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span><br><span class="line">        <span class="keyword">var</span> dragSrc = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">var</span> draggableElements = <span class="built_in">document</span>.querySelectorAll(<span class="string">'[draggable]'</span>);</span><br><span class="line">        <span class="comment">// draggableElements 是 NodeList 对象，并不是 Array，所以没有 forEach 方法。</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">resetDragSrc</span> (<span class="params"></span>) </span>&#123;dragSrc = <span class="literal">null</span>;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragStart</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag start'</span>);</span><br><span class="line">            dragSrc = <span class="keyword">this</span>;</span><br><span class="line">            e.dataTransfer.effectAllowed = <span class="string">'move'</span>;</span><br><span class="line">            e.dataTransfer.setData(<span class="string">'text/html'</span>, <span class="keyword">this</span>.innerHTML);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">this</span>.classList.add(<span class="string">'dragging'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragOver</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag over'</span>);</span><br><span class="line">            <span class="keyword">if</span> (e.preventDefault) &#123;</span><br><span class="line">                e.preventDefault(); <span class="comment">// Necessary. Allows us to drop.</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            e.dataTransfer.dropEffect = <span class="string">'move'</span>;  <span class="comment">// See the section on the DataTransfer object.</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragEnter</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag enter'</span>);</span><br><span class="line">            <span class="keyword">this</span>.classList.add(<span class="string">'over'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragLeave</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag leave'</span>);</span><br><span class="line">            <span class="keyword">this</span>.classList.remove(<span class="string">'over'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drop</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drop!'</span>);</span><br><span class="line">            <span class="keyword">if</span> (e.stopPropagation) &#123;</span><br><span class="line">                e.stopPropagation(); <span class="comment">// stops the browser from redirecting.</span></span><br><span class="line">            &#125;</span><br><span class="line">            dragSrc.innerHTML = <span class="keyword">this</span>.innerHTML;</span><br><span class="line">            <span class="keyword">this</span>.innerHTML = e.dataTransfer.getData(<span class="string">'text/html'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">dragEnd</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'drag end!'</span>);</span><br><span class="line">            [].forEach.call(draggableElements, <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">                element.classList.remove(<span class="string">'over'</span>);</span><br><span class="line">                element.classList.remove(<span class="string">'dragging'</span>);</span><br><span class="line">            &#125;);</span><br><span class="line">            resetDragSrc();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">drag</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'dragging!'</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        [].forEach.call(draggableElements, <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">            element.addEventListener(<span class="string">'dragstart'</span>, dragStart, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragenter'</span>, dragEnter, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragleave'</span>, dragLeave, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragover'</span>, dragOver, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'drag'</span>, drag, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'drop'</span>, drop, <span class="literal">false</span>);</span><br><span class="line">            element.addEventListener(<span class="string">'dragend'</span>, dragEnd, <span class="literal">false</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h1 id="参考资料">参考资料</h1><p><a href="http://www.html5rocks.com/zh/tutorials/dnd/basics/" target="_blank" rel="external">http://www.html5rocks.com/zh/tutorials/dnd/basics/</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/Events</a><br><a href="http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements" target="_blank" rel="external">http://stackoverflow.com/questions/203198/event-binding-on-dynamically-created-elements</a><br><a href="http://www.cnblogs.com/fsjohnhuang/p/3961066.html" target="_blank" rel="external">http://www.cnblogs.com/fsjohnhuang/p/3961066.html</a></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h1 id="基本使用">基本使用</h1><h2 id="创建可拖放对象">创建可拖放对象</h2><p>在 HTML5 中创建可拖动内容非常简单，只需要在元素的属性中加上 <code>draggable=&quot;true&quot;</code> 就能创建可拖放对象了。]]>
-    </summary>
-    
-      <category term="drag-and-drop" scheme="http://scarletsky.github.io/tags/drag-and-drop/"/>
-    
-      <category term="HTML5" scheme="http://scarletsky.github.io/categories/HTML5/"/>
     
   </entry>
   

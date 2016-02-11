@@ -1,0 +1,911 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="functor,haskell," />
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="Functor 简介什么是 Functor ?
+
+现在你可以认为 Functor 是一种数据类型。
+
+Functor 有什么用 ?
+
+我们可以对 Functor 使用 fmap。
+
+fmap 是什么东西 ?
+
+fmap 是一个函数。
+
+fmap 是函数的话，那它的类型签名是什么 ?
+
+fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
+
+我应该怎么看这个类型签名 ?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What is functor in Haskell ?">
+<meta property="og:url" content="http://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/index.html">
+<meta property="og:site_name" content="Scarletsky">
+<meta property="og:description" content="Functor 简介什么是 Functor ?
+
+现在你可以认为 Functor 是一种数据类型。
+
+Functor 有什么用 ?
+
+我们可以对 Functor 使用 fmap。
+
+fmap 是什么东西 ?
+
+fmap 是一个函数。
+
+fmap 是函数的话，那它的类型签名是什么 ?
+
+fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
+
+我应该怎么看这个类型签名 ?">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/2386165/12949440/c8753e16-d042-11e5-84ff-b47753d65c52.png">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/2386165/12949441/c87a69b8-d042-11e5-80d6-2ee458e13e37.png">
+<meta property="og:updated_time" content="2016-02-11T02:42:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What is functor in Haskell ?">
+<meta name="twitter:description" content="Functor 简介什么是 Functor ?
+
+现在你可以认为 Functor 是一种数据类型。
+
+Functor 有什么用 ?
+
+我们可以对 Functor 使用 fmap。
+
+fmap 是什么东西 ?
+
+fmap 是一个函数。
+
+fmap 是函数的话，那它的类型签名是什么 ?
+
+fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
+
+我应该怎么看这个类型签名 ?">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> What is functor in Haskell ? | Scarletsky </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Scarletsky</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                What is functor in Haskell ?
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-09T22:50:13+08:00" content="2016-02-09">
+              2016-02-09
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/02/09/what-is-functor-in-haskell/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/02/09/what-is-functor-in-haskell/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Functor_简介">Functor 简介</h2><p>什么是 Functor ?</p>
+<blockquote>
+<p>现在你可以认为 Functor 是一种数据类型。</p>
+</blockquote>
+<p>Functor 有什么用 ?</p>
+<blockquote>
+<p>我们可以对 Functor 使用 <code>fmap</code>。</p>
+</blockquote>
+<p><code>fmap</code> 是什么东西 ?</p>
+<blockquote>
+<p><code>fmap</code> 是一个函数。</p>
+</blockquote>
+<p><code>fmap</code> 是函数的话，那它的类型签名是什么 ?</p>
+<blockquote>
+<p><code>fmap :: (a -&gt; b) -&gt; f a -&gt; f b</code>。</p>
+</blockquote>
+<p>我应该怎么看这个类型签名 ?</p>
+<blockquote>
+<p>它接受一个函数和一个 Functor 类型作为参数，然后返回另一个 Functor 。</p>
+</blockquote>
+<p><code>fmap</code> 有什么用 ?</p>
+<blockquote>
+<p>类似于 <code>map</code><br><code>map (+1) [1,2,3,4,5]  -- 返回 [2,3,4,5,6]</code><br><code>fmap (+1) [1,2,3,4,5] -- 返回 [2,3,4,5,6]</code></p>
+</blockquote>
+<p>所以列表是 Functor ?</p>
+<blockquote>
+<p>是的，List 是 Functor。</p>
+</blockquote>
+<p>为什么列表是 Functor ?</p>
+<blockquote>
+<p>因为列表实现了 <code>fmap</code>。</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> [] <span class="keyword">where</span></span></span><br><span class="line">  fmap = map</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>实现了 <code>fmap</code> 的数据类型都是 Functor ?</p>
+<blockquote>
+<p>不一定。</p>
+</blockquote>
+<p>为什么 ?</p>
+<blockquote>
+<p>除了要实现 <code>fmap</code> 之外，还需要满足一些条件才能成为 Functor。</p>
+</blockquote>
+<p>满足什么条件 ?</p>
+<blockquote>
+<ol>
+<li>必须保证 <code>fmap id = id</code>，也就是说 <code>fmap id xs</code> 和 <code>id xs</code> 必须返回相同的值。</li>
+<li>必须是可组合的，两个 <code>fmap</code> 组合使用的结果应该和两个函数组合起来再用 <code>fmap</code> 的结果相同。<br>也就是说 <code>fmap f . fmap g</code> 必须等于 <code>fmap (f . g)</code>。</li>
+</ol>
+</blockquote>
+<p>条件一是什么意思 ?</p>
+<blockquote>
+<p>意思是 <code>fmap</code> 只能对值调用 <code>f</code>，不能做额外的事情。</p>
+</blockquote>
+<p>有具体例子吗 ?</p>
+<blockquote>
+<p>看看这个经典的自定义数据类型，C表示计数器：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">CMaybe</span> a = <span class="type">CNothing</span> | <span class="type">CJust</span> <span class="type">Int</span> a <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">CMaybe</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f <span class="type">CNothing</span>          = <span class="type">CNothing</span></span><br><span class="line">  fmap f (<span class="type">CJust</span> counter x) = <span class="type">CJust</span> (counter + <span class="number">1</span>) (f x)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ghci</span></span><br><span class="line"></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"hoha"</span></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"he"</span>) (fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>))</span><br><span class="line"><span class="type">CJust</span> <span class="number">2</span> <span class="string">"hohahe"</span></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"blah"</span>) <span class="type">CNothing</span></span><br><span class="line"><span class="type">CNothing</span></span><br></pre></td></tr></table></figure>
+<p>这里的 <code>fmap</code> 除了对值调用 <code>f</code> 之外，还对 <code>counter</code> 加一。</p>
+</blockquote>
+<p>这有什么问题吗 ?</p>
+<blockquote>
+<p>再看看 <code>fmap id</code> 和 <code>id</code><br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; fmap id (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"haha"</span></span><br><span class="line"><span class="title">ghci</span>&gt; id (<span class="type">Cjust</span> <span class="number">0</span> <span class="string">"haha"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span></span><br></pre></td></tr></table></figure></p>
+<p>看出问题了吗 ?</p>
+</blockquote>
+<p><code>fmap id</code> 和 <code>id</code> 返回的结果不相等 ?</p>
+<blockquote>
+<p>是的，所以即便 <code>CMaybe a</code> 实现了 <code>fmap</code>，但它也不是 Functor。</p>
+</blockquote>
+<p>条件二有点像乘法分配律。</p>
+<blockquote>
+<p>是的。<br>乘法分配律是 <code>(a + b) x c = a x c + b x c</code>。<br>而条件二是 <code>fmap (f . g) = fmap f . fmap g</code>。</p>
+</blockquote>
+<p>条件二有具体例子吗 ?</p>
+<blockquote>
+<p>可以类比函数，因为函数本身也是 Functor，所以函数会满足<strong>可组合</strong>这个条件。<br>而实际应用中，我们也经常使用到函数组合这个特性。</p>
+</blockquote>
+<p>实现了 <code>fmap</code> ，同时满足两个条件的数据类型就是 Functor 吗？</p>
+<blockquote>
+<p>不，还有一个规则，就是该数据类型要有一个类型参数。</p>
+</blockquote>
+<p>能举个例子吗 ?</p>
+<blockquote>
+<p>我们已经知道 List 是一个 Functor，先看看 List 的定义：<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> [] a = [] | a : [a]</span></span><br></pre></td></tr></table></figure></p>
+<p>列表有一个类型参数 a，表示一个列表中可以包含相同类型的元素。</p>
+</blockquote>
+<p>Functor 只能有一个类型参数吗？</p>
+<blockquote>
+<p>不是，我们可以通过其他方法让多于一个类型参数的数据类型都能成为 Functor 的实例。</p>
+</blockquote>
+<p>什么手段 ?</p>
+<blockquote>
+<p>你需要先知道怎么定义一个 Functor。</p>
+</blockquote>
+<h2 id="自定义_Functor">自定义 Functor</h2><p>我应该怎么自定义 Functor ?</p>
+<blockquote>
+<p>先定义一个数据类型，再让该类型成为 Functor 的实例。<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">MyFunctor</span> a = <span class="type">Data</span> a <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">MyFunctor</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f (<span class="type">Data</span> x) = <span class="type">Data</span> (f x)</span><br></pre></td></tr></table></figure></p>
+<p>这样，我们定义的 MyFunctor 就是一个 Functor 了。</p>
+</blockquote>
+<p>刚才提到的让多于一个类型参数的数据类型成为 Functor 实例的方法是？</p>
+<blockquote>
+<p>利用 Haskell 中不全调用的特性。</p>
+</blockquote>
+<p>可以给个例子吗？</p>
+<blockquote>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">MyFunctor2</span> a b = <span class="type">Data2</span> a b <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="container">(<span class="type">MyFunctor2</span> <span class="title">a</span>)</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f (<span class="type">Data2</span> x y) = <span class="type">Data2</span> x (f y)</span><br></pre></td></tr></table></figure>
+<p>在 Haskell 中，我们可以利用 Haskell 不全调用的特性，把 MyFunctor2 a 当成一个整体，这样就相当于只有 b 一个类型参数了。</p>
+</blockquote>
+<h2 id="真_·_Functor">真 · Functor</h2><p>我从上面看到，Functor 是一个类型类？</p>
+<blockquote>
+<p>是的。事实上，<strong>Functor 是一个类型类，表示满足一些条件的数据类型。</strong></p>
+</blockquote>
+<p>满足上面提到的条件？</p>
+<blockquote>
+<p>是的！</p>
+</blockquote>
+<p>有哪些常见的 Functor ？</p>
+<blockquote>
+<p><code>List</code>, <code>Maybe</code>等等。<br>你可以在 ghci 中输入 <code>:i Functor</code> 来查看更多预定义的 Functor。</p>
+</blockquote>
+<p>这些 Functor 有什么特点？</p>
+<blockquote>
+<p>它们都带有上下文：即可以表示有值，也可以表示空值。<br>[] 表示空值，[a] 表示有值；<br>Nothing 表示空值，Just a表示有值；</p>
+</blockquote>
+<p>这样有什么好处吗？</p>
+<blockquote>
+<p>好处是显然易见的。考虑下下面的伪代码：<br><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">post = Posts.find_by_id(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">if</span> post</span><br><span class="line">  <span class="keyword">return</span> post.title</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">None</span></span><br></pre></td></tr></table></figure></p>
+<p>为什么这段伪代码需要判断 post 是否为空？因为 post 没有上下文环境，不能表示空值。<br>如果 post 有上下文环境 (也就是 post 可以表示空值)，那么我们的代码就可以直接写成：<br><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">post = Posts.find_by_id(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">return</span> post.title</span><br></pre></td></tr></table></figure></p>
+<p>因此，如果一个值可以带有上下文环境的话，我们的代码就可以写的非常简洁。</p>
+</blockquote>
+<p>把刚才的伪代码写成 Haskell 代码 ?</p>
+<blockquote>
+<p><code>fmap (getPostTitle) (findPosts 1)</code></p>
+</blockquote>
+<p><code>if else</code> 不见了？</p>
+<blockquote>
+<p>是的，这里假设 post 是一个 Functor，它可以表示带有空值的情况。所以 <code>if else</code> 就不需要了。</p>
+</blockquote>
+<p>那 <code>fmap</code> 呢？ 它事实上是什么东西？</p>
+<blockquote>
+<p><code>fmap</code> 确确实实是一个函数，它知道怎么把传进的函数应用到 Functor 中，并返回一个新的 Functor。</p>
+</blockquote>
+<p><code>fmap</code> 对 Functor 调用函数的过程发生了什么？</p>
+<blockquote>
+<p>看下面两张图 (图出自 <a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">Functors, Applicatives, And Monads In Pictures</a>)：<br><img src="https://cloud.githubusercontent.com/assets/2386165/12949440/c8753e16-d042-11e5-84ff-b47753d65c52.png" alt="fmap_just"><br><img src="https://cloud.githubusercontent.com/assets/2386165/12949441/c87a69b8-d042-11e5-80d6-2ee458e13e37.png" alt="fmap_nothing"><br>实际上，<code>fmap</code> 先取出 Functor 中的值，然后把值传进函数中，再把函数的返回值放回到 Functor 中，最后返回新的 Functor。</p>
+</blockquote>
+<p>Functor 有什么限制？</p>
+<blockquote>
+<p><code>fmap f x</code> 中的 <code>f</code> 只接受一个参数。<br><code>fmap f x</code> 中的 <code>f</code> 不能带有上下文 (换句话说只能是 (+42) 不能是 <code>Just (+42)</code>)。</p>
+</blockquote>
+<p>关于 Functor 的知识，还有什么我是需要知道的 ？</p>
+<blockquote>
+<p><code>fmap</code> 可以中缀调用，即 <code>f `fmap` xs</code><br><code>&lt;$&gt;</code> 是 <code>fmap</code> 的别名，一般用于中缀调用，即 <code>f &lt;$&gt; xs</code>。</p>
+</blockquote>
+<h2 id="总结">总结</h2><p>Functor 是类型类，只要满足以下条件的数据类型都可以成为 Functor 的实例：</p>
+<ul>
+<li>实现 <code>fmap</code>。</li>
+<li>保证 <code>fmap id = id</code>。</li>
+<li>保证 <code>fmap (f . g) = fmap f . fmap g</code>。</li>
+<li>该数据类型必须有一个以上的类型参数。</li>
+</ul>
+<p>最后，强烈建议看看 <a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">这篇文章</a>，相当形象生动。</p>
+<h2 id="参考资料">参考资料</h2><p><a href="http://learnyouahaskell.com/functors-applicative-functors-and-monoids" target="_blank" rel="external">Functors, Applicative Functors and Monoids</a><br><a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">Functors, Applicatives, And Monads In Pictures</a><br><a href="http://cnhaskell.com/chp/10.html#functor" target="_blank" rel="external">Functor 简介</a><br><a href="http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor" target="_blank" rel="external">http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor</a></p>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/functor/" rel="tag">#functor</a>
+          
+            <a href="/tags/haskell/" rel="tag">#haskell</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/06/random-numbers-in-haskell/" rel="next" title="(译) Haskell 中随机数的使用">
+                <i class="fa fa-chevron-left"></i> (译) Haskell 中随机数的使用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars2.githubusercontent.com/u/2386165"
+               alt="Scarletsky" />
+          <p class="site-author-name" itemprop="name">Scarletsky</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Functor_简介"><span class="nav-number">1.</span> <span class="nav-text">Functor 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义_Functor"><span class="nav-number">2.</span> <span class="nav-text">自定义 Functor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#真_·_Functor"><span class="nav-number">3.</span> <span class="nav-text">真 · Functor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Scarletsky</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'scarletskygithubio';
+      var disqus_identifier = '2016/02/09/what-is-functor-in-haskell/';
+      var disqus_title = 'What is functor in Haskell ?';
+      var disqus_url = 'http://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>
