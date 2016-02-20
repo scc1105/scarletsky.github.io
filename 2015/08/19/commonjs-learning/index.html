@@ -276,9 +276,9 @@ module 对象每个模块都有一个module变量，该变量指向当前模块�
       
 
       
-        <h1 id="概述">概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
+        <h1 id="u6982_u8FF0"><a href="#u6982_u8FF0" class="headerlink" title="概述"></a>概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
 <p>根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 <code>require</code> 来获取 <code>module.exports</code> 中暴露的内容，而其他部分都是私有的，其他模块不能访问。</p>
-<h1 id="module_对象">module 对象</h1><p>每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是每个模块都有的本地变量。</p>
+<h1 id="module__u5BF9_u8C61"><a href="#module__u5BF9_u8C61" class="headerlink" title="module 对象"></a>module 对象</h1><p>每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是每个模块都有的本地变量。</p>
 <ul>
 <li><p><code>module.id</code> 模块的识别符，通常是带有绝对路径的模块文件名。</p>
 </li>
@@ -295,7 +295,7 @@ module 对象每个模块都有一个module变量，该变量指向当前模块�
 <li><p><code>module.exports</code> 表示其他模块可以通过 <code>require</code> 获取的内容。默认情况下是一个空对象，即 <code>{}</code>。</p>
 </li>
 </ul>
-<h1 id="module-exports_和_exports">module.exports 和 exports</h1><p>默认情况下，<code>module.exports</code> 和 <code>exports</code> 两者是等价的，即 <code>module.exports === exports</code></p>
+<h1 id="module-exports__u548C_exports"><a href="#module-exports__u548C_exports" class="headerlink" title="module.exports 和 exports"></a>module.exports 和 exports</h1><p>默认情况下，<code>module.exports</code> 和 <code>exports</code> 两者是等价的，即 <code>module.exports === exports</code></p>
 <p><code>exports</code> 只是为了方便我们编码而添加的，相当于在每个文件中自动添加了 <code>var exports = module.exports</code>。</p>
 <p>我们可以根据个人喜好，把需要暴露的东西挂在 <code>exports</code> 或 <code>module.exports</code> 下。</p>
 <p><strong>但是</strong>，必须注意以下几点：</p>
@@ -307,7 +307,7 @@ module 对象每个模块都有一个module变量，该变量指向当前模块�
 <li><p>由于上面的原因，我们会在很多地方看到 <code>module.exports = exports = xxx</code> 这样的代码。</p>
 </li>
 </ul>
-<h1 id="参考资料">参考资料</h1><p><a href="http://javascript.ruanyifeng.com/nodejs/commonjs.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/nodejs/commonjs.html</a><br><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">http://www.infoq.com/cn/articles/nodejs-module-mechanism/</a><br><a href="http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js" target="_blank" rel="external">http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js</a></p>
+<h1 id="u53C2_u8003_u8D44_u6599"><a href="#u53C2_u8003_u8D44_u6599" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://javascript.ruanyifeng.com/nodejs/commonjs.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/nodejs/commonjs.html</a><br><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">http://www.infoq.com/cn/articles/nodejs-module-mechanism/</a><br><a href="http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js" target="_blank" rel="external">http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js</a></p>
 
       
     </div>
@@ -461,7 +461,7 @@ module 对象每个模块都有一个module变量，该变量指向当前模块�
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#module_对象"><span class="nav-number">2.</span> <span class="nav-text">module 对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#module-exports_和_exports"><span class="nav-number">3.</span> <span class="nav-text">module.exports 和 exports</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#u6982_u8FF0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#module__u5BF9_u8C61"><span class="nav-number">2.</span> <span class="nav-text">module 对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#module-exports__u548C_exports"><span class="nav-number">3.</span> <span class="nav-text">module.exports 和 exports</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u53C2_u8003_u8D44_u6599"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

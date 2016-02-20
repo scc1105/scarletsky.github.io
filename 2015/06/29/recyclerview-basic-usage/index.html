@@ -59,37 +59,40 @@
 
 
 
-<meta name="description" content="基本用法
+<meta name="description" content="#基本用法
+
 在 XML 中添加 &amp;lt;android.support.v7.widget.RecyclerView/&amp;gt;
 
 编写继承 RecyclerView.Adapter&amp;lt;RecyclerViewAdapter.ViewHolder&amp;gt; 的 Adapter
 
 Constructor
 编写继承 RecyclerView.ViewHolder 的 ViewHolder
-onCreat">
+onCre">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RecyclerView 基本用法">
 <meta property="og:url" content="http://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/index.html">
 <meta property="og:site_name" content="Scarletsky">
-<meta property="og:description" content="基本用法
+<meta property="og:description" content="#基本用法
+
 在 XML 中添加 &amp;lt;android.support.v7.widget.RecyclerView/&amp;gt;
 
 编写继承 RecyclerView.Adapter&amp;lt;RecyclerViewAdapter.ViewHolder&amp;gt; 的 Adapter
 
 Constructor
 编写继承 RecyclerView.ViewHolder 的 ViewHolder
-onCreat">
+onCre">
 <meta property="og:updated_time" content="2016-01-19T06:39:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RecyclerView 基本用法">
-<meta name="twitter:description" content="基本用法
+<meta name="twitter:description" content="#基本用法
+
 在 XML 中添加 &amp;lt;android.support.v7.widget.RecyclerView/&amp;gt;
 
 编写继承 RecyclerView.Adapter&amp;lt;RecyclerViewAdapter.ViewHolder&amp;gt; 的 Adapter
 
 Constructor
 编写继承 RecyclerView.ViewHolder 的 ViewHolder
-onCreat">
+onCre">
 
 
 
@@ -291,7 +294,8 @@ onCreat">
       
 
       
-        <h1 id="基本用法">基本用法</h1><ul>
+        <p>#基本用法</p>
+<ul>
 <li><p>在 XML 中添加 <code>&lt;android.support.v7.widget.RecyclerView/&gt;</code></p>
 </li>
 <li><p>编写继承 <code>RecyclerView.Adapter&lt;RecyclerViewAdapter.ViewHolder&gt;</code> 的 <code>Adapter</code></p>
@@ -312,9 +316,10 @@ onCreat">
 </ul>
 </li>
 </ul>
-<h1 id="XML">XML</h1><p>新建 xml，添加 <code>RecyclerView</code>。</p>
-<figure class="highlight nix"><table><tr><td class="code"><pre><span class="line">&lt;RelativeLayout xmlns:<span class="variable">android=</span><span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:<span class="variable">fab=</span><span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    android:<span class="variable">orientation=</span><span class="string">"vertical"</span></span><br><span class="line">    android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="variable">layout_height=</span><span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.v7.widget.RecyclerView</span><br><span class="line">        android:<span class="variable">id=</span><span class="string">"@+id/my_recyclerview"</span></span><br><span class="line">        android:<span class="variable">layout_width=</span><span class="string">"match_parent"</span></span><br><span class="line">        android:<span class="variable">layout_height=</span><span class="string">"wrap_content"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="ViewHolder">ViewHolder</h1><p>我们以前使用 <code>ListView</code> 的时候，会用以下的方式来提高 <code>ListView</code> 的性能:</p>
+<p>#XML<br>新建 xml，添加 <code>RecyclerView</code>。</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">&lt;RelativeLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:fab=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    android:orientation=<span class="string">"vertical"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.RecyclerView</span></span><br><span class="line">        android:id=<span class="string">"@+id/my_recyclerview"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+<p>#ViewHolder</p>
+<p>我们以前使用 <code>ListView</code> 的时候，会用以下的方式来提高 <code>ListView</code> 的性能:</p>
 <ul>
 <li>用 <code>convertView</code> 来减少 <code>LayoutInflater.inflate</code> 的使用</li>
 <li>用 <code>ViewHolder</code> 来减少 <code>findViewById</code> 的使用</li>
@@ -323,12 +328,13 @@ onCreat">
 <p>例子：</p>
 <figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> MyViewHolder <span class="keyword">extends</span> RecyclerView.ViewHolder &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> TextView mTitle;</span><br><span class="line">    <span class="keyword">public</span> TextView mSubtitle;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyViewHolder</span> <span class="params">(View v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(v);</span><br><span class="line">        mTitle = (TextView) v.findViewById(R.id.title);</span><br><span class="line">        mSubtitle = (TextView) v.findViewById(R.id.subtitle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>PS: 一般 <code>ViewHolder</code> 会编写在 <code>Adapter</code> 的内部。</p>
-<h1 id="Adapter">Adapter</h1><p>我们需要继承 <code>RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt;</code> 来编写我们自己的 <code>Adapter</code> 。编写我们自己的 <code>Adapter</code> 的时候，最重要的是要重写 <code>onCreateViewHolder</code> 和 <code>onBindViewHolder</code> 方法。</p>
+<p>#Adapter</p>
+<p>我们需要继承 <code>RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt;</code> 来编写我们自己的 <code>Adapter</code> 。编写我们自己的 <code>Adapter</code> 的时候，最重要的是要重写 <code>onCreateViewHolder</code> 和 <code>onBindViewHolder</code> 方法。</p>
 <figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">RecyclerView</span>.<span class="title">ViewHolder</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> RecyclerView.<span class="function">ViewHolder <span class="title">onCreateViewHolder</span> <span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</span><br><span class="line">        View v = LayoutInflater.from(ctx).inflate(R.layout.my_adapter, parent, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewHolder(v);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onBindViewHolder</span> <span class="params">(RecyclerView.ViewHolder h, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        MyViewHolder holder = (MyViewHolder) h;</span><br><span class="line">        holder.mTitle.setText(<span class="string">"This is my title"</span>);</span><br><span class="line">        holder.mSubtitle.setText(<span class="string">"This is my subtitle"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> data.<span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注意，在这个例子中我们的 <code>MyAdapter</code> 存放的是 <code>&lt;RecyclerView.ViewHolder&gt;</code>，所以在 <code>onCreateViewHolder</code> 中返回的也必须是 <code>&lt;RecyclerView.ViewHolder&gt;</code>，而在 <code>onBindViewHolder</code> 的回调中，我们拿到的也是 <code>RecyclerView.ViewHolder</code>，要把它强转成我们之前编写的 <code>MyViewHolder</code> 之后才能正常使用。</p>
-<h1 id="RecyclerView">RecyclerView</h1><p>最后只要设置一下 <code>RecyclerView</code> 就能使用了。</p>
-<figure class="highlight openscad"><table><tr><td class="code"><pre><span class="line">RecyclerView mRecyclerView = <span class="params">(RecyclerView)</span> findViewById<span class="params">(R.id.my_recyclerview)</span>;</span><br><span class="line">mRecyclerView.setLayoutManager<span class="params">(new LinearLayoutManager<span class="params">(this)</span>)</span>;</span><br><span class="line">mRecyclerView.setAdapter<span class="params">(adapter)</span>;</span><br></pre></td></tr></table></figure>
-<h1 id="参考资料">参考资料</h1><p><a href="http://wobushi.ren/recyclerview.html" target="_blank" rel="external">RecyclerView全攻略</a><br><a href="http://blog.csdn.net/lmj623565791/article/details/45059587" target="_blank" rel="external">Android RecyclerView 使用完全解析 体验艺术般的控件</a></p>
+<p>#RecyclerView<br>最后只要设置一下 <code>RecyclerView</code> 就能使用了。</p>
+<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recyclerview)<span class="comment">;</span></span><br><span class="line">mRecyclerView.setLayoutManager(new LinearLayoutManager(this))<span class="comment">;</span></span><br><span class="line">mRecyclerView.setAdapter(adapter)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>#参考资料<br><a href="http://wobushi.ren/recyclerview.html" target="_blank" rel="external">RecyclerView全攻略</a><br><a href="http://blog.csdn.net/lmj623565791/article/details/45059587" target="_blank" rel="external">Android RecyclerView 使用完全解析 体验艺术般的控件</a></p>
 
       
     </div>
@@ -482,7 +488,7 @@ onCreat">
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本用法"><span class="nav-number">1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XML"><span class="nav-number">2.</span> <span class="nav-text">XML</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ViewHolder"><span class="nav-number">3.</span> <span class="nav-text">ViewHolder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Adapter"><span class="nav-number">4.</span> <span class="nav-text">Adapter</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RecyclerView"><span class="nav-number">5.</span> <span class="nav-text">RecyclerView</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

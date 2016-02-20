@@ -294,18 +294,18 @@
 <li><code>$watch list</code></li>
 <li><code>$evalAsync list</code></li>
 </ul>
-<h1 id="$watch_list">$watch list</h1><p>每当我们追踪 view 中的一个事件的时候，我们都在注册一个回调函数，当一个事件发生在页面中的时候我们希望这个函数被调用。想想我们的第一个例子：</p>
+<h1 id="24watch_list"><a href="#24watch_list" class="headerlink" title="$watch list"></a>$watch list</h1><p>每当我们追踪 view 中的一个事件的时候，我们都在注册一个回调函数，当一个事件发生在页面中的时候我们希望这个函数被调用。想想我们的第一个例子：</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="doctype">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">html</span> <span class="attribute">ng-app</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">title</span>&gt;</span>Simple app<span class="tag">&lt;/<span class="title">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">input</span> <span class="attribute">ng-model</span>=<span class="value">"name"</span> <span class="attribute">type</span>=<span class="value">"text"</span> <span class="attribute">placeholder</span>=<span class="value">"Your name"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">h1</span>&gt;</span>Hello &#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="title">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>任何时候用户去更新 input field 的值， 都会在 UI 中发生改变。会发生这种改变是因为我们把 input field 的值<strong>绑定</strong>到 <code>$scope.name</code> 属性中。为了更新 view ，Angular 需要追踪这个变化。它通过把一个 watch function 添加到 <code>$watch List</code> 中来达到这个目的。</p>
 <p>在 <code>$scope</code> 对象中的属性如果在视图中被使用的话，它们才会被绑定。上面的例子中，我们已经添加了一个函数到 <code>$watch list</code>。</p>
 <p>记住：对于<strong>所有</strong>被绑定到 <code>$scope</code> 对象的 UI 元素来说，一个 <code>$watch</code> 被添加到 <code>$watch list</code> 中。<br>Remember: For <strong>all</strong> UI elements that are bound to a $scope object, a $watch is added to the <code>$watch list</code>.</p>
 <p>这些 <code>$watch</code> 列表都会在 <code>$digest</code> 循环中通过一个叫 <code>dirty checking</code> 的过程被解决。</p>
-<h1 id="Dirty_Checking">Dirty Checking</h1><p>Dirty checking 是一个简单的过程，可以归结为一个非常基本的概念：检查是否一个值改变了，整个应用程序尚未同步。</p>
+<h1 id="Dirty_Checking"><a href="#Dirty_Checking" class="headerlink" title="Dirty Checking"></a>Dirty Checking</h1><p>Dirty checking 是一个简单的过程，可以归结为一个非常基本的概念：检查是否一个值改变了，整个应用程序尚未同步。</p>
 <p>Dirty checking 策略在许多不同的应用程序中是很普遍的，远远超过 Angular 所做的。例如游戏引擎，数据库引擎，对象关系映射器（ORMs）都是这样。</p>
 <p>我们的 Angular app 一直追踪着目前在 watch（在 watch 对象里面） 的值。Angular 会一个一个地检查 <code>$watch list</code> 里面的值，如果值还没改变的话，它会继续检查下一个。如果值改变了，app 会记录新的值，然后继续检查下面的。</p>
 <p><img src="https://www.ng-book.com/images/digest_loop/digest.png" alt="Image Title"></p>
 <p>一旦 Angular 检查完整个 <code>$watch list</code>，如果任何值改变了，app 就会回到 <code>$watch</code> 循环中，直到它检测到没有东西改变。</p>
-<h1 id="参考资料">参考资料</h1><p><a href="https://www.ng-book.com/p/The-Digest-Loop-and-apply/" target="_blank" rel="external">The Digest Loop and $apply</a></p>
+<h1 id="u53C2_u8003_u8D44_u6599"><a href="#u53C2_u8003_u8D44_u6599" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://www.ng-book.com/p/The-Digest-Loop-and-apply/" target="_blank" rel="external">The Digest Loop and $apply</a></p>
 
       
     </div>
@@ -461,7 +461,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#$watch_list"><span class="nav-number">1.</span> <span class="nav-text">$watch list</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dirty_Checking"><span class="nav-number">2.</span> <span class="nav-text">Dirty Checking</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#24watch_list"><span class="nav-number">1.</span> <span class="nav-text">$watch list</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dirty_Checking"><span class="nav-number">2.</span> <span class="nav-text">Dirty Checking</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u53C2_u8003_u8D44_u6599"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

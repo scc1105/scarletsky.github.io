@@ -1,0 +1,201 @@
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>The Material Design Lite (MDL) <strong>data-table</strong> component is an enhanced version of the standard HTML <code>&lt;table&gt;</code>. A data-table consists of rows and columns of well-formatted data, presented with appropriate user interaction capabilities.</p>
+<p>Tables are a ubiquitous feature of most user interfaces, regardless of a site’s content or function. Their design and use is therefore an important factor in the overall user experience. See the data-table component’s <a href="http://www.google.com/design/spec/components/data-tables.html">Material Design specifications page</a> for details.</p>
+<p>The available row/column/cell types in a data-table are mostly self-formatting; that is, once the data-table is defined, the individual cells require very little specific attention. For example, the rows exhibit shading behavior on mouseover and selection, numeric values are automatically formatted by default, and the addition of a single class makes the table rows individually or collectively selectable. This makes the data-table component convenient and easy to code for the developer, as well as attractive and intuitive for the user.</p>
+<h3 id="To_include_an_MDL_data-table_component_3A"><a href="#To_include_an_MDL_data-table_component_3A" class="headerlink" title="To include an MDL data-table component:"></a>To include an MDL <strong>data-table</strong> component:</h3><p>&nbsp;1. Code a <code>&lt;table&gt;</code> element. Include <code>&lt;thead&gt;</code> and <code>&lt;tbody&gt;</code> elements to hold the title and data rows, respectively.</p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">table</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">thead</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">thead</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">tbody</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">table</span>&gt;</span>
+</code></pre>
+<p>&nbsp;2. Add one or more MDL classes, separated by spaces, to the table using the <code>class</code> attribute.</p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"mdl-data-table mdl-js-data-table"</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">thead</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">thead</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">tbody</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">table</span>&gt;</span>
+</code></pre>
+<p>&nbsp;2. Inside the <code>&lt;thead&gt;</code>, code exactly one table row <code>&lt;tr&gt;</code> containing one table header cell <code>&lt;th&gt;</code> for each column, and include the desired text in the header cells. To ensure proper header alignment, add the “non-numeric” MDL class to the header cell of text-only columns. (Data cells are formatted as numeric by default.)</p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"mdl-data-table mdl-js-data-table"</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">thead</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Name<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span>&gt;</span>Age<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span>&gt;</span>ID Number<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">thead</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">tbody</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">table</span>&gt;</span>
+</code></pre>
+<p>&nbsp;3. Inside the <code>&lt;tbody&gt;</code>, code one table row <code>&lt;tr&gt;</code> for each data row and one table data cell <code>&lt;td&gt;</code> for each column in the row. As with the header cells, add the “non-numeric” MDL class to text-only data cells to ensure proper alignment.</p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"mdl-data-table mdl-js-data-table"</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">thead</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Name<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span>&gt;</span>Age<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span>&gt;</span>ID Number<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">thead</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">tbody</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Don Aubrey<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>25<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>49021<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Sophia Carson<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>32<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>10258<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Steve Moreno<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>29<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>12359<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">table</span>&gt;</span>
+</code></pre>
+<p>The data-table component is ready for use.</p>
+<h4 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h4><p>A data-table with a “master” select checkbox and individual row select checkboxes.</p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"mdl-data-table mdl-js-data-table mdl-data-table--selectable"</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">thead</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Material<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span>&gt;</span>Quantity<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span>&gt;</span>Unit price<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">thead</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">tbody</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Acrylic (Transparent)<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>250<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>$2.90<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Plywood (Birch)<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>50<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>$1.25<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Laminate (Gold on Blue)<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>10<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>$12.35<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">table</span>&gt;</span>
+</code></pre>
+<p>A data-table without select checkboxes containing mostly text data.</p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"mdl-data-table mdl-js-data-table"</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">thead</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Name<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Nickname<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span>&gt;</span>Age<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Living?<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">thead</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">tbody</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>John Lennon<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>The smart one<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>40<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>No<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Paul McCartney<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>The cute one<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>73<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Yes<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>George Harrison<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>The shy one<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>58<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>No<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Ringo Starr<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>The funny one<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>74<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Yes<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">table</span>&gt;</span>
+</code></pre>
+<p>A table that has name and values for the checkboxes.</p>
+<pre><code class="html"><span class="tag">&lt;<span class="name">table</span> <span class="attr">class</span>=<span class="string">"mdl-data-table mdl-js-data-table mdl-data-table--selectable"</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">thead</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Material<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span>&gt;</span>Quantity<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">th</span>&gt;</span>Unit price<span class="tag">&lt;/<span class="name">th</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">thead</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">tbody</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span> <span class="attr">data-mdl-data-table-selectable-name</span>=<span class="string">"materials[]"</span> <span class="attr">data-mdl-data-table-selectable-value</span>=<span class="string">"acrylic"</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Acrylic (Transparent)<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>250<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>$2.90<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span> <span class="attr">data-mdl-data-table-selectable-name</span>=<span class="string">"materials[]"</span> <span class="attr">data-mdl-data-table-selectable-value</span>=<span class="string">"plywood"</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Plywood (Birch)<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>50<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>$1.25<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">tr</span> <span class="attr">data-mdl-data-table-selectable-name</span>=<span class="string">"materials[]"</span> <span class="attr">data-mdl-data-table-selectable-value</span>=<span class="string">"laminate"</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span> <span class="attr">class</span>=<span class="string">"mdl-data-table__cell--non-numeric"</span>&gt;</span>Laminate (Gold on Blue)<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>10<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+      <span class="tag">&lt;<span class="name">td</span>&gt;</span>$12.35<span class="tag">&lt;/<span class="name">td</span>&gt;</span>
+    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span>
+  <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">table</span>&gt;</span>
+</code></pre>
+<h2 id="Configuration_options"><a href="#Configuration_options" class="headerlink" title="Configuration options"></a>Configuration options</h2><p>The MDL CSS classes apply various predefined visual and behavioral enhancements to the data-table. The table below lists the available classes and their effects.</p>
+<table>
+<thead>
+<tr>
+<th>MDL class</th>
+<th>Effect</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mdl-data-table</code></td>
+<td>Defines table as an MDL component</td>
+<td>Required on table element</td>
+</tr>
+<tr>
+<td><code>mdl-js-data-table</code></td>
+<td>Assigns basic MDL behavior to table</td>
+<td>Required on table element</td>
+</tr>
+<tr>
+<td><code>mdl-data-table--selectable</code></td>
+<td>Applies all/individual selectable behavior (checkboxes)</td>
+<td>Optional; goes on table element</td>
+</tr>
+<tr>
+<td><code>mdl-data-table__header--sorted-ascending</code></td>
+<td>Applies visual styling to indicate the column is sorted in ascending order</td>
+<td>Optional; goes on table header (<code>th</code>)</td>
+</tr>
+<tr>
+<td><code>mdl-data-table__header--sorted-ascending</code></td>
+<td>Applies visual styling to indicate the column is sorted in descending order</td>
+<td>Optional; goes on table header (<code>th</code>)</td>
+</tr>
+<tr>
+<td><code>mdl-data-table__cell--non-numeric</code></td>
+<td>Applies text formatting to data cell</td>
+<td>Optional; goes on both table header and table data cells</td>
+</tr>
+<tr>
+<td>(none)</td>
+<td>Applies numeric formatting to header or data cell (default)</td>
+</tr>
+</tbody>
+</table>

@@ -1,0 +1,130 @@
+<h1 id="Material_Design_Lite"><a href="#Material_Design_Lite" class="headerlink" title="Material Design Lite"></a>Material Design Lite</h1><p><a href="https://badge.fury.io/gh/google%2Fmaterial-design-lite"><img src="https://badge.fury.io/gh/google%2Fmaterial-design-lite.svg" alt="GitHub version"></a> <a href="https://badge.fury.io/js/material-design-lite"><img src="https://badge.fury.io/js/material-design-lite.svg" alt="npm version"></a> <a href="https://badge.fury.io/bo/material-design-lite"><img src="https://badge.fury.io/bo/material-design-lite.svg" alt="Bower version"></a><br><a href="https://gitter.im/google/material-design-lite"><img src="https://img.shields.io/gitter/room/gitterHQ/gitter.svg" alt="Gitter version"></a></p>
+<blockquote>
+<p>An implementation of <a href="http://www.google.com/design/spec/material-design/introduction.html">Material Design</a><br>components in vanilla CSS, JS, and HTML</p>
+</blockquote>
+<p>Material Design Lite (MDL) lets you add a Material Design look and feel to your<br>static content websites. It doesn’t rely on any JavaScript frameworks or<br>libraries. Optimized for cross-device use, gracefully degrades in older<br>browsers, and offers an experience that is accessible from the get-go.</p>
+<h2 id="Use_MDL_on_your_site_3F"><a href="#Use_MDL_on_your_site_3F" class="headerlink" title="Use MDL on your site?"></a>Use MDL on your site?</h2><p><strong>This document is targeted at developers that will contribute to or compile<br>MDL. If you are looking to use MDL on your website or web app please head to<br><a href="http://getmdl.io">getmdl.io</a>.</strong></p>
+<h2 id="Browser_Support"><a href="#Browser_Support" class="headerlink" title="Browser Support"></a>Browser Support</h2><table>
+<thead>
+<tr>
+<th>IE9</th>
+<th>IE10</th>
+<th>IE11</th>
+<th>Chrome</th>
+<th>Opera</th>
+<th>Firefox</th>
+<th>Safari</th>
+<th>Chrome (Android)</th>
+<th>Mobile Safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>A</td>
+<td>A</td>
+<td>A</td>
+<td>A</td>
+<td>A</td>
+<td>A</td>
+<td>A</td>
+<td>A</td>
+</tr>
+</tbody>
+</table>
+<p>A-grade browsers are fully supported. B-grade browsers will gracefully degrade<br>to our CSS-only experience.</p>
+<h2 id="Getting_Started"><a href="#Getting_Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><h3 id="Download_/_Clone"><a href="#Download_/_Clone" class="headerlink" title="Download / Clone"></a>Download / Clone</h3><p>Clone the repo using Git:</p>
+<pre><code class="bash">git <span class="built_in">clone</span> https://github.com/google/material-design-lite.git
+</code></pre>
+<p>Alternatively you can <a href="https://github.com/google/material-design-lite/archive/master.zip">download</a><br>this repository.</p>
+<p>Windows users, if you have trouble compiling due to line endings then make sure<br>you configure git to checkout the repository with <code>lf</code> (unix) line endings. This<br>can be achieved by setting <code>core.eol</code>.</p>
+<pre><code>git config core.eol lf
+git config core.autocrlf input
+git rm --cached -r .
+git reset --hard
+</code></pre><blockquote>
+<p>Remember, the master branch is considered unstable. Do not use this in<br>production. Use a tagged state of the repository, npm, or bower for stability!</p>
+</blockquote>
+<h3 id="What_u2019s_included"><a href="#What_u2019s_included" class="headerlink" title="What’s included"></a>What’s included</h3><p>In the repo you’ll find the following directories and files.</p>
+<table>
+<thead>
+<tr>
+<th>File/Folder</th>
+<th>Provides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CONTRIBUTING.md</td>
+<td>MDL contribution guidelines.</td>
+</tr>
+<tr>
+<td>docs</td>
+<td>Files for the documentation site.</td>
+</tr>
+<tr>
+<td>gulpfile.js</td>
+<td>gulp configuration for MDL.</td>
+</tr>
+<tr>
+<td>LICENSE</td>
+<td>Project license information.</td>
+</tr>
+<tr>
+<td>package.json</td>
+<td>npm package information.</td>
+</tr>
+<tr>
+<td>README.md</td>
+<td>Details for quickly understanding the project.</td>
+</tr>
+<tr>
+<td>src</td>
+<td>Source code for MDL components.</td>
+</tr>
+<tr>
+<td>templates</td>
+<td>Example templates.</td>
+</tr>
+<tr>
+<td>test</td>
+<td>Project test files.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Build"><a href="#Build" class="headerlink" title="Build"></a>Build</h3><p>To get started modifying the components or the docs, first install the necessary<br>dependencies, from the root of the project:</p>
+<pre><code class="bash">npm install &amp;&amp; npm install -g gulp
+</code></pre>
+<blockquote>
+<p>MDL requires NodeJS 0.12.</p>
+</blockquote>
+<p>Next, run the following one-liner to compile the components and the docs and<br>spawn a local instance of the documentation site:</p>
+<pre><code class="bash">gulp all &amp;&amp; gulp serve
+</code></pre>
+<p>Most changes made to files inside the <code>src</code> or the <code>docs</code> directory will cause<br>the page to reload. This page can also be loaded up on physical devices thanks<br>to BrowserSync.</p>
+<p>To build a production version of the components, run:</p>
+<pre><code class="bash">gulp
+</code></pre>
+<p>This will clean the <code>dist</code> folder and rebuild the assets for serving.</p>
+<h3 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h3><p>The <code>templates/</code> subdirectory contains a few exemplary usages of MDL. Templates<br>have their own, quasi-separate gulp pipeline and can be compiled with<br><code>gulp templates</code>. The templates use the vanilla MDL JS and<br><a href="http://www.getmdl.io/customize/index.html">themed</a> CSS files. Extraneous styles<br>are kept in a separate CSS file. Use <code>gulp serve</code> to take a look at the<br>templates:</p>
+<ul>
+<li><a href="http://www.getmdl.io/templates/blog">Blog Template</a></li>
+<li><a href="http://www.getmdl.io/templates/dashboard">Dashboard Template</a></li>
+<li><a href="http://www.getmdl.io/templates/text-only">Text Heavy Webpage Template</a></li>
+<li><a href="http://www.getmdl.io/templates/article">Stand Alone Article Template</a></li>
+<li><a href="http://www.getmdl.io/templates/android-dot-com">Android.com MDL Skin Template</a></li>
+</ul>
+<blockquote>
+<p>Templates are not officially supported in IE9 and legacy browsers that do not<br>pass the minimum-requirements defined in our<br><a href="https://github.com/google/material-design-lite/blob/87c48c22416c3e83850f7711365b2a43ba19c5ce/src/mdlComponentHandler.js#L336-L349">cutting-the-mustard test</a>.</p>
+</blockquote>
+<p>The templates refer to CDN hosted versions of the libraries. If you’d like to<br>test the templates against locally built MDL libraries you need to run the<br><code>templates:localtestingoverride</code> gulp task before running <code>gulp serve</code>:</p>
+<pre><code class="bash">gulp all &amp;&amp; gulp templates:localtestingoverride &amp;&amp; gulp serve
+</code></pre>
+<blockquote>
+<p>Beware as any changes to the <code>templates</code> directory will automatically revert<br>the templates local testing overrides. In this case make sure you run the<br><code>templates:localtestingoverride</code> gulp task again or modify the <code>watch()</code><br>function in the gulp file.</p>
+</blockquote>
+<h2 id="Versioning"><a href="#Versioning" class="headerlink" title="Versioning"></a>Versioning</h2><p>For transparency into our release cycle and in striving to maintain backward<br>compatibility, Material Design Lite is maintained under<br><a href="http://semver.org/">the Semantic Versioning guidelines</a>. Sometimes we screw up,<br>but we’ll adhere to those rules whenever possible.</p>
+<h2 id="Feature_requests"><a href="#Feature_requests" class="headerlink" title="Feature requests"></a>Feature requests</h2><p>If you find MDL doesn’t contain a particular component you think would be<br>useful, please check the issue tracker in case work has already started on it.<br>If not, you can request a <a href="https://github.com/Google/material-design-lite/issues/new?title=[Component%20Request]%20{Component}&amp;body=Please%20include:%0A*%20Description%0A*%20Material%20Design%20Spec%20link%0A*%20Use%20Case%28s%29">new component</a>.<br>Please keep in mind that one of the goals of MDL is to adhere to the Material<br>Design specs and therefore some requests might not be within the scope of this<br>project.</p>
+<h2 id="Want_to_contribute_3F"><a href="#Want_to_contribute_3F" class="headerlink" title="Want to contribute?"></a>Want to contribute?</h2><p>If you found a bug, have any questions or want to contribute. Follow our<br><a href="https://github.com/google/material-design-lite/blob/master/CONTRIBUTING.md">guidelines</a>,<br>and help improve the Material Design Lite. For more information visit our<br><a href="https://github.com/google/material-design-lite/wiki">wiki</a>.</p>
+<h2 id="Do_you_include_any_features_that_a_framework_comes_with_3F"><a href="#Do_you_include_any_features_that_a_framework_comes_with_3F" class="headerlink" title="Do you include any features that a framework comes with?"></a>Do you include any features that a framework comes with?</h2><p>Material Design Lite is focused on delivering a vanilla CSS/JS/HTML library of<br>components. We are not a framework. If you are building a single-page app and<br>require features like two-way data-binding, templating, CSS scoping and so<br>forth, we recommend trying out the excellent<br><a href="http://polymer-project.org">Polymer</a> project.</p>
+<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>© Google, 2015. Licensed under an<br><a href="https://github.com/google/material-design-lite/blob/master/LICENSE">Apache-2</a><br>license.</p>

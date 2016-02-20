@@ -1,0 +1,120 @@
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>The Material Design Lite (MDL) <strong>snackbar</strong> component is a container used to notify a user of an operation’s status.<br>It displays at the bottom of the screen.<br>A snackbar may contain an action button to execute a command for the user.<br>Actions should undo the committed action or retry it if it failed for example.<br>Actions should not be to close the snackbar.<br>By not providing an action, the snackbar becomes a <strong>toast</strong> component.</p>
+<h2 id="Basic_Usage_3A"><a href="#Basic_Usage_3A" class="headerlink" title="Basic Usage:"></a>Basic Usage:</h2><p>Start a snackbar with a container div element.<br>On that container define the <code>mdl-js-snackbar</code> and <code>mdl-snackbar</code> classes.<br>It is also beneficial to add the aria live and atomic values to this container.</p>
+<p>Within the container create a container element for the message.<br>This element should have the class <code>mdl-snackbar__text</code>.<br>Leave this element empty!<br>Text is added when the snackbar is called to be shown.</p>
+<p>Second in the container, add a button element.<br>This element should have the class <code>mdl-snackbar__action</code>.<br>It is recommended to set the type to button to make sure no forms get submitted by accident.<br>Leave the text content empty here as well!<br>Do not directly apply any event handlers.</p>
+<p>You now have complete markup for the snackbar to function.<br>All that is left is within your JavaScript to call the <code>showSnackbar</code> method on the snackbar container.<br>This takes a <a href="#data-object">plain object</a> to configure the snackbar content appropriately.<br>You may call it multiple consecutive times and messages will stack.</p>
+<h2 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h2><p>All snackbars should be shown through the same element.</p>
+<h4 id="Markup_3A"><a href="#Markup_3A" class="headerlink" title="Markup:"></a>Markup:</h4><pre><code class="html"><span class="tag">&lt;<span class="name">div</span> <span class="attr">aria-live</span>=<span class="string">"assertive"</span> <span class="attr">aria-atomic</span>=<span class="string">"true"</span> <span class="attr">aria-relevant</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"mdl-snackbar mdl-js-snackbar"</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mdl-snackbar__text"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+    <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"mdl-snackbar__action"</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span>
+<span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+</code></pre>
+<blockquote>
+<p>Note: In this example there are a few aria attributes for accessibility. Please modify these as-needed for your site.</p>
+</blockquote>
+<h3 id="Snackbar"><a href="#Snackbar" class="headerlink" title="Snackbar"></a>Snackbar</h3><pre><code class="javascript"><span class="keyword">var</span> notification = <span class="built_in">document</span>.querySelector(<span class="string">'.mdl-js-snackbar'</span>);
+<span class="keyword">var</span> data = {
+  message: <span class="string">'Message Sent'</span>,
+  actionHandler: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>{},
+  actionText: <span class="string">'Undo'</span>,
+  timeout: <span class="number">10000</span>
+};
+notification.MaterialSnackbar.showSnackbar(data);
+</code></pre>
+<h3 id="Toast"><a href="#Toast" class="headerlink" title="Toast"></a>Toast</h3><pre><code class="javascript"><span class="keyword">var</span> notification = <span class="built_in">document</span>.querySelector(<span class="string">'.mdl-js-snackbar'</span>);
+notification.MaterialSnackbar.showSnackbar(
+  {
+    message: <span class="string">'Image Uploaded'</span>
+  }
+);
+</code></pre>
+<h2 id="CSS_Classes"><a href="#CSS_Classes" class="headerlink" title="CSS Classes"></a>CSS Classes</h2><h3 id="Blocks"><a href="#Blocks" class="headerlink" title="Blocks"></a>Blocks</h3><table>
+<thead>
+<tr>
+<th>MDL Class</th>
+<th>Effect</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mdl-snackbar</code></td>
+<td>Defines the container of the snackbar component.</td>
+<td>Required on snackbar container</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Elements"><a href="#Elements" class="headerlink" title="Elements"></a>Elements</h3><table>
+<thead>
+<tr>
+<th>MDL Class</th>
+<th>Effect</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mdl-snackbar__text</code></td>
+<td>Defines the element containing the text of the snackbar.</td>
+<td>Required</td>
+</tr>
+<tr>
+<td><code>mdl-snackbar__action</code></td>
+<td>Defines the element that triggers the action of a snackbar.</td>
+<td>Required</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Modifiers"><a href="#Modifiers" class="headerlink" title="Modifiers"></a>Modifiers</h3><table>
+<thead>
+<tr>
+<th>MDL Class</th>
+<th>Effect</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mdl-snackbar--active</code></td>
+<td>Marks the snackbar as active which causes it to display.</td>
+<td>Required when active. Controlled in JavaScript</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Data_Object"><a href="#Data_Object" class="headerlink" title="Data Object"></a>Data Object</h2><p>The Snackbar components <code>showSnackbar</code> method takes an object for snackbar data.<br>The table below shows the properties and their usage.</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Effect</th>
+<th>Remarks</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>message</td>
+<td>The text message to display.</td>
+<td>Required</td>
+<td>String</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>The amount of time in milliseconds to show the snackbar.</td>
+<td>Optional (default 8000)</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>actionHandler</td>
+<td>The function to execute when the action is clicked.</td>
+<td>Optional</td>
+<td>Function</td>
+</tr>
+<tr>
+<td>actionText</td>
+<td>The text to display for the action button.</td>
+<td>Required if actionHandler is set</td>
+<td>String.</td>
+</tr>
+</tbody>
+</table>

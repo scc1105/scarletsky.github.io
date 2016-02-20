@@ -268,27 +268,27 @@
       
         <p>随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 <code>System.Random</code> 库）是伴随着状态的传递的。 </p>
 <p>大部分需要获得帮助的人都有命令式编程的背景，因此，我会先用命令式的方式，然后再用函数式的方式来教大家在 Haskell 中使用随机数。</p>
-<h2 id="任务">任务</h2><p>我会生成满足以下条件的随机列表：</p>
+<h2 id="u4EFB_u52A1"><a href="#u4EFB_u52A1" class="headerlink" title="任务"></a>任务</h2><p>我会生成满足以下条件的随机列表：</p>
 <ul>
 <li>列表长度是 1 到 7 </li>
 <li>列表中的每一项都是 0.0 到 1.0 之间的浮点数</li>
 </ul>
-<h2 id="命令式">命令式</h2><p>在 IO monad 中有一个全局的生成器，你可以初始化它，然后获取随机数。下面有一些常用的函数：</p>
-<h3 id="setStdGen_::_StdGen_-&gt;_IO_()"><code>setStdGen :: StdGen -&gt; IO ()</code></h3><p>初始化或者设置全局生成器，我们可以用 <code>mkStdGen</code> 来生成随机种子。因此，有一个很傻瓜式的用法：</p>
+<h2 id="u547D_u4EE4_u5F0F"><a href="#u547D_u4EE4_u5F0F" class="headerlink" title="命令式"></a>命令式</h2><p>在 IO monad 中有一个全局的生成器，你可以初始化它，然后获取随机数。下面有一些常用的函数：</p>
+<h3 id="setStdGen__3A_3A_StdGen_-_26gt_3B_IO__28_29"><a href="#setStdGen__3A_3A_StdGen_-_26gt_3B_IO__28_29" class="headerlink" title="setStdGen :: StdGen -&gt; IO ()"></a><code>setStdGen :: StdGen -&gt; IO ()</code></h3><p>初始化或者设置全局生成器，我们可以用 <code>mkStdGen</code> 来生成随机种子。因此，有一个很傻瓜式的用法：</p>
 <figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">setStdGen</span> (mkStdGen <span class="number">42</span>)</span><br></pre></td></tr></table></figure>
 <p>当然，你可以用任意的 <code>Int</code> 来替换 <code>42</code>。</p>
 <p>其实，你可以选择是否调用 <code>setStdGen</code>，如果你不调用的话，全局的生成器还是可用的。因为在 runtime 会在启动的时候用一个任意的种子去初始化它，所以每次启动的时候，都会有一个不同的种子。</p>
-<h3 id="randomRIO_::_(Random_a)_=&gt;_(a,a)_-&gt;_IO_a"><code>randomRIO :: (Random a) =&gt; (a,a) -&gt; IO a</code></h3><p>在给定范围随机返回一个类型为 <code>a</code> 的值，同时全局生成器也会更新。你可以通过一个元组来指定范围。下面这个例子会返回 <code>a</code> 到 <code>z</code> 之间的随机值（包含 <code>a</code> 和 <code>z</code>）：</p>
+<h3 id="randomRIO__3A_3A__28Random_a_29__3D_26gt_3B__28a_2Ca_29_-_26gt_3B_IO_a"><a href="#randomRIO__3A_3A__28Random_a_29__3D_26gt_3B__28a_2Ca_29_-_26gt_3B_IO_a" class="headerlink" title="randomRIO :: (Random a) =&gt; (a,a) -&gt; IO a"></a><code>randomRIO :: (Random a) =&gt; (a,a) -&gt; IO a</code></h3><p>在给定范围随机返回一个类型为 <code>a</code> 的值，同时全局生成器也会更新。你可以通过一个元组来指定范围。下面这个例子会返回 <code>a</code> 到 <code>z</code> 之间的随机值（包含 <code>a</code> 和 <code>z</code>）：</p>
 <figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">c</span> &lt;- randomRIO ('a', 'z')</span><br></pre></td></tr></table></figure>
 <p><code>a</code> 可以是任意类型吗？并非如此。在 Haskell 98 标准中， <code>Random</code> 库只支持 <code>Bool</code>, <code>Char</code>,  <code>Int</code>, <code>Integer</code>, <code>Float</code>, <code>Double</code>（你可以自己去扩展这个支持的范围，但这是另外一个话题了）。</p>
-<h3 id="randomIO_::_(Random_a)_=&gt;_IO_a"><code>randomIO :: (Random a) =&gt; IO a</code></h3><p>返回一个类型为 <code>a</code> 的随机数（<code>a</code> 可以是任意类型吗？看上文），全局的生成器也会更新。下面这个例子会返回一个 <code>Double</code> 类型的随机数：</p>
+<h3 id="randomIO__3A_3A__28Random_a_29__3D_26gt_3B_IO_a"><a href="#randomIO__3A_3A__28Random_a_29__3D_26gt_3B_IO_a" class="headerlink" title="randomIO :: (Random a) =&gt; IO a"></a><code>randomIO :: (Random a) =&gt; IO a</code></h3><p>返回一个类型为 <code>a</code> 的随机数（<code>a</code> 可以是任意类型吗？看上文），全局的生成器也会更新。下面这个例子会返回一个 <code>Double</code> 类型的随机数：</p>
 <figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">x</span> &lt;- randomIO :: <span class="type">IO</span> <span class="type">Double</span></span><br></pre></td></tr></table></figure>
 <p>随机数返回的范围由类型决定。</p>
 <p>需要注意的是，这些都是 IO 函数，因此你只可以在 IO 函数中使用它们。换句话说，如果你写了一个要使用它们的函数，它的返回类型也会变成是 IO 函数。</p>
 <p>举个例子，上面提到的代码片段都要写在 <code>do block</code> 中。这只是一个提醒，因为我们想要用命令式的方式来生成随机数。</p>
 <p>下面这个例子展示如何在 IO monad 中完成之前的任务：</p>
 <figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="import"><span class="keyword">import</span> System.Random</span></span><br><span class="line"></span><br><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">    setStdGen (mkStdGen <span class="number">42</span>)  <span class="comment">-- 这步是可选的，如果有这一步，你每一次运行的结果都是一样的，因为随机种子固定是 42</span></span><br><span class="line">    s &lt;- randomStuff</span><br><span class="line">    print s</span><br><span class="line"></span><br><span class="line"><span class="title">randomStuff</span> :: <span class="type">IO</span> [<span class="type">Float</span>]</span><br><span class="line"><span class="title">randomStuff</span> = <span class="keyword">do</span></span><br><span class="line">    n &lt;- randomRIO (<span class="number">1</span>, <span class="number">7</span>)</span><br><span class="line">    sequence (replicate n (randomRIO (<span class="number">0</span>, <span class="number">1</span>)))</span><br></pre></td></tr></table></figure>
-<h2 id="纯函数式">纯函数式</h2><p>你可能有以下原因想知道如何用函数式的方式生成随机数：</p>
+<h2 id="u7EAF_u51FD_u6570_u5F0F"><a href="#u7EAF_u51FD_u6570_u5F0F" class="headerlink" title="纯函数式"></a>纯函数式</h2><p>你可能有以下原因想知道如何用函数式的方式生成随机数：</p>
 <ul>
 <li>你有好奇心</li>
 <li>你不想用 IO monad</li>
@@ -300,11 +300,11 @@
 <li>把生成器当成函数参数的一部分，然后返回随机数</li>
 </ul>
 <p>这里有一些常用的函数用来创建生成器和包含随机数的无限列表。</p>
-<h3 id="mkStdGen_::_Int_-&gt;_StdGen"><code>mkStdGen :: Int -&gt; StdGen</code></h3><p>用随机种子创建生成器。</p>
-<h3 id="randomRs_::_(Random_a,_RandomGen_g)_=&gt;_(a,_a)_-&gt;_g_-&gt;_[a]"><code>randomRs :: (Random a, RandomGen g) =&gt; (a, a) -&gt; g -&gt; [a]</code></h3><p>用生成器生成给定范围的无限列表。例子：用 <code>42</code> 作为随机种子，返回 <code>a</code> 到 <code>z</code> 之间包含 <code>a</code> 和 <code>z</code> 的无限列表：</p>
+<h3 id="mkStdGen__3A_3A_Int_-_26gt_3B_StdGen"><a href="#mkStdGen__3A_3A_Int_-_26gt_3B_StdGen" class="headerlink" title="mkStdGen :: Int -&gt; StdGen"></a><code>mkStdGen :: Int -&gt; StdGen</code></h3><p>用随机种子创建生成器。</p>
+<h3 id="randomRs__3A_3A__28Random_a_2C_RandomGen_g_29__3D_26gt_3B__28a_2C_a_29_-_26gt_3B_g_-_26gt_3B__5Ba_5D"><a href="#randomRs__3A_3A__28Random_a_2C_RandomGen_g_29__3D_26gt_3B__28a_2C_a_29_-_26gt_3B_g_-_26gt_3B__5Ba_5D" class="headerlink" title="randomRs :: (Random a, RandomGen g) =&gt; (a, a) -&gt; g -&gt; [a]"></a><code>randomRs :: (Random a, RandomGen g) =&gt; (a, a) -&gt; g -&gt; [a]</code></h3><p>用生成器生成给定范围的无限列表。例子：用 <code>42</code> 作为随机种子，返回 <code>a</code> 到 <code>z</code> 之间包含 <code>a</code> 和 <code>z</code> 的无限列表：</p>
 <figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">randomRs</span> ('a', 'z') (mkStdGen <span class="number">42</span>)</span><br></pre></td></tr></table></figure>
 <p>类型 <code>a</code> 是随机数的类型。类型 <code>g</code> 看起来是通用的，但实际上它总是 <code>StdGen</code>。</p>
-<h3 id="randoms_::_(Random_a,_RandomGen_g)_=&gt;_g_-&gt;_[a]"><code>randoms :: (Random a, RandomGen g) =&gt; g -&gt; [a]</code></h3><p>用给定的生成器生成随机数的无限列表。例如：用 <code>42</code> 作为随机种子生成 <code>Double</code> 类型的列表：</p>
+<h3 id="randoms__3A_3A__28Random_a_2C_RandomGen_g_29__3D_26gt_3B_g_-_26gt_3B__5Ba_5D"><a href="#randoms__3A_3A__28Random_a_2C_RandomGen_g_29__3D_26gt_3B_g_-_26gt_3B__5Ba_5D" class="headerlink" title="randoms :: (Random a, RandomGen g) =&gt; g -&gt; [a]"></a><code>randoms :: (Random a, RandomGen g) =&gt; g -&gt; [a]</code></h3><p>用给定的生成器生成随机数的无限列表。例如：用 <code>42</code> 作为随机种子生成 <code>Double</code> 类型的列表：</p>
 <figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">randoms</span> (mkStdGen <span class="number">42</span>) :: [<span class="type">Double</span>]</span><br></pre></td></tr></table></figure>
 <p>随机数的范围由类型决定，你需要查文档来确定具体范围，或者直接用 <code>randomRs</code>。</p>
 <p>注意，这些都是函数式的 —— 意味着这里面没有副作用，特别是生成器并不会更新。如果你用一个生成器去生成第一个列表，然后用相同的生成器去生成第二个列表…</p>
@@ -315,7 +315,7 @@
 <p>除了必要的打印操作外，这是纯函数式的。它用生成器生成了无限列表，然后再用这个无限列表来生成另一个无限列表作为答案，最后取第一个作为返回值。</p>
 <p>我这样做是因为尽管我们今天的人物是生成一个随机数，但你通常会需要很多个，我希望这个例子可以对你有点帮助。</p>
 <p>上面的代码的工作原理是：用一个生成器，创建一个包含 <code>Float</code> 的无限列表。截取第一个值，并扩大这个值到 <code>1</code> 到 <code>7</code>，然后用剩下的列表来生成答案。换句话说，把输入的列表分成 <code>(r:rs)</code>，<code>r</code> 决定生成列表的长度（<code>1</code> 到 <code>7</code>），<code>rs</code> 之后会被计算答案。</p>
-<h3 id="split_::_(RandomGen_g)_=&gt;_g_-&gt;_(g,_g)"><code>split :: (RandomGen g) =&gt; g -&gt; (g, g)</code></h3><p>用一个随机种子创建两个不同的生成器，其他情况下重用相同的种子是不明智的。</p>
+<h3 id="split__3A_3A__28RandomGen_g_29__3D_26gt_3B_g_-_26gt_3B__28g_2C_g_29"><a href="#split__3A_3A__28RandomGen_g_29__3D_26gt_3B_g_-_26gt_3B__28g_2C_g_29" class="headerlink" title="split :: (RandomGen g) =&gt; g -&gt; (g, g)"></a><code>split :: (RandomGen g) =&gt; g -&gt; (g, g)</code></h3><p>用一个随机种子创建两个不同的生成器，其他情况下重用相同的种子是不明智的。</p>
 <figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">g</span> = mkStdGen <span class="number">42</span></span><br><span class="line">(ga, gb) = split g</span><br><span class="line"><span class="comment">-- do not use g elsewhere</span></span><br></pre></td></tr></table></figure>
 <p>如果你想创建多余两个的生成器，你可以对新的生成器中的其中一个使用 <code>split</code>：</p>
 <figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">g</span> = mkStdGen <span class="number">42</span></span><br><span class="line">(ga, g') = split g</span><br><span class="line">(gb, gc) = split g'</span><br><span class="line"><span class="comment">-- do not use g, g' elsewhere</span></span><br></pre></td></tr></table></figure>
@@ -326,7 +326,7 @@
 <p>这些在主程序中都是 do-able 的，因为它们都可以在 IO monad 中访问。</p>
 <p>你也可以通过 <code>getStdGen</code> 获取全局生成器：</p>
 <figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">main</span> = <span class="keyword">do</span></span><br><span class="line">    g &lt;- getStdGen</span><br><span class="line">    <span class="keyword">let</span> [s] = take randomStuff g</span><br><span class="line">    print s</span><br></pre></td></tr></table></figure>
-<h2 id="参考资料">参考资料</h2><p><a href="http://www.vex.net/~trebla/haskell/random.xhtml" target="_blank" rel="external">原文</a></p>
+<h2 id="u53C2_u8003_u8D44_u6599"><a href="#u53C2_u8003_u8D44_u6599" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://www.vex.net/~trebla/haskell/random.xhtml" target="_blank" rel="external">原文</a></p>
 
       
     </div>
@@ -488,7 +488,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#任务"><span class="nav-number">1.</span> <span class="nav-text">任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令式"><span class="nav-number">2.</span> <span class="nav-text">命令式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setStdGen_::_StdGen_->_IO_()"><span class="nav-number">2.1.</span> <span class="nav-text">setStdGen :: StdGen -> IO ()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#randomRIO_::_(Random_a)_=>_(a,a)_->_IO_a"><span class="nav-number">2.2.</span> <span class="nav-text">randomRIO :: (Random a) => (a,a) -> IO a</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#randomIO_::_(Random_a)_=>_IO_a"><span class="nav-number">2.3.</span> <span class="nav-text">randomIO :: (Random a) => IO a</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#纯函数式"><span class="nav-number">3.</span> <span class="nav-text">纯函数式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mkStdGen_::_Int_->_StdGen"><span class="nav-number">3.1.</span> <span class="nav-text">mkStdGen :: Int -> StdGen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#randomRs_::_(Random_a,_RandomGen_g)_=>_(a,_a)_->_g_->_[a]"><span class="nav-number">3.2.</span> <span class="nav-text">randomRs :: (Random a, RandomGen g) => (a, a) -> g -> [a]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#randoms_::_(Random_a,_RandomGen_g)_=>_g_->_[a]"><span class="nav-number">3.3.</span> <span class="nav-text">randoms :: (Random a, RandomGen g) => g -> [a]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#split_::_(RandomGen_g)_=>_g_->_(g,_g)"><span class="nav-number">3.4.</span> <span class="nav-text">split :: (RandomGen g) => g -> (g, g)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u4EFB_u52A1"><span class="nav-number">1.</span> <span class="nav-text">任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u547D_u4EE4_u5F0F"><span class="nav-number">2.</span> <span class="nav-text">命令式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setStdGen__3A_3A_StdGen_-_26gt_3B_IO__28_29"><span class="nav-number">2.1.</span> <span class="nav-text">setStdGen :: StdGen -> IO ()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#randomRIO__3A_3A__28Random_a_29__3D_26gt_3B__28a_2Ca_29_-_26gt_3B_IO_a"><span class="nav-number">2.2.</span> <span class="nav-text">randomRIO :: (Random a) => (a,a) -> IO a</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#randomIO__3A_3A__28Random_a_29__3D_26gt_3B_IO_a"><span class="nav-number">2.3.</span> <span class="nav-text">randomIO :: (Random a) => IO a</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u7EAF_u51FD_u6570_u5F0F"><span class="nav-number">3.</span> <span class="nav-text">纯函数式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mkStdGen__3A_3A_Int_-_26gt_3B_StdGen"><span class="nav-number">3.1.</span> <span class="nav-text">mkStdGen :: Int -> StdGen</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#randomRs__3A_3A__28Random_a_2C_RandomGen_g_29__3D_26gt_3B__28a_2C_a_29_-_26gt_3B_g_-_26gt_3B__5Ba_5D"><span class="nav-number">3.2.</span> <span class="nav-text">randomRs :: (Random a, RandomGen g) => (a, a) -> g -> [a]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#randoms__3A_3A__28Random_a_2C_RandomGen_g_29__3D_26gt_3B_g_-_26gt_3B__5Ba_5D"><span class="nav-number">3.3.</span> <span class="nav-text">randoms :: (Random a, RandomGen g) => g -> [a]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#split__3A_3A__28RandomGen_g_29__3D_26gt_3B_g_-_26gt_3B__28g_2C_g_29"><span class="nav-number">3.4.</span> <span class="nav-text">split :: (RandomGen g) => g -> (g, g)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u53C2_u8003_u8D44_u6599"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

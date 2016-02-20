@@ -303,7 +303,7 @@ fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
       
 
       
-        <h2 id="Functor_简介">Functor 简介</h2><p>什么是 Functor ?</p>
+        <h2 id="Functor__u7B80_u4ECB"><a href="#Functor__u7B80_u4ECB" class="headerlink" title="Functor 简介"></a>Functor 简介</h2><p>什么是 Functor ?</p>
 <blockquote>
 <p>现在你可以认为 Functor 是一种数据类型。</p>
 </blockquote>
@@ -395,7 +395,7 @@ fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
 <blockquote>
 <p>你需要先知道怎么定义一个 Functor。</p>
 </blockquote>
-<h2 id="自定义_Functor">自定义 Functor</h2><p>我应该怎么自定义 Functor ?</p>
+<h2 id="u81EA_u5B9A_u4E49_Functor"><a href="#u81EA_u5B9A_u4E49_Functor" class="headerlink" title="自定义 Functor"></a>自定义 Functor</h2><p>我应该怎么自定义 Functor ?</p>
 <blockquote>
 <p>先定义一个数据类型，再让该类型成为 Functor 的实例。<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">MyFunctor</span> a = <span class="type">Data</span> a <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">MyFunctor</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f (<span class="type">Data</span> x) = <span class="type">Data</span> (f x)</span><br></pre></td></tr></table></figure></p>
 <p>这样，我们定义的 MyFunctor 就是一个 Functor 了。</p>
@@ -409,7 +409,7 @@ fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
 <figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">MyFunctor2</span> a b = <span class="type">Data2</span> a b <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="container">(<span class="type">MyFunctor2</span> <span class="title">a</span>)</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f (<span class="type">Data2</span> x y) = <span class="type">Data2</span> x (f y)</span><br></pre></td></tr></table></figure>
 <p>在 Haskell 中，我们可以利用 Haskell 不全调用的特性，把 MyFunctor2 a 当成一个整体，这样就相当于只有 b 一个类型参数了。</p>
 </blockquote>
-<h2 id="真_·_Functor">真 · Functor</h2><p>我从上面看到，Functor 是一个类型类？</p>
+<h2 id="u771F__B7_Functor"><a href="#u771F__B7_Functor" class="headerlink" title="真 · Functor"></a>真 · Functor</h2><p>我从上面看到，Functor 是一个类型类？</p>
 <blockquote>
 <p>是的。事实上，<strong>Functor 是一个类型类，表示满足一些条件的数据类型。</strong></p>
 </blockquote>
@@ -455,7 +455,7 @@ fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
 <blockquote>
 <p><code>fmap</code> 可以中缀调用，即 <code>f `fmap` xs</code><br><code>&lt;$&gt;</code> 是 <code>fmap</code> 的别名，一般用于中缀调用，即 <code>f &lt;$&gt; xs</code>。</p>
 </blockquote>
-<h2 id="总结">总结</h2><p>Functor 是类型类，只要满足以下条件的数据类型都可以成为 Functor 的实例：</p>
+<h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><p>Functor 是类型类，只要满足以下条件的数据类型都可以成为 Functor 的实例：</p>
 <ul>
 <li>实现 <code>fmap</code>。</li>
 <li>保证 <code>fmap id = id</code>。</li>
@@ -463,7 +463,7 @@ fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
 <li>该数据类型必须有一个以上的类型参数。</li>
 </ul>
 <p>最后，强烈建议看看 <a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">这篇文章</a>，相当形象生动。</p>
-<h2 id="参考资料">参考资料</h2><p><a href="http://learnyouahaskell.com/functors-applicative-functors-and-monoids" target="_blank" rel="external">Functors, Applicative Functors and Monoids</a><br><a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">Functors, Applicatives, And Monads In Pictures</a><br><a href="http://cnhaskell.com/chp/10.html#functor" target="_blank" rel="external">Functor 简介</a><br><a href="http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor" target="_blank" rel="external">http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor</a></p>
+<h2 id="u53C2_u8003_u8D44_u6599"><a href="#u53C2_u8003_u8D44_u6599" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://learnyouahaskell.com/functors-applicative-functors-and-monoids" target="_blank" rel="external">Functors, Applicative Functors and Monoids</a><br><a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">Functors, Applicatives, And Monads In Pictures</a><br><a href="http://cnhaskell.com/chp/10.html#functor" target="_blank" rel="external">Functor 简介</a><br><a href="http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor" target="_blank" rel="external">http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor</a></p>
 
       
     </div>
@@ -621,7 +621,7 @@ fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Functor_简介"><span class="nav-number">1.</span> <span class="nav-text">Functor 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义_Functor"><span class="nav-number">2.</span> <span class="nav-text">自定义 Functor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#真_·_Functor"><span class="nav-number">3.</span> <span class="nav-text">真 · Functor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Functor__u7B80_u4ECB"><span class="nav-number">1.</span> <span class="nav-text">Functor 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u81EA_u5B9A_u4E49_Functor"><span class="nav-number">2.</span> <span class="nav-text">自定义 Functor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u771F__B7_Functor"><span class="nav-number">3.</span> <span class="nav-text">真 · Functor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u603B_u7ED3"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u53C2_u8003_u8D44_u6599"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
