@@ -1,65 +1,11 @@
-<!doctype html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
-
-
-
-
-  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-
-
-
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="javascript," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Scarletsky" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
-
-
-
-
-
-
-<meta name="description" content="基本介绍在 Node.js 中，读取文件的方式有两种，一种是用 fs.readFile，另外一种是利用 fs.createReadStream 来读取。
+  <meta charset="utf-8">
+  
+  <title>Node.js 中 Stream API 的使用 | Scarletsky</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="基本介绍在 Node.js 中，读取文件的方式有两种，一种是用 fs.readFile，另外一种是利用 fs.createReadStream 来读取。
 fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。
 而 fs.createReadStream 则是通过 Str">
 <meta property="og:type" content="article">
@@ -75,237 +21,96 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 <meta name="twitter:description" content="基本介绍在 Node.js 中，读取文件的方式有两种，一种是用 fs.readFile，另外一种是利用 fs.createReadStream 来读取。
 fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。
 而 fs.createReadStream 则是通过 Str">
+  
+  
 
 
+  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-<script type="text/javascript" id="hexo.configuration">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    scheme: 'Muse',
-    sidebar: {"position":"left","display":"post"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: 0,
-      author: '博主'
-    }
-  };
+ga('create', 'UA-40690820-1', 'auto');
+ga('send', 'pageview');
+
 </script>
+<!-- End Google Analytics -->
 
-  <title> Node.js 中 Stream API 的使用 | Scarletsky </title>
+
+  
+
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body>
+  <div class="content-post">
+  <a class="avatar" href="/archives">
+    <img src="/images/avatar.jpg" alt="" />
+  </a>
+  <article id="post-node-stream-api-learning" class="article article-type-post" itemscope itemprop="blogPost">
 
-  
-
-
-
-
-
-
-
-
-  
-  
+  <header class="article-header">
     
   
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
+    <div class="article-title article" >
+      Node.js 中 Stream API 的使用
+    </div>
   
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">Scarletsky</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+
+  </header>
+
+  <div class="article-meta">
+    2015-10-22
+
+    <span> | </span>
+
+    <span class="article-author">Scarletsky</span>
+
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
   </div>
-  <p class="site-subtitle"></p>
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
 
-<nav class="site-nav">
-  
+  </div>
+  <div class="article-inner">
 
-  
-    <ul id="menu" class="menu ">
+    <div class="article-entry" itemprop="articleBody">
       
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-
-      
-      
-      
-    </ul>
-  
-
-  
-</nav>
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Node.js 中 Stream API 的使用
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-10-22T17:09:06+08:00" content="2015-10-22">
-              2015-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/10/22/node-stream-api-learning/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/22/node-stream-api-learning/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="u57FA_u672C_u4ECB_u7ECD"><a href="#u57FA_u672C_u4ECB_u7ECD" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
+        <h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
 <p><code>fs.readFile</code> 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。</p>
 <p>而 <code>fs.createReadStream</code> 则是通过 Stream 来读取数据，它会把文件（数据）分割成小块，然后触发一些特定的事件，我们可以监听这些事件，编写特定的处理函数。这种方式相对上面来说，并不好上手，但它效率非常高。</p>
 <p>事实上， Stream 在 Node.js 中并非仅仅用在文件处理上，其他地方也可以看到它的身影，如 <code>process.stdin/stdout</code>, <code>http</code>, <code>tcp sockets</code>, <code>zlib</code>, <code>crypto</code> 等都有用到。</p>
 <p>本文是我学习 Node.js 中的 Stream API 中的一点总结，希望对大家有用。</p>
-<h2 id="u7279_u70B9"><a href="#u7279_u70B9" class="headerlink" title="特点"></a>特点</h2><ul>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ul>
 <li>基于事件通讯</li>
 <li>可以通过 <code>pipe</code> 来连接流</li>
 </ul>
-<h2 id="u79CD_u7C7B"><a href="#u79CD_u7C7B" class="headerlink" title="种类"></a>种类</h2><ul>
+<h2 id="种类"><a href="#种类" class="headerlink" title="种类"></a>种类</h2><ul>
 <li>Readable Stream  可读数据流</li>
 <li>Writeable Stream  可写数据流</li>
 <li>Duplex Stream  双向数据流，可以同时读和写</li>
 <li>Transform Stream 转换数据流，可读可写，同时可以转换（处理）数据</li>
 </ul>
-<h2 id="u4E8B_u4EF6"><a href="#u4E8B_u4EF6" class="headerlink" title="事件"></a>事件</h2><h3 id="u53EF_u8BFB_u6570_u636E_u6D41_u7684_u4E8B_u4EF6"><a href="#u53EF_u8BFB_u6570_u636E_u6D41_u7684_u4E8B_u4EF6" class="headerlink" title="可读数据流的事件"></a>可读数据流的事件</h3><ul>
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><h3 id="可读数据流的事件"><a href="#可读数据流的事件" class="headerlink" title="可读数据流的事件"></a>可读数据流的事件</h3><ul>
 <li><code>readable</code> 数据向外流时触发</li>
 <li><code>data</code> 对于那些没有显式暂停的数据流，添加data事件监听函数，会将数据流切换到流动态，尽快向外提供数据</li>
 <li><code>end</code> 读取完数据时触发。注意不能和 <code>writeableStream.end()</code> 混淆，writeableStream 并没有 end 事件，只有 <code>.end()</code> 方法</li>
 <li><code>close</code> 数据源关闭时触发</li>
 <li><code>error</code> 读取数据发生错误时触发</li>
 </ul>
-<h3 id="u53EF_u5199_u6570_u636E_u6D41_u7684_u4E8B_u4EF6"><a href="#u53EF_u5199_u6570_u636E_u6D41_u7684_u4E8B_u4EF6" class="headerlink" title="可写数据流的事件"></a>可写数据流的事件</h3><ul>
+<h3 id="可写数据流的事件"><a href="#可写数据流的事件" class="headerlink" title="可写数据流的事件"></a>可写数据流的事件</h3><ul>
 <li><code>drain</code> <code>writable.write(chunk)</code> 返回 false 之后，缓存全部写入完成，可以重新写入时就会触发</li>
 <li><code>finish</code> 调用 <code>.end</code> 方法时，所有缓存的数据释放后触发，类似于可读数据流中的 <strong>end</strong> 事件，表示写入过程结束</li>
 <li><code>pipe</code> 作为 pipe 目标时触发</li>
 <li><code>unpipe</code> 作为 unpipe 目标时触发</li>
 <li><code>error</code> 写入数据发生错误时触发</li>
 </ul>
-<h2 id="u72B6_u6001"><a href="#u72B6_u6001" class="headerlink" title="状态"></a>状态</h2><p>可读数据流有两种状态：<strong>流动态</strong> 和 <strong>暂停态</strong>，改变数据流状态的方法如下：</p>
+<h2 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h2><p>可读数据流有两种状态：<strong>流动态</strong> 和 <strong>暂停态</strong>，改变数据流状态的方法如下：</p>
 <p><strong>暂停态 -&gt; 流动态</strong></p>
 <ul>
 <li>添加 data 事件的监听函数</li>
@@ -319,10 +124,10 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 <li>存在 pipe 方法的目的地时，移除所有 data 事件的监听函数，并且调用 unpipe 方法，移除所有 pipe 方法的目的地</li>
 </ul>
 <p><strong>注意：</strong> 只移除 data 事件的监听函数，并不会自动引发数据流进入「暂停态」。另外，存在 pipe 方法的目的地时，调用 pause 方法，并不能保证数据流总是处于暂停态，一旦那些目的地发出数据请求，数据流有可能会继续提供数据。</p>
-<h2 id="u7528_u6CD5"><a href="#u7528_u6CD5" class="headerlink" title="用法"></a>用法</h2><h3 id="u8BFB_u5199_u6587_u4EF6"><a href="#u8BFB_u5199_u6587_u4EF6" class="headerlink" title="读写文件"></a>读写文件</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="comment">// 新建可读数据流</span></span><br><span class="line"><span class="keyword">var</span> rs = fs.createReadStream(<span class="string">'./test1.txt'</span>);</span><br><span class="line"><span class="comment">// 新建可写数据流</span></span><br><span class="line"><span class="keyword">var</span> ws = fs.createWriteStream(<span class="string">'./test2.txt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听可读数据流结束事件</span></span><br><span class="line">rs.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'read text1.txt successfully!'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 监听可写数据流结束事件</span></span><br><span class="line">ws.on(<span class="string">'finish'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'write text2.txt successfully!'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 把可读数据流转换成流动态，流进可写数据流中</span></span><br><span class="line">rs.pipe(ws);</span><br></pre></td></tr></table></figure>
-<h3 id="u8BFB_u53D6_CSV__u6587_u4EF6_uFF0C_u5E76_u4E0A_u4F20_u6570_u636E_uFF08_u6211_u5728_u751F_u4EA7_u73AF_u5883_u4E2D_u5199_u8FC7_uFF09"><a href="#u8BFB_u53D6_CSV__u6587_u4EF6_uFF0C_u5E76_u4E0A_u4F20_u6570_u636E_uFF08_u6211_u5728_u751F_u4EA7_u73AF_u5883_u4E2D_u5199_u8FC7_uFF09" class="headerlink" title="读取 CSV 文件，并上传数据（我在生产环境中写过）"></a>读取 CSV 文件，并上传数据（我在生产环境中写过）</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> es = <span class="built_in">require</span>(<span class="string">'event-stream'</span>);</span><br><span class="line"><span class="keyword">var</span> csv = <span class="built_in">require</span>(<span class="string">'csv'</span>);</span><br><span class="line"><span class="keyword">var</span> parser = csv.parse();</span><br><span class="line"><span class="keyword">var</span> transformer = csv.transform(<span class="function"><span class="keyword">function</span>(<span class="params">record</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> record.join(<span class="string">','</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> data = fs.createReadStream(<span class="string">'./demo.csv'</span>);</span><br><span class="line">data</span><br><span class="line">    .pipe(parser)</span><br><span class="line">    .pipe(transformer)</span><br><span class="line">    <span class="comment">// 处理前一个 stream 传递过来的数据</span></span><br><span class="line">    .pipe(es.map(<span class="function"><span class="keyword">function</span>(<span class="params">data, callback</span>) </span>&#123;</span><br><span class="line">        upload(data, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            callback(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="comment">// 相当于监听前一个 stream 的 end 事件</span></span><br><span class="line">    .pipe(es.wait(<span class="function"><span class="keyword">function</span>(<span class="params">err, body</span>) </span>&#123;</span><br><span class="line">        process.stdout.write(<span class="string">'done!'</span>);</span><br><span class="line">    &#125;));</span><br></pre></td></tr></table></figure>
-<h3 id="u66F4_u591A_u7528_u6CD5"><a href="#u66F4_u591A_u7528_u6CD5" class="headerlink" title="更多用法"></a>更多用法</h3><p>可以参考一下 <a href="https://github.com/jeresig/node-stream-playground" target="_blank" rel="external">https://github.com/jeresig/node-stream-playground</a> ，进去示例网站之后直接点 add stream 就能看到结果了。</p>
-<h2 id="u5E38_u89C1_u5751"><a href="#u5E38_u89C1_u5751" class="headerlink" title="常见坑"></a>常见坑</h2><ul>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><h3 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="comment">// 新建可读数据流</span></span><br><span class="line"><span class="keyword">var</span> rs = fs.createReadStream(<span class="string">'./test1.txt'</span>);</span><br><span class="line"><span class="comment">// 新建可写数据流</span></span><br><span class="line"><span class="keyword">var</span> ws = fs.createWriteStream(<span class="string">'./test2.txt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听可读数据流结束事件</span></span><br><span class="line">rs.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'read text1.txt successfully!'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 监听可写数据流结束事件</span></span><br><span class="line">ws.on(<span class="string">'finish'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'write text2.txt successfully!'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 把可读数据流转换成流动态，流进可写数据流中</span></span><br><span class="line">rs.pipe(ws);</span><br></pre></td></tr></table></figure>
+<h3 id="读取-CSV-文件，并上传数据（我在生产环境中写过）"><a href="#读取-CSV-文件，并上传数据（我在生产环境中写过）" class="headerlink" title="读取 CSV 文件，并上传数据（我在生产环境中写过）"></a>读取 CSV 文件，并上传数据（我在生产环境中写过）</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> es = <span class="built_in">require</span>(<span class="string">'event-stream'</span>);</span><br><span class="line"><span class="keyword">var</span> csv = <span class="built_in">require</span>(<span class="string">'csv'</span>);</span><br><span class="line"><span class="keyword">var</span> parser = csv.parse();</span><br><span class="line"><span class="keyword">var</span> transformer = csv.transform(<span class="function"><span class="keyword">function</span>(<span class="params">record</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> record.join(<span class="string">','</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> data = fs.createReadStream(<span class="string">'./demo.csv'</span>);</span><br><span class="line">data</span><br><span class="line">    .pipe(parser)</span><br><span class="line">    .pipe(transformer)</span><br><span class="line">    <span class="comment">// 处理前一个 stream 传递过来的数据</span></span><br><span class="line">    .pipe(es.map(<span class="function"><span class="keyword">function</span>(<span class="params">data, callback</span>) </span>&#123;</span><br><span class="line">        upload(data, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            callback(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="comment">// 相当于监听前一个 stream 的 end 事件</span></span><br><span class="line">    .pipe(es.wait(<span class="function"><span class="keyword">function</span>(<span class="params">err, body</span>) </span>&#123;</span><br><span class="line">        process.stdout.write(<span class="string">'done!'</span>);</span><br><span class="line">    &#125;));</span><br></pre></td></tr></table></figure>
+<h3 id="更多用法"><a href="#更多用法" class="headerlink" title="更多用法"></a>更多用法</h3><p>可以参考一下 <a href="https://github.com/jeresig/node-stream-playground" target="_blank" rel="external">https://github.com/jeresig/node-stream-playground</a> ，进去示例网站之后直接点 add stream 就能看到结果了。</p>
+<h2 id="常见坑"><a href="#常见坑" class="headerlink" title="常见坑"></a>常见坑</h2><ul>
 <li>用 <code>rs.pipe(ws)</code> 的方式来写文件并不是把 rs 的内容 append 到 ws 后面，而是直接用 rs 的内容覆盖 ws 原有的内容</li>
 <li>已结束/关闭的流不能重复使用，必须重新创建数据流</li>
 <li><p>pipe 方法返回的是目标数据流，如 <code>a.pipe(b)</code> 返回的是 b，因此监听事件的时候请注意你监听的对象是否正确</p>
@@ -333,454 +138,47 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 </ul>
 </li>
 </ul>
-<h2 id="u5E38_u7528_u7C7B_u5E93"><a href="#u5E38_u7528_u7C7B_u5E93" class="headerlink" title="常用类库"></a>常用类库</h2><ul>
+<h2 id="常用类库"><a href="#常用类库" class="headerlink" title="常用类库"></a>常用类库</h2><ul>
 <li><a href="https://github.com/dominictarr/event-stream" target="_blank" rel="external">event-stream</a> 用起来有函数式编程的感觉，个人比较喜欢</li>
 <li><a href="https://github.com/sindresorhus/awesome-nodejs#streams" target="_blank" rel="external">awesome-nodejs#streams</a> 由于其他 stream 库我都没用过，所以有需求的就直接看这里吧</li>
 </ul>
-<h2 id="u53C2_u8003_u8D44_u6599"><a href="#u53C2_u8003_u8D44_u6599" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://javascript.ruanyifeng.com/nodejs/stream.html" target="_blank" rel="external">阮一峰 - stream接口</a><br><a href="https://nodejs.org/api/stream.html" target="_blank" rel="external">nodejs.org Stream</a><br><a href="http://codewinds.com/blog/2013-08-20-nodejs-transform-streams.html" target="_blank" rel="external">Transforming data with Node.js transform streams</a><br><a href="http://stackoverflow.com/questions/18335499/nodejs-whats-the-difference-between-a-duplex-stream-and-a-transform-stream" target="_blank" rel="external">NodeJS: What’s the difference between a Duplex stream and a Transform stream?</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://javascript.ruanyifeng.com/nodejs/stream.html" target="_blank" rel="external">阮一峰 - stream接口</a><br><a href="https://nodejs.org/api/stream.html" target="_blank" rel="external">nodejs.org Stream</a><br><a href="http://codewinds.com/blog/2013-08-20-nodejs-transform-streams.html" target="_blank" rel="external">Transforming data with Node.js transform streams</a><br><a href="http://stackoverflow.com/questions/18335499/nodejs-whats-the-difference-between-a-duplex-stream-and-a-transform-stream" target="_blank" rel="external">NodeJS: What’s the difference between a Duplex stream and a Transform stream?</a></p>
 
       
     </div>
 
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/javascript/" rel="tag">#javascript</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2015/08/19/commonjs-learning/" rel="next" title="CommonJS 学习笔记">
-                <i class="fa fa-chevron-left"></i> CommonJS 学习笔记
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/10/25/birthday-summary/" rel="prev" title="写在二十四岁生日">
-                写在二十四岁生日 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
     
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
+      
+
     
+
   </div>
+</article>
 
 
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview sidebar-panel ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="https://avatars2.githubusercontent.com/u/2386165"
-               alt="Scarletsky" />
-          <p class="site-author-name" itemprop="name">Scarletsky</p>
-          <p class="site-description motion-element" itemprop="description"></p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">26</span>
-              <span class="site-state-item-name">日志</span>
-            </a>
-          </div>
-          
-          
-            <div class="site-state-item site-state-categories">
-              
-                <span class="site-state-item-count">5</span>
-                <span class="site-state-item-name">分类</span>
-              
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">21</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
-            </a>
-          </div>
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-      </section>
-
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator">
-            <i class="fa fa-angle-double-up"></i>
-          </div>
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u57FA_u672C_u4ECB_u7ECD"><span class="nav-number">1.</span> <span class="nav-text">基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u7279_u70B9"><span class="nav-number">2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u79CD_u7C7B"><span class="nav-number">3.</span> <span class="nav-text">种类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u4E8B_u4EF6"><span class="nav-number">4.</span> <span class="nav-text">事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u53EF_u8BFB_u6570_u636E_u6D41_u7684_u4E8B_u4EF6"><span class="nav-number">4.1.</span> <span class="nav-text">可读数据流的事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u53EF_u5199_u6570_u636E_u6D41_u7684_u4E8B_u4EF6"><span class="nav-number">4.2.</span> <span class="nav-text">可写数据流的事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u72B6_u6001"><span class="nav-number">5.</span> <span class="nav-text">状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u7528_u6CD5"><span class="nav-number">6.</span> <span class="nav-text">用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#u8BFB_u5199_u6587_u4EF6"><span class="nav-number">6.1.</span> <span class="nav-text">读写文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u8BFB_u53D6_CSV__u6587_u4EF6_uFF0C_u5E76_u4E0A_u4F20_u6570_u636E_uFF08_u6211_u5728_u751F_u4EA7_u73AF_u5883_u4E2D_u5199_u8FC7_uFF09"><span class="nav-number">6.2.</span> <span class="nav-text">读取 CSV 文件，并上传数据（我在生产环境中写过）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u66F4_u591A_u7528_u6CD5"><span class="nav-number">6.3.</span> <span class="nav-text">更多用法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u5E38_u89C1_u5751"><span class="nav-number">7.</span> <span class="nav-text">常见坑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u5E38_u7528_u7C7B_u5E93"><span class="nav-number">8.</span> <span class="nav-text">常用类库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u53C2_u8003_u8D44_u6599"><span class="nav-number">9.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
-            
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator">
-            <i class="fa fa-angle-double-down"></i>
-          </div>
-        </section>
-      
-
-    </div>
-  </aside>
+</section>
 
 
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
-  <span class="with-love">
-    <i class="icon-next-heart fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Scarletsky</span>
 </div>
 
-<div class="powered-by">
-  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
-  </a>
-</div>
-
-
-
-      </div>
-    </footer>
-
-    <div class="back-to-top"></div>
-  </div>
-
   
-
-
+<script>
+  var disqus_shortname = 'scarletskygithubio';
   
-
-
-
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
-
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-
-  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-
-
+  var disqus_url = 'http://scarletsky.github.io/2015/10/22/node-stream-api-learning/';
   
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
-
-
-
-  
-  
-
-  
-  
-<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
-
-<script type="text/javascript" id="sidebar.toc.highlight">
-  $(document).ready(function () {
-    var tocSelector = '.post-toc';
-    var $tocSelector = $(tocSelector);
-    var activeCurrentSelector = '.active-current';
-
-    $tocSelector
-      .on('activate.bs.scrollspy', function () {
-        var $currentActiveElement = $(tocSelector + ' .active').last();
-
-        removeCurrentActiveClass();
-        $currentActiveElement.addClass('active-current');
-
-        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
-      })
-      .on('clear.bs.scrollspy', function () {
-        removeCurrentActiveClass();
-      });
-
-    function removeCurrentActiveClass () {
-      $(tocSelector + ' ' + activeCurrentSelector)
-        .removeClass(activeCurrentSelector.substring(1));
-    }
-
-    function processTOC () {
-      getTOCMaxHeight();
-      toggleTOCOverflowIndicators();
-    }
-
-    function getTOCMaxHeight () {
-      var height = $('.sidebar').height() -
-                   $tocSelector.position().top -
-                   $('.post-toc-indicator-bottom').height();
-
-      $tocSelector.css('height', height);
-
-      return height;
-    }
-
-    function toggleTOCOverflowIndicators () {
-      tocOverflowIndicator(
-        '.post-toc-indicator-top',
-        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
-      );
-
-      tocOverflowIndicator(
-        '.post-toc-indicator-bottom',
-        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
-      )
-    }
-
-    $(document).on('sidebar.motion.complete', function () {
-      processTOC();
-    });
-
-    $('body').scrollspy({ target: tocSelector });
-    $(window).on('resize', function () {
-      if ( $('.sidebar').hasClass('sidebar-active') ) {
-        processTOC();
-      }
-    });
-
-    onScroll($tocSelector);
-
-    function onScroll (element) {
-      element.on('mousewheel DOMMouseScroll', function (event) {
-          var oe = event.originalEvent;
-          var delta = oe.wheelDelta || -oe.detail;
-
-          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
-          event.preventDefault();
-
-          toggleTOCOverflowIndicators();
-      });
-    }
-
-    function tocOverflowIndicator (indicator, action) {
-      var $indicator = $(indicator);
-      var opacity = action === 'show' ? 1 : 0;
-      $indicator.velocity ?
-        $indicator.velocity('stop').velocity({
-          opacity: opacity
-        }, { duration: 100 }) :
-        $indicator.stop().animate({
-          opacity: opacity
-        }, 100);
-    }
-
-  });
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
 </script>
-
-<script type="text/javascript" id="sidebar.nav">
-  $(document).ready(function () {
-    var html = $('html');
-    var TAB_ANIMATE_DURATION = 200;
-    var hasVelocity = $.isFunction(html.velocity);
-
-    $('.sidebar-nav li').on('click', function () {
-      var item = $(this);
-      var activeTabClassName = 'sidebar-nav-active';
-      var activePanelClassName = 'sidebar-panel-active';
-      if (item.hasClass(activeTabClassName)) {
-        return;
-      }
-
-      var currentTarget = $('.' + activePanelClassName);
-      var target = $('.' + item.data('target'));
-
-      hasVelocity ?
-        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
-          target
-            .velocity('stop')
-            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
-            .addClass(activePanelClassName);
-        }) :
-        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
-          currentTarget.hide();
-          target
-            .stop()
-            .css({'opacity': 0, 'display': 'block'})
-            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
-              currentTarget.removeClass(activePanelClassName);
-              target.addClass(activePanelClassName);
-            });
-        });
-
-      item.siblings().removeClass(activeTabClassName);
-      item.addClass(activeTabClassName);
-    });
-
-    $('.post-toc a').on('click', function (e) {
-      e.preventDefault();
-      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
-      var offset = $(targetSelector).offset().top;
-      hasVelocity ?
-        html.velocity('stop').velocity('scroll', {
-          offset: offset  + 'px',
-          mobileHA: false
-        }) :
-        $('html, body').stop().animate({
-          scrollTop: offset
-        }, 500);
-    });
-
-    // Expand sidebar on post detail page by default, when post has a toc.
-    NexT.motion.middleWares.sidebar = function () {
-      var $tocContent = $('.post-toc-content');
-
-      if (CONFIG.sidebar === 'post') {
-        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
-          NexT.utils.displaySidebar();
-        }
-      }
-    };
-  });
-</script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
-
-
-
-  
-
-
-
-  
-
-    <script type="text/javascript">
-      var disqus_shortname = 'scarletskygithubio';
-      var disqus_identifier = '2015/10/22/node-stream-api-learning/';
-      var disqus_title = 'Node.js 中 Stream API 的使用';
-      var disqus_url = 'http://scarletsky.github.io/2015/10/22/node-stream-api-learning/';
-
-      function run_disqus_script(disqus_script){
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      }
-
-      run_disqus_script('count.js');
-      
-        run_disqus_script('embed.js');
-      
-    </script>
-  
-
-
-
-  
-  
-
-  
-  
 
 
 </body>
