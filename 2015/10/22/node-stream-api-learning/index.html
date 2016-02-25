@@ -4,7 +4,13 @@
   <meta charset="utf-8">
   
   <title>Node.js 中 Stream API 的使用 | Scarletsky</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript," />
+  
+
   <meta name="description" content="基本介绍在 Node.js 中，读取文件的方式有两种，一种是用 fs.readFile，另外一种是利用 fs.createReadStream 来读取。
 fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。
 而 fs.createReadStream 则是通过 Str">
@@ -22,6 +28,8 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。
 而 fs.createReadStream 则是通过 Str">
   
+  
+
   
 
 
@@ -156,30 +164,27 @@ ga('send', 'pageview');
 </article>
 
 
-<section id="comments">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
+
+
 
 
 </div>
 
   
-<script>
-  var disqus_shortname = 'scarletskygithubio';
-  
-  var disqus_url = 'http://scarletsky.github.io/2015/10/22/node-stream-api-learning/';
-  
-  (function(){
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
 
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"undefined"};
+(function() {
+  var ds = document.createElement('script');
+  ds.type = 'text/javascript';ds.async = true;
+  ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+  ds.charset = 'UTF-8';
+  (document.getElementsByTagName('head')[0]
+   || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+<!-- 多说公共JS代码 end -->
 
 </body>
 </html>
