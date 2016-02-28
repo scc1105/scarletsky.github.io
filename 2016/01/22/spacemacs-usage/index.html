@@ -23,7 +23,7 @@
 安装 &amp;amp; 使用$ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d$ emacs
 配置文件Spacemacs 的配置文件位于 ~/.spacemacs 中，我们只需要修改这个文件就可以制定自己的配置了。
 一般情况下，我们只需要在 d">
-<meta property="og:updated_time" content="2016-02-25T02:56:16.000Z">
+<meta property="og:updated_time" content="2016-02-28T05:07:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spacemacs 使用总结">
 <meta name="twitter:description" content="简介Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。
@@ -107,8 +107,9 @@ ga('send', 'pageview');
 <li><p>在 <code>~/.spacemacs</code> 中的 <code>dotspacemacs-additional-packages</code> 中添加 <code>editorconfig</code>：</p>
 <figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="label">dotspacemacs</span>-<span class="keyword">additional-packages</span><br><span class="line"></span> <span class="string">'(</span><br><span class="line">   editorconfig</span><br><span class="line">   )</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>创建 .editorconfig 文件，写上自己喜欢的配置。</p>
+<li><p>创建 <code>.editorconfig</code> 文件，写上自己喜欢的配置。</p>
 </li>
+<li>按 <code>M-x</code> 打开 <code>editorconfig-mode</code> 或调用 <code>editorconfig-apply</code>。</li>
 <li>完。</li>
 </ol>
 <h2 id="设置文件默认的主模式"><a href="#设置文件默认的主模式" class="headerlink" title="设置文件默认的主模式"></a>设置文件默认的主模式</h2><p>虽然我们可以通过 <code>M-x</code> 来设置文件的主模式，但这种方式只是在单独修改某个文件的主模式时好用，如果要把所有同类型的文件都改成其他模式，这种方式的效率就太低了。</p>

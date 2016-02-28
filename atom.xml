@@ -511,7 +511,7 @@
     <link href="http://scarletsky.github.io/2016/01/22/spacemacs-usage/"/>
     <id>http://scarletsky.github.io/2016/01/22/spacemacs-usage/</id>
     <published>2016-01-22T07:20:38.000Z</published>
-    <updated>2016-02-25T02:56:16.000Z</updated>
+    <updated>2016-02-28T05:07:21.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。&lt;/p&gt;
 &lt;h2 id=&quot;安装-amp-使用&quot;&gt;&lt;a href=&quot;#安装-amp-使用&quot; class=&quot;headerlink&quot; title=&quot;安装 &amp;amp; 使用&quot;&gt;&lt;/a&gt;安装 &amp;amp; 使用&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ git &lt;span class=&quot;built_in&quot;&gt;clone&lt;/span&gt; https://github.com/syl20bnr/spacemacs ~/.emacs.d&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ emacs&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -532,8 +532,9 @@
 &lt;li&gt;&lt;p&gt;在 &lt;code&gt;~/.spacemacs&lt;/code&gt; 中的 &lt;code&gt;dotspacemacs-additional-packages&lt;/code&gt; 中添加 &lt;code&gt;editorconfig&lt;/code&gt;：&lt;/p&gt;
 &lt;figure class=&quot;highlight armasm&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;label&quot;&gt;dotspacemacs&lt;/span&gt;-&lt;span class=&quot;keyword&quot;&gt;additional-packages&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   editorconfig&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   )&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;创建 .editorconfig 文件，写上自己喜欢的配置。&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;创建 &lt;code&gt;.editorconfig&lt;/code&gt; 文件，写上自己喜欢的配置。&lt;/p&gt;
 &lt;/li&gt;
+&lt;li&gt;按 &lt;code&gt;M-x&lt;/code&gt; 打开 &lt;code&gt;editorconfig-mode&lt;/code&gt; 或调用 &lt;code&gt;editorconfig-apply&lt;/code&gt;。&lt;/li&gt;
 &lt;li&gt;完。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&quot;设置文件默认的主模式&quot;&gt;&lt;a href=&quot;#设置文件默认的主模式&quot; class=&quot;headerlink&quot; title=&quot;设置文件默认的主模式&quot;&gt;&lt;/a&gt;设置文件默认的主模式&lt;/h2&gt;&lt;p&gt;虽然我们可以通过 &lt;code&gt;M-x&lt;/code&gt; 来设置文件的主模式，但这种方式只是在单独修改某个文件的主模式时好用，如果要把所有同类型的文件都改成其他模式，这种方式的效率就太低了。&lt;/p&gt;
