@@ -30,9 +30,12 @@
 启动 MongoDB:mongod --dbpath xxx --port 1111 --config yyy.conf#for ubuntuservice mongod start
 使用配置文件获取配置信息(-f  或者 –config):mongod --config ~/.mongodb.conf
 停止 MongoDB:kill -2 pi">
-  
+
   
 
+  
+  
+    <link rel="icon" href="/favicon.ico">
   
 
 
@@ -57,42 +60,71 @@ ga('send', 'pageview');
 </head>
 
 <body>
-  <div class="content-post">
-  <a class="avatar" href="/archives">
-    <img src="/images/avatar.jpg" alt="" />
-  </a>
-  <article id="post-mongodb-operation-and-maintenance-basic" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
+  <div class="post-header center">
+   <div class="toolbox">
+  <div class="toolbox-entry">盒子</div>
+  <ul class="list-toolbox">
     
-  
-    <div class="article-title article" >
-      MongoDB 运维基础
+      
+        <li class="item-toolbox">
+          <a href="/archives/">博客</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/category/">分类</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/tag/">标签</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/about/">关于</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/atom.xml">RSS</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+</div>
+<div class="content-post center">
+   <article id="post-mongodb-operation-and-maintenance-basic" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">MongoDB 运维基础</h1>
+
+    <div class="article-meta">
+      <span>2014-10-16</span>
+
+      <span> | </span>
+
+      <span class="article-author">Scarletsky</span>
+
+      <span> | </span>
+
+      
+  <span class="article-category">
+    <a class="article-category-link" href="/categories/mongodb/">mongodb</a>
+  </span>
+
+
     </div>
-  
-
-
   </header>
 
-  <div class="article-meta">
-    2014-10-16
-
-    <span> | </span>
-
-    <span class="article-author">Scarletsky</span>
-
+  <div class="article-content">
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/mongodb/">mongodb</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>可以试用 <code>mongod --help</code> 查看所有选项</p>
+      <p>可以试用 <code>mongod --help</code> 查看所有选项</p>
 <h1 id="启动-MongoDB"><a href="#启动-MongoDB" class="headerlink" title="启动 MongoDB:"></a>启动 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mongod --dbpath xxx --port <span class="number">1111</span> --config yyy.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#for ubuntu</span></span><br><span class="line">service mongod start</span><br></pre></td></tr></table></figure>
 <h1 id="使用配置文件获取配置信息-f-或者-–config"><a href="#使用配置文件获取配置信息-f-或者-–config" class="headerlink" title="使用配置文件获取配置信息(-f  或者 –config):"></a>使用配置文件获取配置信息(-f  或者 –config):</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mongod --config ~/.mongodb.conf</span><br></pre></td></tr></table></figure>
 <h1 id="停止-MongoDB"><a href="#停止-MongoDB" class="headerlink" title="停止 MongoDB:"></a>停止 MongoDB:</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">kill</span> -<span class="number">2</span> pid (SIGINT)</span><br><span class="line"><span class="built_in">kill</span> pid (SIGTEAM)</span><br></pre></td></tr></table></figure>
@@ -110,18 +142,17 @@ ga('send', 'pageview');
 <h1 id="删除-MongoDB"><a href="#删除-MongoDB" class="headerlink" title="删除 MongoDB"></a>删除 MongoDB</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#for ubuntu</span></span><br><span class="line">sudo service mongod stop</span><br><span class="line">sudo apt-get purge mongodb-org*</span><br><span class="line">sudo rm -r /var/<span class="built_in">log</span>/mongodb</span><br><span class="line">sudo rm -r /var/lib/mongodb</span><br></pre></td></tr></table></figure>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://book.douban.com/subject/6068947/" target="_blank" rel="external">MongoDB权威指南</a><br><a href="http://docs.mongodb.org/" target="_blank" rel="external">MongoDB官方文档</a></p>
 
-      
-    </div>
-
     
-      
-
-    
-
   </div>
 </article>
 
 
+
+<section class="disqus-comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 
 
 
@@ -129,6 +160,20 @@ ga('send', 'pageview');
 </div>
 
   
+<script>
+  var disqus_shortname = 'scarletskygithubio';
+  
+  var disqus_url = 'http://scarletsky.github.io/2014/10/16/mongodb-operation-and-maintenance-basic/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
 
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

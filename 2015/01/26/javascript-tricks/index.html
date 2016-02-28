@@ -27,9 +27,12 @@
 <meta name="twitter:description" content="字符串操作首字母大写str.replace(/\b\w+/g, function (word) &amp;#123;    return word.substring(0, 1).toLowerCase() + word.substring(1);&amp;#125;);
 截取字符串最后几位str.substring(str.length-X)
 进制转换d.toString(16)    (十进制 -&amp;gt; 十">
-  
+
   
 
+  
+  
+    <link rel="icon" href="/favicon.ico">
   
 
 
@@ -54,42 +57,71 @@ ga('send', 'pageview');
 </head>
 
 <body>
-  <div class="content-post">
-  <a class="avatar" href="/archives">
-    <img src="/images/avatar.jpg" alt="" />
-  </a>
-  <article id="post-javascript-tricks" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
+  <div class="post-header center">
+   <div class="toolbox">
+  <div class="toolbox-entry">盒子</div>
+  <ul class="list-toolbox">
     
-  
-    <div class="article-title article" >
-      JavaScript 常用技巧
+      
+        <li class="item-toolbox">
+          <a href="/archives/">博客</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/category/">分类</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/tag/">标签</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/about/">关于</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/atom.xml">RSS</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+</div>
+<div class="content-post center">
+   <article id="post-javascript-tricks" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">JavaScript 常用技巧</h1>
+
+    <div class="article-meta">
+      <span>2015-01-26</span>
+
+      <span> | </span>
+
+      <span class="article-author">Scarletsky</span>
+
+      <span> | </span>
+
+      
+  <span class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </span>
+
+
     </div>
-  
-
-
   </header>
 
-  <div class="article-meta">
-    2015-01-26
-
-    <span> | </span>
-
-    <span class="article-author">Scarletsky</span>
-
+  <div class="article-content">
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/javascript/">javascript</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h1><h2 id="首字母大写"><a href="#首字母大写" class="headerlink" title="首字母大写"></a>首字母大写</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+      <h1 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h1><h2 id="首字母大写"><a href="#首字母大写" class="headerlink" title="首字母大写"></a>首字母大写</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="截取字符串最后几位"><a href="#截取字符串最后几位" class="headerlink" title="截取字符串最后几位"></a>截取字符串最后几位</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.substring(str.length-X)</span><br></pre></td></tr></table></figure>
 <h2 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">d.toString(<span class="number">16</span>)    (十进制 -&gt; 十六进制)</span><br><span class="line"><span class="built_in">parseInt</span>(‘ff’, <span class="number">16</span>) (十六进制 -&gt; 十进制)</span><br></pre></td></tr></table></figure>
 <h2 id="移除左边多余的-0"><a href="#移除左边多余的-0" class="headerlink" title="移除左边多余的 0"></a>移除左边多余的 0</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 用正则, '000.00' -&gt; 0.00</span></span><br><span class="line"><span class="comment">// 基于 http://stackoverflow.com/questions/594325/truncate-leading-zeros-of-a-string-in-javascript</span></span><br><span class="line">str.replace(<span class="regexp">/^[0]&#123;2&#125;/</span>, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 parseInt , '000123' -&gt; '123'</span></span><br><span class="line"><span class="comment">// http://stackoverflow.com/questions/6676488/remove-leading-zeros-from-a-number-in-javascript</span></span><br><span class="line"><span class="built_in">parseInt</span>(str, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
@@ -103,18 +135,17 @@ ga('send', 'pageview');
 <hr>
 <h1 id="日期操作"><a href="#日期操作" class="headerlink" title="日期操作"></a>日期操作</h1><h2 id="获取当前时间戳"><a href="#获取当前时间戳" class="headerlink" title="获取当前时间戳"></a>获取当前时间戳</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">+<span class="keyword">new</span> <span class="built_in">Date</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript</span></span><br></pre></td></tr></table></figure>
 
-      
-    </div>
-
     
-      
-
-    
-
   </div>
 </article>
 
 
+
+<section class="disqus-comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 
 
 
@@ -122,6 +153,20 @@ ga('send', 'pageview');
 </div>
 
   
+<script>
+  var disqus_shortname = 'scarletskygithubio';
+  
+  var disqus_url = 'http://scarletsky.github.io/2015/01/26/javascript-tricks/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
 
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

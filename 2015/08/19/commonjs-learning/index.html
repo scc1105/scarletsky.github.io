@@ -27,9 +27,12 @@ module 对象每个模块都有一个module变量，该变量指向当前模块�
 <meta name="twitter:description" content="概述CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。
 根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 require 来获取 module.exports 中暴露的内容，而其他部分都是私有的，其他模块不能访问。
 module 对象每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是">
-  
+
   
 
+  
+  
+    <link rel="icon" href="/favicon.ico">
   
 
 
@@ -54,42 +57,71 @@ ga('send', 'pageview');
 </head>
 
 <body>
-  <div class="content-post">
-  <a class="avatar" href="/archives">
-    <img src="/images/avatar.jpg" alt="" />
-  </a>
-  <article id="post-commonjs-learning" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
+  <div class="post-header center">
+   <div class="toolbox">
+  <div class="toolbox-entry">盒子</div>
+  <ul class="list-toolbox">
     
-  
-    <div class="article-title article" >
-      CommonJS 学习笔记
+      
+        <li class="item-toolbox">
+          <a href="/archives/">博客</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/category/">分类</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/tag/">标签</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/about/">关于</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/atom.xml">RSS</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+</div>
+<div class="content-post center">
+   <article id="post-commonjs-learning" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">CommonJS 学习笔记</h1>
+
+    <div class="article-meta">
+      <span>2015-08-19</span>
+
+      <span> | </span>
+
+      <span class="article-author">Scarletsky</span>
+
+      <span> | </span>
+
+      
+  <span class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </span>
+
+
     </div>
-  
-
-
   </header>
 
-  <div class="article-meta">
-    2015-08-19
-
-    <span> | </span>
-
-    <span class="article-author">Scarletsky</span>
-
+  <div class="article-content">
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/javascript/">javascript</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
+      <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。</p>
 <p>根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 <code>require</code> 来获取 <code>module.exports</code> 中暴露的内容，而其他部分都是私有的，其他模块不能访问。</p>
 <h1 id="module-对象"><a href="#module-对象" class="headerlink" title="module 对象"></a>module 对象</h1><p>每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是每个模块都有的本地变量。</p>
 <ul>
@@ -122,18 +154,17 @@ ga('send', 'pageview');
 </ul>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://javascript.ruanyifeng.com/nodejs/commonjs.html" target="_blank" rel="external">http://javascript.ruanyifeng.com/nodejs/commonjs.html</a><br><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism/" target="_blank" rel="external">http://www.infoq.com/cn/articles/nodejs-module-mechanism/</a><br><a href="http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js" target="_blank" rel="external">http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js</a></p>
 
-      
-    </div>
-
     
-      
-
-    
-
   </div>
 </article>
 
 
+
+<section class="disqus-comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 
 
 
@@ -141,6 +172,20 @@ ga('send', 'pageview');
 </div>
 
   
+<script>
+  var disqus_shortname = 'scarletskygithubio';
+  
+  var disqus_url = 'http://scarletsky.github.io/2015/08/19/commonjs-learning/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
 
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

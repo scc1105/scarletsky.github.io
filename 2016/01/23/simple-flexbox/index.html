@@ -36,9 +36,12 @@
 调节子元素相关的属性。
 
 &amp;lt;div class=&quot;container&quot;&amp;gt;    &amp;lt;div class=&quot;item&quot;&amp;gt;1&amp;lt;/div&amp;gt;    &amp;lt;div class=&quot;item&quot;&amp;gt;2&amp;lt;">
-  
+
   
 
+  
+  
+    <link rel="icon" href="/favicon.ico">
   
 
 
@@ -63,38 +66,67 @@ ga('send', 'pageview');
 </head>
 
 <body>
-  <div class="content-post">
-  <a class="avatar" href="/archives">
-    <img src="/images/avatar.jpg" alt="" />
-  </a>
-  <article id="post-simple-flexbox" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
+  <div class="post-header center">
+   <div class="toolbox">
+  <div class="toolbox-entry">盒子</div>
+  <ul class="list-toolbox">
     
-  
-    <div class="article-title article" >
-      简单易懂的 Flexbox
+      
+        <li class="item-toolbox">
+          <a href="/archives/">博客</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/category/">分类</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/tag/">标签</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/about/">关于</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/atom.xml">RSS</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+</div>
+<div class="content-post center">
+   <article id="post-simple-flexbox" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">简单易懂的 Flexbox</h1>
+
+    <div class="article-meta">
+      <span>2016-01-23</span>
+
+      <span> | </span>
+
+      <span class="article-author">Scarletsky</span>
+
+      <span> | </span>
+
+      
+
     </div>
-  
-
-
   </header>
 
-  <div class="article-meta">
-    2016-01-23
-
-    <span> | </span>
-
-    <span class="article-author">Scarletsky</span>
-
+  <div class="article-content">
     
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Flexbox 是 CSS 3 的布局方式，可以轻松实现传统布局中难以实现的布局。</p>
+      <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Flexbox 是 CSS 3 的布局方式，可以轻松实现传统布局中难以实现的布局。</p>
 <h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><ol>
 <li>设置父容器的 <code>display</code> 为 <code>flex</code>，然后调节容器相关的属性。</li>
 <li>调节子元素相关的属性。</li>
@@ -168,18 +200,17 @@ ga('send', 'pageview');
 <p><strong>注意：<code>float</code>, <code>clear</code>, <code>vertical-align</code> 在子元素中不起作用。</strong></p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank" rel="external">https://css-tricks.com/snippets/css/a-guide-to-flexbox/</a><br><a href="http://www.w3cplus.com/css3/a-guide-to-flexbox.html" target="_blank" rel="external">http://www.w3cplus.com/css3/a-guide-to-flexbox.html</a><br><a href="http://zh.learnlayout.com/flexbox.html" target="_blank" rel="external">http://zh.learnlayout.com/flexbox.html</a></p>
 
-      
-    </div>
-
     
-      
-
-    
-
   </div>
 </article>
 
 
+
+<section class="disqus-comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 
 
 
@@ -187,6 +218,20 @@ ga('send', 'pageview');
 </div>
 
   
+<script>
+  var disqus_shortname = 'scarletskygithubio';
+  
+  var disqus_url = 'http://scarletsky.github.io/2016/01/23/simple-flexbox/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
 
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

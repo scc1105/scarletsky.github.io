@@ -36,9 +36,12 @@
 把可以拖拽的组件包装在 DragSource 中
 设置 type
 设置">
-  
+
   
 
+  
+  
+    <link rel="icon" href="/favicon.ico">
   
 
 
@@ -63,38 +66,67 @@ ga('send', 'pageview');
 </head>
 
 <body>
-  <div class="content-post">
-  <a class="avatar" href="/archives">
-    <img src="/images/avatar.jpg" alt="" />
-  </a>
-  <article id="post-react-dnd-usage" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
+  <div class="post-header center">
+   <div class="toolbox">
+  <div class="toolbox-entry">盒子</div>
+  <ul class="list-toolbox">
     
-  
-    <div class="article-title article" >
-      React-DnD 的使用
+      
+        <li class="item-toolbox">
+          <a href="/archives/">博客</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/category/">分类</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/tag/">标签</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/about/">关于</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/atom.xml">RSS</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+</div>
+<div class="content-post center">
+   <article id="post-react-dnd-usage" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">React-DnD 的使用</h1>
+
+    <div class="article-meta">
+      <span>2015-11-17</span>
+
+      <span> | </span>
+
+      <span class="article-author">Scarletsky</span>
+
+      <span> | </span>
+
+      
+
     </div>
-  
-
-
   </header>
 
-  <div class="article-meta">
-    2015-11-17
-
-    <span> | </span>
-
-    <span class="article-author">Scarletsky</span>
-
+  <div class="article-content">
     
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数据，而组件会改变它们的外观和应用的状态来响应拖拽事件。</p>
+      <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数据，而组件会改变它们的外观和应用的状态来响应拖拽事件。</p>
 <h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><ol>
 <li>把应用的根组件包装在 <code>DragDropContext</code> 中</li>
 <li>把可以拖拽的组件包装在 <code>DragSource</code> 中<ol>
@@ -178,18 +210,17 @@ ga('send', 'pageview');
 </ul>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://gaearon.github.io/react-dnd/" target="_blank" rel="external">官方文档</a></p>
 
-      
-    </div>
-
     
-      
-
-    
-
   </div>
 </article>
 
 
+
+<section class="disqus-comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 
 
 
@@ -197,6 +228,20 @@ ga('send', 'pageview');
 </div>
 
   
+<script>
+  var disqus_shortname = 'scarletskygithubio';
+  
+  var disqus_url = 'http://scarletsky.github.io/2015/11/17/react-dnd-usage/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
 
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

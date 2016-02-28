@@ -27,9 +27,12 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
 <meta name="twitter:description" content="基本介绍在 Node.js 中，读取文件的方式有两种，一种是用 fs.readFile，另外一种是利用 fs.createReadStream 来读取。
 fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。
 而 fs.createReadStream 则是通过 Str">
-  
+
   
 
+  
+  
+    <link rel="icon" href="/favicon.ico">
   
 
 
@@ -54,42 +57,71 @@ ga('send', 'pageview');
 </head>
 
 <body>
-  <div class="content-post">
-  <a class="avatar" href="/archives">
-    <img src="/images/avatar.jpg" alt="" />
-  </a>
-  <article id="post-node-stream-api-learning" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
+  <div class="post-header center">
+   <div class="toolbox">
+  <div class="toolbox-entry">盒子</div>
+  <ul class="list-toolbox">
     
-  
-    <div class="article-title article" >
-      Node.js 中 Stream API 的使用
+      
+        <li class="item-toolbox">
+          <a href="/archives/">博客</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/category/">分类</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/tag/">标签</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/about/">关于</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/atom.xml">RSS</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+</div>
+<div class="content-post center">
+   <article id="post-node-stream-api-learning" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Node.js 中 Stream API 的使用</h1>
+
+    <div class="article-meta">
+      <span>2015-10-22</span>
+
+      <span> | </span>
+
+      <span class="article-author">Scarletsky</span>
+
+      <span> | </span>
+
+      
+  <span class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </span>
+
+
     </div>
-  
-
-
   </header>
 
-  <div class="article-meta">
-    2015-10-22
-
-    <span> | </span>
-
-    <span class="article-author">Scarletsky</span>
-
+  <div class="article-content">
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/javascript/">javascript</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
+      <h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>在 Node.js 中，读取文件的方式有两种，一种是用 <code>fs.readFile</code>，另外一种是利用 <code>fs.createReadStream</code> 来读取。</p>
 <p><code>fs.readFile</code> 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。</p>
 <p>而 <code>fs.createReadStream</code> 则是通过 Stream 来读取数据，它会把文件（数据）分割成小块，然后触发一些特定的事件，我们可以监听这些事件，编写特定的处理函数。这种方式相对上面来说，并不好上手，但它效率非常高。</p>
 <p>事实上， Stream 在 Node.js 中并非仅仅用在文件处理上，其他地方也可以看到它的身影，如 <code>process.stdin/stdout</code>, <code>http</code>, <code>tcp sockets</code>, <code>zlib</code>, <code>crypto</code> 等都有用到。</p>
@@ -152,18 +184,17 @@ ga('send', 'pageview');
 </ul>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://javascript.ruanyifeng.com/nodejs/stream.html" target="_blank" rel="external">阮一峰 - stream接口</a><br><a href="https://nodejs.org/api/stream.html" target="_blank" rel="external">nodejs.org Stream</a><br><a href="http://codewinds.com/blog/2013-08-20-nodejs-transform-streams.html" target="_blank" rel="external">Transforming data with Node.js transform streams</a><br><a href="http://stackoverflow.com/questions/18335499/nodejs-whats-the-difference-between-a-duplex-stream-and-a-transform-stream" target="_blank" rel="external">NodeJS: What’s the difference between a Duplex stream and a Transform stream?</a></p>
 
-      
-    </div>
-
     
-      
-
-    
-
   </div>
 </article>
 
 
+
+<section class="disqus-comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 
 
 
@@ -171,6 +202,20 @@ ga('send', 'pageview');
 </div>
 
   
+<script>
+  var disqus_shortname = 'scarletskygithubio';
+  
+  var disqus_url = 'http://scarletsky.github.io/2015/10/22/node-stream-api-learning/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
 
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

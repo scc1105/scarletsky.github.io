@@ -75,9 +75,12 @@
 我怎么判断一个函数是不是闭包？
 
 你现在还不能回答，因为你还不知道以下概念：全局变量（Global Variable）局部变量（">
-  
+
   
 
+  
+  
+    <link rel="icon" href="/favicon.ico">
   
 
 
@@ -102,38 +105,67 @@ ga('send', 'pageview');
 </head>
 
 <body>
-  <div class="content-post">
-  <a class="avatar" href="/archives">
-    <img src="/images/avatar.jpg" alt="" />
-  </a>
-  <article id="post-the-little-javascript-closures" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
+  <div class="post-header center">
+   <div class="toolbox">
+  <div class="toolbox-entry">盒子</div>
+  <ul class="list-toolbox">
     
-  
-    <div class="article-title article" >
-      The Little JavaScript Closures
+      
+        <li class="item-toolbox">
+          <a href="/archives/">博客</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/category/">分类</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/tag/">标签</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/about/">关于</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/atom.xml">RSS</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+</div>
+<div class="content-post center">
+   <article id="post-the-little-javascript-closures" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">The Little JavaScript Closures</h1>
+
+    <div class="article-meta">
+      <span>2015-12-02</span>
+
+      <span> | </span>
+
+      <span class="article-author">Scarletsky</span>
+
+      <span> | </span>
+
+      
+
     </div>
-  
-
-
   </header>
 
-  <div class="article-meta">
-    2015-12-02
-
-    <span> | </span>
-
-    <span class="article-author">Scarletsky</span>
-
+  <div class="article-content">
     
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>本文尝试模仿 <a href="http://uternet.github.io/TLS/" target="_blank" rel="external">The Little Schema</a> 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。</p>
+      <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>本文尝试模仿 <a href="http://uternet.github.io/TLS/" target="_blank" rel="external">The Little Schema</a> 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。</p>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>什么是闭包？</p>
 <blockquote>
 <p>闭包是一个函数</p>
@@ -396,18 +428,17 @@ ga('send', 'pageview');
 <h2 id="One-More-Thing"><a href="#One-More-Thing" class="headerlink" title="One More Thing"></a>One More Thing</h2><p>[注1] 根据 <a href="https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/" target="_blank" rel="external">Understanding JavaScript Closures</a> 这篇文章，事实上所有函数在创建的时候都会形成闭包。但这种闭包并没什么趣味，也没什么特别的用途，所以我们更关注的是由内部函数形成的闭包。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://uternet.github.io/TLS/" target="_blank" rel="external">http://uternet.github.io/TLS/</a><br><a href="http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting</a><br><a href="http://javascriptissexy.com/understand-javascript-closures-with-ease/" target="_blank" rel="external">http://javascriptissexy.com/understand-javascript-closures-with-ease/</a><br><a href="http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/" target="_blank" rel="external">http://javascriptissexy.com/javascript-variable-scope-and-hoisting-explained/</a><br><a href="http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions" target="_blank" rel="external">http://stackoverflow.com/questions/12930272/javascript-closures-vs-anonymous-functions</a><br><a href="https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/" target="_blank" rel="external">https://javascriptweblog.wordpress.com/2010/10/25/understanding-javascript-closures/</a><br><a href="http://www.moye.me/2014/12/29/closure_higher-order-function/" target="_blank" rel="external">http://www.moye.me/2014/12/29/closure_higher-order-function/</a></p>
 
-      
-    </div>
-
     
-      
-
-    
-
   </div>
 </article>
 
 
+
+<section class="disqus-comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 
 
 
@@ -415,6 +446,20 @@ ga('send', 'pageview');
 </div>
 
   
+<script>
+  var disqus_shortname = 'scarletskygithubio';
+  
+  var disqus_url = 'http://scarletsky.github.io/2015/12/02/the-little-javascript-closures/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
 
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

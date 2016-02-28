@@ -24,9 +24,12 @@
 <meta name="twitter:title" content="MongoDB 安全与认证">
 <meta name="twitter:description" content="安全和认证要开启安全检查，需要在启动 mongod 时添加 –auth 选项admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。在开启安全检查之前，一定要有一个管理员帐号。数据库的用户存储在 admin 的 db.system.users 集合中。
 创建管理员&amp;gt; use admin&amp;gt; db.createUser(&amp;#123;user: &apos;root&apos;, pwd:">
-  
+
   
 
+  
+  
+    <link rel="icon" href="/favicon.ico">
   
 
 
@@ -51,42 +54,71 @@ ga('send', 'pageview');
 </head>
 
 <body>
-  <div class="content-post">
-  <a class="avatar" href="/archives">
-    <img src="/images/avatar.jpg" alt="" />
-  </a>
-  <article id="post-mongodb-security-and-auth" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
+  <div class="post-header center">
+   <div class="toolbox">
+  <div class="toolbox-entry">盒子</div>
+  <ul class="list-toolbox">
     
-  
-    <div class="article-title article" >
-      MongoDB 安全与认证
+      
+        <li class="item-toolbox">
+          <a href="/archives/">博客</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/category/">分类</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/tag/">标签</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/about/">关于</a>
+        </li>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/atom.xml">RSS</a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+</div>
+<div class="content-post center">
+   <article id="post-mongodb-security-and-auth" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">MongoDB 安全与认证</h1>
+
+    <div class="article-meta">
+      <span>2014-10-25</span>
+
+      <span> | </span>
+
+      <span class="article-author">Scarletsky</span>
+
+      <span> | </span>
+
+      
+  <span class="article-category">
+    <a class="article-category-link" href="/categories/mongodb/">mongodb</a>
+  </span>
+
+
     </div>
-  
-
-
   </header>
 
-  <div class="article-meta">
-    2014-10-25
-
-    <span> | </span>
-
-    <span class="article-author">Scarletsky</span>
-
+  <div class="article-content">
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/mongodb/">mongodb</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="安全和认证"><a href="#安全和认证" class="headerlink" title="安全和认证"></a>安全和认证</h1><p>要开启安全检查，需要在启动 mongod 时添加 –auth 选项<br>admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。<br>在开启安全检查之前，一定要有一个管理员帐号。<br>数据库的用户存储在 admin 的 <code>db.system.users</code> 集合中。</p>
+      <h1 id="安全和认证"><a href="#安全和认证" class="headerlink" title="安全和认证"></a>安全和认证</h1><p>要开启安全检查，需要在启动 mongod 时添加 –auth 选项<br>admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。<br>在开启安全检查之前，一定要有一个管理员帐号。<br>数据库的用户存储在 admin 的 <code>db.system.users</code> 集合中。</p>
 <p>创建管理员<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.createUser(&#123;user: <span class="string">'root'</span>, <span class="built_in">pwd</span>: <span class="string">'password'</span>, roles: [<span class="string">'root'</span>]&#125;) <span class="comment"># 添加管理员</span></span><br></pre></td></tr></table></figure></p>
 <p>开启验证<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mongod --config /usr/<span class="built_in">local</span>/etc/mongod.conf --auth</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证方法1</span></span><br><span class="line">$ mongo admin -u <span class="string">'username'</span> -p <span class="string">'password'</span> <span class="comment"># 必须指定该用户有权限访问的数据库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证方法2</span></span><br><span class="line">$ mongo</span><br><span class="line">&gt; use admin</span><br><span class="line">&gt; db.auth(<span class="string">'username'</span>, <span class="string">'password'</span>)</span><br><span class="line">&gt; use otherDatabase</span><br><span class="line">&gt; db.users.find().....</span><br></pre></td></tr></table></figure></p>
 <p>开启验证后，我们在使用 URI 去连接数据库的时候需要注意，要加上 authSource=admin 参数才能通过验证。这里以 mongoose 为例。<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line">mongoose.connect(<span class="string">'mongodb://user:pass@server:port/database?authSource=admin'</span>);</span><br></pre></td></tr></table></figure></p>
@@ -102,18 +134,17 @@ ga('send', 'pageview');
 <h1 id="其他安全考虑"><a href="#其他安全考虑" class="headerlink" title="其他安全考虑"></a>其他安全考虑</h1><p>mongodb 传输协议是不加密的，如果需要加密，可以试用 <code>ssh</code> 或者类似的技术进行加密。<br>另外建议把 mongo 服务器布置在防火墙后或者布置在只有应用服务器能访问的网络中。同时建议使用 <code>--bindip</code> 选项，这样可以限制 ip 访问。运行 <code>mongod --bindip localhost</code> 后，只有本机的应用可以访问服务器。<br>最后，还可以用 <code>--noscripting</code> 选项完全禁止服务端 <code>JavaScript</code> 的执行。</p>
 <h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p><a href="http://docs.mongodb.org/manual/reference/method/js-user-management/" target="_blank" rel="external">Mongodb 官方文档</a></p>
 
-      
-    </div>
-
     
-      
-
-    
-
   </div>
 </article>
 
 
+
+<section class="disqus-comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
 
 
 
@@ -121,6 +152,20 @@ ga('send', 'pageview');
 </div>
 
   
+<script>
+  var disqus_shortname = 'scarletskygithubio';
+  
+  var disqus_url = 'http://scarletsky.github.io/2014/10/25/mongodb-security-and-auth/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
 
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">

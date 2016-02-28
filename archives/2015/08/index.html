@@ -20,9 +20,12 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Scarletsky">
 <meta name="twitter:description">
-  
+
   
 
+  
+  
+    <link rel="icon" href="/favicon.ico">
   
 
 
@@ -47,32 +50,52 @@ ga('send', 'pageview');
 </head>
 
 <body>
-  <div class="content-archive">
-  <div class="archive-header">
-  <div class="breadcrumb"><i class="icon-location"></i>分类</div>
-  <div class="archive-nav">
-    <a class="home-entry" href="/">盒子</a>
-    <ul class="list-entry">
-        <li>
-            <a href="/">首页</a>
+  <div class="content content-archive">
+  <div class="page-header">
+  <div class="breadcrumb"><i class="icon-location"></i><span>博客</span></div>
+
+  <div class="toolbox">
+  <div class="toolbox-entry">盒子</div>
+  <ul class="list-toolbox">
+    
+      
+        <li class="item-toolbox">
+          <a href="/archives/">博客</a>
         </li>
-        <li>
-            <a href="/">分类</a>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/category/">分类</a>
         </li>
-        <li>
-            <a href="/">标签</a>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/tag/">标签</a>
         </li>
-        <li>
-            <a href="/">关于</a>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/about/">关于</a>
         </li>
-        <li>
-            <a href="/">RSS</a>
+      
+    
+      
+        <li class="item-toolbox">
+          <a href="/atom.xml">RSS</a>
         </li>
-    </ul>
-  </div>
-  <a class="avatar" href="/">
-    <img src="/images/avatar.jpg" alt="" />
-    <div class="blog-info">
+      
+    
+  </ul>
+</div>
+
+  <div class="box-blog-info">
+    <a class="avatar" href="/">
+      <img src="/images/avatar.jpg" alt="" />
+    </a>
+    <div class="info">
       <h3 class="name">
         Scarlex
       </h3>
@@ -80,136 +103,69 @@ ga('send', 'pageview');
         Follow your heart, Live better
       </div>
     </div>
-  </a>
+  </div>
 </div>
 
-<div class="archive-body">
-  
-  
+
+  <div class="post-list-box archive-body">
+    <ul class="list-post">  <li class="item-year item item-title item-title-0">
+    <a href="/archives/2015" class="text-year">2015</a>
+  </li>
+<li class="item-post item">
+  <span class="post-date">08-19</span>
+
+  <a class="post-title" href="/2015/08/19/commonjs-learning/">CommonJS 学习笔记</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">08-18</span>
+
+  <a class="post-title" href="/2015/08/18/Object-learning-in-javascript/">JavaScript 中 Object.defineProperty 的使用</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">08-14</span>
+
+  <a class="post-title" href="/2015/08/14/use-gulp-for-front-end-workflow/">利用 Gulp 处理前端工作流程</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">08-11</span>
+
+  <a class="post-title" href="/2015/08/11/mongo-shell-trap/">Mongo Shell 使用过程中遇到的坑</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">08-07</span>
+
+  <a class="post-title" href="/2015/08/07/interview-summary/">面试总结</a>
+
+</li>
+</ul>
+  </div>
+
+  <div class="archive-footer">
     
-    
-      
-      
-      <section class="box-year">
-        <div class="box-year-title">
-          <a href="/archives/2015" class="text-year">2015</a>
-        </div>
 
-        <div class="list-article">
-    
-    <div class="item-article">
-  <div class="article-datetime">
-  <a href="/2015/08/19/commonjs-learning/" class="archive-article-date"><time datetime="2015-08-19T02:11:10.000Z" itemprop="datePublished">
-    08-19
-  </time></a>
+  </div>
 </div>
 
-  
-  
-    <div class="article-title">
-      <a class="article-link" href="/2015/08/19/commonjs-learning/">CommonJS 学习笔记</a>
-    </div>
-  
 
 
-</div>
 
   
-    
-    
-    <div class="item-article">
-  <div class="article-datetime">
-  <a href="/2015/08/18/Object-learning-in-javascript/" class="archive-article-date"><time datetime="2015-08-18T09:57:31.000Z" itemprop="datePublished">
-    08-18
-  </time></a>
-</div>
-
+<script>
+  var disqus_shortname = 'scarletskygithubio';
   
-  
-    <div class="article-title">
-      <a class="article-link" href="/2015/08/18/Object-learning-in-javascript/">JavaScript 中 Object.defineProperty 的使用</a>
-    </div>
-  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
 
-
-</div>
-
-  
-    
-    
-    <div class="item-article">
-  <div class="article-datetime">
-  <a href="/2015/08/14/use-gulp-for-front-end-workflow/" class="archive-article-date"><time datetime="2015-08-14T08:57:33.000Z" itemprop="datePublished">
-    08-14
-  </time></a>
-</div>
-
-  
-  
-    <div class="article-title">
-      <a class="article-link" href="/2015/08/14/use-gulp-for-front-end-workflow/">利用 Gulp 处理前端工作流程</a>
-    </div>
-  
-
-
-</div>
-
-  
-    
-    
-    <div class="item-article">
-  <div class="article-datetime">
-  <a href="/2015/08/11/mongo-shell-trap/" class="archive-article-date"><time datetime="2015-08-11T04:17:47.000Z" itemprop="datePublished">
-    08-11
-  </time></a>
-</div>
-
-  
-  
-    <div class="article-title">
-      <a class="article-link" href="/2015/08/11/mongo-shell-trap/">Mongo Shell 使用过程中遇到的坑</a>
-    </div>
-  
-
-
-</div>
-
-  
-    
-    
-    <div class="item-article">
-  <div class="article-datetime">
-  <a href="/2015/08/07/interview-summary/" class="archive-article-date"><time datetime="2015-08-07T13:32:41.000Z" itemprop="datePublished">
-    08-07
-  </time></a>
-</div>
-
-  
-  
-    <div class="article-title">
-      <a class="article-link" href="/2015/08/07/interview-summary/">面试总结</a>
-    </div>
-  
-
-
-</div>
-
-  
-  
-      </div>
-    </section>
-  
-
-</div>
-
-<div class="archive-footer">
-  
-
-</div>
-
-</div>
-
-  
 
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
