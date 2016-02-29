@@ -23,7 +23,7 @@
 安装 &amp;amp; 使用$ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d$ emacs
 配置文件Spacemacs 的配置文件位于 ~/.spacemacs 中，我们只需要修改这个文件就可以制定自己的配置了。
 一般情况下，我们只需要在 d">
-<meta property="og:updated_time" content="2016-02-28T05:07:21.000Z">
+<meta property="og:updated_time" content="2016-02-29T02:21:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spacemacs 使用总结">
 <meta name="twitter:description" content="简介Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。
@@ -144,6 +144,10 @@ ga('send', 'pageview');
 <li>按 <code>M-x</code> 打开 <code>editorconfig-mode</code> 或调用 <code>editorconfig-apply</code>。</li>
 <li>完。</li>
 </ol>
+<h2 id="Git-集成-必须先配置Magit-的使用"><a href="#Git-集成-必须先配置Magit-的使用" class="headerlink" title="Git 集成 (必须先配置Magit 的使用)"></a>Git 集成 (必须先配置Magit 的使用)</h2><p>Git 是一个优秀的版本控制工具，我们可以在 <code>.spacemacs</code> 的 <code>dotspacemacs-configuration-layers</code> 列表中添加 <code>git</code> 就可以集成 git 了。</p>
+<p>下面是一些常用的 git 命令，前缀为 <code>g</code>。</p>
+<p><code>SPC g i</code> 相当于 <code>git init</code><br><code>SPC g s</code> 相当于 <code>git status</code><br><code>SPC g S</code> 相当于 <code>git add currentFile</code><br><code>SPC g c c</code> 相当于 <code>git commit</code><br><code>SPC g C</code> 相当于 <code>git checkout xxx</code> (切换分支)<br><code>SPC g P p</code> 相当于 <code>git push</code><br><code>SPC g l l</code> 相当于 <code>git log</code></p>
+<p>在 commit 时，我们输入完 commit message 之后，需要按 <code>C-c C-c</code> 来完成 commit 操作，也可以按 <code>C-c C-k</code> 来取消 commit 。</p>
 <h2 id="设置文件默认的主模式"><a href="#设置文件默认的主模式" class="headerlink" title="设置文件默认的主模式"></a>设置文件默认的主模式</h2><p>虽然我们可以通过 <code>M-x</code> 来设置文件的主模式，但这种方式只是在单独修改某个文件的主模式时好用，如果要把所有同类型的文件都改成其他模式，这种方式的效率就太低了。</p>
 <p>在 Spacemacs 中，我们可以用 <code>auto-mode-alist</code> 来设置某一类文件默认的主模式。</p>
 <p>我们只需要在 <code>~/.spacemacs</code> 中的 <code>user-config</code> 中加入下面代码即可：</p>
