@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-02-29T01:53:34.000Z</updated>
+  <updated>2016-02-29T04:22:08.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://scarletsky.github.io/2016/02/28/flexible-instances-vs-type-synonym-instances-in-haskell/"/>
     <id>http://scarletsky.github.io/2016/02/28/flexible-instances-vs-type-synonym-instances-in-haskell/</id>
     <published>2016-02-28T14:31:21.000Z</published>
-    <updated>2016-02-29T01:53:34.000Z</updated>
+    <updated>2016-02-29T04:22:08.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;FlexibleInstances&quot;&gt;&lt;a href=&quot;#FlexibleInstances&quot; class=&quot;headerlink&quot; title=&quot;FlexibleInstances&quot;&gt;&lt;/a&gt;FlexibleInstances&lt;/h2&gt;&lt;p&gt;先看看下面这个简单的例子：&lt;/p&gt;
 &lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- Learning.hs&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;typedef&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Vector&lt;/span&gt; a = &lt;span class=&quot;type&quot;&gt;Vector&lt;/span&gt; a a &lt;span class=&quot;keyword&quot;&gt;deriving&lt;/span&gt; &lt;span class=&quot;container&quot;&gt;(&lt;span class=&quot;type&quot;&gt;Show&lt;/span&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;MyClass&lt;/span&gt; a &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    myFun :: a -&amp;gt; a&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;instance&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;MyClass&lt;/span&gt; &lt;span class=&quot;container&quot;&gt;(&lt;span class=&quot;type&quot;&gt;Vector&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;a&lt;/span&gt;)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    myFun = id&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -45,6 +45,8 @@
     
     </summary>
     
+      <category term="haskell" scheme="http://scarletsky.github.io/categories/haskell/"/>
+    
     
       <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
     
@@ -55,7 +57,7 @@
     <link href="http://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/"/>
     <id>http://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/</id>
     <published>2016-02-09T14:50:13.000Z</published>
-    <updated>2016-02-11T02:42:31.000Z</updated>
+    <updated>2016-02-29T04:27:18.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;Functor-简介&quot;&gt;&lt;a href=&quot;#Functor-简介&quot; class=&quot;headerlink&quot; title=&quot;Functor 简介&quot;&gt;&lt;/a&gt;Functor 简介&lt;/h2&gt;&lt;p&gt;什么是 Functor ?&lt;/p&gt;
 &lt;blockquote&gt;
@@ -228,6 +230,8 @@
     
     </summary>
     
+      <category term="haskell" scheme="http://scarletsky.github.io/categories/haskell/"/>
+    
     
       <category term="functor" scheme="http://scarletsky.github.io/tags/functor/"/>
     
@@ -240,7 +244,7 @@
     <link href="http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/"/>
     <id>http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</id>
     <published>2016-02-06T09:35:18.000Z</published>
-    <updated>2016-02-06T14:25:55.000Z</updated>
+    <updated>2016-02-29T04:27:40.000Z</updated>
     
     <content type="html">&lt;p&gt;随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 &lt;code&gt;System.Random&lt;/code&gt; 库）是伴随着状态的传递的。 &lt;/p&gt;
 &lt;p&gt;大部分需要获得帮助的人都有命令式编程的背景，因此，我会先用命令式的方式，然后再用函数式的方式来教大家在 Haskell 中使用随机数。&lt;/p&gt;
@@ -312,6 +316,8 @@
     
     </summary>
     
+      <category term="haskell" scheme="http://scarletsky.github.io/categories/haskell/"/>
+    
     
       <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
     
@@ -324,7 +330,7 @@
     <link href="http://scarletsky.github.io/2016/01/30/nodejs-process-excel/"/>
     <id>http://scarletsky.github.io/2016/01/30/nodejs-process-excel/</id>
     <published>2016-01-30T03:31:46.000Z</published>
-    <updated>2016-02-11T03:42:40.000Z</updated>
+    <updated>2016-02-29T04:28:16.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;本文介绍用 Node.js 中的 &lt;code&gt;js-xlsx&lt;/code&gt; 库来处理 Excel 文件。&lt;br&gt;&lt;code&gt;js-xlsx&lt;/code&gt; 库是目前 Github 上 star 数量最多的处理 Excel 的库，功能强大，但上手难度稍大。文档有些乱，不适合快速上手。&lt;br&gt;本文对 &lt;code&gt;js-xlsx&lt;/code&gt; 库进行一定的总结，并提供几个实用的例子供读者测试，学习，交流。&lt;/p&gt;
 &lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ npm install xlsx&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -434,6 +440,8 @@
     
     </summary>
     
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
     
       <category term="excel" scheme="http://scarletsky.github.io/tags/excel/"/>
     
@@ -450,7 +458,7 @@
     <link href="http://scarletsky.github.io/2016/01/23/simple-flexbox/"/>
     <id>http://scarletsky.github.io/2016/01/23/simple-flexbox/</id>
     <published>2016-01-23T01:58:37.000Z</published>
-    <updated>2016-01-23T06:06:27.000Z</updated>
+    <updated>2016-02-29T04:28:27.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;Flexbox 是 CSS 3 的布局方式，可以轻松实现传统布局中难以实现的布局。&lt;/p&gt;
 &lt;h2 id=&quot;基本用法&quot;&gt;&lt;a href=&quot;#基本用法&quot; class=&quot;headerlink&quot; title=&quot;基本用法&quot;&gt;&lt;/a&gt;基本用法&lt;/h2&gt;&lt;ol&gt;
@@ -534,6 +542,8 @@
     
     </summary>
     
+      <category term="css" scheme="http://scarletsky.github.io/categories/css/"/>
+    
     
       <category term="css" scheme="http://scarletsky.github.io/tags/css/"/>
     
@@ -546,7 +556,7 @@
     <link href="http://scarletsky.github.io/2016/01/22/spacemacs-usage/"/>
     <id>http://scarletsky.github.io/2016/01/22/spacemacs-usage/</id>
     <published>2016-01-22T07:20:38.000Z</published>
-    <updated>2016-02-29T02:21:14.000Z</updated>
+    <updated>2016-02-29T04:28:38.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。&lt;/p&gt;
 &lt;h2 id=&quot;安装-amp-使用&quot;&gt;&lt;a href=&quot;#安装-amp-使用&quot; class=&quot;headerlink&quot; title=&quot;安装 &amp;amp; 使用&quot;&gt;&lt;/a&gt;安装 &amp;amp; 使用&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ git &lt;span class=&quot;built_in&quot;&gt;clone&lt;/span&gt; https://github.com/syl20bnr/spacemacs ~/.emacs.d&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ emacs&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -607,6 +617,8 @@
     
     </summary>
     
+      <category term="emacs" scheme="http://scarletsky.github.io/categories/emacs/"/>
+    
     
       <category term="emacs" scheme="http://scarletsky.github.io/tags/emacs/"/>
     
@@ -619,7 +631,7 @@
     <link href="http://scarletsky.github.io/2016/01/17/localtunnel-usage/"/>
     <id>http://scarletsky.github.io/2016/01/17/localtunnel-usage/</id>
     <published>2016-01-17T09:07:06.000Z</published>
-    <updated>2016-01-19T06:39:22.000Z</updated>
+    <updated>2016-02-29T04:29:03.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。&lt;/p&gt;
 &lt;h2 id=&quot;客户端&quot;&gt;&lt;a href=&quot;#客户端&quot; class=&quot;headerlink&quot; title=&quot;客户端&quot;&gt;&lt;/a&gt;客户端&lt;/h2&gt;&lt;h3 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h3&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ npm install -g localtunnel&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -652,8 +664,12 @@
     
     </summary>
     
+      <category term="localtunnel" scheme="http://scarletsky.github.io/categories/localtunnel/"/>
+    
     
       <category term="localtunnel" scheme="http://scarletsky.github.io/tags/localtunnel/"/>
+    
+      <category term="nodejs" scheme="http://scarletsky.github.io/tags/nodejs/"/>
     
   </entry>
   
@@ -662,7 +678,7 @@
     <link href="http://scarletsky.github.io/2015/12/02/the-little-javascript-closures/"/>
     <id>http://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</id>
     <published>2015-12-02T12:55:54.000Z</published>
-    <updated>2016-01-19T06:39:26.000Z</updated>
+    <updated>2016-02-29T04:30:06.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;写在前面&quot;&gt;&lt;a href=&quot;#写在前面&quot; class=&quot;headerlink&quot; title=&quot;写在前面&quot;&gt;&lt;/a&gt;写在前面&lt;/h2&gt;&lt;p&gt;本文尝试模仿 &lt;a href=&quot;http://uternet.github.io/TLS/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;The Little Schema&lt;/a&gt; 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。&lt;/p&gt;
 &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;什么是闭包？&lt;/p&gt;
@@ -934,8 +950,14 @@
     
     </summary>
     
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+    
+      <category term="closure" scheme="http://scarletsky.github.io/tags/closure/"/>
     
       <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
+      <category term="闭包" scheme="http://scarletsky.github.io/tags/%E9%97%AD%E5%8C%85/"/>
     
   </entry>
   
@@ -944,7 +966,7 @@
     <link href="http://scarletsky.github.io/2015/11/17/react-dnd-usage/"/>
     <id>http://scarletsky.github.io/2015/11/17/react-dnd-usage/</id>
     <published>2015-11-17T02:59:31.000Z</published>
-    <updated>2016-01-17T15:44:01.000Z</updated>
+    <updated>2016-02-29T04:29:36.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;React DnD 是一组 React 高阶组件，可以用来帮你构建复杂的拖拽接口，同时解耦你的组件。React DnD 非常适合像 Trello 和 Storify 这样的应用，在不同地方通过拖拽转移数据，而组件会改变它们的外观和应用的状态来响应拖拽事件。&lt;/p&gt;
 &lt;h2 id=&quot;基本用法&quot;&gt;&lt;a href=&quot;#基本用法&quot; class=&quot;headerlink&quot; title=&quot;基本用法&quot;&gt;&lt;/a&gt;基本用法&lt;/h2&gt;&lt;ol&gt;
@@ -1037,6 +1059,12 @@
     
     </summary>
     
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+    
+      <category term="dnd" scheme="http://scarletsky.github.io/tags/dnd/"/>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
     
       <category term="react" scheme="http://scarletsky.github.io/tags/react/"/>
     
@@ -1047,7 +1075,7 @@
     <link href="http://scarletsky.github.io/2015/10/25/birthday-summary/"/>
     <id>http://scarletsky.github.io/2015/10/25/birthday-summary/</id>
     <published>2015-10-25T09:38:50.000Z</published>
-    <updated>2016-01-17T15:44:01.000Z</updated>
+    <updated>2016-02-29T04:33:49.000Z</updated>
     
     <content type="html">&lt;p&gt;又一年过去了，今年是第四年。&lt;br&gt;今年的生日是和女朋友一起，平平淡淡地过的。&lt;br&gt;回顾今年，我做的事情基本都是读书，学习，工作，陪妹子。&lt;/p&gt;
 &lt;p&gt;相信大家都知道读书的好处，但很多人在工作之后都会抱怨没时间读书，包括我自己。但人们常说，时间是挤出来的。所以，我也试着去挤时间——把上下班坐地铁/公交的时间利用起来。于是乎，这一年下来看的书大概有：&lt;/p&gt;
@@ -1081,6 +1109,8 @@
       <category term="life" scheme="http://scarletsky.github.io/categories/life/"/>
     
     
+      <category term="bitrhday" scheme="http://scarletsky.github.io/tags/bitrhday/"/>
+    
       <category term="life" scheme="http://scarletsky.github.io/tags/life/"/>
     
   </entry>
@@ -1090,7 +1120,7 @@
     <link href="http://scarletsky.github.io/2015/10/22/node-stream-api-learning/"/>
     <id>http://scarletsky.github.io/2015/10/22/node-stream-api-learning/</id>
     <published>2015-10-22T09:09:06.000Z</published>
-    <updated>2016-01-17T15:44:01.000Z</updated>
+    <updated>2016-02-29T04:34:05.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;基本介绍&quot;&gt;&lt;a href=&quot;#基本介绍&quot; class=&quot;headerlink&quot; title=&quot;基本介绍&quot;&gt;&lt;/a&gt;基本介绍&lt;/h2&gt;&lt;p&gt;在 Node.js 中，读取文件的方式有两种，一种是用 &lt;code&gt;fs.readFile&lt;/code&gt;，另外一种是利用 &lt;code&gt;fs.createReadStream&lt;/code&gt; 来读取。&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;fs.readFile&lt;/code&gt; 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。&lt;/p&gt;
@@ -1165,7 +1195,9 @@
       <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
     
     
-      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+      <category term="nodejs" scheme="http://scarletsky.github.io/tags/nodejs/"/>
+    
+      <category term="stream" scheme="http://scarletsky.github.io/tags/stream/"/>
     
   </entry>
   
@@ -1174,7 +1206,7 @@
     <link href="http://scarletsky.github.io/2015/08/19/commonjs-learning/"/>
     <id>http://scarletsky.github.io/2015/08/19/commonjs-learning/</id>
     <published>2015-08-19T02:11:10.000Z</published>
-    <updated>2016-01-17T15:44:01.000Z</updated>
+    <updated>2016-02-29T04:38:24.000Z</updated>
     
     <content type="html">&lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。&lt;/p&gt;
 &lt;p&gt;根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 &lt;code&gt;require&lt;/code&gt; 来获取 &lt;code&gt;module.exports&lt;/code&gt; 中暴露的内容，而其他部分都是私有的，其他模块不能访问。&lt;/p&gt;
@@ -1220,6 +1252,8 @@
       <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
     
     
+      <category term="commonjs" scheme="http://scarletsky.github.io/tags/commonjs/"/>
+    
   </entry>
   
   <entry>
@@ -1227,7 +1261,7 @@
     <link href="http://scarletsky.github.io/2015/08/18/Object-learning-in-javascript/"/>
     <id>http://scarletsky.github.io/2015/08/18/Object-learning-in-javascript/</id>
     <published>2015-08-18T09:57:31.000Z</published>
-    <updated>2016-01-17T15:44:01.000Z</updated>
+    <updated>2016-02-29T04:34:46.000Z</updated>
     
     <content type="html">&lt;h1 id=&quot;Object-defineProperty&quot;&gt;&lt;a href=&quot;#Object-defineProperty&quot; class=&quot;headerlink&quot; title=&quot;Object.defineProperty&quot;&gt;&lt;/a&gt;Object.defineProperty&lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, and returns the object.&lt;/p&gt;
@@ -1291,7 +1325,7 @@
     <link href="http://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/"/>
     <id>http://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/</id>
     <published>2015-08-14T08:57:33.000Z</published>
-    <updated>2016-01-17T15:44:01.000Z</updated>
+    <updated>2016-02-29T04:38:13.000Z</updated>
     
     <content type="html">&lt;h1 id=&quot;基本用法&quot;&gt;&lt;a href=&quot;#基本用法&quot; class=&quot;headerlink&quot; title=&quot;基本用法&quot;&gt;&lt;/a&gt;基本用法&lt;/h1&gt;&lt;figure class=&quot;highlight gcode&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// gulpfile.js&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp.task&lt;span class=&quot;comment&quot;&gt;(&#39;foo&#39;, function()&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp.src&lt;span class=&quot;comment&quot;&gt;(glob)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe&lt;span class=&quot;comment&quot;&gt;(...)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe&lt;span class=&quot;comment&quot;&gt;(...)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe&lt;span class=&quot;comment&quot;&gt;(gulp.dest(...)&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe&lt;span class=&quot;comment&quot;&gt;(...)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe&lt;span class=&quot;comment&quot;&gt;(gulp.dest(...)&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// shell&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ gulp foo&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h1 id=&quot;基本-API&quot;&gt;&lt;a href=&quot;#基本-API&quot; class=&quot;headerlink&quot; title=&quot;基本 API&quot;&gt;&lt;/a&gt;基本 API&lt;/h1&gt;&lt;ul&gt;
@@ -1408,7 +1442,7 @@
     <link href="http://scarletsky.github.io/2015/08/11/mongo-shell-trap/"/>
     <id>http://scarletsky.github.io/2015/08/11/mongo-shell-trap/</id>
     <published>2015-08-11T04:17:47.000Z</published>
-    <updated>2016-01-17T15:44:01.000Z</updated>
+    <updated>2016-02-29T04:38:02.000Z</updated>
     
     <content type="html">&lt;h1 id=&quot;编写-js-脚本&quot;&gt;&lt;a href=&quot;#编写-js-脚本&quot; class=&quot;headerlink&quot; title=&quot;编写 js 脚本&quot;&gt;&lt;/a&gt;编写 js 脚本&lt;/h1&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;js 脚本中不能包含 &lt;code&gt;use&lt;/code&gt; 关键字，需要用 &lt;code&gt;$ mongo mydb xxx.js&lt;/code&gt; 这样的方式来指定数据库&lt;/p&gt;
@@ -1444,7 +1478,7 @@
     <link href="http://scarletsky.github.io/2015/08/07/interview-summary/"/>
     <id>http://scarletsky.github.io/2015/08/07/interview-summary/</id>
     <published>2015-08-07T13:32:41.000Z</published>
-    <updated>2016-01-17T15:44:01.000Z</updated>
+    <updated>2016-02-29T04:37:54.000Z</updated>
     
     <content type="html">&lt;h1 id=&quot;面试前的准备&quot;&gt;&lt;a href=&quot;#面试前的准备&quot; class=&quot;headerlink&quot; title=&quot;面试前的准备&quot;&gt;&lt;/a&gt;面试前的准备&lt;/h1&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;了解该公司的业务&lt;/p&gt;
@@ -1585,6 +1619,8 @@
     
       <category term="career" scheme="http://scarletsky.github.io/tags/career/"/>
     
+      <category term="life" scheme="http://scarletsky.github.io/tags/life/"/>
+    
   </entry>
   
   <entry>
@@ -1592,7 +1628,7 @@
     <link href="http://scarletsky.github.io/2015/07/05/android-support-design-library-experience/"/>
     <id>http://scarletsky.github.io/2015/07/05/android-support-design-library-experience/</id>
     <published>2015-07-05T15:45:02.000Z</published>
-    <updated>2016-01-19T06:39:13.000Z</updated>
+    <updated>2016-02-29T04:37:44.000Z</updated>
     
     <content type="html">&lt;p&gt;#CoordinatorLayout&lt;/p&gt;
 &lt;p&gt;这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。&lt;/p&gt;
@@ -1618,6 +1654,10 @@
       <category term="android" scheme="http://scarletsky.github.io/categories/android/"/>
     
     
+      <category term="android" scheme="http://scarletsky.github.io/tags/android/"/>
+    
+      <category term="material design" scheme="http://scarletsky.github.io/tags/material-design/"/>
+    
   </entry>
   
   <entry>
@@ -1625,7 +1665,7 @@
     <link href="http://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/"/>
     <id>http://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/</id>
     <published>2015-06-29T12:55:00.000Z</published>
-    <updated>2016-01-19T06:39:04.000Z</updated>
+    <updated>2016-02-29T04:37:29.000Z</updated>
     
     <content type="html">&lt;p&gt;#基本用法&lt;/p&gt;
 &lt;ul&gt;
@@ -1683,6 +1723,10 @@
       <category term="android" scheme="http://scarletsky.github.io/categories/android/"/>
     
     
+      <category term="android" scheme="http://scarletsky.github.io/tags/android/"/>
+    
+      <category term="recyclerview" scheme="http://scarletsky.github.io/tags/recyclerview/"/>
+    
   </entry>
   
   <entry>
@@ -1690,7 +1734,7 @@
     <link href="http://scarletsky.github.io/2015/03/15/html5-canvas-tricks/"/>
     <id>http://scarletsky.github.io/2015/03/15/html5-canvas-tricks/</id>
     <published>2015-03-15T12:55:00.000Z</published>
-    <updated>2016-01-19T06:38:53.000Z</updated>
+    <updated>2016-02-29T04:37:14.000Z</updated>
     
     <content type="html">&lt;h1 id=&quot;注意事项&quot;&gt;&lt;a href=&quot;#注意事项&quot; class=&quot;headerlink&quot; title=&quot;注意事项&quot;&gt;&lt;/a&gt;注意事项&lt;/h1&gt;&lt;p&gt;用 &lt;code&gt;&amp;lt;canvas&amp;gt;&lt;/code&gt; 标签进行绘图时必须要设置 &lt;code&gt;width&lt;/code&gt; 和 &lt;code&gt;height&lt;/code&gt; 属性，这里并不是指 CSS 属性中的 &lt;code&gt;width&lt;/code&gt; 和 &lt;code&gt;height&lt;/code&gt;，而是 &lt;code&gt;&amp;lt;canvas&amp;gt;&lt;/code&gt; 标签本身的属性！&lt;/p&gt;
 &lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;&amp;lt;!-- 正确 --&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;canvas&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;width&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;500&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;height&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;500&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;&amp;lt;!-- 错误 --&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;canvas&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;style&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;width: 500px; height: 500px;&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;&amp;lt;!-- 正确 --&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;canvas&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;canvas&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;style&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;width: 500px; height: 500px;&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;script&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;javascript&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; canvas = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;canvas&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;canvas.setAttribute(&lt;span class=&quot;string&quot;&gt;&#39;width&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;500&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;canvas.setAttribute(&lt;span class=&quot;string&quot;&gt;&#39;height&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;500&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;title&quot;&gt;script&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -1711,7 +1755,9 @@
       <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
     
     
-      <category term="canvas html5" scheme="http://scarletsky.github.io/tags/canvas-html5/"/>
+      <category term="canvas" scheme="http://scarletsky.github.io/tags/canvas/"/>
+    
+      <category term="html5" scheme="http://scarletsky.github.io/tags/html5/"/>
     
   </entry>
   
@@ -1720,7 +1766,7 @@
     <link href="http://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/"/>
     <id>http://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/</id>
     <published>2015-01-27T09:28:00.000Z</published>
-    <updated>2016-01-19T06:38:42.000Z</updated>
+    <updated>2016-02-29T04:35:16.000Z</updated>
     
     <content type="html">&lt;h1 id=&quot;基本流程&quot;&gt;&lt;a href=&quot;#基本流程&quot; class=&quot;headerlink&quot; title=&quot;基本流程&quot;&gt;&lt;/a&gt;基本流程&lt;/h1&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;用户选择文件&lt;/p&gt;
@@ -1783,6 +1829,12 @@
     
       <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
     
+    
+      <category term="blob" scheme="http://scarletsky.github.io/tags/blob/"/>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
+      <category term="upload" scheme="http://scarletsky.github.io/tags/upload/"/>
     
   </entry>
   
