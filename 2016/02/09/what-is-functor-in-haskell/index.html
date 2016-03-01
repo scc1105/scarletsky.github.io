@@ -51,7 +51,7 @@ fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
 我应该怎么看这个类型签名 ?">
 <meta property="og:image" content="https://cloud.githubusercontent.com/assets/2386165/12949440/c8753e16-d042-11e5-84ff-b47753d65c52.png">
 <meta property="og:image" content="https://cloud.githubusercontent.com/assets/2386165/12949441/c87a69b8-d042-11e5-80d6-2ee458e13e37.png">
-<meta property="og:updated_time" content="2016-02-29T04:27:18.000Z">
+<meta property="og:updated_time" content="2016-03-01T06:35:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="What is functor in Haskell ?">
 <meta name="twitter:description" content="Functor 简介什么是 Functor ?
@@ -218,7 +218,11 @@ ga('send', 'pageview');
 <li>必须是可组合的，两个 <code>fmap</code> 组合使用的结果应该和两个函数组合起来再用 <code>fmap</code> 的结果相同。<br>也就是说 <code>fmap f . fmap g</code> 必须等于 <code>fmap (f . g)</code>。</li>
 </ol>
 </blockquote>
-<p>条件一是什么意思 ?</p>
+<p>为什么 <code>fmap id = id</code> ?</p>
+<blockquote>
+<p>因为<br><code>id :: a -&gt; a</code><br><code>fmap id :: T(a) -&gt; T(a)</code><br>令 <code>T(a) = a</code><br>即 <code>fmap id :: a -&gt; a</code><br>所以 <code>fmap id = id</code></p>
+</blockquote>
+<p>所以条件一是什么意思 ?</p>
 <blockquote>
 <p>意思是 <code>fmap</code> 只能对值调用 <code>f</code>，不能做额外的事情。</p>
 </blockquote>
@@ -236,6 +240,10 @@ ga('send', 'pageview');
 <p><code>fmap id</code> 和 <code>id</code> 返回的结果不相等 ?</p>
 <blockquote>
 <p>是的，所以即便 <code>CMaybe a</code> 实现了 <code>fmap</code>，但它也不是 Functor。</p>
+</blockquote>
+<p>为什么 <code>fmap (f . g) = fmap f . fmap g</code> ?</p>
+<blockquote>
+<p>假设<br><code>f :: a -&gt; b</code>, <code>g :: b -&gt; c</code><br>那么<br><code>f . g :: a -&gt; c</code><br>即<br><code>fmap (f . g) = T(a) -&gt; T(c)</code><br>又因为<br><code>fmap f = T(a) -&gt; T(b)</code>, <code>fmap g = T(b) -&gt; T(c)</code><br>所以<br><code>fmap f . fmap g = T(a) -&gt; T(c)</code><br>即 <code>fmap (f . g) = fmap f . fmap g</code></p>
 </blockquote>
 <p>条件二有点像乘法分配律。</p>
 <blockquote>
@@ -330,6 +338,7 @@ ga('send', 'pageview');
 <li>该数据类型必须有一个以上的类型参数。</li>
 </ul>
 <p>最后，强烈建议看看 <a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">这篇文章</a>，相当形象生动。</p>
+<h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p><a href="https://github.com/bramblex" target="_blank" rel="external">@bramblex</a> 给出 <code>fmap id = id</code> 和 <code>fmap (f . g) = fmap f . fmap g</code> 的证明过程。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://learnyouahaskell.com/functors-applicative-functors-and-monoids" target="_blank" rel="external">Functors, Applicative Functors and Monoids</a><br><a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">Functors, Applicatives, And Monads In Pictures</a><br><a href="http://cnhaskell.com/chp/10.html#functor" target="_blank" rel="external">Functor 简介</a><br><a href="http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor" target="_blank" rel="external">http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor</a></p>
 
     

@@ -57,7 +57,7 @@
     <link href="http://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/"/>
     <id>http://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/</id>
     <published>2016-02-09T14:50:13.000Z</published>
-    <updated>2016-02-29T04:27:18.000Z</updated>
+    <updated>2016-03-01T06:35:14.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;Functor-简介&quot;&gt;&lt;a href=&quot;#Functor-简介&quot; class=&quot;headerlink&quot; title=&quot;Functor 简介&quot;&gt;&lt;/a&gt;Functor 简介&lt;/h2&gt;&lt;p&gt;什么是 Functor ?&lt;/p&gt;
 &lt;blockquote&gt;
@@ -107,7 +107,11 @@
 &lt;li&gt;必须是可组合的，两个 &lt;code&gt;fmap&lt;/code&gt; 组合使用的结果应该和两个函数组合起来再用 &lt;code&gt;fmap&lt;/code&gt; 的结果相同。&lt;br&gt;也就是说 &lt;code&gt;fmap f . fmap g&lt;/code&gt; 必须等于 &lt;code&gt;fmap (f . g)&lt;/code&gt;。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;条件一是什么意思 ?&lt;/p&gt;
+&lt;p&gt;为什么 &lt;code&gt;fmap id = id&lt;/code&gt; ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;因为&lt;br&gt;&lt;code&gt;id :: a -&amp;gt; a&lt;/code&gt;&lt;br&gt;&lt;code&gt;fmap id :: T(a) -&amp;gt; T(a)&lt;/code&gt;&lt;br&gt;令 &lt;code&gt;T(a) = a&lt;/code&gt;&lt;br&gt;即 &lt;code&gt;fmap id :: a -&amp;gt; a&lt;/code&gt;&lt;br&gt;所以 &lt;code&gt;fmap id = id&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以条件一是什么意思 ?&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;意思是 &lt;code&gt;fmap&lt;/code&gt; 只能对值调用 &lt;code&gt;f&lt;/code&gt;，不能做额外的事情。&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -125,6 +129,10 @@
 &lt;p&gt;&lt;code&gt;fmap id&lt;/code&gt; 和 &lt;code&gt;id&lt;/code&gt; 返回的结果不相等 ?&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;是的，所以即便 &lt;code&gt;CMaybe a&lt;/code&gt; 实现了 &lt;code&gt;fmap&lt;/code&gt;，但它也不是 Functor。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;为什么 &lt;code&gt;fmap (f . g) = fmap f . fmap g&lt;/code&gt; ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;假设&lt;br&gt;&lt;code&gt;f :: a -&amp;gt; b&lt;/code&gt;, &lt;code&gt;g :: b -&amp;gt; c&lt;/code&gt;&lt;br&gt;那么&lt;br&gt;&lt;code&gt;f . g :: a -&amp;gt; c&lt;/code&gt;&lt;br&gt;即&lt;br&gt;&lt;code&gt;fmap (f . g) = T(a) -&amp;gt; T(c)&lt;/code&gt;&lt;br&gt;又因为&lt;br&gt;&lt;code&gt;fmap f = T(a) -&amp;gt; T(b)&lt;/code&gt;, &lt;code&gt;fmap g = T(b) -&amp;gt; T(c)&lt;/code&gt;&lt;br&gt;所以&lt;br&gt;&lt;code&gt;fmap f . fmap g = T(a) -&amp;gt; T(c)&lt;/code&gt;&lt;br&gt;即 &lt;code&gt;fmap (f . g) = fmap f . fmap g&lt;/code&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;条件二有点像乘法分配律。&lt;/p&gt;
 &lt;blockquote&gt;
@@ -219,6 +227,7 @@
 &lt;li&gt;该数据类型必须有一个以上的类型参数。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;最后，强烈建议看看 &lt;a href=&quot;http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这篇文章&lt;/a&gt;，相当形象生动。&lt;/p&gt;
+&lt;h2 id=&quot;特别感谢&quot;&gt;&lt;a href=&quot;#特别感谢&quot; class=&quot;headerlink&quot; title=&quot;特别感谢&quot;&gt;&lt;/a&gt;特别感谢&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/bramblex&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;@bramblex&lt;/a&gt; 给出 &lt;code&gt;fmap id = id&lt;/code&gt; 和 &lt;code&gt;fmap (f . g) = fmap f . fmap g&lt;/code&gt; 的证明过程。&lt;/p&gt;
 &lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://learnyouahaskell.com/functors-applicative-functors-and-monoids&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Functors, Applicative Functors and Monoids&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Functors, Applicatives, And Monads In Pictures&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://cnhaskell.com/chp/10.html#functor&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Functor 简介&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor&lt;/a&gt;&lt;/p&gt;
 </content>
     
