@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-02-29T04:22:08.000Z</updated>
+  <updated>2016-03-09T04:12:56.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,6 +14,204 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>what is applicative in haskell ?</title>
+    <link href="http://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/"/>
+    <id>http://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/</id>
+    <published>2016-03-07T03:52:28.000Z</published>
+    <updated>2016-03-09T04:12:56.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;初探&quot;&gt;&lt;a href=&quot;#初探&quot; class=&quot;headerlink&quot; title=&quot;初探&quot;&gt;&lt;/a&gt;初探&lt;/h2&gt;&lt;p&gt;什么是 &lt;code&gt;Applicative&lt;/code&gt; ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Applicative 是加强版的 Functor，是一个类型类。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;加强版的 &lt;code&gt;Functor&lt;/code&gt; 是什么意思 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;还记得 Functor 的限制吗？&lt;br&gt;&lt;code&gt;fmap f x&lt;/code&gt; 中的 &lt;code&gt;f&lt;/code&gt; 只接受一个参数。&lt;br&gt;&lt;code&gt;fmap f x&lt;/code&gt; 中的 &lt;code&gt;f&lt;/code&gt; 不能带有上下文 (换句话说只能是 &lt;code&gt;(+42)&lt;/code&gt; 不能是 &lt;code&gt;Just (+42)&lt;/code&gt;)。&lt;br&gt;所谓的加强版的 Functor 就没有这些限制。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这样有什么用 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我们先看看 Applicative 的声明吧:&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;container&quot;&gt;(&lt;span class=&quot;type&quot;&gt;Functor&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;f&lt;/span&gt;)&lt;/span&gt; =&amp;gt; &lt;span class=&quot;type&quot;&gt;Applicative&lt;/span&gt; f &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    pure :: a -&amp;gt; f a&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;*&amp;gt; :: f (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; b&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;你能从 Applicative 的声明中看出什么吗？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;Applicative&lt;/code&gt; 是 &lt;code&gt;Functor&lt;/code&gt; ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;是的，所谓加强版的 Functor，它首先就是一个 Functor，外加一些额外的功能嘛。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;pure&lt;/code&gt; 有什么用 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;把一个值变成一个 Functor 。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; 呢 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;和 fmap (也就是 &amp;lt;$&amp;gt;) 一起看吧。&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;$&amp;gt; ::   (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;*&amp;gt; :: f (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;&amp;lt;$&amp;gt;&lt;/code&gt; 传进的是普通的函数，而 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; 传进的是一个包装过的函数 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;是的，这就是 Applicative 和 Functor 的区别。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;有没有简单易懂的例子 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;先看看下面几个例子吧。&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;ghci&lt;/span&gt;&amp;gt; (+&lt;span class=&quot;number&quot;&gt;33&lt;/span&gt;) &amp;lt;$&amp;gt; &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;42&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;ghci&lt;/span&gt;&amp;gt; &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; (+&lt;span class=&quot;number&quot;&gt;33&lt;/span&gt;) &amp;lt;*&amp;gt; &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;42&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;ghci&lt;/span&gt;&amp;gt; pure (+&lt;span class=&quot;number&quot;&gt;33&lt;/span&gt;) &amp;lt;*&amp;gt; &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;42&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;能看出什么吗？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;包装过的函数和普通函数一样，都可以接受包装过的值作为参数，并返回正确的结果？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;正确！&lt;br&gt;我们再看看下面两个例子:&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;ghci&lt;/span&gt;&amp;gt; &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; (+) &amp;lt;*&amp;gt; &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; &amp;lt;*&amp;gt; &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;ghci&lt;/span&gt;&amp;gt; pure (+) &amp;lt;*&amp;gt; &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; &amp;lt;*&amp;gt; &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;能看出什么吗 ?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;包装过的函数可以接受多个参数了 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;是的！&lt;br&gt;Applicative 就是通过接受一个带有上下文的函数来突破 Functor 的限制的。&lt;br&gt;我们先凭直觉来用一下 Applicative 吧！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;小试&quot;&gt;&lt;a href=&quot;#小试&quot; class=&quot;headerlink&quot; title=&quot;小试&quot;&gt;&lt;/a&gt;小试&lt;/h2&gt;&lt;p&gt;&lt;code&gt;Just (++) &amp;lt;*&amp;gt; Just &amp;quot;Hello&amp;quot; &amp;lt;*&amp;gt; Just &amp;quot; World&amp;quot;&lt;/code&gt; 的结果是 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Just “Hello World”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;(++) &amp;lt;$&amp;gt; Just &amp;quot;Hello &amp;quot; &amp;lt;*&amp;gt; Just &amp;quot;Haskell~&amp;quot;&lt;/code&gt; 的结果是 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Just “Hello Haskell~”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;(++) &amp;lt;$&amp;gt; Just 42 &amp;lt;*&amp;gt; Nothing&lt;/code&gt; 的结果是 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Nothing&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;[(*0), (+100), (^2)] &amp;lt;*&amp;gt; [1, 2, 3]&lt;/code&gt; 的结果是 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[0,0,0,101,102,103,1,4,9]&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;为什么不是 &lt;code&gt;[0, 102, 9]&lt;/code&gt; ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;因为列表是 Applicative 的实例，它实现了自己的 &amp;lt;*&amp;gt; 方法。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以其实 &lt;code&gt;Maybe&lt;/code&gt; 也是 &lt;code&gt;Applicative&lt;/code&gt; 的实例 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;是的。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;理解&quot;&gt;&lt;a href=&quot;#理解&quot; class=&quot;headerlink&quot; title=&quot;理解&quot;&gt;&lt;/a&gt;理解&lt;/h2&gt;&lt;p&gt;&lt;code&gt;Maybe&lt;/code&gt; 是怎么实现 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; 的 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如下所示:&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;instance&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Applicative&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Maybe&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    pure          = &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; f  &amp;lt;*&amp;gt; m = fmap f m&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;type&quot;&gt;Nothing&lt;/span&gt; &amp;lt;*&amp;gt; _ = &lt;span class=&quot;type&quot;&gt;Nothing&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;现在可以试试理解 &amp;lt;*&amp;gt; 是如何应用在 Maybe 中的。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;Just (+) &amp;lt;*&amp;gt; Just 3&lt;/code&gt; 的结果是 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Just (+3)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以 &lt;code&gt;Just (+) &amp;lt;*&amp;gt; Just 3 &amp;lt;*&amp;gt; Just 8&lt;/code&gt; 是 &lt;code&gt;Just 11&lt;/code&gt; ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;是的！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;那列表是怎么实现 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; 的 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如下所示:&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;instance&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Applicative&lt;/span&gt; [] &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    pure x = [x]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fs &amp;lt;*&amp;gt; xs = [f x | f &amp;lt;- fs, x &amp;lt;- xs]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;列表是通过「列表解析(List Comprehension)」来实现 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; 的。&lt;br&gt;其中的 fs 可以看成是一个由函数组成的列表，如 [(+1), (*2), (^3)]&lt;br&gt;整个过程可以看作 &lt;code&gt;concatMap (\f -&amp;gt; map f xs) fs&lt;/code&gt; 的另一个写法。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;还有哪些是 &lt;code&gt;Applicative&lt;/code&gt; 的实例 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;IO&lt;/code&gt;, &lt;code&gt;(-&amp;gt;) r&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;IO&lt;/code&gt; 怎么实现 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;看看下面的代码:&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;instance&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Applicative&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;IO&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    pure = return&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    a &amp;lt;*&amp;gt; b = &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        f &amp;lt;- a&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        x &amp;lt;- b&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        return (f x)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;不太懂，有没有具体的例子 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;下面有个简单易懂的例子:&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;myAction&lt;/span&gt; :: &lt;span class=&quot;type&quot;&gt;IO&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;String&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;myAction&lt;/span&gt; = &lt;span class=&quot;keyword&quot;&gt;do&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    a &amp;lt;- getLine&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    b &amp;lt;- getLine&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return $ a ++ b&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;其实我们可以可以写成下面这样:&lt;br&gt;&lt;code&gt;myAction = (++) &amp;lt;$&amp;gt; getLine &amp;lt;*&amp;gt; getLine&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;那 &lt;code&gt;(-&amp;gt;) r&lt;/code&gt; 又是什么 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;(-&amp;gt;) r&lt;/code&gt; 其实是函数，如果语法允许的话，我们写成 &lt;code&gt;r -&amp;gt;&lt;/code&gt; 也可以，但是语法只允许 &lt;code&gt;(-&amp;gt;) r&lt;/code&gt; 这种写法。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;(-&amp;gt;) r&lt;/code&gt; 是怎么实现 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; 的 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;看看下面的代码:&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;instance&lt;/span&gt; &lt;span class=&quot;type&quot;&gt;Applicative&lt;/span&gt; &lt;span class=&quot;container&quot;&gt;((-&amp;gt;)&lt;/span&gt; r) &lt;span class=&quot;keyword&quot;&gt;where&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    pure x = (\_ -&amp;gt; x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    f &amp;lt;*&amp;gt; g = \x -&amp;gt; f x (g x)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;(-&amp;gt;) r&lt;/code&gt; 的 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; 实现不是太好理解。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;确实不太好理解，它的意思是给 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; 两个函数，然后生成一个新的函数。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;有具体例子吗？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这里要先留意一下 pure 的实现:&lt;br&gt;&lt;code&gt;pure x = (\_ -&amp;gt; x)&lt;/code&gt;&lt;br&gt;它会包装传进的函数，返回一个新的函数。这个新函数会无视第一个传进的参数，然后返回原来的函数。 &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;看起来很绕，可以给一些例子吗 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;是的，直接看例子会好理解一点:&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;ghci&lt;/span&gt;&amp;gt; :t pure (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;pure&lt;/span&gt; (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) :: f (a -&amp;gt; a)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;ghci&lt;/span&gt;&amp;gt; :t pure (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;pure&lt;/span&gt; (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; :: a -&amp;gt; a&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;ghci&lt;/span&gt;&amp;gt; pure (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;看到了吗 ?&lt;br&gt;&lt;code&gt;pure (+3)&lt;/code&gt; 返回的是 &lt;code&gt;(\_ -&amp;gt; (+3))&lt;/code&gt;。&lt;br&gt;&lt;code&gt;pure (+3) 2&lt;/code&gt; 返回的是 &lt;code&gt;(+3)&lt;/code&gt;。&lt;br&gt;&lt;code&gt;pure (+3) 2 4&lt;/code&gt; 其实是 &lt;code&gt;(+3) 4&lt;/code&gt; 的结果。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;OK，我已经了解 &lt;code&gt;pure&lt;/code&gt; 是如何处理函数的了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;好，接下来我们看 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; 的实现。&lt;br&gt;看看下面的例子，我们按照定义一步一步来~&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 例子1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    pure (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &amp;lt;*&amp;gt; (*&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 展开 pure (+3)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= (\_ -&amp;gt; (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)) &amp;lt;*&amp;gt; (*&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 展开 &amp;lt;*&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= \x -&amp;gt; (\_ -&amp;gt; (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)) x (*&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 当 x = 5 时&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= \&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; -&amp;gt; (\_ -&amp;gt; (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)) &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; (*&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 传进 5 之后的返回值如下&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= (\_ -&amp;gt; (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)) &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;500&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 无论第一个参数是什么，它都是返回 (+3)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &lt;span class=&quot;number&quot;&gt;500&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= &lt;span class=&quot;number&quot;&gt;503&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 例子2&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    (+) &amp;lt;$&amp;gt; (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &amp;lt;*&amp;gt; (*&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 展开 &amp;lt;$&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= (+) . (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &amp;lt;*&amp;gt; (*&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 展开 &amp;lt;*&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= \x -&amp;gt; (+) . (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) x (*&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 当 x = 5 时&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= \&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; -&amp;gt; (+) . (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; (*&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 返回值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= (+) . (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;500&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= (&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;+) &lt;span class=&quot;number&quot;&gt;500&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= &lt;span class=&quot;number&quot;&gt;508&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 例子3&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    (\x y z -&amp;gt; [x,y,z]) &amp;lt;$&amp;gt; (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &amp;lt;*&amp;gt; (*&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;) &amp;lt;*&amp;gt; (/&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 先假设 (\x y z -&amp;gt; [x,y,z]) 为 f&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= f &amp;lt;$&amp;gt; (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &amp;lt;*&amp;gt; (*&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;) &amp;lt;*&amp;gt; (/&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 展开 &amp;lt;$&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= f . (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;) &amp;lt;*&amp;gt; (*&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;) &amp;lt;*&amp;gt; (/&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 展开第一个 &amp;lt;*&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= \x -&amp;gt; (f . (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)) x (*&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; x) &amp;lt;*&amp;gt; (/&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 展开第二个 &amp;lt;*&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= \y -&amp;gt; (\x -&amp;gt; (f . (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)) x (*&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; x)) y (/&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; y)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 观察 (\x -&amp;gt; (f . (+3)) x (*2 x)) y&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 把 y 传入函数中可以得到&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= \y -&amp;gt; (f . (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;)) y (*&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; y) (/&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; y)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= \y -&amp;gt; f (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; y) (*&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; y) (/&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; y)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 当传入 5 作为参数时&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= f (+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;) (*&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;) (/&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= f &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;2.5&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;-- 把 f 换回 (\x y z -&amp;gt; [x,y,z])&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= [&lt;span class=&quot;number&quot;&gt;8.0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;10.0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2.5&lt;/span&gt;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;很有趣吧 !&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;每次都要展开 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; 很麻烦啊 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;从刚才的例子中，你应该可以发现，我们从直觉上就可以知道计算过程。&lt;br&gt;试试化简一下 &lt;code&gt;f &amp;lt;$&amp;gt; g &amp;lt;*&amp;gt; h&lt;/code&gt; ?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;f &amp;lt;$&amp;gt; g &amp;lt;*&amp;gt; h&lt;/code&gt; = &lt;code&gt;(\x -&amp;gt; f (g x) (h x))&lt;/code&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;正确，再把 5 传入看看 ?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;f &amp;lt;$&amp;gt; g &amp;lt;*&amp;gt; h $ 5&lt;/code&gt; = &lt;code&gt;f (g 5) (h 5)&lt;/code&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;假设 f 是一个需要两个参数的函数的话，就能返回计算结果了 !&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以其实我们可以把 &lt;code&gt;f &amp;lt;$&amp;gt; g &amp;lt;*&amp;gt; h&lt;/code&gt; 看成是把 &lt;code&gt;g&lt;/code&gt; 和 &lt;code&gt;h&lt;/code&gt; 的结果传给 &lt;code&gt;f&lt;/code&gt; ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;是的，我们从直觉上就可以知道计算过程，很有趣吧 !&lt;br&gt;顺便说下, 像 &lt;code&gt;f &amp;lt;$&amp;gt; g &amp;lt;*&amp;gt; h&lt;/code&gt; 这样的用法叫做 Applicative Style 哦 !&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;Applicative&lt;/code&gt; 有没有和 &lt;code&gt;Functor&lt;/code&gt; 一样需要遵守的规则 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;有的！其中最重要的规则是:&lt;br&gt;必须保证 &lt;code&gt;pure f &amp;lt;*&amp;gt; x = fmap f x&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我应该怎么理解这个规则 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我们说 &lt;code&gt;Applicative&lt;/code&gt; 是加强版的 &lt;code&gt;Functor&lt;/code&gt;，它可以应用一个带有上下文的函数到 &lt;code&gt;Functor&lt;/code&gt; 上。&lt;br&gt;我们看看之前提到的 &lt;code&gt;Applicative&lt;/code&gt; 实例 :&lt;br&gt;对于 &lt;code&gt;Maybe&lt;/code&gt; :&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;  pure f &amp;lt;*&amp;gt; x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= &lt;span class=&quot;type&quot;&gt;Just&lt;/span&gt; f &amp;lt;*&amp;gt; x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= fmap f x&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;对于 &lt;code&gt;List&lt;/code&gt; :&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;  pure f &amp;lt;*&amp;gt; x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= [f] &amp;lt;*&amp;gt; x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= [f x&#39; | x&#39; &amp;lt;- x]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= map f x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= fmap f x&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;对于 &lt;code&gt;IO&lt;/code&gt; :&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;  pure f &amp;lt;*&amp;gt; x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= return f &amp;lt;*&amp;gt; x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= return (f x)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= fmap f x&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;对于 &lt;code&gt;(-&amp;gt;) r&lt;/code&gt; :&lt;br&gt;&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;  pure f &amp;lt;*&amp;gt; x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= (\_ -&amp;gt; f) &amp;lt;*&amp;gt; x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= (\y -&amp;gt; (\_ -&amp;gt; f) y (x y))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= (\y -&amp;gt; f (x y))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= (\y -&amp;gt; (f . x) y)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= f . x&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;= fmap f x&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;看到了吧 ! 我们上面提到的 &lt;code&gt;Applicative&lt;/code&gt; 的实例全部都满足 &lt;code&gt;pure f &amp;lt;*&amp;gt; x = fmap f x&lt;/code&gt; 哦 !&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;还有其他需要遵守的规则吗 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;有的，分别如下:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;pure id &amp;lt;*&amp;gt; v = v&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pure (.) &amp;lt;*&amp;gt; u &amp;lt;*&amp;gt; v &amp;lt;*&amp;gt; w = u &amp;lt;*&amp;gt; (v &amp;lt;*&amp;gt; w)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pure f &amp;lt;*&amp;gt; pure x = pure (f x)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;u &amp;lt;*&amp;gt; pure y = pure ($ y) &amp;lt;*&amp;gt; u&lt;/code&gt;&lt;br&gt;这些规则都是可以被证明的，你可以试一试。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;还有什么我需要知道的吗 ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;忘了说，&lt;code&gt;Applicative&lt;/code&gt; 需要导入才可以用，它位于 &lt;code&gt;Control.Applicative&lt;/code&gt; 下。&lt;br&gt;想用的时候记得先写 &lt;code&gt;import Control.Applicative&lt;/code&gt; 哦 !&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Applicative&lt;/code&gt; 是加强版的 &lt;code&gt;Functor&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Applicative&lt;/code&gt; 的实例可以使用 &lt;code&gt;pure&lt;/code&gt; 和 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;我们可以用 &lt;code&gt;&amp;lt;$&amp;gt;&lt;/code&gt; 和 &lt;code&gt;&amp;lt;*&amp;gt;&lt;/code&gt; 将一个普通函数应用到任意数量的 &lt;code&gt;Applicative Functor&lt;/code&gt; 上。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://learnyouahaskell.com/functors-applicative-functors-and-monoids&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Functors, Applicative Functors and Monoids&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;初探&quot;&gt;&lt;a href=&quot;#初探&quot; class=&quot;headerlink&quot; title=&quot;初探&quot;&gt;&lt;/a&gt;初探&lt;/h2&gt;&lt;p&gt;什么是 &lt;code&gt;Applicative&lt;/code&gt; ?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Applicative 是加强版的 F
+    
+    </summary>
+    
+      <category term="haskell" scheme="http://scarletsky.github.io/categories/haskell/"/>
+    
+    
+      <category term="applicative" scheme="http://scarletsky.github.io/tags/applicative/"/>
+    
+      <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
+    
+  </entry>
   
   <entry>
     <title>FlexibleInstances 和 TypeSynonymInstances 编译指令的区别</title>
@@ -1767,83 +1965,6 @@
       <category term="canvas" scheme="http://scarletsky.github.io/tags/canvas/"/>
     
       <category term="html5" scheme="http://scarletsky.github.io/tags/html5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JavaScript 利用 Blob 进行分片上传</title>
-    <link href="http://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/"/>
-    <id>http://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/</id>
-    <published>2015-01-27T09:28:00.000Z</published>
-    <updated>2016-02-29T04:35:16.000Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;基本流程&quot;&gt;&lt;a href=&quot;#基本流程&quot; class=&quot;headerlink&quot; title=&quot;基本流程&quot;&gt;&lt;/a&gt;基本流程&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;用户选择文件&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;判断文件大小&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;如果文件小于限定文件大小，则直接上传&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;否则进行分片上传&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h1 id=&quot;分片流程&quot;&gt;&lt;a href=&quot;#分片流程&quot; class=&quot;headerlink&quot; title=&quot;分片流程&quot;&gt;&lt;/a&gt;分片流程&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;给定限定大小。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;利用 &lt;code&gt;Blob&lt;/code&gt; 对象的 &lt;code&gt;slice&lt;/code&gt; 方法把文件分成 N 份。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;遍历 N 次，利用 &lt;code&gt;FormData&lt;/code&gt; 创建需要提交的数据，上传数据。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h1 id=&quot;服务端处理流程&quot;&gt;&lt;a href=&quot;#服务端处理流程&quot; class=&quot;headerlink&quot; title=&quot;服务端处理流程&quot;&gt;&lt;/a&gt;服务端处理流程&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;接收数据&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;判断数据总份数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;如果总份数为 1，则直接保存成文件，文件名不需要改变。保存完成后，直接返回信息给客户端。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;否则保存成文件时，文件名后缀名需要带上 .partX 来表示该文件为第几部分。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;判断已上传的数据是否等于总份数。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;如果相等，则合并文件。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;合并完成后，删除带有 .partX 的文件。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h1 id=&quot;代码实例&quot;&gt;&lt;a href=&quot;#代码实例&quot; class=&quot;headerlink&quot; title=&quot;代码实例&quot;&gt;&lt;/a&gt;代码实例&lt;/h1&gt;&lt;h2 id=&quot;客户端代码-html&quot;&gt;&lt;a href=&quot;#客户端代码-html&quot; class=&quot;headerlink&quot; title=&quot;客户端代码 - html&quot;&gt;&lt;/a&gt;客户端代码 - html&lt;/h2&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;file&quot;&lt;/span&gt; &lt;span class=&quot;attribute&quot;&gt;id&lt;/span&gt;=&lt;span class=&quot;value&quot;&gt;&quot;upload&quot;&lt;/span&gt;/&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;客户端代码-JavaScript&quot;&gt;&lt;a href=&quot;#客户端代码-JavaScript&quot; class=&quot;headerlink&quot; title=&quot;客户端代码 - JavaScript&quot;&gt;&lt;/a&gt;客户端代码 - JavaScript&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;uploadFile&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;url, blob, callback&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; perFileSize = &lt;span class=&quot;number&quot;&gt;2097152&lt;/span&gt;; &lt;span class=&quot;comment&quot;&gt;// 2 * 1024 * 1024&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; blobParts = &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.ceil(blob.size / perFileSize);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i &amp;lt; blobParts; i++) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        (&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;i&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fd = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FormData();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; _blob = blob.slice(i * perFileSize, (i + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;) * perFileSize);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            fd.append(&lt;span class=&quot;string&quot;&gt;&#39;_blob&#39;&lt;/span&gt;, _blob);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            fd.append(&lt;span class=&quot;string&quot;&gt;&#39;filename&#39;&lt;/span&gt;, blob.name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            fd.append(&lt;span class=&quot;string&quot;&gt;&#39;index&#39;&lt;/span&gt;, i + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            fd.append(&lt;span class=&quot;string&quot;&gt;&#39;total&#39;&lt;/span&gt;, blobParts);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            $.ajax(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                type: &lt;span class=&quot;string&quot;&gt;&#39;POST&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                url: url,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                data: fd,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                processData: &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                contentType: &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;).done(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;res&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;upload status: &#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;this is &#39;&lt;/span&gt; + (i + &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;) + &lt;span class=&quot;string&quot;&gt;&#39;part, total &#39;&lt;/span&gt; + blobParts + &lt;span class=&quot;string&quot;&gt;&#39; part(s).&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (res.statusCode === &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    callback(&lt;span class=&quot;literal&quot;&gt;null&lt;/span&gt;, res);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;).fail(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;err&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                callback(err, &lt;span class=&quot;literal&quot;&gt;null&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;)(i)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&#39;#upload&#39;&lt;/span&gt;).on(&lt;span class=&quot;string&quot;&gt;&#39;change&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;e&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; file = e.target.files[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    uploadFile(&lt;span class=&quot;string&quot;&gt;&#39;/upload&#39;&lt;/span&gt;, file, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;err, res&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (err) &amp;#123; &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(err); &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;upload successfully!&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;服务端代码-NodeJS&quot;&gt;&lt;a href=&quot;#服务端代码-NodeJS&quot; class=&quot;headerlink&quot; title=&quot;服务端代码 - NodeJS&quot;&gt;&lt;/a&gt;服务端代码 - NodeJS&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Expressjs&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; multipart = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;connect-multiparty&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; multipartMiddleware = multipart();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; uploadDir = &lt;span class=&quot;string&quot;&gt;&#39;./upload/&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 合并文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;mergeFiles&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;fileName, fileParts&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; buffers = [];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 获取各个部分的路径&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; filePartsPaths = fileParts.map(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;name&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; path.join(uploadDir, name);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 获取各个 part 的 buffer，并保存到 buffers 中&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    filePartsPaths.forEach(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;path&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; buffer = fs.readFileSync(path);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        buffers.push(buffer);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 合并文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; concatBuffer = Buffer.concat(buffers);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; concatFilePath = path.join(uploadDir, fileName);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    fs.writeFileSync(concatFilePath, concatBuffer);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 删除各个 part 的文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    filePartsPaths.forEach(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;path&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        fs.unlinkSync(path);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;upload&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;req, res&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (req.method === &lt;span class=&quot;string&quot;&gt;&#39;POST&#39;&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; data = req.body;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; _blobPath = req.files._blob.path;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fileName = data.filename;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; filePath;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; total = &lt;span class=&quot;built_in&quot;&gt;parseInt&lt;/span&gt;(data.total);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 处理文件路径&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (total === &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            filePath = path.join(uploadDir, fileName);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fileNameWithPart = fileName + &lt;span class=&quot;string&quot;&gt;&#39;.part&#39;&lt;/span&gt; + data.index;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            filePath = path.join(uploadDir, fileNameWithPart);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 读取上传的数据，保存到指定路径&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; tmpBuffer = fs.readFileSync(_blobPath);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        fs.writeFileSync(filePath, tmpBuffer);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;// 判断是否上传完成&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (total === &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            res.send(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 获取指定目录下的所有文件名&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; filesInDir = fs.readdirSync(uploadDir);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 找出指定文件名中带有 .part 的文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fileParts = filesInDir.filter(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;name&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; name.substring(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, fileName.length + &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;) === (fileName + &lt;span class=&quot;string&quot;&gt;&#39;.part&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 判断是否需要合并文件&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (fileParts.length === total) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                mergeFiles(fileName, fileParts);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                res.send(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                res.send(&lt;span class=&quot;number&quot;&gt;204&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        res.send(&lt;span class=&quot;number&quot;&gt;405&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;app.post(&lt;span class=&quot;string&quot;&gt;&#39;/upload&#39;&lt;/span&gt;, multipartMiddleware, upload);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;基本流程&quot;&gt;&lt;a href=&quot;#基本流程&quot; class=&quot;headerlink&quot; title=&quot;基本流程&quot;&gt;&lt;/a&gt;基本流程&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;用户选择文件&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;判断文件大小&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;如果文件小于
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
-    
-    
-      <category term="blob" scheme="http://scarletsky.github.io/tags/blob/"/>
-    
-      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
-    
-      <category term="upload" scheme="http://scarletsky.github.io/tags/upload/"/>
     
   </entry>
   

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>what is applicative in haskell ? | Scarletsky</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="applicative,haskell," />
+  
+
+  <meta name="description" content="初探什么是 Applicative ?
+
+Applicative 是加强版的 Functor，是一个类型类。
+
+加强版的 Functor 是什么意思 ?
+
+还记得 Functor 的限制吗？fmap f x 中的 f 只接受一个参数。fmap f x 中的 f 不能带有上下文 (换句话说只能是 (+42) 不能是 Just (+42))。所谓的加强版的 Functor 就没有这些限制。
+
+这样有什">
+<meta property="og:type" content="article">
+<meta property="og:title" content="what is applicative in haskell ?">
+<meta property="og:url" content="http://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/index.html">
+<meta property="og:site_name" content="Scarletsky">
+<meta property="og:description" content="初探什么是 Applicative ?
+
+Applicative 是加强版的 Functor，是一个类型类。
+
+加强版的 Functor 是什么意思 ?
+
+还记得 Functor 的限制吗？fmap f x 中的 f 只接受一个参数。fmap f x 中的 f 不能带有上下文 (换句话说只能是 (+42) 不能是 Just (+42))。所谓的加强版的 Functor 就没有这些限制。
+
+这样有什">
+<meta property="og:updated_time" content="2016-03-09T04:12:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="what is applicative in haskell ?">
+<meta name="twitter:description" content="初探什么是 Applicative ?
+
+Applicative 是加强版的 Functor，是一个类型类。
+
+加强版的 Functor 是什么意思 ?
+
+还记得 Functor 的限制吗？fmap f x 中的 f 只接受一个参数。fmap f x 中的 f 不能带有上下文 (换句话说只能是 (+42) 不能是 Just (+42))。所谓的加强版的 Functor 就没有这些限制。
+
+这样有什">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link rel="stylesheet" href="/css/styles.css" type="text/css">
+
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-40690820-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+</head>
+
+<body>
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry hint hint--left" data-hint="点击返回首页" href="/">盒子</a>
+    <ul class="list-toolbox">
+      
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/">博客</a>
+          </li>
+        
+      
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/">分类</a>
+          </li>
+        
+      
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/">标签</a>
+          </li>
+        
+      
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/about/">关于</a>
+          </li>
+        
+      
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/atom.xml">RSS</a>
+          </li>
+        
+      
+    </ul>
+  </div>
+
+
+</div>
+
+ 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#初探"><span class="toc-text">初探</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小试"><span class="toc-text">小试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#理解"><span class="toc-text">理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </div>
+
+
+ <a class="back-top" href="#">
+  <i class="icon-angle-up"></i>
+</a>
+
+
+<div class="content-post CENTER">
+   <article id="post-what-is-applicative-in-haskell" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">what is applicative in haskell ?</h1>
+
+    <div class="article-meta">
+      <span>2016-03-07</span>
+
+      <span> | </span>
+
+      <span class="article-author">Scarletsky</span>
+
+      <span> | </span>
+
+      
+  <span class="article-category">
+    <a class="article-category-link" href="/categories/haskell/">haskell</a>
+  </span>
+
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="初探"><a href="#初探" class="headerlink" title="初探"></a>初探</h2><p>什么是 <code>Applicative</code> ?</p>
+<blockquote>
+<p>Applicative 是加强版的 Functor，是一个类型类。</p>
+</blockquote>
+<p>加强版的 <code>Functor</code> 是什么意思 ?</p>
+<blockquote>
+<p>还记得 Functor 的限制吗？<br><code>fmap f x</code> 中的 <code>f</code> 只接受一个参数。<br><code>fmap f x</code> 中的 <code>f</code> 不能带有上下文 (换句话说只能是 <code>(+42)</code> 不能是 <code>Just (+42)</code>)。<br>所谓的加强版的 Functor 就没有这些限制。</p>
+</blockquote>
+<p>这样有什么用 ?</p>
+<blockquote>
+<p>我们先看看 Applicative 的声明吧:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="container">(<span class="type">Functor</span> <span class="title">f</span>)</span> =&gt; <span class="type">Applicative</span> f <span class="keyword">where</span></span></span><br><span class="line">    pure :: a -&gt; f a</span><br><span class="line">    &lt;*&gt; :: f (a -&gt; b) -&gt; f a -&gt; b</span><br></pre></td></tr></table></figure></p>
+<p>你能从 Applicative 的声明中看出什么吗？</p>
+</blockquote>
+<p><code>Applicative</code> 是 <code>Functor</code> ?</p>
+<blockquote>
+<p>是的，所谓加强版的 Functor，它首先就是一个 Functor，外加一些额外的功能嘛。</p>
+</blockquote>
+<p><code>pure</code> 有什么用 ?</p>
+<blockquote>
+<p>把一个值变成一个 Functor 。</p>
+</blockquote>
+<p><code>&lt;*&gt;</code> 呢 ?</p>
+<blockquote>
+<p>和 fmap (也就是 &lt;$&gt;) 一起看吧。<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line">&lt;$&gt; ::   (a -&gt; b) -&gt; f a -&gt; f b</span><br><span class="line">&lt;*&gt; :: f (a -&gt; b) -&gt; f a -&gt; f b</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><code>&lt;$&gt;</code> 传进的是普通的函数，而 <code>&lt;*&gt;</code> 传进的是一个包装过的函数 ?</p>
+<blockquote>
+<p>是的，这就是 Applicative 和 Functor 的区别。</p>
+</blockquote>
+<p>有没有简单易懂的例子 ?</p>
+<blockquote>
+<p>先看看下面几个例子吧。<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; (+<span class="number">33</span>) &lt;$&gt; <span class="type">Just</span> <span class="number">9</span></span><br><span class="line"><span class="type">Just</span> <span class="number">42</span></span><br><span class="line"><span class="title">ghci</span>&gt; <span class="type">Just</span> (+<span class="number">33</span>) &lt;*&gt; <span class="type">Just</span> <span class="number">9</span></span><br><span class="line"><span class="type">Just</span> <span class="number">42</span></span><br><span class="line"><span class="title">ghci</span>&gt; pure (+<span class="number">33</span>) &lt;*&gt; <span class="type">Just</span> <span class="number">9</span></span><br><span class="line"><span class="type">Just</span> <span class="number">42</span></span><br></pre></td></tr></table></figure></p>
+<p>能看出什么吗？</p>
+</blockquote>
+<p>包装过的函数和普通函数一样，都可以接受包装过的值作为参数，并返回正确的结果？</p>
+<blockquote>
+<p>正确！<br>我们再看看下面两个例子:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; <span class="type">Just</span> (+) &lt;*&gt; <span class="type">Just</span> <span class="number">3</span> &lt;*&gt; <span class="type">Just</span> <span class="number">8</span></span><br><span class="line"><span class="type">Just</span> <span class="number">11</span></span><br><span class="line"><span class="title">ghci</span>&gt; pure (+) &lt;*&gt; <span class="type">Just</span> <span class="number">3</span> &lt;*&gt; <span class="type">Just</span> <span class="number">8</span></span><br><span class="line"><span class="type">Just</span> <span class="number">11</span></span><br></pre></td></tr></table></figure></p>
+<p>能看出什么吗 ?</p>
+</blockquote>
+<p>包装过的函数可以接受多个参数了 ?</p>
+<blockquote>
+<p>是的！<br>Applicative 就是通过接受一个带有上下文的函数来突破 Functor 的限制的。<br>我们先凭直觉来用一下 Applicative 吧！</p>
+</blockquote>
+<h2 id="小试"><a href="#小试" class="headerlink" title="小试"></a>小试</h2><p><code>Just (++) &lt;*&gt; Just &quot;Hello&quot; &lt;*&gt; Just &quot; World&quot;</code> 的结果是 ?</p>
+<blockquote>
+<p>Just “Hello World”</p>
+</blockquote>
+<p><code>(++) &lt;$&gt; Just &quot;Hello &quot; &lt;*&gt; Just &quot;Haskell~&quot;</code> 的结果是 ?</p>
+<blockquote>
+<p>Just “Hello Haskell~”</p>
+</blockquote>
+<p><code>(++) &lt;$&gt; Just 42 &lt;*&gt; Nothing</code> 的结果是 ?</p>
+<blockquote>
+<p>Nothing</p>
+</blockquote>
+<p><code>[(*0), (+100), (^2)] &lt;*&gt; [1, 2, 3]</code> 的结果是 ?</p>
+<blockquote>
+<p>[0,0,0,101,102,103,1,4,9]</p>
+</blockquote>
+<p>为什么不是 <code>[0, 102, 9]</code> ?</p>
+<blockquote>
+<p>因为列表是 Applicative 的实例，它实现了自己的 &lt;*&gt; 方法。</p>
+</blockquote>
+<p>所以其实 <code>Maybe</code> 也是 <code>Applicative</code> 的实例 ?</p>
+<blockquote>
+<p>是的。</p>
+</blockquote>
+<h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p><code>Maybe</code> 是怎么实现 <code>&lt;*&gt;</code> 的 ?</p>
+<blockquote>
+<p>如下所示:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> <span class="type">Maybe</span> <span class="keyword">where</span></span></span><br><span class="line">    pure          = <span class="type">Just</span></span><br><span class="line">    <span class="type">Just</span> f  &lt;*&gt; m = fmap f m</span><br><span class="line">    <span class="type">Nothing</span> &lt;*&gt; _ = <span class="type">Nothing</span></span><br></pre></td></tr></table></figure></p>
+<p>现在可以试试理解 &lt;*&gt; 是如何应用在 Maybe 中的。</p>
+</blockquote>
+<p><code>Just (+) &lt;*&gt; Just 3</code> 的结果是 ?</p>
+<blockquote>
+<p>Just (+3)</p>
+</blockquote>
+<p>所以 <code>Just (+) &lt;*&gt; Just 3 &lt;*&gt; Just 8</code> 是 <code>Just 11</code> ?</p>
+<blockquote>
+<p>是的！</p>
+</blockquote>
+<p>那列表是怎么实现 <code>&lt;*&gt;</code> 的 ?</p>
+<blockquote>
+<p>如下所示:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> [] <span class="keyword">where</span></span></span><br><span class="line">    pure x = [x]</span><br><span class="line">    fs &lt;*&gt; xs = [f x | f &lt;- fs, x &lt;- xs]</span><br></pre></td></tr></table></figure></p>
+<p>列表是通过「列表解析(List Comprehension)」来实现 <code>&lt;*&gt;</code> 的。<br>其中的 fs 可以看成是一个由函数组成的列表，如 [(+1), (*2), (^3)]<br>整个过程可以看作 <code>concatMap (\f -&gt; map f xs) fs</code> 的另一个写法。</p>
+</blockquote>
+<p>还有哪些是 <code>Applicative</code> 的实例 ?</p>
+<blockquote>
+<p><code>IO</code>, <code>(-&gt;) r</code></p>
+</blockquote>
+<p><code>IO</code> 怎么实现 <code>&lt;*&gt;</code> ?</p>
+<blockquote>
+<p>看看下面的代码:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> <span class="type">IO</span> <span class="keyword">where</span></span></span><br><span class="line">    pure = return</span><br><span class="line">    a &lt;*&gt; b = <span class="keyword">do</span></span><br><span class="line">        f &lt;- a</span><br><span class="line">        x &lt;- b</span><br><span class="line">        return (f x)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>不太懂，有没有具体的例子 ?</p>
+<blockquote>
+<p>下面有个简单易懂的例子:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">myAction</span> :: <span class="type">IO</span> <span class="type">String</span></span><br><span class="line"><span class="title">myAction</span> = <span class="keyword">do</span></span><br><span class="line">    a &lt;- getLine</span><br><span class="line">    b &lt;- getLine</span><br><span class="line">    return $ a ++ b</span><br></pre></td></tr></table></figure></p>
+<p>其实我们可以可以写成下面这样:<br><code>myAction = (++) &lt;$&gt; getLine &lt;*&gt; getLine</code></p>
+</blockquote>
+<p>那 <code>(-&gt;) r</code> 又是什么 ?</p>
+<blockquote>
+<p><code>(-&gt;) r</code> 其实是函数，如果语法允许的话，我们写成 <code>r -&gt;</code> 也可以，但是语法只允许 <code>(-&gt;) r</code> 这种写法。</p>
+</blockquote>
+<p><code>(-&gt;) r</code> 是怎么实现 <code>&lt;*&gt;</code> 的 ?</p>
+<blockquote>
+<p>看看下面的代码:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> <span class="container">((-&gt;)</span> r) <span class="keyword">where</span></span></span><br><span class="line">    pure x = (\_ -&gt; x)</span><br><span class="line">    f &lt;*&gt; g = \x -&gt; f x (g x)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><code>(-&gt;) r</code> 的 <code>&lt;*&gt;</code> 实现不是太好理解。</p>
+<blockquote>
+<p>确实不太好理解，它的意思是给 <code>&lt;*&gt;</code> 两个函数，然后生成一个新的函数。</p>
+</blockquote>
+<p>有具体例子吗？</p>
+<blockquote>
+<p>这里要先留意一下 pure 的实现:<br><code>pure x = (\_ -&gt; x)</code><br>它会包装传进的函数，返回一个新的函数。这个新函数会无视第一个传进的参数，然后返回原来的函数。 </p>
+</blockquote>
+<p>看起来很绕，可以给一些例子吗 ?</p>
+<blockquote>
+<p>是的，直接看例子会好理解一点:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; :t pure (+<span class="number">3</span>)</span><br><span class="line"><span class="title">pure</span> (+<span class="number">3</span>) :: f (a -&gt; a)</span><br><span class="line"></span><br><span class="line"><span class="title">ghci</span>&gt; :t pure (+<span class="number">3</span>) <span class="number">2</span></span><br><span class="line"><span class="title">pure</span> (+<span class="number">3</span>) <span class="number">2</span> :: a -&gt; a</span><br><span class="line"></span><br><span class="line"><span class="title">ghci</span>&gt; pure (+<span class="number">3</span>) <span class="number">2</span> <span class="number">4</span></span><br><span class="line"><span class="number">7</span></span><br></pre></td></tr></table></figure></p>
+<p>看到了吗 ?<br><code>pure (+3)</code> 返回的是 <code>(\_ -&gt; (+3))</code>。<br><code>pure (+3) 2</code> 返回的是 <code>(+3)</code>。<br><code>pure (+3) 2 4</code> 其实是 <code>(+3) 4</code> 的结果。</p>
+</blockquote>
+<p>OK，我已经了解 <code>pure</code> 是如何处理函数的了。</p>
+<blockquote>
+<p>好，接下来我们看 <code>&lt;*&gt;</code> 的实现。<br>看看下面的例子，我们按照定义一步一步来~<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 例子1</span></span><br><span class="line">    pure (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">100</span>)</span><br><span class="line"><span class="comment">-- 展开 pure (+3)</span></span><br><span class="line">= (\_ -&gt; (+<span class="number">3</span>)) &lt;*&gt; (*<span class="number">100</span>)</span><br><span class="line"><span class="comment">-- 展开 &lt;*&gt;</span></span><br><span class="line">= \x -&gt; (\_ -&gt; (+<span class="number">3</span>)) x (*<span class="number">100</span> x)</span><br><span class="line"><span class="comment">-- 当 x = 5 时</span></span><br><span class="line">= \<span class="number">5</span> -&gt; (\_ -&gt; (+<span class="number">3</span>)) <span class="number">5</span> (*<span class="number">100</span> <span class="number">5</span>)</span><br><span class="line"><span class="comment">-- 传进 5 之后的返回值如下</span></span><br><span class="line">= (\_ -&gt; (+<span class="number">3</span>)) <span class="number">5</span> <span class="number">500</span></span><br><span class="line"><span class="comment">-- 无论第一个参数是什么，它都是返回 (+3)</span></span><br><span class="line">= (+<span class="number">3</span>) <span class="number">500</span></span><br><span class="line">= <span class="number">503</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 例子2</span></span><br><span class="line">    (+) &lt;$&gt; (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">100</span>)</span><br><span class="line"><span class="comment">-- 展开 &lt;$&gt;</span></span><br><span class="line">= (+) . (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">100</span>)</span><br><span class="line"><span class="comment">-- 展开 &lt;*&gt;</span></span><br><span class="line">= \x -&gt; (+) . (+<span class="number">3</span>) x (*<span class="number">100</span> x)</span><br><span class="line"><span class="comment">-- 当 x = 5 时</span></span><br><span class="line">= \<span class="number">5</span> -&gt; (+) . (+<span class="number">3</span>) <span class="number">5</span> (*<span class="number">100</span> <span class="number">5</span>)</span><br><span class="line"><span class="comment">-- 返回值</span></span><br><span class="line">= (+) . (+<span class="number">3</span>) <span class="number">5</span> <span class="number">500</span></span><br><span class="line">= (<span class="number">8</span>+) <span class="number">500</span></span><br><span class="line">= <span class="number">508</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 例子3</span></span><br><span class="line">    (\x y z -&gt; [x,y,z]) &lt;$&gt; (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">2</span>) &lt;*&gt; (/<span class="number">2</span>)</span><br><span class="line"><span class="comment">-- 先假设 (\x y z -&gt; [x,y,z]) 为 f</span></span><br><span class="line">= f &lt;$&gt; (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">2</span>) &lt;*&gt; (/<span class="number">2</span>)</span><br><span class="line"><span class="comment">-- 展开 &lt;$&gt;</span></span><br><span class="line">= f . (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">2</span>) &lt;*&gt; (/<span class="number">2</span>)</span><br><span class="line"><span class="comment">-- 展开第一个 &lt;*&gt;</span></span><br><span class="line">= \x -&gt; (f . (+<span class="number">3</span>)) x (*<span class="number">2</span> x) &lt;*&gt; (/<span class="number">2</span>)</span><br><span class="line"><span class="comment">-- 展开第二个 &lt;*&gt;</span></span><br><span class="line">= \y -&gt; (\x -&gt; (f . (+<span class="number">3</span>)) x (*<span class="number">2</span> x)) y (/<span class="number">2</span> y)</span><br><span class="line"><span class="comment">-- 观察 (\x -&gt; (f . (+3)) x (*2 x)) y</span></span><br><span class="line"><span class="comment">-- 把 y 传入函数中可以得到</span></span><br><span class="line">= \y -&gt; (f . (+<span class="number">3</span>)) y (*<span class="number">2</span> y) (/<span class="number">2</span> y)</span><br><span class="line">= \y -&gt; f (+<span class="number">3</span> y) (*<span class="number">2</span> y) (/<span class="number">2</span> y)</span><br><span class="line"><span class="comment">-- 当传入 5 作为参数时</span></span><br><span class="line">= f (+<span class="number">3</span> <span class="number">5</span>) (*<span class="number">2</span> <span class="number">5</span>) (/<span class="number">2</span> <span class="number">5</span>)</span><br><span class="line">= f <span class="number">8</span> <span class="number">10</span> <span class="number">2.5</span></span><br><span class="line"><span class="comment">-- 把 f 换回 (\x y z -&gt; [x,y,z])</span></span><br><span class="line">= [<span class="number">8.0</span>,<span class="number">10.0</span>,<span class="number">2.5</span>]</span><br></pre></td></tr></table></figure></p>
+<p>很有趣吧 !</p>
+</blockquote>
+<p>每次都要展开 <code>&lt;*&gt;</code> 很麻烦啊 ?</p>
+<blockquote>
+<p>从刚才的例子中，你应该可以发现，我们从直觉上就可以知道计算过程。<br>试试化简一下 <code>f &lt;$&gt; g &lt;*&gt; h</code> ?</p>
+</blockquote>
+<p><code>f &lt;$&gt; g &lt;*&gt; h</code> = <code>(\x -&gt; f (g x) (h x))</code>。</p>
+<blockquote>
+<p>正确，再把 5 传入看看 ?</p>
+</blockquote>
+<p><code>f &lt;$&gt; g &lt;*&gt; h $ 5</code> = <code>f (g 5) (h 5)</code>。</p>
+<blockquote>
+<p>假设 f 是一个需要两个参数的函数的话，就能返回计算结果了 !</p>
+</blockquote>
+<p>所以其实我们可以把 <code>f &lt;$&gt; g &lt;*&gt; h</code> 看成是把 <code>g</code> 和 <code>h</code> 的结果传给 <code>f</code> ?</p>
+<blockquote>
+<p>是的，我们从直觉上就可以知道计算过程，很有趣吧 !<br>顺便说下, 像 <code>f &lt;$&gt; g &lt;*&gt; h</code> 这样的用法叫做 Applicative Style 哦 !</p>
+</blockquote>
+<p><code>Applicative</code> 有没有和 <code>Functor</code> 一样需要遵守的规则 ?</p>
+<blockquote>
+<p>有的！其中最重要的规则是:<br>必须保证 <code>pure f &lt;*&gt; x = fmap f x</code>。</p>
+</blockquote>
+<p>我应该怎么理解这个规则 ?</p>
+<blockquote>
+<p>我们说 <code>Applicative</code> 是加强版的 <code>Functor</code>，它可以应用一个带有上下文的函数到 <code>Functor</code> 上。<br>我们看看之前提到的 <code>Applicative</code> 实例 :<br>对于 <code>Maybe</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line">  pure f &lt;*&gt; x</span><br><span class="line">= <span class="type">Just</span> f &lt;*&gt; x</span><br><span class="line">= fmap f x</span><br></pre></td></tr></table></figure></p>
+<p>对于 <code>List</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line">  pure f &lt;*&gt; x</span><br><span class="line">= [f] &lt;*&gt; x</span><br><span class="line">= [f x' | x' &lt;- x]</span><br><span class="line">= map f x</span><br><span class="line">= fmap f x</span><br></pre></td></tr></table></figure></p>
+<p>对于 <code>IO</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line">  pure f &lt;*&gt; x</span><br><span class="line">= return f &lt;*&gt; x</span><br><span class="line">= return (f x)</span><br><span class="line">= fmap f x</span><br></pre></td></tr></table></figure></p>
+<p>对于 <code>(-&gt;) r</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line">  pure f &lt;*&gt; x</span><br><span class="line">= (\_ -&gt; f) &lt;*&gt; x</span><br><span class="line">= (\y -&gt; (\_ -&gt; f) y (x y))</span><br><span class="line">= (\y -&gt; f (x y))</span><br><span class="line">= (\y -&gt; (f . x) y)</span><br><span class="line">= f . x</span><br><span class="line">= fmap f x</span><br></pre></td></tr></table></figure></p>
+<p>看到了吧 ! 我们上面提到的 <code>Applicative</code> 的实例全部都满足 <code>pure f &lt;*&gt; x = fmap f x</code> 哦 !</p>
+</blockquote>
+<p>还有其他需要遵守的规则吗 ?</p>
+<blockquote>
+<p>有的，分别如下:</p>
+<ul>
+<li><code>pure id &lt;*&gt; v = v</code></li>
+<li><code>pure (.) &lt;*&gt; u &lt;*&gt; v &lt;*&gt; w = u &lt;*&gt; (v &lt;*&gt; w)</code></li>
+<li><code>pure f &lt;*&gt; pure x = pure (f x)</code></li>
+<li><code>u &lt;*&gt; pure y = pure ($ y) &lt;*&gt; u</code><br>这些规则都是可以被证明的，你可以试一试。</li>
+</ul>
+</blockquote>
+<p>还有什么我需要知道的吗 ?</p>
+<blockquote>
+<p>忘了说，<code>Applicative</code> 需要导入才可以用，它位于 <code>Control.Applicative</code> 下。<br>想用的时候记得先写 <code>import Control.Applicative</code> 哦 !</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><code>Applicative</code> 是加强版的 <code>Functor</code>。</li>
+<li><code>Applicative</code> 的实例可以使用 <code>pure</code> 和 <code>&lt;*&gt;</code>。</li>
+<li>我们可以用 <code>&lt;$&gt;</code> 和 <code>&lt;*&gt;</code> 将一个普通函数应用到任意数量的 <code>Applicative Functor</code> 上。</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://learnyouahaskell.com/functors-applicative-functors-and-monoids" target="_blank" rel="external">Functors, Applicative Functors and Monoids</a></p>
+
+    
+  </div>
+</article>
+
+
+
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+
+
+
+</div>
+
+  
+<script>
+  var disqus_shortname = 'scarletskygithubio';
+  
+  var disqus_url = 'http://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+  
+
+</body>
+</html>
