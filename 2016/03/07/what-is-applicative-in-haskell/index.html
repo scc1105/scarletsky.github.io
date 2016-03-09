@@ -33,7 +33,7 @@ Applicative 是加强版的 Functor，是一个类型类。
 还记得 Functor 的限制吗？fmap f x 中的 f 只接受一个参数。fmap f x 中的 f 不能带有上下文 (换句话说只能是 (+42) 不能是 Just (+42))。所谓的加强版的 Functor 就没有这些限制。
 
 这样有什">
-<meta property="og:updated_time" content="2016-03-09T04:12:56.000Z">
+<meta property="og:updated_time" content="2016-03-09T05:26:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="what is applicative in haskell ?">
 <meta name="twitter:description" content="初探什么是 Applicative ?
@@ -174,7 +174,7 @@ ga('send', 'pageview');
 </blockquote>
 <p><code>pure</code> 有什么用 ?</p>
 <blockquote>
-<p>把一个值变成一个 Functor 。</p>
+<p>把一个值变成一个 Applicative Functor 。</p>
 </blockquote>
 <p><code>&lt;*&gt;</code> 呢 ?</p>
 <blockquote>
