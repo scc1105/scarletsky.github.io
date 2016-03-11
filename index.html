@@ -27,9 +27,9 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link rel="stylesheet" href="/css/styles.css" type="text/css">
-
   
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
 
   
 <!-- Google Analytics -->
@@ -51,6 +51,9 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
+  
+
   
   <div class="content-home text-center">
   <a class="avatar" href="/">
@@ -62,6 +65,7 @@ ga('send', 'pageview');
   <div class="slogan">
     Follow your heart, Live better
   </div>
+
   <hr>
 
   <ul class="text-center nav">
@@ -87,6 +91,13 @@ ga('send', 'pageview');
         <span>|</span>
       </li>
     
+      <li class="item">
+        
+          <a href="/about/">About</a>
+        
+        <span>|</span>
+      </li>
+    
   </ul>
 
 </div>
@@ -94,21 +105,76 @@ ga('send', 'pageview');
 
 
 
-  
-<script>
-  var disqus_shortname = 'scarletskygithubio';
-  
-  (function(){
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
 
 
+
   
 
+  <script src="/js/app.js"></script>
 </body>
 </html>

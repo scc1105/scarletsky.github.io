@@ -34,9 +34,9 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
     <link rel="icon" href="/favicon.ico">
   
 
-  <link rel="stylesheet" href="/css/styles.css" type="text/css">
-
   
+
+  <link href="/css/styles.css?v=ed12202f" rel="stylesheet">
 
   
 <!-- Google Analytics -->
@@ -58,41 +58,69 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
   <div class="post-header CENTER">
    
   <div class="toolbox">
-    <a class="toolbox-entry hint hint--left" data-hint="点击返回首页" href="/">盒子</a>
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
     <ul class="list-toolbox">
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/archives/">博客</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/category/">分类</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/tag/">标签</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/about/">关于</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/atom.xml">RSS</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
       
     </ul>
   </div>
@@ -100,19 +128,15 @@ ga('send', 'pageview');
 
 </div>
 
- 
+
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本介绍"><span class="toc-text">基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特点"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#种类"><span class="toc-text">种类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件"><span class="toc-text">事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#可读数据流的事件"><span class="toc-text">可读数据流的事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可写数据流的事件"><span class="toc-text">可写数据流的事件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#状态"><span class="toc-text">状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用法"><span class="toc-text">用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#读写文件"><span class="toc-text">读写文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#读取-CSV-文件，并上传数据（我在生产环境中写过）"><span class="toc-text">读取 CSV 文件，并上传数据（我在生产环境中写过）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更多用法"><span class="toc-text">更多用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见坑"><span class="toc-text">常见坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用类库"><span class="toc-text">常用类库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
   </div>
 
 
- <a class="back-top" href="#">
-  <i class="icon-angle-up"></i>
-</a>
 
-
-<div class="content-post CENTER">
+<div class="content content-post CENTER">
    <article id="post-node-stream-api-learning" class="article article-type-post" itemscope itemprop="blogPost">
   <header class="article-header">
     <h1 class="post-title">Node.js 中 Stream API 的使用</h1>
@@ -204,36 +228,116 @@ ga('send', 'pageview');
   </div>
 </article>
 
+</div>
 
 
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
   <section class="disqus-comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
   </section>
 
+  <script>
+    var disqus_shortname = 'scarletskygithubio';
+    
+    var disqus_url = 'http://scarletsky.github.io/2015/10/22/node-stream-api-learning/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
 
 
 
-</div>
+
+  </div>
 
   
-<script>
-  var disqus_shortname = 'scarletskygithubio';
-  
-  var disqus_url = 'http://scarletsky.github.io/2015/10/22/node-stream-api-learning/';
-  
-  (function(){
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript';
-    dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
 
-
-  
-
+  <script src="/js/app.js"></script>
 </body>
 </html>
