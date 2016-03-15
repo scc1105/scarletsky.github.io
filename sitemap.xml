@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://scarletsky.github.io/project/index.html</loc>
-    
-    <lastmod>2016-03-15T10:04:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://scarletsky.github.io/2015/12/02/the-little-javascript-closures/</loc>
     
     <lastmod>2016-03-11T02:15:30.000Z</lastmod>
