@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>type vs data vs newtype in haskell | Scarletsky</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="haskell," />
+  
+
+  <meta name="description" content="typetype 关键字用来设置类型别名，提高代码可读性。
+我们可以类比 shell 里面的 alias 命令，它是用来设置命令别名的。譬如下面的 shell 命令：
+$ alias aria2-server=&quot;aria2c --conf-path ~/aria2.conf&quot;
+我们用 aria2-server 来代替 aria2c --conf-path ~/aria2.conf，它们本质上是一样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="type vs data vs newtype in haskell">
+<meta property="og:url" content="http://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/index.html">
+<meta property="og:site_name" content="Scarletsky">
+<meta property="og:description" content="typetype 关键字用来设置类型别名，提高代码可读性。
+我们可以类比 shell 里面的 alias 命令，它是用来设置命令别名的。譬如下面的 shell 命令：
+$ alias aria2-server=&quot;aria2c --conf-path ~/aria2.conf&quot;
+我们用 aria2-server 来代替 aria2c --conf-path ~/aria2.conf，它们本质上是一样">
+<meta property="og:updated_time" content="2016-03-20T05:41:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="type vs data vs newtype in haskell">
+<meta name="twitter:description" content="typetype 关键字用来设置类型别名，提高代码可读性。
+我们可以类比 shell 里面的 alias 命令，它是用来设置命令别名的。譬如下面的 shell 命令：
+$ alias aria2-server=&quot;aria2c --conf-path ~/aria2.conf&quot;
+我们用 aria2-server 来代替 aria2c --conf-path ~/aria2.conf，它们本质上是一样">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  
+
+  <link href="/css/styles.css?v=8c6c4ed3" rel="stylesheet">
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-40690820-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a 
+            class="CIRCLE" 
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#type"><span class="toc-text">type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#data"><span class="toc-text">data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#newtype"><span class="toc-text">newtype</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-type-vs-data-vs-newtype-in-haskell" class="article article-type-post" itemscope itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">type vs data vs newtype in haskell</h1>
+
+    <div class="article-meta">
+      <span>2016-03-15</span>
+
+      <span> | </span>
+
+      <span class="article-author">Scarletsky</span>
+
+      <span> | </span>
+
+      
+  <span class="article-category">
+    <a class="article-category-link" href="/categories/haskell/">haskell</a>
+  </span>
+
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="type"><a href="#type" class="headerlink" title="type"></a>type</h2><p><code>type</code> 关键字用来设置类型别名，提高代码可读性。</p>
+<p>我们可以类比 shell 里面的 <code>alias</code> 命令，它是用来设置命令别名的。譬如下面的 shell 命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">alias</span> aria2-server=<span class="string">"aria2c --conf-path ~/aria2.conf"</span></span><br></pre></td></tr></table></figure>
+<p>我们用 <code>aria2-server</code> 来代替 <code>aria2c --conf-path ~/aria2.conf</code>，它们本质上是一样的，只是一个不同的名字，方便我们输入而已。</p>
+<p>Haskell 中的 <code>type</code> 命令也是一样，它用来设置一个 <strong>「已有类型」</strong> 的别名。</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">type</span> <span class="type">BookId</span> = <span class="type">Int</span></span></span><br><span class="line"><span class="typedef"><span class="keyword">type</span> <span class="type">BookSummary</span> = <span class="type">String</span></span></span><br><span class="line"><span class="typedef"><span class="keyword">type</span> <span class="type">BookRecord</span> = <span class="container">(<span class="type">BookId</span>, <span class="type">BookSummary</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>上面的代码只是为一些 <strong>「已有类型」</strong> 设置一个别名，并没有创建新的数据类型，因此它不能使用 <code>deriving</code> 关键字。</p>
+<h2 id="data"><a href="#data" class="headerlink" title="data"></a>data</h2><p><code>data</code> 关键字用来创建新的数据类型，有「类型构造器」 和 「值构造器」，它们的名字可以是相同的，也可以是不同的。<br>其中，有一个以上「值构造器」的数据类型称为 「代数数据类型（algebraic data type）」。</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- BookInfo 是类型构造器</span></span><br><span class="line"><span class="comment">-- Book 是值构造器</span></span><br><span class="line"><span class="comment">-- ghci&gt; Book 1 "Hello" :: BookInfo</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">BookInfo</span> = <span class="type">Book</span> <span class="type">Int</span> <span class="type">String</span> <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 左边的 Book 是类型构造器</span></span><br><span class="line"><span class="comment">-- 右边的 Book 是值构造器</span></span><br><span class="line"><span class="comment">-- ghci&gt; Book 1 "World" :: Book</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">Book</span> = <span class="type">Book</span> <span class="type">Int</span> <span class="type">String</span> <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- Tree a 是代数数据类型</span></span><br><span class="line"><span class="comment">-- a 是类型参数，表示任意类型</span></span><br><span class="line"><span class="comment">-- Empty 和 Node 都是值构造器</span></span><br><span class="line"><span class="comment">-- ghci&gt; Empty :: Tree a</span></span><br><span class="line"><span class="comment">-- ghci&gt; Node 1 (Empty) (Empty) :: Num a =&gt; Tree a</span></span><br><span class="line"><span class="comment">-- ghci&gt; Node "Hello" Empty (Node "World" (Empty) (Empty)) :: Tree [Char]</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">Tree</span> a = <span class="type">Empty</span> | <span class="type">Node</span> a <span class="container">(<span class="type">Tree</span> <span class="title">a</span>)</span> <span class="container">(<span class="type">Tree</span> <span class="title">a</span>)</span> <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p><code>data</code> 支持用 Record Syntax 来创建数据类型，用 Record Syntax 生成数据类型的同时会生成一些 <code>getter</code> 函数。</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">Person</span> = <span class="type">Person</span> <span class="container">&#123;</span><br><span class="line">    <span class="title">name</span> :: <span class="type">String</span>,</span><br><span class="line">    <span class="title">age</span> :: <span class="type">Int</span>,</span><br><span class="line">    <span class="title">height</span> :: <span class="type">Float</span></span><br><span class="line">&#125;</span> <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 自动生成下面这些 getter 函数</span></span><br><span class="line"><span class="comment">-- name :: Person -&gt; String</span></span><br><span class="line"><span class="comment">-- age :: Person -&gt; Int</span></span><br><span class="line"><span class="comment">-- height :: Person -&gt; Float</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 通过如下方式来创建数据</span></span><br><span class="line"><span class="comment">-- let p = Person &#123; name="John", age=30, height=1.8 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 使用 getter 函数</span></span><br><span class="line"><span class="comment">-- name p -&gt; "John"</span></span><br><span class="line"><span class="comment">-- age p -&gt; 30</span></span><br><span class="line"><span class="comment">-- height p -&gt; 1.8</span></span><br></pre></td></tr></table></figure>
+<h2 id="newtype"><a href="#newtype" class="headerlink" title="newtype"></a>newtype</h2><p><code>newtype</code> 关键字和 <code>data</code> 类似，都是用来创建新的数据类型，但 <code>newtype</code> 的值构造器限制在一个，而 <code>data</code> 没有限制值构造器的数量。<br>另外，<code>newtype</code> 速度比 <code>data</code> 要快。</p>
+<p>为什么既然有了 <code>data</code> 还要有 <code>newtype</code> ？ 先看下面这个例子：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line">[(+<span class="number">2</span>), (*<span class="number">3</span>)] &lt;*&gt; [<span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="comment">-- 结果是 [4, 5, 6, 9]</span></span><br><span class="line"><span class="comment">-- 但我希望的结果是 [4, 9]，该怎样做 ？</span></span><br></pre></td></tr></table></figure>
+<p>在上面的例子中，因为 <code>[]</code> 已经是 <code>Applicative</code> 的实例了，也就是说它已经有自己的 <code>&lt;*&gt;</code> 方法了。<br>如果不重新实现 <code>&lt;*&gt;</code> 方法，我们是没有办法得到 <code>[4, 9]</code> 这个结果的。</p>
+<p>但怎样才能既不改动原有的 <code>[]</code>，又可以重新实现 <code>&lt;*&gt;</code> 方法呢 ？<br>答案就是用 <code>newtype</code> 把 <code>[]</code> 封装成一个新的类型，然后让这个新的类型成为 <code>Applicative</code> 的实例啦~<br>我们来试试：</p>
+<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">newtype</span> <span class="type">ZipList</span> a = <span class="type">ZipList</span> <span class="container">&#123; <span class="title">getZipList</span> :: [<span class="title">a</span>] &#125;</span> <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 要让 ZipList 成为 Applicative 的实例，</span></span><br><span class="line"><span class="comment">-- 必须先让 ZipList 成为 Functor 的实例</span></span><br><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">ZipList</span> <span class="keyword">where</span></span></span><br><span class="line">    fmap f xs = undefined</span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Applicative</span> <span class="type">ZipList</span> <span class="keyword">where</span></span></span><br><span class="line">    pure x = undefined</span><br><span class="line">    <span class="type">ZipList</span> fs &lt;*&gt; <span class="type">ZipList</span> xs = <span class="type">ZipList</span> (zipWith id fs xs)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ghci&gt; getZipList $ ZipList [(+2), (*3)] &lt;*&gt; ZipList [2,3]</span></span><br><span class="line"><span class="comment">-- ghci&gt; [4, 9]</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>type</code> 用来为一个已有类型声明别名。<br><code>data</code> 用来定义新的数据类型，可以有任意个值构造器。<br><code>newtype</code> 用来封装已有的数据类型，只能有一个值构造器，速度比 <code>data</code> 快。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://learnyoua.haskell.sg/content/zh-cn/ch08/build-our-own-type-and-typeclass.html" target="_blank" rel="external">Build Our Own Type and Typeclss</a><br><a href="http://learnyouahaskell.com/functors-applicative-functors-and-monoids" target="_blank" rel="external">Functors, Applicative Functors and Monoids</a><br><a href="http://cnhaskell.com/chp/3.html" target="_blank" rel="external">Defining types, streamlining functions</a><br><a href="http://cnhaskell.com/chp/6.html" target="_blank" rel="external">Using typeclasses</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'scarletskygithubio';
+    
+    var disqus_url = 'http://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/fastclick.js', function() {
+      loadScript('/js/app.js', function() {
+        // load success
+      });
+    });
+  }
+</script>
+
+</body>
+</html>
