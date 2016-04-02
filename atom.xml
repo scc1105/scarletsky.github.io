@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-04-02T05:16:57.000Z</updated>
+  <updated>2016-04-02T16:16:58.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -16,11 +16,70 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Hubot 的简单用法</title>
+    <link href="http://scarletsky.github.io/2016/04/03/hubot-simple-usage/"/>
+    <id>http://scarletsky.github.io/2016/04/03/hubot-simple-usage/</id>
+    <published>2016-04-02T16:12:49.000Z</published>
+    <updated>2016-04-02T16:16:58.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;Hubot 是 Github 的开源聊天机器人，可以用来做一些自动化任务，如部署网站，翻译语言等等。&lt;/p&gt;
+&lt;p&gt;你可能会说，这些只要写个脚本就可以做到了吧？&lt;/p&gt;
+&lt;p&gt;确实，但你写完脚本之后还是需要手动运行那些脚本。&lt;/p&gt;
+&lt;p&gt;你有没想过其实你可以在常用的聊天软件上说 &lt;code&gt;@xxx, 部署新版本的网站&lt;/code&gt;，然后机器人就自动登录服务器，然后执行部署脚本，部署成功后告诉你 &lt;code&gt;新版本的网站已经部署成功&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;是的，如果你的聊天软件上集成了 Hubot，你就可以轻松地用它来管理一些繁琐的事情啦！&lt;/p&gt;
+&lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;p&gt;官方推荐我们用 yeoman + hubot 生成器来生成我们的聊天机器人，方法如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ npm install -g yo generator-hubot&amp;#10;$ mkdir myhubot &amp;#38;&amp;#38; cd myhubot&amp;#10;$ yo hubot&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;回答一些基本的问题后，我们的聊天机器人就生成好啦~&lt;/p&gt;
+&lt;h2 id=&quot;基本用法&quot;&gt;&lt;a href=&quot;#基本用法&quot; class=&quot;headerlink&quot; title=&quot;基本用法&quot;&gt;&lt;/a&gt;基本用法&lt;/h2&gt;&lt;p&gt;我们的聊天机器人的执行文件是 &lt;code&gt;bin/hubot&lt;/code&gt;，我们先看看里面写什么：&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ cat ./bin/hubot&amp;#10;&amp;#10;#!/bin/sh&amp;#10;&amp;#10;set -e&amp;#10;&amp;#10;npm install&amp;#10;export PATH=&amp;#34;node_modules/.bin:node_modules/hubot/node_modules/.bin:$PATH&amp;#34;&amp;#10;&amp;#10;exec node_modules/.bin/hubot --name &amp;#34;myhubot&amp;#34; &amp;#34;$@&amp;#34;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这份执行文件只是先执行 &lt;code&gt;npm install&lt;/code&gt;，然后设置环境变量，再执行 &lt;code&gt;node_modules/.bin/hubot&lt;/code&gt; 而已，没什么神秘的。&lt;/p&gt;
+&lt;p&gt;我们试试运行一下这份可执行文件：&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ ./bin/hubot&amp;#10;myhubot&amp;#62;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;我们看到了一个类似 shell 的东东！试试随便输入一些东西：&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;myhubot&amp;#62; hello&amp;#10;myhubot&amp;#62; world&amp;#10;myhubot&amp;#62; how are you?&amp;#10;myhubot&amp;#62; can you hear me?&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;我们发现无论我们输入什么，我们的机器人都没有反应，是不是坏掉了？&lt;br&gt;其实并不是这样的，它没反应是因为我们没有对「输入」的处理，如果我们输入一些特定的「输入」，它就会有反应啦！&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;myhubot&amp;#62; myhubot ping&amp;#10;myhubot&amp;#62; PONG&amp;#10;&amp;#10;myhubot&amp;#62; myhubot pug me&amp;#10;myhubot&amp;#62; http://28.media.tumblr.com/tumblr_locinzasB91qzj3syo1_500.jpg&amp;#10;&amp;#10;myhubot&amp;#62; myhubot help&amp;#10;myhubot&amp;#62; myhubot adapter - Reply with the adapter&amp;#10;myhubot animate me &amp;#60;query&amp;#62; - The same thing as `image me`, except adds a few parameters to try to return an animated GIF instead.&amp;#10;myhubot echo &amp;#60;text&amp;#62; - Reply back with &amp;#60;text&amp;#62;&amp;#10;myhubot help - Displays all of the help commands that Hubot knows about.&amp;#10;myhubot help &amp;#60;query&amp;#62; - Displays all help commands that match &amp;#60;query&amp;#62;.&amp;#10;myhubot image me &amp;#60;query&amp;#62; - The Original. Queries Google Images for &amp;#60;query&amp;#62; and returns a random top result.&amp;#10;myhubot map me &amp;#60;query&amp;#62; - Returns a map view of the area returned by `query`.&amp;#10;myhubot mustache me &amp;#60;url|query&amp;#62; - Adds a mustache to the specified URL or query result.&amp;#10;myhubot ping - Reply with pong&amp;#10;myhubot pug bomb N - get N pugs&amp;#10;myhubot pug me - Receive a pug&amp;#10;myhubot the rules - Make sure hubot still knows the rules.&amp;#10;myhubot time - Reply with current time&amp;#10;myhubot translate me &amp;#60;phrase&amp;#62; - Searches for a translation for the &amp;#60;phrase&amp;#62; and then prints that bad boy out.&amp;#10;myhubot translate me from &amp;#60;source&amp;#62; into &amp;#60;target&amp;#62; &amp;#60;phrase&amp;#62; - Translates &amp;#60;phrase&amp;#62; from &amp;#60;source&amp;#62; into &amp;#60;target&amp;#62;. Both &amp;#60;source&amp;#62; and &amp;#60;target&amp;#62; are optional&amp;#10;ship it - Display a motivation squirrel&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;看到了吧！如果我们输入了特定的「输入」，机器人就会有反应啦！&lt;/p&gt;
+&lt;p&gt;当我们输入 &lt;code&gt;myhubot help&lt;/code&gt; 的时候，返回的东东其实就是预定义的「输入」，这些预定义的「输入」只在 shell adapter 下有效哦！&lt;/p&gt;
+&lt;h2 id=&quot;Adapter&quot;&gt;&lt;a href=&quot;#Adapter&quot; class=&quot;headerlink&quot; title=&quot;Adapter&quot;&gt;&lt;/a&gt;Adapter&lt;/h2&gt;&lt;p&gt;什么是 shell adapter ？ 我们运行 &lt;code&gt;./bin/hubot&lt;/code&gt; 时默认的 adapter 就是 shell adapter。&lt;/p&gt;
+&lt;p&gt;什么是 adapter ？ 所谓的 adapter 其实是一些让机器人接收输入的接口。 &lt;/p&gt;
+&lt;p&gt;刚才提到，shell adapter 是默认情况下的 adapter，主要是用来测试 adapter 是否生效。说白了，其实就是没什么用！&lt;/p&gt;
+&lt;p&gt;觉得很坑爹是吧？说好的让我们的聊天软件整合我们的机器人呢？&lt;/p&gt;
+&lt;p&gt;实际上社区已经为我们提供了各种各样的 adapter，我们只要下载就可以用啦！具体请看看 &lt;a href=&quot;https://hubot.github.com/docs/adapters/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://hubot.github.com/docs/adapters/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;那么我们如何指定用某个 adapter 呢？很简单啦，只要启动机器人的时候带上 &lt;code&gt;-a&lt;/code&gt; 参数就好了。&lt;br&gt;譬如如果我们想让机器人整合到 telegram，我们只要执行下面的命令就可以了：&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ npm install --save hubot-telegram&amp;#10;$ ./bin/hubot -a telegram&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;当然我们还需要设置一下，这些设置会根据不同的 adapter 而有所不同，具体请看对应的文档！&lt;/p&gt;
+&lt;p&gt;如果你所用的聊天软件并不在社区的支持列表中，又想把整合 Hubot 的话，可以自己写 adapter，文档在这里：&lt;a href=&quot;https://hubot.github.com/docs/adapters/development/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://hubot.github.com/docs/adapters/development/&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Scripts&quot;&gt;&lt;a href=&quot;#Scripts&quot; class=&quot;headerlink&quot; title=&quot;Scripts&quot;&gt;&lt;/a&gt;Scripts&lt;/h2&gt;&lt;p&gt;我们一直说 Hubot 是聊天机器人，机器人最基本的是根据不同的「输入」给出不同的「输出」。&lt;br&gt;在 Hubot 应该怎么处理不同「输入」，给出不同的「输出」呢？&lt;br&gt;答案就是用 Scripts 啦！&lt;/p&gt;
+&lt;p&gt;有没有发现我们机器人的目录下有个 &lt;code&gt;scripts/&lt;/code&gt; 文件夹？我们可以在这个文件夹下添加各种脚本文件，根据不同的「输入」给出不同的「输出」。&lt;br&gt;在我们启动 Hubot 的时候，它会加载 &lt;code&gt;scripts/&lt;/code&gt; 文件夹下的脚本，赋予 Hubot 强大的交互能力！&lt;/p&gt;
+&lt;p&gt;需要注意的是，&lt;code&gt;scripts/&lt;/code&gt; 下的脚本必须是 &lt;code&gt;.coffee&lt;/code&gt; 或者 &lt;code&gt;.js&lt;/code&gt; 格式的，而且必须暴露一个接受 robot 参数的函数！&lt;br&gt;我们还是先打开 &lt;code&gt;scripts/example.coffee&lt;/code&gt; 看看吧！&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// coffee&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;module&lt;/span&gt;.exports = (robot) -&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// js&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;module&lt;/span&gt;.exports = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;robot&lt;/span&gt;) &lt;/span&gt;&amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在这个函数里面，我们可以利用 &lt;code&gt;robot.hear&lt;/code&gt;、&lt;code&gt;robot.response&lt;/code&gt;、&lt;code&gt;robot.send&lt;/code&gt;、&lt;code&gt;robot.reply&lt;/code&gt; 等 api 为不同的「输入」给出不同的「输出」！&lt;br&gt;我们还可以用 &lt;code&gt;robot.http(url).get()&lt;/code&gt; 等方法来发出 http 请求！这样我们的机器人就可以有更强大的交互能力了！&lt;/p&gt;
+&lt;p&gt;想知道更多 api 的用法的话，可以参考文档：&lt;a href=&quot;https://hubot.github.com/docs/scripting/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://hubot.github.com/docs/scripting/&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;写在最后&quot;&gt;&lt;a href=&quot;#写在最后&quot; class=&quot;headerlink&quot; title=&quot;写在最后&quot;&gt;&lt;/a&gt;写在最后&lt;/h2&gt;&lt;p&gt;Hubot 真的是一个简单易用的聊天机器人，我们可以把它整合到我们的聊天软件中，让那些简单但繁琐的任务自动化起来，提高我们的工作效率！&lt;br&gt;最后强烈推荐各位同学去读一下 Hubot 的源码，简单易懂，之后会对 Hubot 有更深刻的认识！&lt;/p&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://hubot.github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://hubot.github.com/&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;Hubot 是 Github 的开源聊天机器人，可以用来做一些自动化任务，如部署网站，翻译语言等等。&lt;/p&gt;
+&lt;p&gt;你可能会说，这些只要写个
+    
+    </summary>
+    
+      <category term="hubot" scheme="http://scarletsky.github.io/categories/hubot/"/>
+    
+    
+      <category term="hubot" scheme="http://scarletsky.github.io/tags/hubot/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Lodash 中 assign，extend 和 merge 的区别</title>
     <link href="http://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/"/>
     <id>http://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/</id>
     <published>2016-04-02T02:51:19.000Z</published>
-    <updated>2016-04-02T05:16:57.000Z</updated>
+    <updated>2016-04-02T05:17:35.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;我们经常在别人的代码中看见 &lt;code&gt;assign&lt;/code&gt;，&lt;code&gt;extend&lt;/code&gt;，&lt;code&gt;merge&lt;/code&gt; 函数，这三个函数用起来很相似，都是合并源对象的属性到目标对象中。&lt;/p&gt;
 &lt;p&gt;既然都是合并对象，为什么还分三个不同的函数呢？它们之间到底有什么区别呢？&lt;/p&gt;
@@ -1881,43 +1940,6 @@
       <category term="career" scheme="http://scarletsky.github.io/tags/career/"/>
     
       <category term="life" scheme="http://scarletsky.github.io/tags/life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Android Support Design Library 注意事项</title>
-    <link href="http://scarletsky.github.io/2015/07/05/android-support-design-library-experience/"/>
-    <id>http://scarletsky.github.io/2015/07/05/android-support-design-library-experience/</id>
-    <published>2015-07-05T15:45:02.000Z</published>
-    <updated>2016-02-29T04:37:44.000Z</updated>
-    
-    <content type="html">&lt;p&gt;#CoordinatorLayout&lt;/p&gt;
-&lt;p&gt;这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。&lt;/p&gt;
-&lt;p&gt;常见的用法如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CoordinatorLayout&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    xmlns:android=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    xmlns:app=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res-auto&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.v4&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.NestedScrollView&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        xmlns:android=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        xmlns:app=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res-auto&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_gravity=&lt;span class=&quot;string&quot;&gt;&quot;fill_vertical&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_marginBottom=&lt;span class=&quot;string&quot;&gt;&quot;?attr/actionBarSize&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:&lt;span class=&quot;attribute&quot;&gt;background&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;@android:color/white&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        app:layout_behavior=&lt;span class=&quot;string&quot;&gt;&quot;@string/appbar_scrolling_view_behavior&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;FrameLayout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/frame_image_toolbar_content&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;/FrameLayout&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.v4&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.NestedScrollView&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.AppBarLayout&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/appbar&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;256dp&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:theme=&lt;span class=&quot;string&quot;&gt;&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CollapsingToolbarLayout&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/collapsing_toolbar_wrapper&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:contentScrim=&lt;span class=&quot;string&quot;&gt;&quot;?attr/colorPrimary&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:expandedTitleMarginEnd=&lt;span class=&quot;string&quot;&gt;&quot;64dp&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:expandedTitleMarginStart=&lt;span class=&quot;string&quot;&gt;&quot;48dp&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:layout_scrollFlags=&lt;span class=&quot;string&quot;&gt;&quot;scroll|exitUntilCollapsed&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;lt;ImageView&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/collapsing_toolbar_image&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:scaleType=&lt;span class=&quot;string&quot;&gt;&quot;centerCrop&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:layout_collapseMode=&lt;span class=&quot;string&quot;&gt;&quot;parallax&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                /&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.v7&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.Toolbar&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/collapsing_toolbar&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;?attr/actionBarSize&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:layout_collapseMode=&lt;span class=&quot;string&quot;&gt;&quot;pin&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:theme=&lt;span class=&quot;string&quot;&gt;&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:popupTheme=&lt;span class=&quot;string&quot;&gt;&quot;@style/ThemeOverlay.AppCompat.Light&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                /&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CollapsingToolbarLayout&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.AppBarLayout&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CoordinatorLayout&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;CollapsingToolbarLayout.setTitle 代替 Toolbar.setTitle&lt;/li&gt;
-&lt;li&gt;NestedScrollView 中必须添加 &lt;code&gt;app:layout_behavior=&amp;quot;@string/appbar_scrolling_view_behavior&amp;quot;&lt;/code&gt; 属性之后，里面的内容才会位于 AppBarLayout 之下&lt;/li&gt;
-&lt;li&gt;NestedScrollView 中 &lt;code&gt;android:layout_gravity=&amp;quot;fill_vertical&amp;quot;&lt;/code&gt; 和 &lt;code&gt;android:layout_marginBottom=&amp;quot;?attr/actionBarSize&amp;quot;&lt;/code&gt; 属性不是必须的，但如果内容不够高，则内容会位于屏幕底部，而不是 AppBarLayout 下面。&lt;code&gt;layout_gravity=&amp;quot;fill_vertical&amp;quot;&lt;/code&gt; 可以修复这个问题。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;#参考资料&lt;br&gt;&lt;a href=&quot;http://segmentfault.com/a/1190000002888109&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Android Support Design 中 CoordinatorLayout 与 Behaviors 初探&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;#CoordinatorLayout&lt;/p&gt;
-&lt;p&gt;这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。&lt;/p&gt;
-&lt;p&gt;常见的用法如下：&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="android" scheme="http://scarletsky.github.io/categories/android/"/>
-    
-    
-      <category term="android" scheme="http://scarletsky.github.io/tags/android/"/>
-    
-      <category term="material design" scheme="http://scarletsky.github.io/tags/material-design/"/>
     
   </entry>
   
