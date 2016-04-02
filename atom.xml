@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-04-02T02:58:44.000Z</updated>
+  <updated>2016-04-02T05:16:57.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,54 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>dive-into-hubot-with-source-code</title>
-    <link href="http://scarletsky.github.io/2016/04/02/dive-into-hubot-with-source-code/"/>
-    <id>http://scarletsky.github.io/2016/04/02/dive-into-hubot-with-source-code/</id>
-    <published>2016-04-02T02:58:44.000Z</published>
-    <updated>2016-04-02T02:58:44.000Z</updated>
-    
-    <content type="html"></content>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>auth-in-spa</title>
-    <link href="http://scarletsky.github.io/2016/04/02/auth-in-spa/"/>
-    <id>http://scarletsky.github.io/2016/04/02/auth-in-spa/</id>
-    <published>2016-04-02T02:56:31.000Z</published>
-    <updated>2016-04-02T02:56:31.000Z</updated>
-    
-    <content type="html"></content>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>hubot-simple-usage</title>
-    <link href="http://scarletsky.github.io/2016/04/02/hubot-simple-usage/"/>
-    <id>http://scarletsky.github.io/2016/04/02/hubot-simple-usage/</id>
-    <published>2016-04-02T02:55:47.000Z</published>
-    <updated>2016-04-02T02:55:47.000Z</updated>
-    
-    <content type="html"></content>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>Lodash 中 assign，extend 和 merge 的区别</title>
@@ -1743,6 +1695,229 @@
     
     
       <category term="gulp" scheme="http://scarletsky.github.io/tags/gulp/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mongo Shell 使用过程中遇到的坑</title>
+    <link href="http://scarletsky.github.io/2015/08/11/mongo-shell-trap/"/>
+    <id>http://scarletsky.github.io/2015/08/11/mongo-shell-trap/</id>
+    <published>2015-08-11T04:17:47.000Z</published>
+    <updated>2016-02-29T04:38:02.000Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;编写-js-脚本&quot;&gt;&lt;a href=&quot;#编写-js-脚本&quot; class=&quot;headerlink&quot; title=&quot;编写 js 脚本&quot;&gt;&lt;/a&gt;编写 js 脚本&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;js 脚本中不能包含 &lt;code&gt;use&lt;/code&gt; 关键字，需要用 &lt;code&gt;$ mongo mydb xxx.js&lt;/code&gt; 这样的方式来指定数据库&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;不能用 &lt;code&gt;console.log&lt;/code&gt;，需要用 &lt;code&gt;print&lt;/code&gt; 代替&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;调用 &lt;code&gt;ObjectId()&lt;/code&gt; 时需要确保传进去的值为字符串，否则会出现 &lt;code&gt;Error: invalid object id: length&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;使用 &lt;code&gt;$set&lt;/code&gt; 来设置数字时需要注意，mongo shell 默认会把所有数字类型的值转换成浮点型，如果你需要插入整形，你需要用 &lt;code&gt;NumberInt()&lt;/code&gt; 或 &lt;code&gt;NumberLong()&lt;/code&gt; 来代替。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ mongo mydb test.js&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// test.js&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; users = db.users.find(&amp;#123;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;users.forEach(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;u&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// not console.log(u._id) !!&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// use print instead of console!&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    print(u._id);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    db.users.update(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        _id: ObjectId(&lt;span class=&quot;string&quot;&gt;&#39;&#39;&lt;/span&gt; + u._id) &lt;span class=&quot;comment&quot;&gt;// make sure the params is string&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;, &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        $set: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            money: NumberInt(&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;) &lt;span class=&quot;comment&quot;&gt;// it will be int, not float.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://docs.mongodb.org/manual/core/shell-types/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://docs.mongodb.org/manual/core/shell-types/&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;编写-js-脚本&quot;&gt;&lt;a href=&quot;#编写-js-脚本&quot; class=&quot;headerlink&quot; title=&quot;编写 js 脚本&quot;&gt;&lt;/a&gt;编写 js 脚本&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;js 脚本中不能包含 &lt;code&gt;use&lt;/code&gt; 关键字，需要用 &lt;
+    
+    </summary>
+    
+      <category term="mongodb" scheme="http://scarletsky.github.io/categories/mongodb/"/>
+    
+    
+      <category term="mongodb" scheme="http://scarletsky.github.io/tags/mongodb/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>面试总结</title>
+    <link href="http://scarletsky.github.io/2015/08/07/interview-summary/"/>
+    <id>http://scarletsky.github.io/2015/08/07/interview-summary/</id>
+    <published>2015-08-07T13:32:41.000Z</published>
+    <updated>2016-02-29T04:37:54.000Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;面试前的准备&quot;&gt;&lt;a href=&quot;#面试前的准备&quot; class=&quot;headerlink&quot; title=&quot;面试前的准备&quot;&gt;&lt;/a&gt;面试前的准备&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;了解该公司的业务&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果不了解的话，面试的时候 HR 们那些一系列专业的术语会让你头晕&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;想清楚你为什么不去投其他公司（如BAT）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;想清楚该公司哪些方面吸引你，常见的有&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;办公环境优雅&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;技术先进&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;工作自由&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;福利待遇好&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;业务熟悉&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;想清楚你要问的问题，常见的有&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;期望工资（互联网行业跳槽一般涨幅 10% ~ 20% —— By 某 HR）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;试用期长度&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;工作情况（几点上下班，一周上几天，加班怎么办）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;各种制度（打卡，加班，调休，激励，补助）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;是否社保（五险一金）&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;想清楚你目前公司产品（你参与过的项目）的状况&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;优点&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;缺点&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;当初选择这种架构/技术的原因&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;是否出现过问题？怎么解决？&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;想清楚你问什么要离开现在的公司&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;自身发展（技术，业务）达到瓶颈？&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;待遇不佳&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;工作强度大&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;为了更好的待遇&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;想清楚你想加入什么样的公司/团队（你理想中的公司/团队是怎样的）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;所处的行业&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;技术水平&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;为什么&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;面试中&quot;&gt;&lt;a href=&quot;#面试中&quot; class=&quot;headerlink&quot; title=&quot;面试中&quot;&gt;&lt;/a&gt;面试中&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;介绍自己&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;谈谈自己的成长经历&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;谈谈自己对未来的期待&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;聊面试前准备的问题，相互问答。注意几点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;不要紧张&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;想清楚，组织清楚语言再回答&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;你觉得刚才的 HR 怎么样？（多轮面试下会问到），注意：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;不要无中生有&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;回答尽量圆滑&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;面试后&quot;&gt;&lt;a href=&quot;#面试后&quot; class=&quot;headerlink&quot; title=&quot;面试后&quot;&gt;&lt;/a&gt;面试后&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;冷静下来，再次思考&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;新公司和旧公司之间的差别&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;跳槽的目的&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;跳槽是否有必要&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;衡量跳槽的成本&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;搬家成本（如果需要搬家的话）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;交通成本&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;适应新环境所需时间&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;是否会带来其他问题&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;做出决定&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;面试前的准备&quot;&gt;&lt;a href=&quot;#面试前的准备&quot; class=&quot;headerlink&quot; title=&quot;面试前的准备&quot;&gt;&lt;/a&gt;面试前的准备&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;了解该公司的业务&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果不了解的话，面试的时候 HR 们那些一系列
+    
+    </summary>
+    
+      <category term="life" scheme="http://scarletsky.github.io/categories/life/"/>
+    
+    
+      <category term="career" scheme="http://scarletsky.github.io/tags/career/"/>
+    
+      <category term="life" scheme="http://scarletsky.github.io/tags/life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Android Support Design Library 注意事项</title>
+    <link href="http://scarletsky.github.io/2015/07/05/android-support-design-library-experience/"/>
+    <id>http://scarletsky.github.io/2015/07/05/android-support-design-library-experience/</id>
+    <published>2015-07-05T15:45:02.000Z</published>
+    <updated>2016-02-29T04:37:44.000Z</updated>
+    
+    <content type="html">&lt;p&gt;#CoordinatorLayout&lt;/p&gt;
+&lt;p&gt;这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。&lt;/p&gt;
+&lt;p&gt;常见的用法如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CoordinatorLayout&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    xmlns:android=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    xmlns:app=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res-auto&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.v4&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.NestedScrollView&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        xmlns:android=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        xmlns:app=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res-auto&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_gravity=&lt;span class=&quot;string&quot;&gt;&quot;fill_vertical&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_marginBottom=&lt;span class=&quot;string&quot;&gt;&quot;?attr/actionBarSize&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:&lt;span class=&quot;attribute&quot;&gt;background&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;@android:color/white&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        app:layout_behavior=&lt;span class=&quot;string&quot;&gt;&quot;@string/appbar_scrolling_view_behavior&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;FrameLayout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/frame_image_toolbar_content&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;/FrameLayout&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.v4&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.NestedScrollView&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.AppBarLayout&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/appbar&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;256dp&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:theme=&lt;span class=&quot;string&quot;&gt;&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CollapsingToolbarLayout&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/collapsing_toolbar_wrapper&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:contentScrim=&lt;span class=&quot;string&quot;&gt;&quot;?attr/colorPrimary&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:expandedTitleMarginEnd=&lt;span class=&quot;string&quot;&gt;&quot;64dp&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:expandedTitleMarginStart=&lt;span class=&quot;string&quot;&gt;&quot;48dp&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:layout_scrollFlags=&lt;span class=&quot;string&quot;&gt;&quot;scroll|exitUntilCollapsed&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;lt;ImageView&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/collapsing_toolbar_image&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:scaleType=&lt;span class=&quot;string&quot;&gt;&quot;centerCrop&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:layout_collapseMode=&lt;span class=&quot;string&quot;&gt;&quot;parallax&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                /&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.v7&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.Toolbar&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/collapsing_toolbar&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;?attr/actionBarSize&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:layout_collapseMode=&lt;span class=&quot;string&quot;&gt;&quot;pin&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:theme=&lt;span class=&quot;string&quot;&gt;&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:popupTheme=&lt;span class=&quot;string&quot;&gt;&quot;@style/ThemeOverlay.AppCompat.Light&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                /&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CollapsingToolbarLayout&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.AppBarLayout&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CoordinatorLayout&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;CollapsingToolbarLayout.setTitle 代替 Toolbar.setTitle&lt;/li&gt;
+&lt;li&gt;NestedScrollView 中必须添加 &lt;code&gt;app:layout_behavior=&amp;quot;@string/appbar_scrolling_view_behavior&amp;quot;&lt;/code&gt; 属性之后，里面的内容才会位于 AppBarLayout 之下&lt;/li&gt;
+&lt;li&gt;NestedScrollView 中 &lt;code&gt;android:layout_gravity=&amp;quot;fill_vertical&amp;quot;&lt;/code&gt; 和 &lt;code&gt;android:layout_marginBottom=&amp;quot;?attr/actionBarSize&amp;quot;&lt;/code&gt; 属性不是必须的，但如果内容不够高，则内容会位于屏幕底部，而不是 AppBarLayout 下面。&lt;code&gt;layout_gravity=&amp;quot;fill_vertical&amp;quot;&lt;/code&gt; 可以修复这个问题。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;#参考资料&lt;br&gt;&lt;a href=&quot;http://segmentfault.com/a/1190000002888109&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Android Support Design 中 CoordinatorLayout 与 Behaviors 初探&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;#CoordinatorLayout&lt;/p&gt;
+&lt;p&gt;这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。&lt;/p&gt;
+&lt;p&gt;常见的用法如下：&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="android" scheme="http://scarletsky.github.io/categories/android/"/>
+    
+    
+      <category term="android" scheme="http://scarletsky.github.io/tags/android/"/>
+    
+      <category term="material design" scheme="http://scarletsky.github.io/tags/material-design/"/>
     
   </entry>
   
