@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-03-20T05:46:21.000Z</updated>
+  <updated>2016-04-02T02:58:44.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,6 +14,115 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>dive-into-hubot-with-source-code</title>
+    <link href="http://scarletsky.github.io/2016/04/02/dive-into-hubot-with-source-code/"/>
+    <id>http://scarletsky.github.io/2016/04/02/dive-into-hubot-with-source-code/</id>
+    <published>2016-04-02T02:58:44.000Z</published>
+    <updated>2016-04-02T02:58:44.000Z</updated>
+    
+    <content type="html"></content>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>auth-in-spa</title>
+    <link href="http://scarletsky.github.io/2016/04/02/auth-in-spa/"/>
+    <id>http://scarletsky.github.io/2016/04/02/auth-in-spa/</id>
+    <published>2016-04-02T02:56:31.000Z</published>
+    <updated>2016-04-02T02:56:31.000Z</updated>
+    
+    <content type="html"></content>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>hubot-simple-usage</title>
+    <link href="http://scarletsky.github.io/2016/04/02/hubot-simple-usage/"/>
+    <id>http://scarletsky.github.io/2016/04/02/hubot-simple-usage/</id>
+    <published>2016-04-02T02:55:47.000Z</published>
+    <updated>2016-04-02T02:55:47.000Z</updated>
+    
+    <content type="html"></content>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Lodash 中 assign，extend 和 merge 的区别</title>
+    <link href="http://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/"/>
+    <id>http://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/</id>
+    <published>2016-04-02T02:51:19.000Z</published>
+    <updated>2016-04-02T05:16:57.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;我们经常在别人的代码中看见 &lt;code&gt;assign&lt;/code&gt;，&lt;code&gt;extend&lt;/code&gt;，&lt;code&gt;merge&lt;/code&gt; 函数，这三个函数用起来很相似，都是合并源对象的属性到目标对象中。&lt;/p&gt;
+&lt;p&gt;既然都是合并对象，为什么还分三个不同的函数呢？它们之间到底有什么区别呢？&lt;/p&gt;
+&lt;h2 id=&quot;assign-object-sources&quot;&gt;&lt;a href=&quot;#assign-object-sources&quot; class=&quot;headerlink&quot; title=&quot;assign(object, [sources])&quot;&gt;&lt;/a&gt;assign(object, [sources])&lt;/h2&gt;&lt;p&gt;我们先看看官方网站上面的定义：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Assigns own enumerable string keyed properties of source objects to the destination object. Source objects are applied from left to right. Subsequent sources overwrite property assignments of previous sources.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;把源对象(sources)的属性分配到目标对象(object)，源对象会从左往右地调用，后面对象的属性会覆盖前面的。&lt;/p&gt;
+&lt;p&gt;看看下面的例子:&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;assign(&amp;#123;&amp;#125;, &amp;#123; a: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &amp;#125;, &amp;#123; b: &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// &amp;#123; a: 1, b: 2 &amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 后面的 &amp;#123; a: 2 &amp;#125; 把前面的 &amp;#123; a: 1 &amp;#125; 覆盖了&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign(&amp;#123;&amp;#125;, &amp;#123; a: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &amp;#125;, &amp;#123; b: &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &amp;#125;, &amp;#123; a: &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// &amp;#123; a: 2, b: 2 &amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 观察下面两个例子，如果属性值为 object，后面的值会覆盖前面的值&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123;&amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; a: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; b: &amp;#123; c: &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;, d: &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; &amp;#125; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// &amp;#123; a: 1, b: &amp;#123; c: 2, d: 3 &amp;#125; &amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123;&amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; a: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; b: &amp;#123; c: &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;, d: &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; &amp;#125; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; b: &amp;#123; e: &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &amp;#125; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// &amp;#123; a: 1, b: &amp;#123; e: 4 &amp;#125; &amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// `assign` 函数会忽略原型链上的属性。&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Foo&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123; &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.c = &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Foo.prototype.d = &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign(&amp;#123; a: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &amp;#125;, &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Foo());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// &amp;#123; a: 1, c: 3 &amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// `assign` 会修改原来的对象&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; test = &amp;#123; a: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;assign(test, &amp;#123; b: &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; &amp;#125;); &lt;span class=&quot;comment&quot;&gt;// &amp;#123; a: 1, b: 2 &amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(test);      &lt;span class=&quot;comment&quot;&gt;// &amp;#123; a: 1, b: 2 &amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;extend-object-sources&quot;&gt;&lt;a href=&quot;#extend-object-sources&quot; class=&quot;headerlink&quot; title=&quot;extend(object, [sources])&quot;&gt;&lt;/a&gt;extend(object, [sources])&lt;/h2&gt;&lt;p&gt;在 3.x 版本中，&lt;code&gt;extend&lt;/code&gt; 是 &lt;code&gt;assign&lt;/code&gt; 的别名，它们的作用是一模一样的。&lt;br&gt;在 4.x 版本中，&lt;code&gt;extend&lt;/code&gt; 是 &lt;code&gt;assignIn&lt;/code&gt; 的别名，和 &lt;code&gt;assign&lt;/code&gt; 有点区别。&lt;/p&gt;
+&lt;p&gt;官方定义如下：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This method is like _.assign except that it iterates over own and inherited source properties.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在上面的例子中，我们知道 &lt;code&gt;assign&lt;/code&gt; 函数不会把原型链上的属性合并到目标对象，而 &lt;code&gt;extend&lt;/code&gt; 或 &lt;code&gt;assignIn&lt;/code&gt; 函数则会！&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// Important !! this is Lodash 4.x !!&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 把源对象原型链上的属性也合并到目标对象上！&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Foo&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123; &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.c = &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Foo.prototype.d = &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;extend(&amp;#123; a: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &amp;#125;, &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Foo());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// &amp;#123; a: 1, c: 3, d: 4 &amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;merge-object-sources&quot;&gt;&lt;a href=&quot;#merge-object-sources&quot; class=&quot;headerlink&quot; title=&quot;merge(object, [sources])&quot;&gt;&lt;/a&gt;merge(object, [sources])&lt;/h2&gt;&lt;p&gt;我们看看 &lt;code&gt;merge&lt;/code&gt; 函数的定义：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This method is like _.assign except that it recursively merges own and inherited enumerable string keyed properties of source objects into the destination object. Source properties that resolve to undefined are skipped if a destination value exists. Array and plain object properties are merged recursively.Other objects and value types are overridden by assignment. Source objects are applied from left to right. Subsequent sources overwrite property assignments of previous sources.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;merge&lt;/code&gt; 也和 &lt;code&gt;assign&lt;/code&gt; 类似，不同的地方在于 &lt;code&gt;merge&lt;/code&gt; 遇到相同属性的时候，如果属性值为纯对象(plain object)或者集合(collection)时，不是用后面的属性值去覆盖前面的属性值，而是会把前后两个属性值合并。&lt;br&gt;如果源对象的属性值为 &lt;code&gt;undefined&lt;/code&gt;，则会忽略该属性。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;assign(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123;&amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; a: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; b: &amp;#123; c: &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;, d: &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&amp;#125; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; b: &amp;#123; e: &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &amp;#125; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// &amp;#123; a: 1, b: &amp;#123; e: 4 &amp;#125; &amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;merge(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123;&amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; a: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; b: &amp;#123; c: &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;, d: &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&amp;#125; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; b: &amp;#123; e: &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt; &amp;#125; &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// &amp;#123; a: 1, b: &amp;#123; c: 2, d: 3, e: 4 &amp;#125; &amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 合并集合&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; users = &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;data&#39;&lt;/span&gt;: [&amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;user&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;barney&#39;&lt;/span&gt; &amp;#125;, &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;user&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&#39;fred&#39;&lt;/span&gt; &amp;#125;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ages = &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;data&#39;&lt;/span&gt;: [&amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;age&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;36&lt;/span&gt; &amp;#125;, &amp;#123; &lt;span class=&quot;string&quot;&gt;&#39;age&#39;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;40&lt;/span&gt; &amp;#125;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;merge(&amp;#123;&amp;#125;, users, ages)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// &amp;#123; data: [ &amp;#123; user: &#39;barney&#39;, age: 36 &amp;#125;, &amp;#123; user: &#39;fred&#39;, age: 40 &amp;#125; ] &amp;#125;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// merge 函数会修改原来的对象！&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;merge(users, ages)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(users) &lt;span class=&quot;comment&quot;&gt;// &amp;#123; data: [ &amp;#123; user: &#39;barney&#39;, age: 36 &amp;#125;, &amp;#123; user: &#39;fred&#39;, age: 40 &amp;#125; ]&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h2&gt;&lt;h3 id=&quot;相同之处&quot;&gt;&lt;a href=&quot;#相同之处&quot; class=&quot;headerlink&quot; title=&quot;相同之处&quot;&gt;&lt;/a&gt;相同之处&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;都可以用来合并对象&lt;/li&gt;
+&lt;li&gt;都会修改原来的对象 (如果原来的对象是作为函数的第一个参数的话)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;不同之处&quot;&gt;&lt;a href=&quot;#不同之处&quot; class=&quot;headerlink&quot; title=&quot;不同之处&quot;&gt;&lt;/a&gt;不同之处&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;assign&lt;/code&gt; 函数不会处理原型链上的属性，也不会合并相同的属性，而是用后面的属性值覆盖前面的属性值&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;extend&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;3.x 版本中和 &lt;code&gt;assign&lt;/code&gt; 一样&lt;/li&gt;
+&lt;li&gt;4.x 版本中会合并原型链上的属性&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;merge&lt;/code&gt; 遇到相同属性名的时候，如果属性值是纯对象或集合的时候，会合并属性值&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://lodash.com/docs&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://lodash.com/docs&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/19965844/lodash-difference-between-extend-assign-and-merge&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/19965844/lodash-difference-between-extend-assign-and-merge&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;我们经常在别人的代码中看见 &lt;code&gt;assign&lt;/code&gt;，&lt;code&gt;extend&lt;/code&gt;，&lt;code&gt;merge&lt;/cod
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
+  </entry>
   
   <entry>
     <title>type vs data vs newtype in haskell</title>
@@ -1634,298 +1743,6 @@
     
     
       <category term="gulp" scheme="http://scarletsky.github.io/tags/gulp/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mongo Shell 使用过程中遇到的坑</title>
-    <link href="http://scarletsky.github.io/2015/08/11/mongo-shell-trap/"/>
-    <id>http://scarletsky.github.io/2015/08/11/mongo-shell-trap/</id>
-    <published>2015-08-11T04:17:47.000Z</published>
-    <updated>2016-02-29T04:38:02.000Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;编写-js-脚本&quot;&gt;&lt;a href=&quot;#编写-js-脚本&quot; class=&quot;headerlink&quot; title=&quot;编写 js 脚本&quot;&gt;&lt;/a&gt;编写 js 脚本&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;js 脚本中不能包含 &lt;code&gt;use&lt;/code&gt; 关键字，需要用 &lt;code&gt;$ mongo mydb xxx.js&lt;/code&gt; 这样的方式来指定数据库&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;不能用 &lt;code&gt;console.log&lt;/code&gt;，需要用 &lt;code&gt;print&lt;/code&gt; 代替&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;调用 &lt;code&gt;ObjectId()&lt;/code&gt; 时需要确保传进去的值为字符串，否则会出现 &lt;code&gt;Error: invalid object id: length&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;使用 &lt;code&gt;$set&lt;/code&gt; 来设置数字时需要注意，mongo shell 默认会把所有数字类型的值转换成浮点型，如果你需要插入整形，你需要用 &lt;code&gt;NumberInt()&lt;/code&gt; 或 &lt;code&gt;NumberLong()&lt;/code&gt; 来代替。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ mongo mydb test.js&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// test.js&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; users = db.users.find(&amp;#123;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;users.forEach(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;u&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// not console.log(u._id) !!&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// use print instead of console!&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    print(u._id);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    db.users.update(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        _id: ObjectId(&lt;span class=&quot;string&quot;&gt;&#39;&#39;&lt;/span&gt; + u._id) &lt;span class=&quot;comment&quot;&gt;// make sure the params is string&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;, &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        $set: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            money: NumberInt(&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;) &lt;span class=&quot;comment&quot;&gt;// it will be int, not float.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h1 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://docs.mongodb.org/manual/core/shell-types/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://docs.mongodb.org/manual/core/shell-types/&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;编写-js-脚本&quot;&gt;&lt;a href=&quot;#编写-js-脚本&quot; class=&quot;headerlink&quot; title=&quot;编写 js 脚本&quot;&gt;&lt;/a&gt;编写 js 脚本&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;js 脚本中不能包含 &lt;code&gt;use&lt;/code&gt; 关键字，需要用 &lt;
-    
-    </summary>
-    
-      <category term="mongodb" scheme="http://scarletsky.github.io/categories/mongodb/"/>
-    
-    
-      <category term="mongodb" scheme="http://scarletsky.github.io/tags/mongodb/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>面试总结</title>
-    <link href="http://scarletsky.github.io/2015/08/07/interview-summary/"/>
-    <id>http://scarletsky.github.io/2015/08/07/interview-summary/</id>
-    <published>2015-08-07T13:32:41.000Z</published>
-    <updated>2016-02-29T04:37:54.000Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;面试前的准备&quot;&gt;&lt;a href=&quot;#面试前的准备&quot; class=&quot;headerlink&quot; title=&quot;面试前的准备&quot;&gt;&lt;/a&gt;面试前的准备&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;了解该公司的业务&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;如果不了解的话，面试的时候 HR 们那些一系列专业的术语会让你头晕&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;想清楚你为什么不去投其他公司（如BAT）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;想清楚该公司哪些方面吸引你，常见的有&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;办公环境优雅&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;技术先进&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;工作自由&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;福利待遇好&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;业务熟悉&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;想清楚你要问的问题，常见的有&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;期望工资（互联网行业跳槽一般涨幅 10% ~ 20% —— By 某 HR）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;试用期长度&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;工作情况（几点上下班，一周上几天，加班怎么办）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;各种制度（打卡，加班，调休，激励，补助）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;是否社保（五险一金）&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;想清楚你目前公司产品（你参与过的项目）的状况&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;优点&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;缺点&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;当初选择这种架构/技术的原因&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;是否出现过问题？怎么解决？&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;想清楚你问什么要离开现在的公司&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;自身发展（技术，业务）达到瓶颈？&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;待遇不佳&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;工作强度大&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;为了更好的待遇&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;想清楚你想加入什么样的公司/团队（你理想中的公司/团队是怎样的）&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;所处的行业&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;技术水平&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;为什么&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;面试中&quot;&gt;&lt;a href=&quot;#面试中&quot; class=&quot;headerlink&quot; title=&quot;面试中&quot;&gt;&lt;/a&gt;面试中&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;介绍自己&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;谈谈自己的成长经历&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;谈谈自己对未来的期待&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;聊面试前准备的问题，相互问答。注意几点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;不要紧张&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;想清楚，组织清楚语言再回答&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;你觉得刚才的 HR 怎么样？（多轮面试下会问到），注意：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;不要无中生有&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;回答尽量圆滑&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;面试后&quot;&gt;&lt;a href=&quot;#面试后&quot; class=&quot;headerlink&quot; title=&quot;面试后&quot;&gt;&lt;/a&gt;面试后&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;冷静下来，再次思考&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;新公司和旧公司之间的差别&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;跳槽的目的&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;跳槽是否有必要&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;衡量跳槽的成本&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;搬家成本（如果需要搬家的话）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;交通成本&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;适应新环境所需时间&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;是否会带来其他问题&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;做出决定&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;面试前的准备&quot;&gt;&lt;a href=&quot;#面试前的准备&quot; class=&quot;headerlink&quot; title=&quot;面试前的准备&quot;&gt;&lt;/a&gt;面试前的准备&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;了解该公司的业务&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;如果不了解的话，面试的时候 HR 们那些一系列
-    
-    </summary>
-    
-      <category term="life" scheme="http://scarletsky.github.io/categories/life/"/>
-    
-    
-      <category term="career" scheme="http://scarletsky.github.io/tags/career/"/>
-    
-      <category term="life" scheme="http://scarletsky.github.io/tags/life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Android Support Design Library 注意事项</title>
-    <link href="http://scarletsky.github.io/2015/07/05/android-support-design-library-experience/"/>
-    <id>http://scarletsky.github.io/2015/07/05/android-support-design-library-experience/</id>
-    <published>2015-07-05T15:45:02.000Z</published>
-    <updated>2016-02-29T04:37:44.000Z</updated>
-    
-    <content type="html">&lt;p&gt;#CoordinatorLayout&lt;/p&gt;
-&lt;p&gt;这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。&lt;/p&gt;
-&lt;p&gt;常见的用法如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CoordinatorLayout&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    xmlns:android=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    xmlns:app=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res-auto&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.v4&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.NestedScrollView&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        xmlns:android=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        xmlns:app=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res-auto&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_gravity=&lt;span class=&quot;string&quot;&gt;&quot;fill_vertical&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_marginBottom=&lt;span class=&quot;string&quot;&gt;&quot;?attr/actionBarSize&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:&lt;span class=&quot;attribute&quot;&gt;background&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;@android:color/white&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        app:layout_behavior=&lt;span class=&quot;string&quot;&gt;&quot;@string/appbar_scrolling_view_behavior&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;FrameLayout&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/frame_image_toolbar_content&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;/FrameLayout&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.v4&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.NestedScrollView&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.AppBarLayout&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/appbar&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;256dp&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:theme=&lt;span class=&quot;string&quot;&gt;&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CollapsingToolbarLayout&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/collapsing_toolbar_wrapper&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:contentScrim=&lt;span class=&quot;string&quot;&gt;&quot;?attr/colorPrimary&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:expandedTitleMarginEnd=&lt;span class=&quot;string&quot;&gt;&quot;64dp&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:expandedTitleMarginStart=&lt;span class=&quot;string&quot;&gt;&quot;48dp&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            app:layout_scrollFlags=&lt;span class=&quot;string&quot;&gt;&quot;scroll|exitUntilCollapsed&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;lt;ImageView&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/collapsing_toolbar_image&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:scaleType=&lt;span class=&quot;string&quot;&gt;&quot;centerCrop&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:layout_collapseMode=&lt;span class=&quot;string&quot;&gt;&quot;parallax&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                /&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.v7&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.Toolbar&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/collapsing_toolbar&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;?attr/actionBarSize&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:layout_collapseMode=&lt;span class=&quot;string&quot;&gt;&quot;pin&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:theme=&lt;span class=&quot;string&quot;&gt;&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                app:popupTheme=&lt;span class=&quot;string&quot;&gt;&quot;@style/ThemeOverlay.AppCompat.Light&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                /&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CollapsingToolbarLayout&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.AppBarLayout&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.design&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.CoordinatorLayout&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;CollapsingToolbarLayout.setTitle 代替 Toolbar.setTitle&lt;/li&gt;
-&lt;li&gt;NestedScrollView 中必须添加 &lt;code&gt;app:layout_behavior=&amp;quot;@string/appbar_scrolling_view_behavior&amp;quot;&lt;/code&gt; 属性之后，里面的内容才会位于 AppBarLayout 之下&lt;/li&gt;
-&lt;li&gt;NestedScrollView 中 &lt;code&gt;android:layout_gravity=&amp;quot;fill_vertical&amp;quot;&lt;/code&gt; 和 &lt;code&gt;android:layout_marginBottom=&amp;quot;?attr/actionBarSize&amp;quot;&lt;/code&gt; 属性不是必须的，但如果内容不够高，则内容会位于屏幕底部，而不是 AppBarLayout 下面。&lt;code&gt;layout_gravity=&amp;quot;fill_vertical&amp;quot;&lt;/code&gt; 可以修复这个问题。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;#参考资料&lt;br&gt;&lt;a href=&quot;http://segmentfault.com/a/1190000002888109&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Android Support Design 中 CoordinatorLayout 与 Behaviors 初探&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/30612310/android-nestedscrollview-has-wrong-size-after-applayout-behavior&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;#CoordinatorLayout&lt;/p&gt;
-&lt;p&gt;这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。&lt;/p&gt;
-&lt;p&gt;常见的用法如下：&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="android" scheme="http://scarletsky.github.io/categories/android/"/>
-    
-    
-      <category term="android" scheme="http://scarletsky.github.io/tags/android/"/>
-    
-      <category term="material design" scheme="http://scarletsky.github.io/tags/material-design/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RecyclerView 基本用法</title>
-    <link href="http://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/"/>
-    <id>http://scarletsky.github.io/2015/06/29/recyclerview-basic-usage/</id>
-    <published>2015-06-29T12:55:00.000Z</published>
-    <updated>2016-02-29T04:37:29.000Z</updated>
-    
-    <content type="html">&lt;p&gt;#基本用法&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;在 XML 中添加 &lt;code&gt;&amp;lt;android.support.v7.widget.RecyclerView/&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;编写继承 &lt;code&gt;RecyclerView.Adapter&amp;lt;RecyclerViewAdapter.ViewHolder&amp;gt;&lt;/code&gt; 的 &lt;code&gt;Adapter&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Constructor&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;编写继承 &lt;code&gt;RecyclerView.ViewHolder&lt;/code&gt; 的 &lt;code&gt;ViewHolder&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;onCreateViewHolder&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;onBindViewHolder&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;getItemCount&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;设置 &lt;code&gt;RecyclerView&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;setLayoutManager&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;setAdapter&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;setItemAnimator&lt;/code&gt;(可选)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;addItemDecoration&lt;/code&gt;(可选)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;#XML&lt;br&gt;新建 xml，添加 &lt;code&gt;RecyclerView&lt;/code&gt;。&lt;/p&gt;
-&lt;figure class=&quot;highlight stylus&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;RelativeLayout xmlns:android=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res/android&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    xmlns:fab=&lt;span class=&quot;string&quot;&gt;&quot;http://schemas.android.com/apk/res-auto&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    android:orientation=&lt;span class=&quot;string&quot;&gt;&quot;vertical&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;lt;android&lt;span class=&quot;class&quot;&gt;.support&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.v7&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.widget&lt;/span&gt;&lt;span class=&quot;class&quot;&gt;.RecyclerView&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:id=&lt;span class=&quot;string&quot;&gt;&quot;@+id/my_recyclerview&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_width=&lt;span class=&quot;string&quot;&gt;&quot;match_parent&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        android:layout_height=&lt;span class=&quot;string&quot;&gt;&quot;wrap_content&quot;&lt;/span&gt; /&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;/RelativeLayout&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;#ViewHolder&lt;/p&gt;
-&lt;p&gt;我们以前使用 &lt;code&gt;ListView&lt;/code&gt; 的时候，会用以下的方式来提高 &lt;code&gt;ListView&lt;/code&gt; 的性能:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;用 &lt;code&gt;convertView&lt;/code&gt; 来减少 &lt;code&gt;LayoutInflater.inflate&lt;/code&gt; 的使用&lt;/li&gt;
-&lt;li&gt;用 &lt;code&gt;ViewHolder&lt;/code&gt; 来减少 &lt;code&gt;findViewById&lt;/code&gt; 的使用&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;RecyclerView&lt;/code&gt; 标准化了 &lt;code&gt;ViewHolder&lt;/code&gt; 来缓存昂贵 &lt;code&gt;findViewById&lt;/code&gt; 的结果。&lt;/p&gt;
-&lt;p&gt;例子：&lt;/p&gt;
-&lt;figure class=&quot;highlight aspectj&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; MyViewHolder &lt;span class=&quot;keyword&quot;&gt;extends&lt;/span&gt; RecyclerView.ViewHolder &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; TextView mTitle;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; TextView mSubtitle;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;MyViewHolder&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(View v)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;super&lt;/span&gt;(v);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        mTitle = (TextView) v.findViewById(R.id.title);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        mSubtitle = (TextView) v.findViewById(R.id.subtitle);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;PS: 一般 &lt;code&gt;ViewHolder&lt;/code&gt; 会编写在 &lt;code&gt;Adapter&lt;/code&gt; 的内部。&lt;/p&gt;
-&lt;p&gt;#Adapter&lt;/p&gt;
-&lt;p&gt;我们需要继承 &lt;code&gt;RecyclerView.Adapter&amp;lt;RecyclerView.ViewHolder&amp;gt;&lt;/code&gt; 来编写我们自己的 &lt;code&gt;Adapter&lt;/code&gt; 。编写我们自己的 &lt;code&gt;Adapter&lt;/code&gt; 的时候，最重要的是要重写 &lt;code&gt;onCreateViewHolder&lt;/code&gt; 和 &lt;code&gt;onBindViewHolder&lt;/code&gt; 方法。&lt;/p&gt;
-&lt;figure class=&quot;highlight aspectj&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;MyAdapter&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;RecyclerView&lt;/span&gt;.&lt;span class=&quot;title&quot;&gt;Adapter&lt;/span&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;RecyclerView&lt;/span&gt;.&lt;span class=&quot;title&quot;&gt;ViewHolder&lt;/span&gt;&amp;gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;annotation&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; RecyclerView.&lt;span class=&quot;function&quot;&gt;ViewHolder &lt;span class=&quot;title&quot;&gt;onCreateViewHolder&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(ViewGroup parent, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; viewType)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        View v = LayoutInflater.from(ctx).inflate(R.layout.my_adapter, parent, &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ViewHolder(v);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;annotation&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;onBindViewHolder&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(RecyclerView.ViewHolder h, &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; position)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        MyViewHolder holder = (MyViewHolder) h;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        holder.mTitle.setText(&lt;span class=&quot;string&quot;&gt;&quot;This is my title&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        holder.mSubtitle.setText(&lt;span class=&quot;string&quot;&gt;&quot;This is my subtitle&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;annotation&quot;&gt;@Override&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;getItemCount&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; data.&lt;span class=&quot;title&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;注意，在这个例子中我们的 &lt;code&gt;MyAdapter&lt;/code&gt; 存放的是 &lt;code&gt;&amp;lt;RecyclerView.ViewHolder&amp;gt;&lt;/code&gt;，所以在 &lt;code&gt;onCreateViewHolder&lt;/code&gt; 中返回的也必须是 &lt;code&gt;&amp;lt;RecyclerView.ViewHolder&amp;gt;&lt;/code&gt;，而在 &lt;code&gt;onBindViewHolder&lt;/code&gt; 的回调中，我们拿到的也是 &lt;code&gt;RecyclerView.ViewHolder&lt;/code&gt;，要把它强转成我们之前编写的 &lt;code&gt;MyViewHolder&lt;/code&gt; 之后才能正常使用。&lt;/p&gt;
-&lt;p&gt;#RecyclerView&lt;br&gt;最后只要设置一下 &lt;code&gt;RecyclerView&lt;/code&gt; 就能使用了。&lt;/p&gt;
-&lt;figure class=&quot;highlight dns&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recyclerview)&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;mRecyclerView.setLayoutManager(new LinearLayoutManager(this))&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;mRecyclerView.setAdapter(adapter)&lt;span class=&quot;comment&quot;&gt;;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;#参考资料&lt;br&gt;&lt;a href=&quot;http://wobushi.ren/recyclerview.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;RecyclerView全攻略&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://blog.csdn.net/lmj623565791/article/details/45059587&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Android RecyclerView 使用完全解析 体验艺术般的控件&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;#基本用法&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;在 XML 中添加 &lt;code&gt;&amp;lt;android.support.v7.widget.RecyclerView/&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;编写继承 &lt;code&gt;RecyclerView.Ada
-    
-    </summary>
-    
-      <category term="android" scheme="http://scarletsky.github.io/categories/android/"/>
-    
-    
-      <category term="android" scheme="http://scarletsky.github.io/tags/android/"/>
-    
-      <category term="recyclerview" scheme="http://scarletsky.github.io/tags/recyclerview/"/>
     
   </entry>
   
