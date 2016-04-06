@@ -47,7 +47,7 @@
 我怎么判断一个函数是不是闭包？
 
 你现在还不能回答，因为你还不知道以下概念：全局变量（Global Variable）局部变量（Loc">
-<meta property="og:updated_time" content="2016-03-11T02:15:30.000Z">
+<meta property="og:updated_time" content="2016-04-06T02:15:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The Little JavaScript Closures">
 <meta name="twitter:description" content="写在前面本文尝试模仿 The Little Schema 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。
@@ -367,12 +367,12 @@ ga('send', 'pageview');
 <blockquote>
 <p>不是，因为 foo 函数不是一个内部函数</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(x + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>bar 函数是一个闭包吗？</p>
 <blockquote>
 <p>不是，因为它只是一个内部函数，并没有引用自由变量</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(x + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>bar 函数是一个闭包吗？</p>
 <blockquote>
 <p>是的，因为它是一个内部函数，同时引用了自由变量</p>
