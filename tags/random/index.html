@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html>
+
+
+  <html class="light page-tagsrandom">
+
+
 <head>
   <meta charset="utf-8">
   
@@ -27,9 +31,12 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  
+  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
 
-  <link href="/css/styles.css?v=8c6c4ed3" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+  
 
   
 <!-- Google Analytics -->
@@ -53,7 +60,7 @@ ga('send', 'pageview');
 <body>
 
   
-    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
   
 
   <div class="content content-tag">
@@ -70,13 +77,14 @@ ga('send', 'pageview');
   <div class="toolbox">
     <a class="toolbox-entry" href="/">
       <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
       <i class="icon-home"></i>
     </a>
     <ul class="list-toolbox">
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/archives/"
             target="_self"
             >
@@ -85,8 +93,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/category/"
             target="_self"
             >
@@ -95,8 +103,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/tag/"
             target="_self"
             >
@@ -105,8 +113,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/about/"
             target="_self"
             >
@@ -115,12 +123,22 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/atom.xml"
             target="_blank"
             >
             RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
           </a>
         </li>
       
@@ -142,6 +160,7 @@ ga('send', 'pageview');
       </div>
     </div>
   </div>
+
 </div>
 
   <section class="tag-box">
@@ -248,9 +267,14 @@ ga('send', 'pageview');
         <span class="tag-size">( 1 )</span>
       </a>
     
+      <a class="tag-item" href="#infinite scroll">
+        <span class="tag-name">infinite scroll</span>
+        <span class="tag-size">( 1 )</span>
+      </a>
+    
       <a class="tag-item" href="#javascript">
         <span class="tag-name">javascript</span>
-        <span class="tag-size">( 7 )</span>
+        <span class="tag-size">( 8 )</span>
       </a>
     
       <a class="tag-item" href="#js-xlsx">
@@ -694,12 +718,28 @@ ga('send', 'pageview');
   <a class="post-title" href="/2016/04/03/hubot-simple-usage/">Hubot 的简单用法</a>
 
 </li>
-<li id="javascript" class="item-category-name item-title item-title-0">
+<li id="infinite scroll" class="item-category-name item-title item-title-0">
+  <!--
+    <a href="" class="text-year">
+   -->
+    infinite scroll
+    <span class="category-count">( 1 )</span>
+  <!--
+  </a>
+   -->
+</li>
+<li class="item-post item">
+  <span class="post-date">04-20</span>
+
+  <a class="post-title" href="/2016/04/20/how-to-implement-infinite-scroll/">如何实现无限滚动</a>
+
+</li>
+<li id="javascript" class="item-category-name item-title item-title-1">
   <!--
     <a href="" class="text-year">
    -->
     javascript
-    <span class="category-count">( 7 )</span>
+    <span class="category-count">( 8 )</span>
   <!--
   </a>
    -->
@@ -746,7 +786,13 @@ ga('send', 'pageview');
   <a class="post-title" href="/2015/01/26/javascript-tricks/">JavaScript 常用技巧</a>
 
 </li>
-<li id="js-xlsx" class="item-category-name item-title item-title-1">
+<li class="item-post item">
+  <span class="post-date">04-20</span>
+
+  <a class="post-title" href="/2016/04/20/how-to-implement-infinite-scroll/">如何实现无限滚动</a>
+
+</li>
+<li id="js-xlsx" class="item-category-name item-title item-title-2">
   <!--
     <a href="" class="text-year">
    -->
@@ -762,7 +808,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2016/01/30/nodejs-process-excel/">在 Node.js 中利用 js-xlsx 处理 Excel 文件</a>
 
 </li>
-<li id="life" class="item-category-name item-title item-title-2">
+<li id="life" class="item-category-name item-title item-title-3">
   <!--
     <a href="" class="text-year">
    -->
@@ -784,7 +830,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2015/08/07/interview-summary/">面试总结</a>
 
 </li>
-<li id="localtunnel" class="item-category-name item-title item-title-3">
+<li id="localtunnel" class="item-category-name item-title item-title-4">
   <!--
     <a href="" class="text-year">
    -->
@@ -800,7 +846,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2016/01/17/localtunnel-usage/">Localtunnel（Node.js 版） 使用教程</a>
 
 </li>
-<li id="material design" class="item-category-name item-title item-title-4">
+<li id="material design" class="item-category-name item-title item-title-0">
   <!--
     <a href="" class="text-year">
    -->
@@ -816,7 +862,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2015/07/05/android-support-design-library-experience/">Android Support Design Library 注意事项</a>
 
 </li>
-<li id="mongodb" class="item-category-name item-title item-title-0">
+<li id="mongodb" class="item-category-name item-title item-title-1">
   <!--
     <a href="" class="text-year">
    -->
@@ -844,7 +890,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2014/10/25/mongodb-security-and-auth/">MongoDB 安全与认证</a>
 
 </li>
-<li id="node" class="item-category-name item-title item-title-1">
+<li id="node" class="item-category-name item-title item-title-2">
   <!--
     <a href="" class="text-year">
    -->
@@ -860,7 +906,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2016/01/30/nodejs-process-excel/">在 Node.js 中利用 js-xlsx 处理 Excel 文件</a>
 
 </li>
-<li id="nodejs" class="item-category-name item-title item-title-2">
+<li id="nodejs" class="item-category-name item-title item-title-3">
   <!--
     <a href="" class="text-year">
    -->
@@ -882,7 +928,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2015/10/22/node-stream-api-learning/">Node.js 中 Stream API 的使用</a>
 
 </li>
-<li id="random" class="item-category-name item-title item-title-3">
+<li id="random" class="item-category-name item-title item-title-4">
   <!--
     <a href="" class="text-year">
    -->
@@ -898,7 +944,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2016/02/06/random-numbers-in-haskell/">(译) Haskell 中随机数的使用</a>
 
 </li>
-<li id="react" class="item-category-name item-title item-title-4">
+<li id="react" class="item-category-name item-title item-title-0">
   <!--
     <a href="" class="text-year">
    -->
@@ -914,7 +960,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2015/11/17/react-dnd-usage/">React-DnD 的使用</a>
 
 </li>
-<li id="recyclerview" class="item-category-name item-title item-title-0">
+<li id="recyclerview" class="item-category-name item-title item-title-1">
   <!--
     <a href="" class="text-year">
    -->
@@ -930,7 +976,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2015/06/29/recyclerview-basic-usage/">RecyclerView 基本用法</a>
 
 </li>
-<li id="spacemacs" class="item-category-name item-title item-title-1">
+<li id="spacemacs" class="item-category-name item-title item-title-2">
   <!--
     <a href="" class="text-year">
    -->
@@ -946,7 +992,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2016/01/22/spacemacs-usage/">Spacemacs 使用总结</a>
 
 </li>
-<li id="stream" class="item-category-name item-title item-title-2">
+<li id="stream" class="item-category-name item-title item-title-3">
   <!--
     <a href="" class="text-year">
    -->
@@ -962,7 +1008,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2015/10/22/node-stream-api-learning/">Node.js 中 Stream API 的使用</a>
 
 </li>
-<li id="upload" class="item-category-name item-title item-title-3">
+<li id="upload" class="item-category-name item-title item-title-4">
   <!--
     <a href="" class="text-year">
    -->
@@ -978,7 +1024,7 @@ ga('send', 'pageview');
   <a class="post-title" href="/2015/01/27/javascript-upload-slice-file-using-blob/">JavaScript 利用 Blob 进行分片上传</a>
 
 </li>
-<li id="闭包" class="item-category-name item-title item-title-4">
+<li id="闭包" class="item-category-name item-title item-title-0">
   <!--
     <a href="" class="text-year">
    -->
@@ -1007,12 +1053,13 @@ ga('send', 'pageview');
 
 
 
-  <div class="modal" id="modal-one" aria-hidden="true">
-  <a href="#close" class="cover" aria-hidden="true"></a>
-  <div class="modal-dialog">
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
     <div class="modal-header">
-      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+      <span id="close" class="btn-close">关闭</span>
     </div>
+    <hr>
     <div class="modal-body">
       <ul class="list-toolbox">
         
@@ -1066,6 +1113,16 @@ ga('send', 'pageview');
             </a>
           </li>
         
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
       </ul>
 
     </div>
@@ -1100,10 +1157,8 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/fastclick.js', function() {
-      loadScript('/js/app.js', function() {
-        // load success
-      });
+    loadScript('/js/bundle.js?235687', function() {
+      // load success
     });
   }
 </script>

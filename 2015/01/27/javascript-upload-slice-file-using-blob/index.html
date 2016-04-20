@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html>
+
+
+  <html class="light page-post">
+
+
 <head>
   <meta charset="utf-8">
   
@@ -109,9 +113,12 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  
+  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
 
-  <link href="/css/styles.css?v=8c6c4ed3" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+  
 
   
 <!-- Google Analytics -->
@@ -135,7 +142,7 @@ ga('send', 'pageview');
 <body>
 
   
-    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
   
 
   <div class="post-header CENTER">
@@ -143,13 +150,14 @@ ga('send', 'pageview');
   <div class="toolbox">
     <a class="toolbox-entry" href="/">
       <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
       <i class="icon-home"></i>
     </a>
     <ul class="list-toolbox">
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/archives/"
             target="_self"
             >
@@ -158,8 +166,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/category/"
             target="_self"
             >
@@ -168,8 +176,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/tag/"
             target="_self"
             >
@@ -178,8 +186,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/about/"
             target="_self"
             >
@@ -188,12 +196,22 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/atom.xml"
             target="_blank"
             >
             RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
           </a>
         </li>
       
@@ -212,24 +230,37 @@ ga('send', 'pageview');
 
 
 <div class="content content-post CENTER">
-   <article id="post-javascript-upload-slice-file-using-blob" class="article article-type-post" itemscope itemprop="blogPost">
+   <article id="post-javascript-upload-slice-file-using-blob" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
     <h1 class="post-title">JavaScript 利用 Blob 进行分片上传</h1>
 
     <div class="article-meta">
-      <span>2015-01-27</span>
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.01.27</span>
+      </span>
 
-      <span> | </span>
-
-      <span class="article-author">Scarletsky</span>
-
-      <span> | </span>
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Scarletsky</span>
+        </span>
+      
 
       
   <span class="article-category">
+    <i class="icon-list"></i>
     <a class="article-category-link" href="/categories/javascript/">javascript</a>
   </span>
 
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://scarletsky.github.io/2015/01/27/javascript-upload-slice-file-using-blob/#disqus_thread"></a>
+        </span>
+      
 
     </div>
   </header>
@@ -297,12 +328,13 @@ ga('send', 'pageview');
 
 
 
-  <div class="modal" id="modal-one" aria-hidden="true">
-  <a href="#close" class="cover" aria-hidden="true"></a>
-  <div class="modal-dialog">
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
     <div class="modal-header">
-      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+      <span id="close" class="btn-close">关闭</span>
     </div>
+    <hr>
     <div class="modal-body">
       <ul class="list-toolbox">
         
@@ -356,6 +388,16 @@ ga('send', 'pageview');
             </a>
           </li>
         
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
       </ul>
 
     </div>
@@ -386,6 +428,9 @@ ga('send', 'pageview');
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
   </script>
+
+  <script id="dsq-count-scr" src="//scarletskygithubio.disqus.com/count.js" async></script>
+
 
 
     
@@ -421,10 +466,8 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/fastclick.js', function() {
-      loadScript('/js/app.js', function() {
-        // load success
-      });
+    loadScript('/js/bundle.js?235687', function() {
+      // load success
     });
   }
 </script>

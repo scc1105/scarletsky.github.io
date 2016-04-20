@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html>
+
+
+  <html class="light page-archives201512">
+
+
 <head>
   <meta charset="utf-8">
   
@@ -27,9 +31,12 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  
+  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
 
-  <link href="/css/styles.css?v=8c6c4ed3" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+  
 
   
 <!-- Google Analytics -->
@@ -53,7 +60,7 @@ ga('send', 'pageview');
 <body>
 
   
-    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
   
 
   <div class="content content-archive">
@@ -70,13 +77,14 @@ ga('send', 'pageview');
   <div class="toolbox">
     <a class="toolbox-entry" href="/">
       <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
       <i class="icon-home"></i>
     </a>
     <ul class="list-toolbox">
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/archives/"
             target="_self"
             >
@@ -85,8 +93,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/category/"
             target="_self"
             >
@@ -95,8 +103,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/tag/"
             target="_self"
             >
@@ -105,8 +113,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/about/"
             target="_self"
             >
@@ -115,12 +123,22 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/atom.xml"
             target="_blank"
             >
             RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
           </a>
         </li>
       
@@ -142,12 +160,17 @@ ga('send', 'pageview');
       </div>
     </div>
   </div>
+
 </div>
 
 
   <div class="post-list-box archive-body">
     <ul class="list-post">  <li class="item-year item item-title item-title-0">
-    <a href="/archives/2015" class="text-year">2015</a>
+    <a href="/archives/2015" class="text-year">
+      2015
+      <i class="icon-yang"></i>
+      
+    </a>
   </li>
 <li class="item-post item">
   <span class="post-date">12-02</span>
@@ -170,12 +193,13 @@ ga('send', 'pageview');
 
 
 
-  <div class="modal" id="modal-one" aria-hidden="true">
-  <a href="#close" class="cover" aria-hidden="true"></a>
-  <div class="modal-dialog">
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
     <div class="modal-header">
-      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+      <span id="close" class="btn-close">关闭</span>
     </div>
+    <hr>
     <div class="modal-body">
       <ul class="list-toolbox">
         
@@ -229,6 +253,16 @@ ga('send', 'pageview');
             </a>
           </li>
         
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
       </ul>
 
     </div>
@@ -263,10 +297,8 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/fastclick.js', function() {
-      loadScript('/js/app.js', function() {
-        // load success
-      });
+    loadScript('/js/bundle.js?235687', function() {
+      // load success
     });
   }
 </script>

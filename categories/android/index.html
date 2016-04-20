@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html>
+
+
+  <html class="light page-categoriesandroid">
+
+
 <head>
   <meta charset="utf-8">
   
@@ -27,9 +31,12 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  
+  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
 
-  <link href="/css/styles.css?v=8c6c4ed3" rel="stylesheet">
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+  
 
   
 <!-- Google Analytics -->
@@ -53,7 +60,7 @@ ga('send', 'pageview');
 <body>
 
   
-    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
   
 
   <div class="content content-category">
@@ -70,13 +77,14 @@ ga('send', 'pageview');
   <div class="toolbox">
     <a class="toolbox-entry" href="/">
       <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
       <i class="icon-home"></i>
     </a>
     <ul class="list-toolbox">
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/archives/"
             target="_self"
             >
@@ -85,8 +93,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/category/"
             target="_self"
             >
@@ -95,8 +103,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/tag/"
             target="_self"
             >
@@ -105,8 +113,8 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/about/"
             target="_self"
             >
@@ -115,12 +123,22 @@ ga('send', 'pageview');
         </li>
       
         <li class="item-toolbox">
-          <a 
-            class="CIRCLE" 
+          <a
+            class="CIRCLE"
             href="/atom.xml"
             target="_blank"
             >
             RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
           </a>
         </li>
       
@@ -142,6 +160,7 @@ ga('send', 'pageview');
       </div>
     </div>
   </div>
+
 </div>
 
   <section class="category-box">
@@ -180,7 +199,7 @@ ga('send', 'pageview');
     
       <a class="category-item" href="#javascript">
         <span class="category-name">javascript</span>
-        <span class="category-size">( 14 )</span>
+        <span class="category-size">( 15 )</span>
       </a>
     
       <a class="category-item" href="#life">
@@ -332,7 +351,7 @@ ga('send', 'pageview');
     <a href="" class="text-year">
    -->
     javascript
-    <span class="category-count">( 14 )</span>
+    <span class="category-count">( 15 )</span>
   <!--
   </a>
    -->
@@ -421,6 +440,12 @@ ga('send', 'pageview');
   <a class="post-title" href="/2014/10/16/the-digest-loop-and-apply/">The Digest Loop and $apply</a>
 
 </li>
+<li class="item-post item">
+  <span class="post-date">04-20</span>
+
+  <a class="post-title" href="/2016/04/20/how-to-implement-infinite-scroll/">如何实现无限滚动</a>
+
+</li>
 <li id="life" class="item-category-name item-title item-title-2">
   <!--
     <a href="" class="text-year">
@@ -500,12 +525,13 @@ ga('send', 'pageview');
 
 
 
-  <div class="modal" id="modal-one" aria-hidden="true">
-  <a href="#close" class="cover" aria-hidden="true"></a>
-  <div class="modal-dialog">
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
     <div class="modal-header">
-      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+      <span id="close" class="btn-close">关闭</span>
     </div>
+    <hr>
     <div class="modal-body">
       <ul class="list-toolbox">
         
@@ -559,6 +585,16 @@ ga('send', 'pageview');
             </a>
           </li>
         
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
       </ul>
 
     </div>
@@ -593,10 +629,8 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/fastclick.js', function() {
-      loadScript('/js/app.js', function() {
-        // load success
-      });
+    loadScript('/js/bundle.js?235687', function() {
+      // load success
     });
   }
 </script>
