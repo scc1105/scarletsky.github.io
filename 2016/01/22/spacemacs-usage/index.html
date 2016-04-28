@@ -27,7 +27,7 @@
 安装 &amp;amp; 使用$ git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d$ emacs
 配置文件Spacemacs 的配置文件位于 ~/.spacemacs 中，我们只需要修改这个文件就可以制定自己的配置了。
 一般情况下，我们只需要在 d">
-<meta property="og:updated_time" content="2016-04-16T13:09:04.000Z">
+<meta property="og:updated_time" content="2016-04-28T11:05:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spacemacs 使用总结">
 <meta name="twitter:description" content="简介Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。
@@ -226,7 +226,7 @@ ga('send', 'pageview');
 </li>
 <li><p>创建 <code>.editorconfig</code> 文件，写上自己喜欢的配置。</p>
 </li>
-<li>按 <code>M-x</code> 打开 <code>editorconfig-mode</code> 或调用 <code>editorconfig-apply</code>。</li>
+<li>在 <code>~/.spacemacs</code> 中的 <code>docspacemacs/user-config</code> 中加入 <code>(editorconfig-mode 1)</code>。</li>
 <li>完。</li>
 </ol>
 <h2 id="Git-集成-必须先配置Magit-的使用"><a href="#Git-集成-必须先配置Magit-的使用" class="headerlink" title="Git 集成 (必须先配置Magit 的使用)"></a>Git 集成 (必须先配置Magit 的使用)</h2><p>Git 是一个优秀的版本控制工具，我们可以在 <code>.spacemacs</code> 的 <code>dotspacemacs-configuration-layers</code> 列表中添加 <code>git</code> 就可以集成 git 了。</p>
