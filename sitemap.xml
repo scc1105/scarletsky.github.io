@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://scarletsky.github.io/2016/06/12/mapreduce-in-mongodb/</loc>
+    
+    <lastmod>2016-06-12T06:57:16.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://scarletsky.github.io/css/personal-style.css</loc>
+    
+    <lastmod>2016-06-12T02:42:57.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://scarletsky.github.io/2016/05/02/write-your-own-hubot-scripts/</loc>
     
     <lastmod>2016-05-10T05:04:19.000Z</lastmod>
@@ -19,13 +33,6 @@
     <loc>http://scarletsky.github.io/2016/04/20/how-to-implement-infinite-scroll/</loc>
     
     <lastmod>2016-04-20T09:18:35.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://scarletsky.github.io/css/personal-style.css</loc>
-    
-    <lastmod>2016-04-20T08:28:30.000Z</lastmod>
     
   </url>
   

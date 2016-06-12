@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-05-10T05:04:19.000Z</updated>
+  <updated>2016-06-12T06:57:16.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,6 +14,342 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>「译」 MapReduce in MongoDB</title>
+    <link href="http://scarletsky.github.io/2016/06/12/mapreduce-in-mongodb/"/>
+    <id>http://scarletsky.github.io/2016/06/12/mapreduce-in-mongodb/</id>
+    <published>2016-06-12T02:04:53.000Z</published>
+    <updated>2016-06-12T06:57:16.000Z</updated>
+    
+    <content type="html">&lt;p&gt;在这篇文章里面，我们会演示如何在 MongoDB 中使用 MapReduce 操作。&lt;br&gt;我们会用 &lt;code&gt;dummy-json&lt;/code&gt; 这个包来生成一些虚假的数据，然后用 &lt;code&gt;Mongojs&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如果想要快速看到结果，可以到 &lt;a href=&quot;http://code.runnable.com/U1fmE30iHWMIGY_r/mapreduce-in-mongodb-for-node-js&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt; 里看看。&lt;/p&gt;
+&lt;h2 id=&quot;什么是-MongoDB&quot;&gt;&lt;a href=&quot;#什么是-MongoDB&quot; class=&quot;headerlink&quot; title=&quot;什么是 MongoDB ?&quot;&gt;&lt;/a&gt;什么是 MongoDB ?&lt;/h2&gt;&lt;p&gt;MongoDB 是一个 NoSQL 数据库，不像 MySQL 、MSSQL 和 Oracle DB 那样，MongoDB 使用集合(collections) 来代替表(tables)。同时，它用集合中的文档(documents)来代替表中的行(rows)。还有最好的一点是，所有文档都保存成 JSON 格式！你可以到&lt;a href=&quot;http://try.mongodb.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;学更多关于 MongoDB 的知识。&lt;/p&gt;
+&lt;p&gt;你可以从 &lt;a href=&quot;http://www.mongodb.org/downloads&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt; 下载安装 MongoDB。&lt;/p&gt;
+&lt;p&gt;如果以前没用过 MongoDB，那么你可以记住下面这些命令:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Command&lt;/th&gt;
+&lt;th&gt;Result&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mongod&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;启动 MongoDB 服务&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;mongo&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;进入 MongoDB Shell&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;show dbs&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;显示所有数据库列表&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;use &amp;lt;db name&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;进入指定的数据库&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;show collections&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;进入数据库之后，显示该数据库中所有的集合&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;db.collectionName.find()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;显示该集合中所有文档&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;db.collectionName.findOne()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;显示该集合中第一个文档&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;db.collectionName.find().pretty()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;显示漂亮的 JSON 格式&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;db.collectionName.insert({key: value})&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;插入一条新的记录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;db.collectionName.update({ condition: value}, {$set: {key: value}}, {upsert: true})&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;会更新指定的文档，设置指定的值。如果 &lt;code&gt;upsert&lt;/code&gt; 为 &lt;code&gt;true&lt;/code&gt;，当没有找到匹配的文档时，会创建一条新的记录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;db.collectionName.remove({})&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;移除集合中的所有文档&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;db.collectionName.remove({key: value})&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;移除集合中匹配到的文档&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&quot;什么是-MapReduce&quot;&gt;&lt;a href=&quot;#什么是-MapReduce&quot; class=&quot;headerlink&quot; title=&quot;什么是 MapReduce ?&quot;&gt;&lt;/a&gt;什么是 MapReduce ?&lt;/h2&gt;&lt;p&gt;弄清楚 MapReduce 是如何运作的是非常重要的，如果对 MapReduce 过程不了解的话，你在运行 MapReduce 时很可能得不到你想要的结果。&lt;/p&gt;
+&lt;p&gt;从 mongodb.org 上的解析：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Map-reduce 是一种数据处理范例，用于将大量的数据变成有用的聚合结果。 对于 map-reduce 操作，MongoDB 提供了 mapReduce 的数据库命令。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在这非常简单的术语里面，mapReduce 命令接受两个基本的输入：mapper 函数和 reducer 函数。&lt;/p&gt;
+&lt;p&gt;Mapper 是一个匹配数据的过程，它会在集合中查询我们想要处理的字段，然后根据我们指定的 key 去分组，再把这些 key-value 对交给 reducer 函数，由它来处理这些匹配到的数据。&lt;/p&gt;
+&lt;p&gt;我们来看看下面这些数据：&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; name: foo, price: 9 &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; name: foo, price: 12 &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; name: bar, price: 8 &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; name: baz, price: 3 &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; name: baz, price: 5 &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;我们想要计算出相同名字下的所需要的价钱。我们将会用这个数据通过 Mapper 和 Reducer 去获得结果。&lt;/p&gt;
+&lt;p&gt;当我们让 Mapper 去处理上面的数据时，会生成如下的结果：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Key&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;foo&lt;/td&gt;
+&lt;td&gt;[9,12]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;bar&lt;/td&gt;
+&lt;td&gt;[8]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;baz&lt;/td&gt;
+&lt;td&gt;[3,5]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;看到了吗？它用相同的 key 去分组数据。在我们的例子中，是用 name 分组。这些结果会发送到 Reducer 中。&lt;/p&gt;
+&lt;p&gt;现在，在 reducer 中，我们会得到上面表格中的第一行数据，然后迭代这些数据然后把它们加起来，这就是第一行数据的总和。然后 reducer 会对第二行数据做同样的事情，直到所有行被处理完。&lt;/p&gt;
+&lt;p&gt;最终的输出结果如下：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Name&lt;/th&gt;
+&lt;th&gt;Total&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;foo&lt;/td&gt;
+&lt;td&gt;21&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;bar&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;baz&lt;/td&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;现在你明白为什么 Mapper 会叫 Mapper 了吧 ! (因为它会创建一份数据的映射)&lt;br&gt;也明白了为什么 Reducer 会叫 Reducer 了吧 ! (因为它会把 Mapper 生成的数据归纳成一个简单的形式)&lt;/p&gt;
+&lt;p&gt;如果你运行一些例子，你就会知道它是怎么工作的拉。你也可以从&lt;a href=&quot;https://docs.mongodb.com/manual/core/map-reduce/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;官方文档&lt;/a&gt; 中了解更多细节。&lt;/p&gt;
+&lt;h2 id=&quot;创建一个项目&quot;&gt;&lt;a href=&quot;#创建一个项目&quot; class=&quot;headerlink&quot; title=&quot;创建一个项目&quot;&gt;&lt;/a&gt;创建一个项目&lt;/h2&gt;&lt;p&gt;正如上文所说，我们可以在 mongo shell 中直接查询和看到输出结果。但是，为了让教程更加丰富，我们会构建一个 Nodejs 项目，在里面运行我们之前的任务。&lt;/p&gt;
+&lt;h3 id=&quot;Mongojs&quot;&gt;&lt;a href=&quot;#Mongojs&quot; class=&quot;headerlink&quot; title=&quot;Mongojs&quot;&gt;&lt;/a&gt;Mongojs&lt;/h3&gt;&lt;p&gt;我们会用 &lt;code&gt;mongojs&lt;/code&gt; 去实现我们的 MapReduce。你可以用同样的代码跑在 mongo shell 里面，会看到同样的结果。&lt;/p&gt;
+&lt;h3 id=&quot;Dummy-json&quot;&gt;&lt;a href=&quot;#Dummy-json&quot; class=&quot;headerlink&quot; title=&quot;Dummy-json&quot;&gt;&lt;/a&gt;Dummy-json&lt;/h3&gt;&lt;p&gt;我们会用 &lt;code&gt;dummy-json&lt;/code&gt; 去创建一些虚假的数据。你可以在 &lt;a href=&quot;https://github.com/webroo/dummy-json&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt; 找到更多的信息。然后我们会在这些虚假数据上面运行 MapReduce 命令，生成一些有意义的结果。&lt;/p&gt;
+&lt;p&gt;我们开始吧！&lt;/p&gt;
+&lt;p&gt;首先，你要安装 Nodejs，你可以看看 &lt;a href=&quot;http://thejackalofjavascript.com/hello-node/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;。然后你要创建一个叫 mongoDBMapReduce 的目录。我们将会创建 &lt;code&gt;package.json&lt;/code&gt; 文件来保存项目的详细信息。&lt;/p&gt;
+&lt;p&gt;运行 &lt;code&gt;npm init&lt;/code&gt; 然后填入你喜欢的东西，创建完 &lt;code&gt;package.json&lt;/code&gt; 后，我们要添加项目的依赖。&lt;br&gt;运行 &lt;code&gt;npm i mongojs dummy-json --save-dev&lt;/code&gt; ，然后等几分钟之后，我们项目的依赖就安装好了。&lt;/p&gt;
+&lt;h2 id=&quot;生成虚假数据&quot;&gt;&lt;a href=&quot;#生成虚假数据&quot; class=&quot;headerlink&quot; title=&quot;生成虚假数据&quot;&gt;&lt;/a&gt;生成虚假数据&lt;/h2&gt;&lt;p&gt;下一步，我们要用 &lt;code&gt;dummy-json&lt;/code&gt; 模块来生成虚假数据。&lt;br&gt;在项目的根目录创建一个名叫 &lt;code&gt;dataGen.js&lt;/code&gt; 的文件，我们会把数据生成的逻辑保存到一个独立的文件里面。如果以后需要添加更多的数据，你可以运行这个文件。&lt;/p&gt;
+&lt;p&gt;把下面的内容复制到 &lt;code&gt;dataGen.js&lt;/code&gt; 里面：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; mongojs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;mongojs&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; db = mongojs(&lt;span class=&quot;string&quot;&gt;&#39;mapReduceDB&#39;&lt;/span&gt;, [&lt;span class=&quot;string&quot;&gt;&#39;sourceData&#39;&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;fs&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; dummyjson = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;dummy-json&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; helpers = &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  gender: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;+ &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.random() &amp;gt; &lt;span class=&quot;number&quot;&gt;0.5&lt;/span&gt; ? &lt;span class=&quot;string&quot;&gt;&#39;male&#39;&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&#39;female&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  dob : &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; start = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Date&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;1900&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        end = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Date&lt;/span&gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Date&lt;/span&gt;(start.getTime() + &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.random() * (end.getTime() - start.getTime()));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  hobbies : &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; hobbysList = []; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    hobbysList[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] = [];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    hobbysList[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;][&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] = [&lt;span class=&quot;string&quot;&gt;&quot;Acrobatics&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;Meditation&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;Music&quot;&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    hobbysList[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;][&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;] = [&lt;span class=&quot;string&quot;&gt;&quot;Acrobatics&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;Photography&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;Papier-Mache&quot;&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    hobbysList[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;][&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;] = [ &lt;span class=&quot;string&quot;&gt;&quot;Papier-Mache&quot;&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; hobbysList[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;][&lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.floor(&lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.random() * hobbysList[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;].length)];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&quot;Begin Parsing &amp;gt;&amp;gt;&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; template = fs.readFileSync(&lt;span class=&quot;string&quot;&gt;&#39;schema.hbs&#39;&lt;/span&gt;, &amp;#123;encoding: &lt;span class=&quot;string&quot;&gt;&#39;utf8&#39;&lt;/span&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; result = dummyjson.parse(template, &amp;#123;helpers: helpers&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&quot;Begin Database Insert &amp;gt;&amp;gt;&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;db.sourceData.remove(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;argument&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&quot;DB Cleanup Completd&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;db.sourceData.insert(&lt;span class=&quot;built_in&quot;&gt;JSON&lt;/span&gt;.parse(result), &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;err, docs&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&quot;DB Insert Completed&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;第1-4行&lt;/strong&gt;，我们引入了所有依赖。&lt;br&gt;&lt;strong&gt;第2行&lt;/strong&gt;，我们创建了一个叫 &lt;code&gt;mapReduceDB&lt;/code&gt; 的数据库。在数据库里面，创建了一个叫 &lt;code&gt;sourceData&lt;/code&gt; 的集合。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第6-23行&lt;/strong&gt;，是 Handlebar 的 helper。你可以到 &lt;code&gt;dummy-json&lt;/code&gt; 中了解更多信息。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第27-28行&lt;/strong&gt;，我们读取了 &lt;code&gt;schema.hbs&lt;/code&gt; 文件 (我们接着会创建这个文件)，然后把它解析成 JSON。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第32行&lt;/strong&gt;，在插入新数据之前，我们要先把旧数据清除掉。如果你想保留旧数据，把这部分注释掉就好了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;第36行&lt;/strong&gt;，把生成的数据插入数据库。&lt;/p&gt;
+&lt;p&gt;接着，我们要在项目根目录创建一个叫 &lt;code&gt;schema.hbs&lt;/code&gt; 的文件。这里面会包括 JSON 文档的结构。把下面的内容复制到文件里面：&lt;/p&gt;
+&lt;figure class=&quot;highlight hbs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;xml&quot;&gt;[&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;begin-block&quot;&gt;#repeat &lt;/span&gt;9999&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &quot;id&quot;: &lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;variable&quot;&gt;index&lt;/span&gt;&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &quot;name&quot;: &quot;&lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;variable&quot;&gt;firstName&lt;/span&gt;&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt; &lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;variable&quot;&gt;lastName&lt;/span&gt;&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt;&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &quot;email&quot;: &quot;&lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;variable&quot;&gt;email&lt;/span&gt;&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt;&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &quot;work&quot;: &quot;&lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;variable&quot;&gt;company&lt;/span&gt;&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt;&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &quot;dob&quot; : &quot;&lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;variable&quot;&gt;dob&lt;/span&gt;&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt;&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &quot;age&quot;: &lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;variable&quot;&gt;number&lt;/span&gt; 1 99&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &quot;gender&quot; : &quot;&lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;variable&quot;&gt;gender&lt;/span&gt;&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt;&quot;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &quot;salary&quot; : &lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;variable&quot;&gt;number&lt;/span&gt; 999 99999&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &quot;hobbies&quot; : &quot;&lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;variable&quot;&gt;hobbies&lt;/span&gt;&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt;&quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;expression&quot;&gt;&amp;#123;&amp;#123;&lt;span class=&quot;end-block&quot;&gt;/repeat&lt;/span&gt;&amp;#125;&amp;#125;&lt;/span&gt;&lt;span class=&quot;xml&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;]&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意 &lt;strong&gt;第2行&lt;/strong&gt;，我们会生成 9999 个文档。&lt;/p&gt;
+&lt;p&gt;打开一个新的终端，运行 &lt;code&gt;mongod&lt;/code&gt;，启动 MongoDB 服务。然后回到原来的终端，运行 &lt;code&gt;node dataGen.js&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;如果一切正常，会显示如下结果：&lt;/p&gt;
+&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ node dataGen.js&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Begin&lt;/span&gt; Parsing &amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Begin&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;Database&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;Insert&lt;/span&gt; &amp;gt;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;DB &lt;span class=&quot;keyword&quot;&gt;Cleanup&lt;/span&gt; Completed&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;DB &lt;span class=&quot;keyword&quot;&gt;Insert&lt;/span&gt; Completed&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后按 ctrl + c 杀掉 Node 程序。要验证是否插入成功，我们可以打开一个新的终端，运行 &lt;code&gt;mongo&lt;/code&gt; 命令进入 mongo shell。&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt; use mapReduceDB&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt; db.sourceData.findOne()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;id&quot;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;name&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;Leanne Flinn&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;email&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;leanne.flinn@unilogic.com&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;work&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;Unilogic&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;dob&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;Sun Mar 14 1909 12:45:53 GTM+0530 (LST)&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;age&quot;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;27&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;gender&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;male&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;salary&quot;&lt;/span&gt;: &lt;span class=&quot;number&quot;&gt;16660&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;hobbies&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;Acrobatics,Photography,Papier-Mache&quot;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;_id&quot;&lt;/span&gt;: Object(&lt;span class=&quot;string&quot;&gt;&quot;57579f702fa6c7651e504fe2&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;gt; db.sourceData.count()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;9999&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;有意义的数据&quot;&gt;&lt;a href=&quot;#有意义的数据&quot; class=&quot;headerlink&quot; title=&quot;有意义的数据&quot;&gt;&lt;/a&gt;有意义的数据&lt;/h2&gt;&lt;p&gt;现在我们有 9999 个虚假用户的数据，让我们试着把数据变得有意义&lt;/p&gt;
+&lt;h3 id=&quot;例子1：计算男女数量&quot;&gt;&lt;a href=&quot;#例子1：计算男女数量&quot; class=&quot;headerlink&quot; title=&quot;例子1：计算男女数量&quot;&gt;&lt;/a&gt;例子1：计算男女数量&lt;/h3&gt;&lt;p&gt;首先，在项目根目录创建一个 &lt;code&gt;example1.js&lt;/code&gt; 的文件，我们要进行 MapReduce 操作，去计算男女的数量。&lt;/p&gt;
+&lt;h4 id=&quot;Mapper-的逻辑&quot;&gt;&lt;a href=&quot;#Mapper-的逻辑&quot; class=&quot;headerlink&quot; title=&quot;Mapper 的逻辑&quot;&gt;&lt;/a&gt;Mapper 的逻辑&lt;/h4&gt;&lt;p&gt;我们只需要让 Mapper 以性别作为 key，把值作为 1。因为一个用户不是男就是女。所以，Mapper 的输出会是下面这样：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Key&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Male&lt;/td&gt;
+&lt;td&gt;[1,1,1…]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Female&lt;/td&gt;
+&lt;td&gt;[1,1,1,1,1…]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&quot;Reducer-的逻辑&quot;&gt;&lt;a href=&quot;#Reducer-的逻辑&quot; class=&quot;headerlink&quot; title=&quot;Reducer 的逻辑&quot;&gt;&lt;/a&gt;Reducer 的逻辑&lt;/h4&gt;&lt;p&gt;在 Reducer 中，我们会获得上面两行数据，我们要做的是把每一行中的值求和，表示该性别的总数。最终的输出结果如下：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Key&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Male&lt;/td&gt;
+&lt;td&gt;5031&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Female&lt;/td&gt;
+&lt;td&gt;4968&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&quot;代码&quot;&gt;&lt;a href=&quot;#代码&quot; class=&quot;headerlink&quot; title=&quot;代码&quot;&gt;&lt;/a&gt;代码&lt;/h4&gt;&lt;p&gt;好了，现在我们可以写代码去实现了。在 &lt;code&gt;example1.js&lt;/code&gt; 中，我们要先引入所需要的依赖。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; mongojs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;mongojs&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; db = mongojs(&lt;span class=&quot;string&quot;&gt;&#39;mapReduceDB&#39;&lt;/span&gt;, [&lt;span class=&quot;string&quot;&gt;&#39;sourceData&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;example1_results&#39;&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意 &lt;strong&gt;第2行&lt;/strong&gt;，第一个参数是数据库的名字，第二个参数表示集合的数组。&lt;code&gt;example1_results&lt;/code&gt; 集合用来保存结果。&lt;/p&gt;
+&lt;p&gt;接下来，我们加上 mapper 和 reducer 函数：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; mapper = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    emit(&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.gender, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; reducer = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;gender, count&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Array&lt;/span&gt;.sum(count);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在&lt;strong&gt;第2行&lt;/strong&gt;中， &lt;code&gt;this&lt;/code&gt; 表示当前的文档，因此 &lt;code&gt;this.gender&lt;/code&gt; 会作为 mapper 的 key，它的值要么是 &lt;code&gt;male&lt;/code&gt;，要么是 &lt;code&gt;female&lt;/code&gt;。而 &lt;code&gt;emit()&lt;/code&gt; 将会把数据发送到一个临时保存数据的地方，作为 mapper 的结果。&lt;/p&gt;
+&lt;p&gt;在&lt;strong&gt;第5行&lt;/strong&gt;中，我们简单地把每个性别的所有值加起来。&lt;/p&gt;
+&lt;p&gt;最后，加上执行逻辑：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;db.sourceData.mapReduce(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    mapper,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    reducer,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        out : &lt;span class=&quot;string&quot;&gt;&quot;example1_results&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; db.example1_results.find(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;err, docs&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(err) &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(err);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(docs);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在&lt;strong&gt;第5行&lt;/strong&gt;中，我们设置了输出的集合名。&lt;br&gt;在&lt;strong&gt;第9行&lt;/strong&gt;中，我们会从 &lt;code&gt;example1_results&lt;/code&gt; 集合取得结果并显示它。&lt;/p&gt;
+&lt;p&gt;我们可以在终端运行试试：&lt;/p&gt;
+&lt;figure class=&quot;highlight groovy&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ node example1.js&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[ &amp;#123; &lt;span class=&quot;string&quot;&gt;_id:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;female&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;value:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;4968&lt;/span&gt; &amp;#125;, &amp;#123; &lt;span class=&quot;string&quot;&gt;_id:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;male&#39;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;value:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5031&lt;/span&gt; &amp;#125; ]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;我的数量可能和你的不一样，但男女总数应该是 9999 !&lt;/p&gt;
+&lt;h4 id=&quot;Mongo-Shell-代码&quot;&gt;&lt;a href=&quot;#Mongo-Shell-代码&quot; class=&quot;headerlink&quot; title=&quot;Mongo Shell 代码&quot;&gt;&lt;/a&gt;Mongo Shell 代码&lt;/h4&gt;&lt;p&gt;如果你想在 mongo shell 中运行上面的例子，你可以粘贴下面这些代码到终端里面：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;mapper = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    emit(&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.gender, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;reducer = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;gender, count&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Array&lt;/span&gt;.sum(count);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;db.sourceData.mapReduce(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    mapper,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    reducer,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        out : &lt;span class=&quot;string&quot;&gt;&quot;example1_results&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; db.example1_results.find()&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后你就会看到一样的结果，很简单吧！&lt;/p&gt;
+&lt;h3 id=&quot;例子2：获取每个性别中最老和最年轻的人&quot;&gt;&lt;a href=&quot;#例子2：获取每个性别中最老和最年轻的人&quot; class=&quot;headerlink&quot; title=&quot;例子2：获取每个性别中最老和最年轻的人&quot;&gt;&lt;/a&gt;例子2：获取每个性别中最老和最年轻的人&lt;/h3&gt;&lt;p&gt;在项目根目录创建一个 &lt;code&gt;example2.js&lt;/code&gt; 的文件。在这里，我们要把所有用户根据性别分组，然后分别找每个性别中最老和最年轻的用户。这个例子比前面的稍微复杂一点。&lt;/p&gt;
+&lt;h4 id=&quot;Mapper-的逻辑-1&quot;&gt;&lt;a href=&quot;#Mapper-的逻辑-1&quot; class=&quot;headerlink&quot; title=&quot;Mapper 的逻辑&quot;&gt;&lt;/a&gt;Mapper 的逻辑&lt;/h4&gt;&lt;p&gt;在 mapper 中，我们要以性别作为 key，然后以 object 作为 value。这个 object 要包含用户的年龄和名字。年龄是用来做计算用的，而名字只是用来显示给人看的。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Key&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Male&lt;/td&gt;
+&lt;td&gt;[{age: 9, name: ‘John’}, …]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Female&lt;/td&gt;
+&lt;td&gt;[{age: 19, name: ‘Rita’}, …]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&quot;Reducer-的逻辑-1&quot;&gt;&lt;a href=&quot;#Reducer-的逻辑-1&quot; class=&quot;headerlink&quot; title=&quot;Reducer 的逻辑&quot;&gt;&lt;/a&gt;Reducer 的逻辑&lt;/h4&gt;&lt;p&gt;我们的 reducer 会比前一个例子要复杂一点。我们要检查所有和性别相关的年龄，找到年龄最大和最小的用户。最终的输出结果是这样的：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Key&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Male&lt;/td&gt;
+&lt;td&gt;{min: {name: ‘harry’, age: 1}, max: {name: ‘Alex’, age: 99} }&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Female&lt;/td&gt;
+&lt;td&gt;{min: {name: ‘Loli’, age: 10}, max: {name: ‘Mary’, age: 98} }&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&quot;代码-1&quot;&gt;&lt;a href=&quot;#代码-1&quot; class=&quot;headerlink&quot; title=&quot;代码&quot;&gt;&lt;/a&gt;代码&lt;/h4&gt;&lt;p&gt;现在打开 &lt;code&gt;example2.js&lt;/code&gt;，粘贴下面的内容进去：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; mongojs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;mongojs&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; db = mongojs(&lt;span class=&quot;string&quot;&gt;&#39;mapReduceDB&#39;&lt;/span&gt;, [&lt;span class=&quot;string&quot;&gt;&#39;sourceData&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;example2_results&#39;&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; mapper = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; x = &amp;#123;age : &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age, name : &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    emit(&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.gender, &amp;#123;min : x , max : x&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; reducer = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;key, values&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; res = values[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;; i &amp;lt; values.length; i++) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(values[i].min.age &amp;lt; res.min.age)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            res.min = &amp;#123;name : values[i].min.name, age : values[i].min.age&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (values[i].max.age &amp;gt; res.max.age) &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;           res.max = &amp;#123;name : values[i].max.name, age : values[i].max.age&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; res;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;db.sourceData.mapReduce(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    mapper,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    reducer,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        out : &lt;span class=&quot;string&quot;&gt;&quot;example2_results&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; db.example2_results.find(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;err, docs&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(err) &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(err);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;built_in&quot;&gt;JSON&lt;/span&gt;.stringify(docs));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在&lt;strong&gt;第6行&lt;/strong&gt;，我们构建了一个 object，把它作为 value 发送。&lt;br&gt;在&lt;strong&gt;第13-18行&lt;/strong&gt;，我们迭代了所有 object，检查当前的 object 的年龄是否大于或小于前一个 object 的年龄，如果是，就会更新 &lt;code&gt;res.max&lt;/code&gt; 或者 &lt;code&gt;res.min&lt;/code&gt;。&lt;br&gt;在第&lt;strong&gt;第27行&lt;/strong&gt;，我们把结果输出到 &lt;code&gt;example2_results&lt;/code&gt; 中。&lt;/p&gt;
+&lt;p&gt;我们可以运行一下这个例子：&lt;/p&gt;
+&lt;figure class=&quot;highlight groovy&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ node example2.js&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[ &amp;#123; &lt;span class=&quot;string&quot;&gt;_id:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;female&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;value:&lt;/span&gt; &amp;#123; &lt;span class=&quot;string&quot;&gt;min:&lt;/span&gt; [Object], &lt;span class=&quot;string&quot;&gt;max:&lt;/span&gt; [Object] &amp;#125; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; &lt;span class=&quot;string&quot;&gt;_id:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;male&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;value:&lt;/span&gt; &amp;#123; &lt;span class=&quot;string&quot;&gt;min:&lt;/span&gt; [Object], &lt;span class=&quot;string&quot;&gt;max:&lt;/span&gt; [Object] &amp;#125; &amp;#125; ]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;例子3：计算每种兴趣爱好的人数&quot;&gt;&lt;a href=&quot;#例子3：计算每种兴趣爱好的人数&quot; class=&quot;headerlink&quot; title=&quot;例子3：计算每种兴趣爱好的人数&quot;&gt;&lt;/a&gt;例子3：计算每种兴趣爱好的人数&lt;/h3&gt;&lt;p&gt;在我们最后的例子中，我们会看看有多少用户有相同的兴趣爱好。我们在项目根目录创建一个叫 &lt;code&gt;example3.js&lt;/code&gt; 的文件。用户数据长这样子：&lt;/p&gt;
+&lt;figure class=&quot;highlight json&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;id&lt;/span&gt;&quot;: &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;name&lt;/span&gt;&quot;: &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;Leanne Flinn&quot;&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;email&lt;/span&gt;&quot;: &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;leanne.flinn@unilogic.com&quot;&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;work&lt;/span&gt;&quot;: &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;Unilogic&quot;&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;dob&lt;/span&gt;&quot;: &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;Sun Mar 14 1909 12:45:53 GTM+0530 (LST)&quot;&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;age&lt;/span&gt;&quot;: &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;number&quot;&gt;27&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;gender&lt;/span&gt;&quot;: &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;male&quot;&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;salary&lt;/span&gt;&quot;: &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;number&quot;&gt;16660&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;hobbies&lt;/span&gt;&quot;: &lt;span class=&quot;value&quot;&gt;&lt;span class=&quot;string&quot;&gt;&quot;Acrobatics,Photography,Papier-Mache&quot;&lt;/span&gt;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &quot;&lt;span class=&quot;attribute&quot;&gt;_id&lt;/span&gt;&quot;: &lt;span class=&quot;value&quot;&gt;Object(&lt;span class=&quot;string&quot;&gt;&quot;57579f702fa6c7651e504fe2&quot;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如你所见，每个用户的兴趣爱好列表都用逗号分隔。我们会找出有多少用户有表演杂技的爱好等等。&lt;/p&gt;
+&lt;h4 id=&quot;Mapper-的逻辑-2&quot;&gt;&lt;a href=&quot;#Mapper-的逻辑-2&quot; class=&quot;headerlink&quot; title=&quot;Mapper 的逻辑&quot;&gt;&lt;/a&gt;Mapper 的逻辑&lt;/h4&gt;&lt;p&gt;在这个场景下，我们的 mapper 会复杂一点。我们要为每个用户的兴趣爱好发送一个新的 key-value 对。这样，每个用户的每个兴趣爱好都会触发一次计算。最终我们会得到如下的结果：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Key&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Acrobatics&lt;/td&gt;
+&lt;td&gt;[1,1,1,1,1,1,….]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Meditation&lt;/td&gt;
+&lt;td&gt;[1,1,1,1,1,1,….]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Music&lt;/td&gt;
+&lt;td&gt;[1,1,1,1,1,1,….]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Photography&lt;/td&gt;
+&lt;td&gt;[1,1,1,1,1,1,….]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Papier-Mache&lt;/td&gt;
+&lt;td&gt;[1,1,1,1,1,1,….]&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&quot;Reducer-的逻辑-2&quot;&gt;&lt;a href=&quot;#Reducer-的逻辑-2&quot; class=&quot;headerlink&quot; title=&quot;Reducer 的逻辑&quot;&gt;&lt;/a&gt;Reducer 的逻辑&lt;/h4&gt;&lt;p&gt;在这里，我们只要简单地为每种兴趣爱好求和就好了。最终我们会得到下面的结果：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Key&lt;/th&gt;
+&lt;th&gt;Value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Acrobatics&lt;/td&gt;
+&lt;td&gt;6641&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Meditation&lt;/td&gt;
+&lt;td&gt;3338&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Music&lt;/td&gt;
+&lt;td&gt;3338&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Photography&lt;/td&gt;
+&lt;td&gt;3303&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Papier-Mache&lt;/td&gt;
+&lt;td&gt;6661&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&quot;代码-2&quot;&gt;&lt;a href=&quot;#代码-2&quot; class=&quot;headerlink&quot; title=&quot;代码&quot;&gt;&lt;/a&gt;代码&lt;/h4&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; mongojs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;mongojs&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; db = mongojs(&lt;span class=&quot;string&quot;&gt;&#39;mapReduceDB&#39;&lt;/span&gt;, [&lt;span class=&quot;string&quot;&gt;&#39;sourceData&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;example3_results&#39;&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; mapper = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;     &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; hobbys = &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.hobbies.split(&lt;span class=&quot;string&quot;&gt;&#39;,&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (i &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; hobbys) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        emit(hobbys[i], &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; reducer = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;key, values&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; count = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (index &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; values) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        count += values[index];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; count;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;db.sourceData.mapReduce(&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    mapper,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    reducer,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        out : &lt;span class=&quot;string&quot;&gt;&quot;example3_results&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; );&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; db.example3_results.find(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;err, docs&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(err) &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(err);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(docs);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意&lt;strong&gt;第7-9行&lt;/strong&gt;，我们迭代了每个兴趣爱好，然后发送了一次记数。&lt;br&gt;&lt;strong&gt;第13-18行&lt;/strong&gt;可以用 &lt;code&gt;Array.sum(values)&lt;/code&gt; 来代替，这样是另外一种做相同事情的方式。最终我们得到的结果：&lt;/p&gt;
+&lt;figure class=&quot;highlight groovy&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ node example3.js&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[ &amp;#123; &lt;span class=&quot;string&quot;&gt;_id:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;Acrobatics&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;value:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6641&lt;/span&gt; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; &lt;span class=&quot;string&quot;&gt;_id:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;Meditation&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;value:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3338&lt;/span&gt; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; &lt;span class=&quot;string&quot;&gt;_id:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;Music&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;value:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3338&lt;/span&gt; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; &lt;span class=&quot;string&quot;&gt;_id:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;Photography&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;value:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;6661&lt;/span&gt; &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#123; &lt;span class=&quot;string&quot;&gt;_id:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;Papier-Mache&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;value:&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;3303&lt;/span&gt; &amp;#125; ]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这就是 MongoDB 中运行 MapReduce 的方法了。但要记住，有时候一个简单的查询就能完成你想要的事情的。&lt;/p&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://thejackalofjavascript.com/mapreduce-in-mongodb/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MapReduce in MongoDB&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在这篇文章里面，我们会演示如何在 MongoDB 中使用 MapReduce 操作。&lt;br&gt;我们会用 &lt;code&gt;dummy-json&lt;/code&gt; 这个包来生成一些虚假的数据，然后用 &lt;code&gt;Mongojs&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如果想要快速看到结果，可以到 &lt;
+    
+    </summary>
+    
+    
+      <category term="mongodb" scheme="http://scarletsky.github.io/tags/mongodb/"/>
+    
+  </entry>
   
   <entry>
     <title>编写 Hubot Scripts</title>
@@ -1811,123 +2147,6 @@
     
     
       <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>利用 Gulp 处理前端工作流程</title>
-    <link href="http://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/"/>
-    <id>http://scarletsky.github.io/2015/08/14/use-gulp-for-front-end-workflow/</id>
-    <published>2015-08-14T08:57:33.000Z</published>
-    <updated>2016-02-29T04:38:13.000Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;基本用法&quot;&gt;&lt;a href=&quot;#基本用法&quot; class=&quot;headerlink&quot; title=&quot;基本用法&quot;&gt;&lt;/a&gt;基本用法&lt;/h1&gt;&lt;figure class=&quot;highlight gcode&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// gulpfile.js&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp.task&lt;span class=&quot;comment&quot;&gt;(&#39;foo&#39;, function()&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp.src&lt;span class=&quot;comment&quot;&gt;(glob)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe&lt;span class=&quot;comment&quot;&gt;(...)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe&lt;span class=&quot;comment&quot;&gt;(...)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe&lt;span class=&quot;comment&quot;&gt;(gulp.dest(...)&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe&lt;span class=&quot;comment&quot;&gt;(...)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe&lt;span class=&quot;comment&quot;&gt;(gulp.dest(...)&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// shell&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ gulp foo&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h1 id=&quot;基本-API&quot;&gt;&lt;a href=&quot;#基本-API&quot; class=&quot;headerlink&quot; title=&quot;基本 API&quot;&gt;&lt;/a&gt;基本 API&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;gulp.src(glob[, options])&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;根据 &lt;code&gt;glob&lt;/code&gt; 匹配文件，返回 &lt;code&gt;stream&lt;/code&gt;，可以通过 &lt;code&gt;.pipe()&lt;/code&gt; 方法传递给后续的插件。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;gulp.dest(path[, options])&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;一般用法 &lt;code&gt;.pipe(gulp.dest(path))&lt;/code&gt;，把 &lt;code&gt;pipe&lt;/code&gt; 中的内容按照指定的 &lt;code&gt;path&lt;/code&gt; 写成文件，会自动创建不存在的文件夹。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;注意，可以通过 &lt;code&gt;.pipe&lt;/code&gt; 多次指定输出的地方，具体请看 &lt;a href=&quot;https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulpdestpath-options&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;gulp.task(name[, deps], fn)&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;定义名为 &lt;code&gt;name&lt;/code&gt; 的任务，定义之后就可以在命令行中使用 &lt;code&gt;gulp xxx&lt;/code&gt; 来执行任务。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;deps&lt;/code&gt; 里面的任务全部完成后才会执行 &lt;code&gt;fn&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;deps&lt;/code&gt; 里面的任务都是并行执行的，如果需要顺序执行，需要特殊写法。具体看 &lt;a href=&quot;https://github.com/gulpjs/gulp/blob/master/docs/API.md#return-a-promise&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;gulp.watch(glob[, opts, cb])&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;监听文件变化&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;根据&lt;a href=&quot;http://stackoverflow.com/questions/22391527/gulps-gulp-watch-not-triggered-for-new-or-deleted-files&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这个帖子&lt;/a&gt;，&lt;code&gt;gulp.watch&lt;/code&gt; 不会监听新文件（目录），所以一般你会需要 &lt;a href=&quot;https://github.com/floatdrop/gulp-watch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-watch&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;常用命令-（自定义）&quot;&gt;&lt;a href=&quot;#常用命令-（自定义）&quot; class=&quot;headerlink&quot; title=&quot;常用命令 （自定义）&quot;&gt;&lt;/a&gt;常用命令 （自定义）&lt;/h1&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# for development mode&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp server&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# run test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp &lt;span class=&quot;built_in&quot;&gt;test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# for production mode&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp build&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;gulp-server-流程&quot;&gt;&lt;a href=&quot;#gulp-server-流程&quot; class=&quot;headerlink&quot; title=&quot;gulp server 流程&quot;&gt;&lt;/a&gt;&lt;code&gt;gulp server&lt;/code&gt; 流程&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;把 &lt;code&gt;less&lt;/code&gt;, &lt;code&gt;sass&lt;/code&gt;, 之类的文件编译成 CSS，常用插件：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/plus3network/gulp-less&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-less&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/dlmanning/gulp-sass&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-sass&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;创建 Web Server (with Live Reload)，常用：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/AveVlad/gulp-connect&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-connect&lt;/a&gt;，用来创建 Web Server，其实还有其他选择的，但多数都是利用 &lt;a href=&quot;https://github.com/senchalabs/connect&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;connect&lt;/a&gt; 来创建 Web Server 的。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/andrewrk/node-proxy-middleware&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;node-proxy-middle&lt;/a&gt;，用来代理请求，可以把 &lt;code&gt;/api/xxx&lt;/code&gt; 发送到指定的地址。(常用于 SPA 开发)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/tinganho/connect-modrewrite&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;connect-modrewrite&lt;/a&gt;，匹配资源，如果不匹配就可以重定向到指定地址。(常用于 SPA 开发)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/bripkens/connect-history-api-fallback&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;connect-history-api-fallback&lt;/a&gt;，作用同上，也用于匹配资源，但用起来简单很多。(常用于 SPA 开发)&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;监听文件变化，常用插件：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/floatdrop/gulp-watch&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-watch&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;示例代码&quot;&gt;&lt;a href=&quot;#示例代码&quot; class=&quot;headerlink&quot; title=&quot;示例代码&quot;&gt;&lt;/a&gt;示例代码&lt;/h3&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;clean:css&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    del.sync(&lt;span class=&quot;string&quot;&gt;&#39;app/styles/*.css&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;less&#39;&lt;/span&gt;, [&lt;span class=&quot;string&quot;&gt;&#39;clean:css&#39;&lt;/span&gt;], &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; stream = gulp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            .src(&lt;span class=&quot;string&quot;&gt;&#39;app/styles/main.less&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            .pipe(less())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            .pipe(gulp.dest(&lt;span class=&quot;string&quot;&gt;&#39;app/styles/&#39;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; stream;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;connect&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    connect.server(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        root: &lt;span class=&quot;string&quot;&gt;&#39;./app&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        port: &lt;span class=&quot;number&quot;&gt;9000&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        livereload: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        middleware: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;connect, o&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                (&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; url = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;url&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; proxy = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;proxy-middleware&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; options = url.parse(&lt;span class=&quot;string&quot;&gt;&#39;http://localhost:3000/api&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    options.route = &lt;span class=&quot;string&quot;&gt;&#39;/api&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; proxy(options);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                &amp;#125;)(),&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                modRewrite([&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    &lt;span class=&quot;string&quot;&gt;&#39;!\\.html|\\.js|\\.css|\\.swf|\\.jp(e?)g|\\.png|\\.gif|\\.eot|\\.woff|\\.ttf|\\.svg$ /index.html&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                ])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            ];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;watch&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .src(&lt;span class=&quot;string&quot;&gt;&#39;app/styles/**/*.less&#39;&lt;/span&gt;, &amp;#123;read: &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(watch(&lt;span class=&quot;string&quot;&gt;&#39;app/styles/**/*.less&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; gulp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                .src(&lt;span class=&quot;string&quot;&gt;&#39;app/styles/main.less&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                .pipe(less())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                .pipe(gulp.dest(&lt;span class=&quot;string&quot;&gt;&#39;app/styles/&#39;&lt;/span&gt;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                .pipe(connect.reload());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .src([&lt;span class=&quot;string&quot;&gt;&#39;app/scripts/**/*.js&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;app/**/*.html&#39;&lt;/span&gt;])&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(watch([&lt;span class=&quot;string&quot;&gt;&#39;app/scripts/**/*.js&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;app/**/*.html&#39;&lt;/span&gt;]))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(plumber())&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(connect.reload());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;server&#39;&lt;/span&gt;, [&lt;span class=&quot;string&quot;&gt;&#39;less&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;connect&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;watch&#39;&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;gulp-build-流程&quot;&gt;&lt;a href=&quot;#gulp-build-流程&quot; class=&quot;headerlink&quot; title=&quot;gulp build 流程&quot;&gt;&lt;/a&gt;&lt;code&gt;gulp build&lt;/code&gt; 流程&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;清理 &lt;code&gt;dist/&lt;/code&gt; 文件夹&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/sindresorhus/del&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;del&lt;/a&gt;，根据 &lt;code&gt;glob&lt;/code&gt; 来删除文件/目录&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;压缩文件&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/jonschlinkert/gulp-htmlmin&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-htmlmin&lt;/a&gt;，压缩 &lt;code&gt;html&lt;/code&gt; 文件&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/murphydanger/gulp-minify-html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-minify-html&lt;/a&gt;，同上&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/chilijung/gulp-cssmin&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-cssmin&lt;/a&gt;，压缩 &lt;code&gt;css&lt;/code&gt; 文件&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/murphydanger/gulp-minify-css&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-minify-css&lt;/a&gt;，同上，封装了 &lt;a href=&quot;https://github.com/jakubpawlowicz/clean-css&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;clean-css&lt;/a&gt;，star 比上面的多&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/terinjokes/gulp-uglify&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-uglify&lt;/a&gt;，混淆 &lt;code&gt;JavaScript&lt;/code&gt; 代码&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/zont/gulp-usemin&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-usemin&lt;/a&gt;，合并指定 &lt;code&gt;block&lt;/code&gt; 中的文件&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/sindresorhus/gulp-rev&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;gulp-rev&lt;/a&gt;，给静态文件加上版本号，如 &lt;code&gt;app.js&lt;/code&gt; -&amp;gt; &lt;code&gt;app-d41d8cd98f.js&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;复制其他文件到 &lt;code&gt;dist/&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;gulp.src(...).pipe(gulp.dest(...))&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;实例代码&quot;&gt;&lt;a href=&quot;#实例代码&quot; class=&quot;headerlink&quot; title=&quot;实例代码&quot;&gt;&lt;/a&gt;实例代码&lt;/h3&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;clean:build&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    del.sync(&lt;span class=&quot;string&quot;&gt;&#39;dist/&#39;&lt;/span&gt;, &amp;#123;force: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;minify&#39;&lt;/span&gt;, [&lt;span class=&quot;string&quot;&gt;&#39;clean:build&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;less&#39;&lt;/span&gt;], &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .src(&lt;span class=&quot;string&quot;&gt;&#39;app/views/**/*.html&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(htmlmin(&amp;#123;collapseWhitespace: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&amp;#125;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(gulp.dest(&lt;span class=&quot;string&quot;&gt;&#39;dist/views&#39;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .src(&lt;span class=&quot;string&quot;&gt;&#39;app/index.html&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(usemin(&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            js: [uglify(), rev()],&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            css: [minifyCss(), &lt;span class=&quot;string&quot;&gt;&#39;concat&#39;&lt;/span&gt;, rev()]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;))&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(gulp.dest(&lt;span class=&quot;string&quot;&gt;&#39;dist/&#39;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;copyfonts&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    gulp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .src(&lt;span class=&quot;string&quot;&gt;&#39;app/styles/fonts/*&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        .pipe(gulp.dest(&lt;span class=&quot;string&quot;&gt;&#39;dist/fonts/&#39;&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;gulp.task(&lt;span class=&quot;string&quot;&gt;&#39;build&#39;&lt;/span&gt;, [&lt;span class=&quot;string&quot;&gt;&#39;clean:build&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;minify&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;copyfonts&#39;&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h1 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/gulpjs/gulp/blob/master/docs/API.md&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;英文文档&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.gulpjs.com.cn/docs/api/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;中文文档&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;基本用法&quot;&gt;&lt;a href=&quot;#基本用法&quot; class=&quot;headerlink&quot; title=&quot;基本用法&quot;&gt;&lt;/a&gt;基本用法&lt;/h1&gt;&lt;figure class=&quot;highlight gcode&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
-    
-    
-      <category term="gulp" scheme="http://scarletsky.github.io/tags/gulp/"/>
     
   </entry>
   
