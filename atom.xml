@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-06-12T06:57:16.000Z</updated>
+  <updated>2016-06-18T15:18:50.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>升级 GitLab 过程中踩过的坑</title>
+    <link href="http://scarletsky.github.io/2016/06/18/issues-when-upgrading-gitlab/"/>
+    <id>http://scarletsky.github.io/2016/06/18/issues-when-upgrading-gitlab/</id>
+    <published>2016-06-18T11:58:57.000Z</published>
+    <updated>2016-06-18T15:18:50.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;最近帮公司的 Gitlab 从 7.14 升级到 8.7.6，升级的主要动机是整合 Gitlab CI，提升持续集成的效率。鉴于之前也是我把 Gitlab 从 7.x 升级到 7.14 的，我以为我已经有经验去处理了，但实际上，这次升级让我踩了不少以前没遇到过的坑…&lt;br&gt;本文主要记录升级 Gitlab 过程中踩过的一些坑~&lt;/p&gt;
+&lt;h2 id=&quot;MySQL-突然启动失败&quot;&gt;&lt;a href=&quot;#MySQL-突然启动失败&quot; class=&quot;headerlink&quot; title=&quot;MySQL 突然启动失败&quot;&gt;&lt;/a&gt;MySQL 突然启动失败&lt;/h2&gt;&lt;p&gt;由于我们公司的 Gitlab 服务器内存不太够，只有 2G，所以偶尔会出现 500 的错误，但通常情况下，直接通过 &lt;code&gt;$ sudo service gitlab restart&lt;/code&gt; 重启一次服务就可以恢复正常了。&lt;br&gt;但是，最近我遇到过 gitlab 启动失败，原因是 MySQL 无法启动。&lt;br&gt;当我启动 MySQL 的时候，报了这样的错误：&lt;/p&gt;
+&lt;figure class=&quot;highlight lasso&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ sudo service gitlab restart&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;MySQL Job failed &lt;span class=&quot;keyword&quot;&gt;to&lt;/span&gt; start&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;报错就报错吧，去看看 error.log 就好了吧。 然而，我太天真了:&lt;/p&gt;
+&lt;figure class=&quot;highlight stata&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;keyword&quot;&gt;cat&lt;/span&gt; /&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt;/&lt;span class=&quot;keyword&quot;&gt;log&lt;/span&gt;/mysql/&lt;span class=&quot;keyword&quot;&gt;error&lt;/span&gt;.&lt;span class=&quot;literal&quot;&gt;log&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;keyword&quot;&gt;cat&lt;/span&gt; /&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt;/&lt;span class=&quot;keyword&quot;&gt;log&lt;/span&gt;/mysql/mysql.&lt;span class=&quot;literal&quot;&gt;log&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;MySQL 的 error.log 是空的，mysql.log 也是空的…太诡异了，没 log 怎么 debug ?&lt;br&gt;还好有万能的 google，我找到了类似情况的问题：&lt;a href=&quot;http://stackoverflow.com/questions/22909060/mysql-job-failed-to-start&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;mysql-job-failed-to-start&lt;/a&gt;。最高票的答案是重装 mysql 的，但我不敢冒这个风险。我注意到有个回答说：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The given solution requires enough free HDD&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;于是我马上查了一下硬盘空间：&lt;/p&gt;
+&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ df -h&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Filesystem      Size  Used Avail &lt;span class=&quot;operator&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Use&lt;/span&gt;% Mounted &lt;span class=&quot;keyword&quot;&gt;on&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;/dev/xvda1       &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;G&lt;/span&gt;   &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;G&lt;/span&gt;  &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;keyword&quot;&gt;G&lt;/span&gt;   &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;% /&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;原来是空间满了，于是我删掉了一些没用的东西，腾出了 3G 多的空间之后，MySQL 又可以正常启动了，Gitlab 也是！&lt;/p&gt;
+&lt;h2 id=&quot;迁移-MySQL-到-PostgreSQL-时找不到依赖&quot;&gt;&lt;a href=&quot;#迁移-MySQL-到-PostgreSQL-时找不到依赖&quot; class=&quot;headerlink&quot; title=&quot;迁移 MySQL 到 PostgreSQL 时找不到依赖&quot;&gt;&lt;/a&gt;迁移 MySQL 到 PostgreSQL 时找不到依赖&lt;/h2&gt;&lt;p&gt;以前一直听说 PostgreSQL 很强大，而 Gitlab 也是官方推荐使用 PostgreSQL，再加上 Gitlab 有官方教程教我们如何把 MySQL 迁移到 PostgreSQL，于是我就萌生了迁移数据库的念头。&lt;/p&gt;
+&lt;p&gt;按照着 &lt;a href=&quot;https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/update/mysql_to_postgresql.md&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Migrating GitLab from MySQL to Postgres&lt;/a&gt; 这篇文章，我很轻易就把 MySQL 中的数据迁移到 PostgreSQL 中了。&lt;br&gt;而且每个步骤都没报错，我以为一切正常，谁知道当我执行 &lt;code&gt;service gitlab start&lt;/code&gt; 的时候，就报启动失败了。&lt;/p&gt;
+&lt;p&gt;我一下子就懵了，为什么按照官方教程做还会报错？ 而且报的还是这种抱不到依赖的错误？&lt;br&gt;&lt;figure class=&quot;highlight oxygene&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Specified &lt;span class=&quot;string&quot;&gt;&#39;postgresql&#39;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; database adapter, but the gem &lt;span class=&quot;keyword&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;not&lt;/span&gt; loaded. &lt;span class=&quot;keyword&quot;&gt;Add&lt;/span&gt; `gem &lt;span class=&quot;string&quot;&gt;&#39;pg&#39;&lt;/span&gt;` &lt;span class=&quot;keyword&quot;&gt;to&lt;/span&gt; your Gemfile.&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;我找了很多资料，但基本都是说把 &lt;code&gt;pg&lt;/code&gt; 加到 Gemfile ，然后再 &lt;code&gt;bundle install&lt;/code&gt; 就好了。&lt;br&gt;但我试过把 &lt;code&gt;vendor/bundle&lt;/code&gt; 删掉再重装，还是有这个错误。&lt;br&gt;最后，我找到 &lt;a href=&quot;https://gitlab.com/gitlab-org/gitlab-ci/issues/227&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Gem::LoadError: Specified ‘mysql2’ after update to 7.13
+&lt;/a&gt; 这个 issue，里面提到在 &lt;code&gt;.bundle/config&lt;/code&gt; 里面有一些 bundle 的配置！我发现我里面的配置和这个 issue 提到的配置是一样的：&lt;/p&gt;
+&lt;figure class=&quot;highlight groovy&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;BUNDLE_WITHOUT:&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;development:&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;test:&lt;/span&gt;&lt;span class=&quot;string&quot;&gt;postgres:&lt;/span&gt;mysql&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;最后，我把上面的 &lt;code&gt;postgres&lt;/code&gt; 部分删掉，然后再运行 &lt;code&gt;sudo -u git -H bundle install --without development test mysql --deployment&lt;/code&gt; 安装依赖，就能正常启动 gitlab 了。&lt;/p&gt;
+&lt;p&gt;这时候，我才体会到，不熟悉 ruby 技术栈去搞 gitlab 真是累啊~&lt;/p&gt;
+&lt;h2 id=&quot;Docker-化时自动修改用户组引起其他问题&quot;&gt;&lt;a href=&quot;#Docker-化时自动修改用户组引起其他问题&quot; class=&quot;headerlink&quot; title=&quot;Docker 化时自动修改用户组引起其他问题&quot;&gt;&lt;/a&gt;Docker 化时自动修改用户组引起其他问题&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;严格来说这不是升级 Gitlab 升级过程中遇到的坑，这只是我在尝试把 gitlab docker 化时遇到的问题。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;有了上面的经历，我暗下决心，要把 Gitlab Docker 化，这样我就不用操心 Gitlab 相关的问题了，我只要启动下载镜像，运行容器就好了，其他 Gitlab 相关的事情就交回给官方处理好了。&lt;/p&gt;
+&lt;p&gt;于是，我找到了 &lt;a href=&quot;https://github.com/sameersbn/docker-gitlab&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;docker-gitlab&lt;/a&gt;，我慢慢去尝试把 Gitlab 扔到 docker 里面运行。&lt;/p&gt;
+&lt;p&gt;最开始的时候，我直接用 docker-compose 来运行 docker-gitlab，我试着先用 MySQL ，于是我把 &lt;code&gt;docker-compose.yaml&lt;/code&gt; 中的 PostgreSQL 部分的东西全部改成 MySQL，然后直接用 &lt;code&gt;docker-compose up&lt;/code&gt; 来运行 gitlab 。&lt;/p&gt;
+&lt;p&gt;虽然运行过程中没看出什么问题，但我后来发现 MySQL 中的用户和用户组都被修改成 &lt;code&gt;messagebus:messagebus&lt;/code&gt; 了！这样直接导致了我本地的 MySQL 不能正常使用了。&lt;br&gt;最后把它改回 &lt;code&gt;mysql:adm&lt;/code&gt; 才恢复正常~&lt;/p&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/22909060/mysql-job-failed-to-start&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/22909060/mysql-job-failed-to-start&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://gitlab.com/gitlab-org/gitlab-ci/issues/227&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://gitlab.com/gitlab-org/gitlab-ci/issues/227&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/sameersbn/docker-gitlab&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/sameersbn/docker-gitlab&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;最近帮公司的 Gitlab 从 7.14 升级到 8.7.6，升级的主要动机是整合 Gitlab CI，提升持续集成的效率。鉴于之前也是我把
+    
+    </summary>
+    
+    
+      <category term="gitlab" scheme="http://scarletsky.github.io/tags/gitlab/"/>
+    
+  </entry>
   
   <entry>
     <title>「译」 MapReduce in MongoDB</title>
@@ -2083,70 +2129,6 @@
     
     
       <category term="commonjs" scheme="http://scarletsky.github.io/tags/commonjs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JavaScript 中 Object.defineProperty 的使用</title>
-    <link href="http://scarletsky.github.io/2015/08/18/Object-learning-in-javascript/"/>
-    <id>http://scarletsky.github.io/2015/08/18/Object-learning-in-javascript/</id>
-    <published>2015-08-18T09:57:31.000Z</published>
-    <updated>2016-02-29T04:34:46.000Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;Object-defineProperty&quot;&gt;&lt;a href=&quot;#Object-defineProperty&quot; class=&quot;headerlink&quot; title=&quot;Object.defineProperty&quot;&gt;&lt;/a&gt;Object.defineProperty&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;The Object.defineProperty() method defines a new property directly on an object, or modifies an existing property on an object, and returns the object.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;直接在一个对象上定义一个新的属性，或修改一个已经存在的属性。这个方法会返回该对象。&lt;/p&gt;
-&lt;h3 id=&quot;语法&quot;&gt;&lt;a href=&quot;#语法&quot; class=&quot;headerlink&quot; title=&quot;语法&quot;&gt;&lt;/a&gt;语法&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Object.defineProperty(obj, prop, descriptor)&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&quot;参数&quot;&gt;&lt;a href=&quot;#参数&quot; class=&quot;headerlink&quot; title=&quot;参数&quot;&gt;&lt;/a&gt;参数&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;Object obj&lt;/code&gt; 目标对象&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;String prop&lt;/code&gt; 需要定义的属性&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;Object descriptor&lt;/code&gt; 该属性拥有的特性，可设置的值有：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;value&lt;/code&gt; 属性的值，默认为 &lt;code&gt;undefined&lt;/code&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;writable&lt;/code&gt; 该属性是否可写，如果设置成 &lt;code&gt;false&lt;/code&gt;，则任何对该属性改写的操作都无效（但不会报错），默认为 &lt;code&gt;false&lt;/code&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;get&lt;/code&gt; 一旦目标对象访问该属性，就会调用这个方法，并返回结果。默认为 &lt;code&gt;undefined&lt;/code&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;set&lt;/code&gt; 一旦目标对象设置该属性，就会调用这个方法。默认为 &lt;code&gt;undeinfed&lt;/code&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;configurable&lt;/code&gt; 如果为false，则任何尝试删除目标属性或修改属性以下特性（writable, configurable, enumerable）的行为将被无效化，默认为 &lt;code&gt;false&lt;/code&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;enumerable&lt;/code&gt; 是否能在for…in循环中遍历出来或在Object.keys中列举出来。默认为 &lt;code&gt;false&lt;/code&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;注意&quot;&gt;&lt;a href=&quot;#注意&quot; class=&quot;headerlink&quot; title=&quot;注意&quot;&gt;&lt;/a&gt;&lt;strong&gt;注意&lt;/strong&gt;&lt;/h4&gt;&lt;p&gt;在 &lt;code&gt;descriptor&lt;/code&gt; 中不能&lt;strong&gt;同时&lt;/strong&gt;设置访问器 (&lt;code&gt;get&lt;/code&gt; 和 &lt;code&gt;set&lt;/code&gt;) 和 &lt;code&gt;wriable&lt;/code&gt; 或 &lt;code&gt;value&lt;/code&gt;，否则会报以下错误：&lt;br&gt;&lt;figure class=&quot;highlight crmsh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Invalid &lt;span class=&quot;keyword&quot;&gt;property&lt;/span&gt;.&lt;span class=&quot;title&quot;&gt;  &lt;/span&gt;A &lt;span class=&quot;keyword&quot;&gt;property&lt;/span&gt;&lt;span class=&quot;title&quot;&gt; &lt;/span&gt;cannot both have accessors &lt;span class=&quot;operator&quot;&gt;and&lt;/span&gt; be writable &lt;span class=&quot;operator&quot;&gt;or&lt;/span&gt; have a value&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;h3 id=&quot;实际应用&quot;&gt;&lt;a href=&quot;#实际应用&quot; class=&quot;headerlink&quot; title=&quot;实际应用&quot;&gt;&lt;/a&gt;实际应用&lt;/h3&gt;&lt;p&gt;我们知道，在 &lt;code&gt;Express.js&lt;/code&gt; 升级到 4.0 之后，它把很多功能从核心库中移除了。当我们访问那些被移除的属性时，它会报错，告诉我们该属性已经被移除了。这个功能就是通过 &lt;code&gt;Object.defineProperty&lt;/code&gt; 来实现的。看看源码吧：&lt;/p&gt;
-&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;json&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;urlencoded&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;bodyParser&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;compress&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;cookieSession&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;session&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;logger&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;cookieParser&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;favicon&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;responseTime&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;errorHandler&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;timeout&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;methodOverride&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;vhost&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;csrf&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;directory&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;limit&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;multipart&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&#39;staticCache&#39;&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;].forEach(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;name&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;Object&lt;/span&gt;.defineProperty(exports, name, &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    get: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &lt;span class=&quot;keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Error&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;Most middleware (like &#39;&lt;/span&gt; + name + &lt;span class=&quot;string&quot;&gt;&#39;) is no longer bundled with Express and must be installed separately. Please see https://github.com/senchalabs/connect#middleware.&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    configurable: &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h1 id=&quot;Object-defineProperties&quot;&gt;&lt;a href=&quot;#Object-defineProperties&quot; class=&quot;headerlink&quot; title=&quot;Object.defineProperties&quot;&gt;&lt;/a&gt;Object.defineProperties&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;The Object.defineProperties() method defines new or modifies existing properties directly on an object, returning the object.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;和 &lt;code&gt;Object.defineProperty&lt;/code&gt; 类似，只不过这个方法可以设置多个属性。&lt;/p&gt;
-&lt;h3 id=&quot;语法-1&quot;&gt;&lt;a href=&quot;#语法-1&quot; class=&quot;headerlink&quot; title=&quot;语法&quot;&gt;&lt;/a&gt;语法&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Object.defineProperties(obj, props)&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&quot;参数-1&quot;&gt;&lt;a href=&quot;#参数-1&quot; class=&quot;headerlink&quot; title=&quot;参数&quot;&gt;&lt;/a&gt;参数&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;Object obj&lt;/code&gt; 目标对象&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;Object props&lt;/code&gt; 要为目标对象添加的属性，其中 &lt;code&gt;key&lt;/code&gt; 和 &lt;code&gt;value&lt;/code&gt; 分别代表 &lt;code&gt;Object.defineProperty&lt;/code&gt; 中的第二和第三个参数。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.cnblogs.com/rubylouvre/archive/2010/09/19/1831128.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/strongloop/express/blob/master/lib/express.js&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/strongloop/express/blob/master/lib/express.js&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;Object-defineProperty&quot;&gt;&lt;a href=&quot;#Object-defineProperty&quot; class=&quot;headerlink&quot; title=&quot;Object.defineProperty&quot;&gt;&lt;/a&gt;Object.defineProperty&lt;/
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
-    
-    
-      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
     
   </entry>
   
