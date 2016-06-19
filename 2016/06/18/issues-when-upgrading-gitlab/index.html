@@ -23,7 +23,7 @@ MySQL 突然启动失败由于我们公司的 Gitlab 服务器内存不太够，
 <meta property="og:site_name" content="Scarletsky">
 <meta property="og:description" content="简介最近帮公司的 Gitlab 从 7.14 升级到 8.7.6，升级的主要动机是整合 Gitlab CI，提升持续集成的效率。鉴于之前也是我把 Gitlab 从 7.x 升级到 7.14 的，我以为我已经有经验去处理了，但实际上，这次升级让我踩了不少以前没遇到过的坑…本文主要记录升级 Gitlab 过程中踩过的一些坑~
 MySQL 突然启动失败由于我们公司的 Gitlab 服务器内存不太够，只有">
-<meta property="og:updated_time" content="2016-06-18T15:18:50.000Z">
+<meta property="og:updated_time" content="2016-06-19T03:11:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="升级 GitLab 过程中踩过的坑">
 <meta name="twitter:description" content="简介最近帮公司的 Gitlab 从 7.14 升级到 8.7.6，升级的主要动机是整合 Gitlab CI，提升持续集成的效率。鉴于之前也是我把 Gitlab 从 7.x 升级到 7.14 的，我以为我已经有经验去处理了，但实际上，这次升级让我踩了不少以前没遇到过的坑…本文主要记录升级 Gitlab 过程中踩过的一些坑~
@@ -186,7 +186,7 @@ ga('send', 'pageview');
     
       <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>最近帮公司的 Gitlab 从 7.14 升级到 8.7.6，升级的主要动机是整合 Gitlab CI，提升持续集成的效率。鉴于之前也是我把 Gitlab 从 7.x 升级到 7.14 的，我以为我已经有经验去处理了，但实际上，这次升级让我踩了不少以前没遇到过的坑…<br>本文主要记录升级 Gitlab 过程中踩过的一些坑~</p>
 <h2 id="MySQL-突然启动失败"><a href="#MySQL-突然启动失败" class="headerlink" title="MySQL 突然启动失败"></a>MySQL 突然启动失败</h2><p>由于我们公司的 Gitlab 服务器内存不太够，只有 2G，所以偶尔会出现 500 的错误，但通常情况下，直接通过 <code>$ sudo service gitlab restart</code> 重启一次服务就可以恢复正常了。<br>但是，最近我遇到过 gitlab 启动失败，原因是 MySQL 无法启动。<br>当我启动 MySQL 的时候，报了这样的错误：</p>
-<figure class="highlight lasso"><table><tr><td class="code"><pre><span class="line">$ sudo service gitlab restart</span><br><span class="line"><span class="attribute">...</span></span><br><span class="line">MySQL Job failed <span class="keyword">to</span> start</span><br></pre></td></tr></table></figure>
+<figure class="highlight lasso"><table><tr><td class="code"><pre><span class="line">$ sudo service mysql restart</span><br><span class="line"><span class="attribute">...</span></span><br><span class="line">MySQL Job failed <span class="keyword">to</span> start</span><br></pre></td></tr></table></figure>
 <p>报错就报错吧，去看看 error.log 就好了吧。 然而，我太天真了:</p>
 <figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">cat</span> /<span class="keyword">var</span>/<span class="keyword">log</span>/mysql/<span class="keyword">error</span>.<span class="literal">log</span></span><br><span class="line">$ <span class="keyword">cat</span> /<span class="keyword">var</span>/<span class="keyword">log</span>/mysql/mysql.<span class="literal">log</span></span><br></pre></td></tr></table></figure>
 <p>MySQL 的 error.log 是空的，mysql.log 也是空的…太诡异了，没 log 怎么 debug ?<br>还好有万能的 google，我找到了类似情况的问题：<a href="http://stackoverflow.com/questions/22909060/mysql-job-failed-to-start" target="_blank" rel="external">mysql-job-failed-to-start</a>。最高票的答案是重装 mysql 的，但我不敢冒这个风险。我注意到有个回答说：</p>
