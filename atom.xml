@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-06-19T03:11:45.000Z</updated>
+  <updated>2016-06-20T02:53:34.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://scarletsky.github.io/2016/06/18/issues-when-upgrading-gitlab/"/>
     <id>http://scarletsky.github.io/2016/06/18/issues-when-upgrading-gitlab/</id>
     <published>2016-06-18T11:58:57.000Z</published>
-    <updated>2016-06-19T03:11:45.000Z</updated>
+    <updated>2016-06-20T02:53:34.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;最近帮公司的 Gitlab 从 7.14 升级到 8.7.6，升级的主要动机是整合 Gitlab CI，提升持续集成的效率。鉴于之前也是我把 Gitlab 从 7.x 升级到 7.14 的，我以为我已经有经验去处理了，但实际上，这次升级让我踩了不少以前没遇到过的坑…&lt;br&gt;本文主要记录升级 Gitlab 过程中踩过的一些坑~&lt;/p&gt;
 &lt;h2 id=&quot;MySQL-突然启动失败&quot;&gt;&lt;a href=&quot;#MySQL-突然启动失败&quot; class=&quot;headerlink&quot; title=&quot;MySQL 突然启动失败&quot;&gt;&lt;/a&gt;MySQL 突然启动失败&lt;/h2&gt;&lt;p&gt;由于我们公司的 Gitlab 服务器内存不太够，只有 2G，所以偶尔会出现 500 的错误，但通常情况下，直接通过 &lt;code&gt;$ sudo service gitlab restart&lt;/code&gt; 重启一次服务就可以恢复正常了。&lt;br&gt;但是，最近我遇到过 gitlab 启动失败，原因是 MySQL 无法启动。&lt;br&gt;当我启动 MySQL 的时候，报了这样的错误：&lt;/p&gt;
@@ -46,7 +46,8 @@
 &lt;p&gt;有了上面的经历，我暗下决心，要把 Gitlab Docker 化，这样我就不用操心 Gitlab 相关的问题了，我只要启动下载镜像，运行容器就好了，其他 Gitlab 相关的事情就交回给官方处理好了。&lt;/p&gt;
 &lt;p&gt;于是，我找到了 &lt;a href=&quot;https://github.com/sameersbn/docker-gitlab&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;docker-gitlab&lt;/a&gt;，我慢慢去尝试把 Gitlab 扔到 docker 里面运行。&lt;/p&gt;
 &lt;p&gt;最开始的时候，我直接用 docker-compose 来运行 docker-gitlab，我试着先用 MySQL ，于是我把 &lt;code&gt;docker-compose.yaml&lt;/code&gt; 中的 PostgreSQL 部分的东西全部改成 MySQL，然后直接用 &lt;code&gt;docker-compose up&lt;/code&gt; 来运行 gitlab 。&lt;/p&gt;
-&lt;p&gt;虽然运行过程中没看出什么问题，但我后来发现 MySQL 中的用户和用户组都被修改成 &lt;code&gt;messagebus:messagebus&lt;/code&gt; 了！这样直接导致了我本地的 MySQL 不能正常使用了。&lt;br&gt;最后把它改回 &lt;code&gt;mysql:adm&lt;/code&gt; 才恢复正常~&lt;/p&gt;
+&lt;p&gt;虽然运行过程中没看出什么问题，但我后来发现 MySQL 中的用户和用户组都被修改成 &lt;code&gt;messagebus:fuse&lt;/code&gt; 了！这样直接导致了我本地的 MySQL 不能正常使用了。&lt;/p&gt;
+&lt;p&gt;经过调查，我发现是 docker 的 &lt;code&gt;-v&lt;/code&gt; 指定已存在目录的时候，会修改文件目录的用户和用户组，最后把它改回 &lt;code&gt;mysql:adm&lt;/code&gt; 才恢复正常~&lt;/p&gt;
 &lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/22909060/mysql-job-failed-to-start&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/22909060/mysql-job-failed-to-start&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://gitlab.com/gitlab-org/gitlab-ci/issues/227&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://gitlab.com/gitlab-org/gitlab-ci/issues/227&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/sameersbn/docker-gitlab&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/sameersbn/docker-gitlab&lt;/a&gt;&lt;/p&gt;
 </content>
     
