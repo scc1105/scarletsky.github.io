@@ -41,11 +41,11 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -68,6 +68,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -196,7 +197,7 @@ ga('send', 'pageview');
   <div class="article-content">
     
       <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。</p>
-<h2 id="安装-amp-使用"><a href="#安装-amp-使用" class="headerlink" title="安装 &amp; 使用"></a>安装 &amp; 使用</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/syl20bnr/spacemacs ~/.emacs.d</span><br><span class="line">$ emacs</span><br></pre></td></tr></table></figure>
+<h2 id="安装-amp-使用"><a href="#安装-amp-使用" class="headerlink" title="安装 &amp; 使用"></a>安装 &amp; 使用</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> https://github.com/syl20bnr/spacemacs ~/.emacs.d</div><div class="line">$ emacs</div></pre></td></tr></table></figure>
 <h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>Spacemacs 的配置文件位于 <code>~/.spacemacs</code> 中，我们只需要修改这个文件就可以制定自己的配置了。</p>
 <p>一般情况下，我们只需要在 <code>dotspacemacs-configuration-layers</code> 中添加自己需要的 layer 就可以了。</p>
 <h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><h4 id="配置文件管理"><a href="#配置文件管理" class="headerlink" title="配置文件管理"></a>配置文件管理</h4><p><code>SPC f e d</code> 快速打开配置文件 <code>.spacemacs</code><br><code>SPC f e R</code> 同步配置文件</p>
@@ -222,7 +223,7 @@ ga('send', 'pageview');
 <ol>
 <li><code>$ brew install editorconfig</code></li>
 <li><p>在 <code>~/.spacemacs</code> 中的 <code>dotspacemacs-additional-packages</code> 中添加 <code>editorconfig</code>：</p>
-<figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="label">dotspacemacs</span>-<span class="keyword">additional-packages</span><br><span class="line"></span> <span class="string">'(</span><br><span class="line">   editorconfig</span><br><span class="line">   )</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="code"><pre><div class="line"><span class="symbol">dotspacemacs</span>-<span class="keyword">additional-packages</span></div><div class="line"> <span class="string">'(</span></div><div class="line">   editorconfig</div><div class="line">   )</div></pre></td></tr></table></figure>
 </li>
 <li><p>创建 <code>.editorconfig</code> 文件，写上自己喜欢的配置。</p>
 </li>
@@ -281,7 +282,7 @@ ga('send', 'pageview');
 <h2 id="设置文件默认的主模式"><a href="#设置文件默认的主模式" class="headerlink" title="设置文件默认的主模式"></a>设置文件默认的主模式</h2><p>虽然我们可以通过 <code>M-x</code> 来设置文件的主模式，但这种方式只是在单独修改某个文件的主模式时好用，如果要把所有同类型的文件都改成其他模式，这种方式的效率就太低了。</p>
 <p>在 Spacemacs 中，我们可以用 <code>auto-mode-alist</code> 来设置某一类文件默认的主模式。</p>
 <p>我们只需要在 <code>~/.spacemacs</code> 中的 <code>user-config</code> 中加入下面代码即可：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">(add-to-list &#39;auto-mode-alist &#39;(&#34;\\.js\\&#39;&#34; . react-mode))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">(add-to-list &apos;auto-mode-alist &apos;(&quot;\\.js\\&apos;&quot; . react-mode))</div></pre></td></tr></table></figure>
 <p>上面代码会用 <code>react-mode</code> 打开所有 <code>.js</code> 文件。</p>
 <h2 id="Emacs-服务器"><a href="#Emacs-服务器" class="headerlink" title="Emacs 服务器"></a>Emacs 服务器</h2><p>Spacemacs 会在启动时启动服务器，这个服务器会在 Spacemacs 关闭的时候被杀掉。</p>
 <h3 id="使用-Emacs-服务器"><a href="#使用-Emacs-服务器" class="headerlink" title="使用 Emacs 服务器"></a>使用 Emacs 服务器</h3><p>当 Emacs 服务器启动的时候，我们可以在命令行中使用 <code>emacsclient</code> 命令：</p>
@@ -306,6 +307,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -453,7 +477,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

@@ -56,11 +56,11 @@ onCre">
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -83,6 +83,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -228,7 +229,7 @@ ga('send', 'pageview');
 </li>
 </ul>
 <p>#XML<br>新建 xml，添加 <code>RecyclerView</code>。</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">&lt;RelativeLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:fab=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    android:orientation=<span class="string">"vertical"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android<span class="class">.support</span><span class="class">.v7</span><span class="class">.widget</span><span class="class">.RecyclerView</span></span><br><span class="line">        android:id=<span class="string">"@+id/my_recyclerview"</span></span><br><span class="line">        android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;RelativeLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    xmlns:fab=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">    android:orientation=<span class="string">"vertical"</span></div><div class="line">    android:layout_width=<span class="string">"match_parent"</span></div><div class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</div><div class="line"></div><div class="line">    &lt;android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span></div><div class="line">        android:id=<span class="string">"@+id/my_recyclerview"</span></div><div class="line">        android:layout_width=<span class="string">"match_parent"</span></div><div class="line">        android:layout_height=<span class="string">"wrap_content"</span> /&gt;</div><div class="line"></div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure>
 <p>#ViewHolder</p>
 <p>我们以前使用 <code>ListView</code> 的时候，会用以下的方式来提高 <code>ListView</code> 的性能:</p>
 <ul>
@@ -237,14 +238,14 @@ ga('send', 'pageview');
 </ul>
 <p><code>RecyclerView</code> 标准化了 <code>ViewHolder</code> 来缓存昂贵 <code>findViewById</code> 的结果。</p>
 <p>例子：</p>
-<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> MyViewHolder <span class="keyword">extends</span> RecyclerView.ViewHolder &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> TextView mTitle;</span><br><span class="line">    <span class="keyword">public</span> TextView mSubtitle;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyViewHolder</span> <span class="params">(View v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(v);</span><br><span class="line">        mTitle = (TextView) v.findViewById(R.id.title);</span><br><span class="line">        mSubtitle = (TextView) v.findViewById(R.id.subtitle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> MyViewHolder <span class="keyword">extends</span> RecyclerView.ViewHolder &#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> TextView mTitle;</div><div class="line">    <span class="keyword">public</span> TextView mSubtitle;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyViewHolder</span> <span class="params">(View v)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(v);</div><div class="line">        mTitle = (TextView) v.findViewById(R.id.title);</div><div class="line">        mSubtitle = (TextView) v.findViewById(R.id.subtitle);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>PS: 一般 <code>ViewHolder</code> 会编写在 <code>Adapter</code> 的内部。</p>
 <p>#Adapter</p>
 <p>我们需要继承 <code>RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt;</code> 来编写我们自己的 <code>Adapter</code> 。编写我们自己的 <code>Adapter</code> 的时候，最重要的是要重写 <code>onCreateViewHolder</code> 和 <code>onBindViewHolder</code> 方法。</p>
-<figure class="highlight aspectj"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">RecyclerView</span>.<span class="title">ViewHolder</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> RecyclerView.<span class="function">ViewHolder <span class="title">onCreateViewHolder</span> <span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</span><br><span class="line">        View v = LayoutInflater.from(ctx).inflate(R.layout.my_adapter, parent, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewHolder(v);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onBindViewHolder</span> <span class="params">(RecyclerView.ViewHolder h, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        MyViewHolder holder = (MyViewHolder) h;</span><br><span class="line">        holder.mTitle.setText(<span class="string">"This is my title"</span>);</span><br><span class="line">        holder.mSubtitle.setText(<span class="string">"This is my subtitle"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> data.<span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">RecyclerView</span>.<span class="title">ViewHolder</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">public</span> RecyclerView.<span class="function">ViewHolder <span class="title">onCreateViewHolder</span> <span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</div><div class="line">        View v = LayoutInflater.from(ctx).inflate(R.layout.my_adapter, parent, <span class="keyword">false</span>);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewHolder(v);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onBindViewHolder</span> <span class="params">(RecyclerView.ViewHolder h, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">        MyViewHolder holder = (MyViewHolder) h;</div><div class="line">        holder.mTitle.setText(<span class="string">"This is my title"</span>);</div><div class="line">        holder.mSubtitle.setText(<span class="string">"This is my subtitle"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">return</span> data.<span class="title">size</span><span class="params">()</span></span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>注意，在这个例子中我们的 <code>MyAdapter</code> 存放的是 <code>&lt;RecyclerView.ViewHolder&gt;</code>，所以在 <code>onCreateViewHolder</code> 中返回的也必须是 <code>&lt;RecyclerView.ViewHolder&gt;</code>，而在 <code>onBindViewHolder</code> 的回调中，我们拿到的也是 <code>RecyclerView.ViewHolder</code>，要把它强转成我们之前编写的 <code>MyViewHolder</code> 之后才能正常使用。</p>
 <p>#RecyclerView<br>最后只要设置一下 <code>RecyclerView</code> 就能使用了。</p>
-<figure class="highlight dns"><table><tr><td class="code"><pre><span class="line">RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recyclerview)<span class="comment">;</span></span><br><span class="line">mRecyclerView.setLayoutManager(new LinearLayoutManager(this))<span class="comment">;</span></span><br><span class="line">mRecyclerView.setAdapter(adapter)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><div class="line">RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recyclerview)<span class="comment">;</span></div><div class="line">mRecyclerView.setLayoutManager(new LinearLayoutManager(this))<span class="comment">;</span></div><div class="line">mRecyclerView.setAdapter(adapter)<span class="comment">;</span></div></pre></td></tr></table></figure>
 <p>#参考资料<br><a href="http://wobushi.ren/recyclerview.html" target="_blank" rel="external">RecyclerView全攻略</a><br><a href="http://blog.csdn.net/lmj623565791/article/details/45059587" target="_blank" rel="external">Android RecyclerView 使用完全解析 体验艺术般的控件</a></p>
 
     
@@ -252,6 +253,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -399,7 +423,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

@@ -44,11 +44,11 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -71,6 +71,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -204,17 +205,17 @@ ga('send', 'pageview');
 <p>你有没想过其实你可以在常用的聊天软件上说 <code>@xxx, 部署新版本的网站</code>，然后机器人就自动登录服务器，然后执行部署脚本，部署成功后告诉你 <code>新版本的网站已经部署成功</code>。</p>
 <p>是的，如果你的聊天软件上集成了 Hubot，你就可以轻松地用它来管理一些繁琐的事情啦！</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>官方推荐我们用 yeoman + hubot 生成器来生成我们的聊天机器人，方法如下：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ npm install -g yo generator-hubot&#10;$ mkdir myhubot &#38;&#38; cd myhubot&#10;$ yo hubot</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm install -g yo generator-hubot</div><div class="line">$ mkdir myhubot &amp;&amp; cd myhubot</div><div class="line">$ yo hubot</div></pre></td></tr></table></figure>
 <p>回答一些基本的问题后，我们的聊天机器人就生成好啦~</p>
 <h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>我们的聊天机器人的执行文件是 <code>bin/hubot</code>，我们先看看里面写什么：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ cat ./bin/hubot&#10;&#10;#!/bin/sh&#10;&#10;set -e&#10;&#10;npm install&#10;export PATH=&#34;node_modules/.bin:node_modules/hubot/node_modules/.bin:$PATH&#34;&#10;&#10;exec node_modules/.bin/hubot --name &#34;myhubot&#34; &#34;$@&#34;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ cat ./bin/hubot</div><div class="line"></div><div class="line">#!/bin/sh</div><div class="line"></div><div class="line">set -e</div><div class="line"></div><div class="line">npm install</div><div class="line">export PATH=&quot;node_modules/.bin:node_modules/hubot/node_modules/.bin:$PATH&quot;</div><div class="line"></div><div class="line">exec node_modules/.bin/hubot --name &quot;myhubot&quot; &quot;$@&quot;</div></pre></td></tr></table></figure>
 <p>这份执行文件只是先执行 <code>npm install</code>，然后设置环境变量，再执行 <code>node_modules/.bin/hubot</code> 而已，没什么神秘的。</p>
 <p>我们试试运行一下这份可执行文件：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ ./bin/hubot&#10;myhubot&#62;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ ./bin/hubot</div><div class="line">myhubot&gt;</div></pre></td></tr></table></figure>
 <p>我们看到了一个类似 shell 的东东！试试随便输入一些东西：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">myhubot&#62; hello&#10;myhubot&#62; world&#10;myhubot&#62; how are you?&#10;myhubot&#62; can you hear me?</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">myhubot&gt; hello</div><div class="line">myhubot&gt; world</div><div class="line">myhubot&gt; how are you?</div><div class="line">myhubot&gt; can you hear me?</div></pre></td></tr></table></figure>
 <p>我们发现无论我们输入什么，我们的机器人都没有反应，是不是坏掉了？<br>其实并不是这样的，它没反应是因为我们没有对「输入」的处理，如果我们输入一些特定的「输入」，它就会有反应啦！</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">myhubot&#62; myhubot ping&#10;myhubot&#62; PONG&#10;&#10;myhubot&#62; myhubot pug me&#10;myhubot&#62; http://28.media.tumblr.com/tumblr_locinzasB91qzj3syo1_500.jpg&#10;&#10;myhubot&#62; myhubot help&#10;myhubot&#62; myhubot adapter - Reply with the adapter&#10;myhubot animate me &#60;query&#62; - The same thing as `image me`, except adds a few parameters to try to return an animated GIF instead.&#10;myhubot echo &#60;text&#62; - Reply back with &#60;text&#62;&#10;myhubot help - Displays all of the help commands that Hubot knows about.&#10;myhubot help &#60;query&#62; - Displays all help commands that match &#60;query&#62;.&#10;myhubot image me &#60;query&#62; - The Original. Queries Google Images for &#60;query&#62; and returns a random top result.&#10;myhubot map me &#60;query&#62; - Returns a map view of the area returned by `query`.&#10;myhubot mustache me &#60;url|query&#62; - Adds a mustache to the specified URL or query result.&#10;myhubot ping - Reply with pong&#10;myhubot pug bomb N - get N pugs&#10;myhubot pug me - Receive a pug&#10;myhubot the rules - Make sure hubot still knows the rules.&#10;myhubot time - Reply with current time&#10;myhubot translate me &#60;phrase&#62; - Searches for a translation for the &#60;phrase&#62; and then prints that bad boy out.&#10;myhubot translate me from &#60;source&#62; into &#60;target&#62; &#60;phrase&#62; - Translates &#60;phrase&#62; from &#60;source&#62; into &#60;target&#62;. Both &#60;source&#62; and &#60;target&#62; are optional&#10;ship it - Display a motivation squirrel</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">myhubot&gt; myhubot ping</div><div class="line">myhubot&gt; PONG</div><div class="line"></div><div class="line">myhubot&gt; myhubot pug me</div><div class="line">myhubot&gt; http://28.media.tumblr.com/tumblr_locinzasB91qzj3syo1_500.jpg</div><div class="line"></div><div class="line">myhubot&gt; myhubot help</div><div class="line">myhubot&gt; myhubot adapter - Reply with the adapter</div><div class="line">myhubot animate me &lt;query&gt; - The same thing as `image me`, except adds a few parameters to try to return an animated GIF instead.</div><div class="line">myhubot echo &lt;text&gt; - Reply back with &lt;text&gt;</div><div class="line">myhubot help - Displays all of the help commands that Hubot knows about.</div><div class="line">myhubot help &lt;query&gt; - Displays all help commands that match &lt;query&gt;.</div><div class="line">myhubot image me &lt;query&gt; - The Original. Queries Google Images for &lt;query&gt; and returns a random top result.</div><div class="line">myhubot map me &lt;query&gt; - Returns a map view of the area returned by `query`.</div><div class="line">myhubot mustache me &lt;url|query&gt; - Adds a mustache to the specified URL or query result.</div><div class="line">myhubot ping - Reply with pong</div><div class="line">myhubot pug bomb N - get N pugs</div><div class="line">myhubot pug me - Receive a pug</div><div class="line">myhubot the rules - Make sure hubot still knows the rules.</div><div class="line">myhubot time - Reply with current time</div><div class="line">myhubot translate me &lt;phrase&gt; - Searches for a translation for the &lt;phrase&gt; and then prints that bad boy out.</div><div class="line">myhubot translate me from &lt;source&gt; into &lt;target&gt; &lt;phrase&gt; - Translates &lt;phrase&gt; from &lt;source&gt; into &lt;target&gt;. Both &lt;source&gt; and &lt;target&gt; are optional</div><div class="line">ship it - Display a motivation squirrel</div></pre></td></tr></table></figure>
 <p>看到了吧！如果我们输入了特定的「输入」，机器人就会有反应啦！</p>
 <p>当我们输入 <code>myhubot help</code> 的时候，返回的东东其实就是预定义的「输入」，这些预定义的「输入」只在 shell adapter 下有效哦！</p>
 <h2 id="Adapter"><a href="#Adapter" class="headerlink" title="Adapter"></a>Adapter</h2><p>什么是 shell adapter ？ 我们运行 <code>./bin/hubot</code> 时默认的 adapter 就是 shell adapter。</p>
@@ -223,13 +224,13 @@ ga('send', 'pageview');
 <p>觉得很坑爹是吧？说好的让我们的聊天软件整合我们的机器人呢？</p>
 <p>实际上社区已经为我们提供了各种各样的 adapter，我们只要下载就可以用啦！具体请看看 <a href="https://hubot.github.com/docs/adapters/" target="_blank" rel="external">https://hubot.github.com/docs/adapters/</a></p>
 <p>那么我们如何指定用某个 adapter 呢？很简单啦，只要启动机器人的时候带上 <code>-a</code> 参数就好了。<br>譬如如果我们想让机器人整合到 telegram，我们只要执行下面的命令就可以了：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ npm install --save hubot-telegram&#10;$ ./bin/hubot -a telegram</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm install --save hubot-telegram</div><div class="line">$ ./bin/hubot -a telegram</div></pre></td></tr></table></figure>
 <p>当然我们还需要设置一下，这些设置会根据不同的 adapter 而有所不同，具体请看对应的文档！</p>
 <p>如果你所用的聊天软件并不在社区的支持列表中，又想把整合 Hubot 的话，可以自己写 adapter，文档在这里：<a href="https://hubot.github.com/docs/adapters/development/" target="_blank" rel="external">https://hubot.github.com/docs/adapters/development/</a></p>
 <h2 id="Scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h2><p>我们一直说 Hubot 是聊天机器人，机器人最基本的是根据不同的「输入」给出不同的「输出」。<br>在 Hubot 应该怎么处理不同「输入」，给出不同的「输出」呢？<br>答案就是用 Scripts 啦！</p>
 <p>有没有发现我们机器人的目录下有个 <code>scripts/</code> 文件夹？我们可以在这个文件夹下添加各种脚本文件，根据不同的「输入」给出不同的「输出」。<br>在我们启动 Hubot 的时候，它会加载 <code>scripts/</code> 文件夹下的脚本，赋予 Hubot 强大的交互能力！</p>
 <p>需要注意的是，<code>scripts/</code> 下的脚本必须是 <code>.coffee</code> 或者 <code>.js</code> 格式的，而且必须暴露一个接受 robot 参数的函数！<br>我们还是先打开 <code>scripts/example.coffee</code> 看看吧！</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// coffee</span></span><br><span class="line"><span class="built_in">module</span>.exports = (robot) -&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">robot</span>) </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// coffee</span></div><div class="line"><span class="built_in">module</span>.exports = (robot) -&gt;</div><div class="line"></div><div class="line"><span class="comment">// js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">robot</span>) </span>&#123;&#125;</div></pre></td></tr></table></figure>
 <p>在这个函数里面，我们可以利用 <code>robot.hear</code>、<code>robot.response</code>、<code>robot.send</code>、<code>robot.reply</code> 等 api 为不同的「输入」给出不同的「输出」！<br>我们还可以用 <code>robot.http(url).get()</code> 等方法来发出 http 请求！这样我们的机器人就可以有更强大的交互能力了！</p>
 <p>想知道更多 api 的用法的话，可以参考文档：<a href="https://hubot.github.com/docs/scripting/" target="_blank" rel="external">https://hubot.github.com/docs/scripting/</a></p>
 <h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>Hubot 真的是一个简单易用的聊天机器人，我们可以把它整合到我们的聊天软件中，让那些简单但繁琐的任务自动化起来，提高我们的工作效率！<br>最后强烈推荐各位同学去读一下 Hubot 的源码，简单易懂，之后会对 Hubot 有更深刻的认识！</p>
@@ -240,6 +241,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -387,7 +411,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

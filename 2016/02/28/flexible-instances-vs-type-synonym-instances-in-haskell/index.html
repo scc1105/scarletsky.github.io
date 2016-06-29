@@ -38,11 +38,11 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -65,6 +65,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -193,18 +194,18 @@ ga('send', 'pageview');
   <div class="article-content">
     
       <h2 id="FlexibleInstances"><a href="#FlexibleInstances" class="headerlink" title="FlexibleInstances"></a>FlexibleInstances</h2><p>先看看下面这个简单的例子：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Learning.hs</span></span><br><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">Vector</span> a = <span class="type">Vector</span> a a <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">class</span> <span class="type">MyClass</span> a <span class="keyword">where</span></span></span><br><span class="line">    myFun :: a -&gt; a</span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">MyClass</span> <span class="container">(<span class="type">Vector</span> <span class="title">a</span>)</span> <span class="keyword">where</span></span></span><br><span class="line">    myFun = id</span><br></pre></td></tr></table></figure>
+<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="comment">-- Learning.hs</span></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">Vector</span> a = <span class="type">Vector</span> a a <span class="keyword">deriving</span> (<span class="type">Show</span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">class</span> <span class="type">MyClass</span> a <span class="keyword">where</span></div><div class="line">    myFun :: a -&gt; a</div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">MyClass</span> (<span class="type">Vector</span> <span class="title">a</span>) <span class="keyword">where</span></div><div class="line">    myFun = id</div></pre></td></tr></table></figure>
 <p>这样的定义看起来是没有问题的，因为不需要任何编译指令就能通过编译了。<br>我们可以运行看看：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; :l <span class="type">Learning</span>.hs</span><br><span class="line">[<span class="number">1</span> <span class="keyword">of</span> <span class="number">1</span>] <span class="type">Compiling</span> <span class="type">Main</span>             ( <span class="type">Test</span>.hs, interpreted )</span><br><span class="line"><span class="type">Ok</span>, modules loaded: <span class="type">Main</span>.</span><br><span class="line"><span class="title">ghci</span>&gt; myFun (<span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span>)</span><br><span class="line"><span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span></span><br><span class="line"><span class="title">ghci</span>&gt; myFun (<span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span>) :: <span class="type">Vector</span> <span class="type">Int</span></span><br><span class="line"><span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span></span><br><span class="line"><span class="title">ghci</span>&gt; myFun (<span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span>) :: <span class="type">Vector</span> <span class="type">Double</span></span><br><span class="line"><span class="type">Vector</span> <span class="number">1.0</span> <span class="number">2.0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; :l <span class="type">Learning</span>.hs</div><div class="line">[<span class="number">1</span> <span class="keyword">of</span> <span class="number">1</span>] <span class="type">Compiling</span> <span class="type">Main</span>             ( <span class="type">Test</span>.hs, interpreted )</div><div class="line"><span class="type">Ok</span>, modules loaded: <span class="type">Main</span>.</div><div class="line"><span class="title">ghci</span>&gt; myFun (<span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span>)</div><div class="line"><span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span></div><div class="line"><span class="title">ghci</span>&gt; myFun (<span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span>) :: <span class="type">Vector</span> <span class="type">Int</span></div><div class="line"><span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span></div><div class="line"><span class="title">ghci</span>&gt; myFun (<span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span>) :: <span class="type">Vector</span> <span class="type">Double</span></div><div class="line"><span class="type">Vector</span> <span class="number">1.0</span> <span class="number">2.0</span></div></pre></td></tr></table></figure>
 <p>但如果我们需要为 <code>Vector a</code> 不同的类型参数实现不同的 <code>myFun</code> 的话呢？</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">MyClass</span> <span class="container">(<span class="type">Vector</span> <span class="type">Int</span>)</span> <span class="keyword">where</span></span></span><br><span class="line">    myFun = undefined</span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">MyClass</span> <span class="container">(<span class="type">Vector</span> <span class="type">Double</span>)</span> <span class="keyword">where</span></span></span><br><span class="line">    myFun = undefined</span><br></pre></td></tr></table></figure>
+<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">MyClass</span> (<span class="type">Vector</span> <span class="type">Int</span>) <span class="keyword">where</span></span></div><div class="line">    myFun = undefined</div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">MyClass</span> (<span class="type">Vector</span> <span class="type">Double</span>) <span class="keyword">where</span></div><div class="line">    myFun = undefined</div></pre></td></tr></table></figure>
 <p>我们再看看编译时会发生什么？</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; :r</span><br><span class="line">[<span class="number">1</span> <span class="keyword">of</span> <span class="number">1</span>] <span class="type">Compiling</span> <span class="type">Main</span>             ( <span class="type">Learning</span>.hs, interpreted )</span><br><span class="line"></span><br><span class="line"><span class="type">Learning</span>.hs:<span class="number">10</span>:<span class="number">10</span>:</span><br><span class="line">    <span class="type">Illegal</span> <span class="keyword">instance</span> declaration for ‘<span class="type">MyClass</span> (<span class="type">Vector</span> <span class="type">Int</span>)’</span><br><span class="line">          (<span class="type">All</span> <span class="keyword">instance</span> types must be <span class="keyword">of</span> the form (<span class="type">T</span> a1 ... an)</span><br><span class="line">           <span class="keyword">where</span> a1 ... an are *distinct <span class="typedef"><span class="keyword">type</span> variables*,</span></span><br><span class="line">           and each <span class="typedef"><span class="keyword">type</span> variable appears at most once in the instance head.</span></span><br><span class="line">           <span class="type">Use</span> <span class="type">FlexibleInstances</span> <span class="keyword">if</span> you want to disable this.)</span><br><span class="line">    <span class="type">In</span> the <span class="keyword">instance</span> declaration for ‘<span class="type">MyClass</span> (<span class="type">Vector</span> <span class="type">Int</span>)’</span><br><span class="line"><span class="type">Failed</span>, modules loaded: none.</span><br></pre></td></tr></table></figure>
+<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; :r</div><div class="line">[<span class="number">1</span> <span class="keyword">of</span> <span class="number">1</span>] <span class="type">Compiling</span> <span class="type">Main</span>             ( <span class="type">Learning</span>.hs, interpreted )</div><div class="line"></div><div class="line"><span class="type">Learning</span>.hs:<span class="number">10</span>:<span class="number">10</span>:</div><div class="line">    <span class="type">Illegal</span> <span class="keyword">instance</span> declaration for ‘<span class="type">MyClass</span> (<span class="type">Vector</span> <span class="type">Int</span>)’</div><div class="line">          (<span class="type">All</span> <span class="keyword">instance</span> types must be <span class="keyword">of</span> the form (<span class="type">T</span> a1 ... an)</div><div class="line">           <span class="keyword">where</span> a1 ... an are *distinct <span class="class"><span class="keyword">type</span> variables*,</span></div><div class="line">           and each <span class="class"><span class="keyword">type</span> variable appears at most once in the instance head.</span></div><div class="line">           <span class="type">Use</span> <span class="type">FlexibleInstances</span> <span class="keyword">if</span> you want to disable this.)</div><div class="line">    <span class="type">In</span> the <span class="keyword">instance</span> declaration for ‘<span class="type">MyClass</span> (<span class="type">Vector</span> <span class="type">Int</span>)’</div><div class="line"><span class="type">Failed</span>, modules loaded: none.</div></pre></td></tr></table></figure>
 <p>编译失败！为什么会编译失败呢？</p>
 <p>因为通常情况下，我们不能给多态类型（polymorphic type）的特化版本（specialized version）写类型类实例。<br>在这个例子中，<code>Vector Int</code> 和 <code>Vector Double</code> 就是 <code>Vector a</code> 的特化版本。<br>如果我们需要为这些特化版本写类型类实例的话，我们就需要开启 <code>FlexibleInstances</code> 编译指令来取消这个限制。</p>
 <h2 id="TypeSynonymInstances"><a href="#TypeSynonymInstances" class="headerlink" title="TypeSynonymInstances"></a>TypeSynonymInstances</h2><p>理解了上面的 <code>FlexibleInstances</code> 后，<code>TypeSynonymInstances</code> 就容易理解了。</p>
 <p>如果我需要为 <code>Vector Int</code> 添加一个别名，然后让这个别名成为 MyClass 类型类的实例，我们就会需要用到 <code>TypeSynonymInstances</code> 编译指令了。</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">type</span> <span class="type">VectorInt</span> = <span class="type">Vector</span> <span class="type">Int</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">MyClass</span> <span class="type">VectorInt</span> <span class="keyword">where</span></span></span><br><span class="line">    myFun = undefined</span><br></pre></td></tr></table></figure>
+<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">VectorInt</span> = <span class="type">Vector</span> <span class="type">Int</span></span></div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">MyClass</span> <span class="type">VectorInt</span> <span class="keyword">where</span></div><div class="line">    myFun = undefined</div></pre></td></tr></table></figure>
 <p>默认情况下，ghc 编译上面的代码时会报错，原因是 Haskell 98 并不支持这种语法。<br>要让 ghc 成功编译上面的代码，我们就需要开启 <code>TypeSynonymInstances</code> 这个编译指令了。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://rwh.readthedocs.org/en/latest/chp/6.html" target="_blank" rel="external">http://rwh.readthedocs.org/en/latest/chp/6.html</a><br><a href="http://book.realworldhaskell.org/read/using-typeclasses.html" target="_blank" rel="external">http://book.realworldhaskell.org/read/using-typeclasses.html</a></p>
 
@@ -213,6 +214,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -360,7 +384,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

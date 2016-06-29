@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="functor,haskell," />
+    <meta name="keywords" content="haskell,functor," />
   
 
   <meta name="description" content="Functor 简介什么是 Functor ?
@@ -75,6 +75,7 @@ fmap 是函数的话，那它的类型签名是什么 ?
 fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
 
 我应该怎么看这个类型签名 ?">
+<meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/2386165/12949440/c8753e16-d042-11e5-84ff-b47753d65c52.png">
 
   
 
@@ -82,11 +83,11 @@ fmap :: (a -&amp;gt; b) -&amp;gt; f a -&amp;gt; f b。
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -109,6 +110,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -267,7 +269,7 @@ ga('send', 'pageview');
 <p>为什么列表是 Functor ?</p>
 <blockquote>
 <p>因为列表实现了 <code>fmap</code>。</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> [] <span class="keyword">where</span></span></span><br><span class="line">  fmap = map</span><br></pre></td></tr></table></figure>
+<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> [] <span class="keyword">where</span></span></div><div class="line">  fmap = map</div></pre></td></tr></table></figure>
 </blockquote>
 <p>实现了 <code>fmap</code> 的数据类型都是 Functor ?</p>
 <blockquote>
@@ -295,12 +297,12 @@ ga('send', 'pageview');
 <p>有具体例子吗 ?</p>
 <blockquote>
 <p>看看这个经典的自定义数据类型，C表示计数器：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">CMaybe</span> a = <span class="type">CNothing</span> | <span class="type">CJust</span> <span class="type">Int</span> a <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">CMaybe</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f <span class="type">CNothing</span>          = <span class="type">CNothing</span></span><br><span class="line">  fmap f (<span class="type">CJust</span> counter x) = <span class="type">CJust</span> (counter + <span class="number">1</span>) (f x)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ghci</span></span><br><span class="line"></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"hoha"</span></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"he"</span>) (fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>))</span><br><span class="line"><span class="type">CJust</span> <span class="number">2</span> <span class="string">"hohahe"</span></span><br><span class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"blah"</span>) <span class="type">CNothing</span></span><br><span class="line"><span class="type">CNothing</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">CMaybe</span> a = <span class="type">CNothing</span> | <span class="type">CJust</span> <span class="type">Int</span> a <span class="keyword">deriving</span> (<span class="type">Show</span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">CMaybe</span> <span class="keyword">where</span></div><div class="line">  fmap f <span class="type">CNothing</span>          = <span class="type">CNothing</span></div><div class="line">  fmap f (<span class="type">CJust</span> counter x) = <span class="type">CJust</span> (counter + <span class="number">1</span>) (f x)</div><div class="line"></div><div class="line"><span class="comment">-- ghci</span></div><div class="line"></div><div class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>)</div><div class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"hoha"</span></div><div class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"he"</span>) (fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>))</div><div class="line"><span class="type">CJust</span> <span class="number">2</span> <span class="string">"hohahe"</span></div><div class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"blah"</span>) <span class="type">CNothing</span></div><div class="line"><span class="type">CNothing</span></div></pre></td></tr></table></figure>
 <p>这里的 <code>fmap</code> 除了对值调用 <code>f</code> 之外，还对 <code>counter</code> 加一。</p>
 </blockquote>
 <p>这有什么问题吗 ?</p>
 <blockquote>
-<p>再看看 <code>fmap id</code> 和 <code>id</code><br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; fmap id (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"haha"</span></span><br><span class="line"><span class="title">ghci</span>&gt; id (<span class="type">Cjust</span> <span class="number">0</span> <span class="string">"haha"</span>)</span><br><span class="line"><span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span></span><br></pre></td></tr></table></figure></p>
+<p>再看看 <code>fmap id</code> 和 <code>id</code><br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; fmap id (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span>)</div><div class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"haha"</span></div><div class="line"><span class="title">ghci</span>&gt; id (<span class="type">Cjust</span> <span class="number">0</span> <span class="string">"haha"</span>)</div><div class="line"><span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span></div></pre></td></tr></table></figure></p>
 <p>看出问题了吗 ?</p>
 </blockquote>
 <p><code>fmap id</code> 和 <code>id</code> 返回的结果不相等 ?</p>
@@ -325,7 +327,7 @@ ga('send', 'pageview');
 </blockquote>
 <p>能举个例子吗 ?</p>
 <blockquote>
-<p>我们已经知道 List 是一个 Functor，先看看 List 的定义：<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> [] a = [] | a : [a]</span></span><br></pre></td></tr></table></figure></p>
+<p>我们已经知道 List 是一个 Functor，先看看 List 的定义：<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> [] a = [] | a : [a]</span></div></pre></td></tr></table></figure></p>
 <p>列表有一个类型参数 a，表示一个列表中可以包含相同类型的元素。</p>
 </blockquote>
 <p>Functor 只能有一个类型参数吗？</p>
@@ -338,7 +340,7 @@ ga('send', 'pageview');
 </blockquote>
 <h2 id="自定义-Functor"><a href="#自定义-Functor" class="headerlink" title="自定义 Functor"></a>自定义 Functor</h2><p>我应该怎么自定义 Functor ?</p>
 <blockquote>
-<p>先定义一个数据类型，再让该类型成为 Functor 的实例。<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">MyFunctor</span> a = <span class="type">Data</span> a <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">MyFunctor</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f (<span class="type">Data</span> x) = <span class="type">Data</span> (f x)</span><br></pre></td></tr></table></figure></p>
+<p>先定义一个数据类型，再让该类型成为 Functor 的实例。<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">MyFunctor</span> a = <span class="type">Data</span> a <span class="keyword">deriving</span> (<span class="type">Show</span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">MyFunctor</span> <span class="keyword">where</span></div><div class="line">  fmap f (<span class="type">Data</span> x) = <span class="type">Data</span> (f x)</div></pre></td></tr></table></figure></p>
 <p>这样，我们定义的 MyFunctor 就是一个 Functor 了。</p>
 </blockquote>
 <p>刚才提到的让多于一个类型参数的数据类型成为 Functor 实例的方法是？</p>
@@ -347,7 +349,7 @@ ga('send', 'pageview');
 </blockquote>
 <p>可以给个例子吗？</p>
 <blockquote>
-<figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="typedef"><span class="keyword">data</span> <span class="type">MyFunctor2</span> a b = <span class="type">Data2</span> a b <span class="keyword">deriving</span> <span class="container">(<span class="type">Show</span>)</span></span></span><br><span class="line"><span class="class"></span><br><span class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="container">(<span class="type">MyFunctor2</span> <span class="title">a</span>)</span> <span class="keyword">where</span></span></span><br><span class="line">  fmap f (<span class="type">Data2</span> x y) = <span class="type">Data2</span> x (f y)</span><br></pre></td></tr></table></figure>
+<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">MyFunctor2</span> a b = <span class="type">Data2</span> a b <span class="keyword">deriving</span> (<span class="type">Show</span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">Functor</span> (<span class="type">MyFunctor2</span> <span class="title">a</span>) <span class="keyword">where</span></div><div class="line">  fmap f (<span class="type">Data2</span> x y) = <span class="type">Data2</span> x (f y)</div></pre></td></tr></table></figure>
 <p>在 Haskell 中，我们可以利用 Haskell 不全调用的特性，把 MyFunctor2 a 当成一个整体，这样就相当于只有 b 一个类型参数了。</p>
 </blockquote>
 <h2 id="真-·-Functor"><a href="#真-·-Functor" class="headerlink" title="真 · Functor"></a>真 · Functor</h2><p>我从上面看到，Functor 是一个类型类？</p>
@@ -368,8 +370,8 @@ ga('send', 'pageview');
 </blockquote>
 <p>这样有什么好处吗？</p>
 <blockquote>
-<p>好处是显然易见的。考虑下下面的伪代码：<br><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">post = Posts.find_by_id(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">if</span> post</span><br><span class="line">  <span class="keyword">return</span> post.title</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">None</span></span><br></pre></td></tr></table></figure></p>
-<p>为什么这段伪代码需要判断 post 是否为空？因为 post 没有上下文环境，不能表示空值。<br>如果 post 有上下文环境 (也就是 post 可以表示空值)，那么我们的代码就可以直接写成：<br><figure class="highlight py"><table><tr><td class="code"><pre><span class="line">post = Posts.find_by_id(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">return</span> post.title</span><br></pre></td></tr></table></figure></p>
+<p>好处是显然易见的。考虑下下面的伪代码：<br><figure class="highlight py"><table><tr><td class="code"><pre><div class="line">post = Posts.find_by_id(<span class="number">1</span>)</div><div class="line"><span class="keyword">if</span> post</div><div class="line">  <span class="keyword">return</span> post.title</div><div class="line"><span class="keyword">else</span></div><div class="line">  <span class="keyword">return</span> <span class="keyword">None</span></div></pre></td></tr></table></figure></p>
+<p>为什么这段伪代码需要判断 post 是否为空？因为 post 没有上下文环境，不能表示空值。<br>如果 post 有上下文环境 (也就是 post 可以表示空值)，那么我们的代码就可以直接写成：<br><figure class="highlight py"><table><tr><td class="code"><pre><div class="line">post = Posts.find_by_id(<span class="number">1</span>)</div><div class="line"><span class="keyword">return</span> post.title</div></pre></td></tr></table></figure></p>
 <p>因此，如果一个值可以带有上下文环境的话，我们的代码就可以写的非常简洁。</p>
 </blockquote>
 <p>把刚才的伪代码写成 Haskell 代码 ?</p>
@@ -412,6 +414,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -559,7 +584,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

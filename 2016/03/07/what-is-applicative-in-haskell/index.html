@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="applicative,haskell," />
+    <meta name="keywords" content="haskell,applicative," />
   
 
   <meta name="description" content="初探什么是 Applicative ?
@@ -56,11 +56,11 @@ Applicative 是加强版的 Functor，是一个类型类。
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -83,6 +83,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -220,7 +221,7 @@ ga('send', 'pageview');
 </blockquote>
 <p>这样有什么用 ?</p>
 <blockquote>
-<p>我们先看看 Applicative 的声明吧:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="container">(<span class="type">Functor</span> <span class="title">f</span>)</span> =&gt; <span class="type">Applicative</span> f <span class="keyword">where</span></span></span><br><span class="line">    pure :: a -&gt; f a</span><br><span class="line">    &lt;*&gt; :: f (a -&gt; b) -&gt; f a -&gt; b</span><br></pre></td></tr></table></figure></p>
+<p>我们先看看 Applicative 的声明吧:<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> (<span class="type">Functor</span> <span class="title">f</span>) =&gt; <span class="type">Applicative</span> f <span class="keyword">where</span></span></div><div class="line">    pure :: a -&gt; f a</div><div class="line">    &lt;*&gt; :: f (a -&gt; b) -&gt; f a -&gt; b</div></pre></td></tr></table></figure></p>
 <p>你能从 Applicative 的声明中看出什么吗？</p>
 </blockquote>
 <p><code>Applicative</code> 是 <code>Functor</code> ?</p>
@@ -233,7 +234,7 @@ ga('send', 'pageview');
 </blockquote>
 <p><code>&lt;*&gt;</code> 呢 ?</p>
 <blockquote>
-<p>和 fmap (也就是 &lt;$&gt;) 一起看吧。<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line">&lt;$&gt; ::   (a -&gt; b) -&gt; f a -&gt; f b</span><br><span class="line">&lt;*&gt; :: f (a -&gt; b) -&gt; f a -&gt; f b</span><br></pre></td></tr></table></figure></p>
+<p>和 fmap (也就是 &lt;$&gt;) 一起看吧。<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line">&lt;$&gt; ::   (a -&gt; b) -&gt; f a -&gt; f b</div><div class="line">&lt;*&gt; :: f (a -&gt; b) -&gt; f a -&gt; f b</div></pre></td></tr></table></figure></p>
 </blockquote>
 <p><code>&lt;$&gt;</code> 传进的是普通的函数，而 <code>&lt;*&gt;</code> 传进的是一个包装过的函数 ?</p>
 <blockquote>
@@ -241,12 +242,12 @@ ga('send', 'pageview');
 </blockquote>
 <p>有没有简单易懂的例子 ?</p>
 <blockquote>
-<p>先看看下面几个例子吧。<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; (+<span class="number">33</span>) &lt;$&gt; <span class="type">Just</span> <span class="number">9</span></span><br><span class="line"><span class="type">Just</span> <span class="number">42</span></span><br><span class="line"><span class="title">ghci</span>&gt; <span class="type">Just</span> (+<span class="number">33</span>) &lt;*&gt; <span class="type">Just</span> <span class="number">9</span></span><br><span class="line"><span class="type">Just</span> <span class="number">42</span></span><br><span class="line"><span class="title">ghci</span>&gt; pure (+<span class="number">33</span>) &lt;*&gt; <span class="type">Just</span> <span class="number">9</span></span><br><span class="line"><span class="type">Just</span> <span class="number">42</span></span><br></pre></td></tr></table></figure></p>
+<p>先看看下面几个例子吧。<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; (+<span class="number">33</span>) &lt;$&gt; <span class="type">Just</span> <span class="number">9</span></div><div class="line"><span class="type">Just</span> <span class="number">42</span></div><div class="line"><span class="title">ghci</span>&gt; <span class="type">Just</span> (+<span class="number">33</span>) &lt;*&gt; <span class="type">Just</span> <span class="number">9</span></div><div class="line"><span class="type">Just</span> <span class="number">42</span></div><div class="line"><span class="title">ghci</span>&gt; pure (+<span class="number">33</span>) &lt;*&gt; <span class="type">Just</span> <span class="number">9</span></div><div class="line"><span class="type">Just</span> <span class="number">42</span></div></pre></td></tr></table></figure></p>
 <p>能看出什么吗？</p>
 </blockquote>
 <p>包装过的函数和普通函数一样，都可以接受包装过的值作为参数，并返回正确的结果？</p>
 <blockquote>
-<p>正确！<br>我们再看看下面两个例子:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; <span class="type">Just</span> (+) &lt;*&gt; <span class="type">Just</span> <span class="number">3</span> &lt;*&gt; <span class="type">Just</span> <span class="number">8</span></span><br><span class="line"><span class="type">Just</span> <span class="number">11</span></span><br><span class="line"><span class="title">ghci</span>&gt; pure (+) &lt;*&gt; <span class="type">Just</span> <span class="number">3</span> &lt;*&gt; <span class="type">Just</span> <span class="number">8</span></span><br><span class="line"><span class="type">Just</span> <span class="number">11</span></span><br></pre></td></tr></table></figure></p>
+<p>正确！<br>我们再看看下面两个例子:<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; <span class="type">Just</span> (+) &lt;*&gt; <span class="type">Just</span> <span class="number">3</span> &lt;*&gt; <span class="type">Just</span> <span class="number">8</span></div><div class="line"><span class="type">Just</span> <span class="number">11</span></div><div class="line"><span class="title">ghci</span>&gt; pure (+) &lt;*&gt; <span class="type">Just</span> <span class="number">3</span> &lt;*&gt; <span class="type">Just</span> <span class="number">8</span></div><div class="line"><span class="type">Just</span> <span class="number">11</span></div></pre></td></tr></table></figure></p>
 <p>能看出什么吗 ?</p>
 </blockquote>
 <p>包装过的函数可以接受多个参数了 ?</p>
@@ -279,7 +280,7 @@ ga('send', 'pageview');
 </blockquote>
 <h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p><code>Maybe</code> 是怎么实现 <code>&lt;*&gt;</code> 的 ?</p>
 <blockquote>
-<p>如下所示:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> <span class="type">Maybe</span> <span class="keyword">where</span></span></span><br><span class="line">    pure          = <span class="type">Just</span></span><br><span class="line">    <span class="type">Just</span> f  &lt;*&gt; m = fmap f m</span><br><span class="line">    <span class="type">Nothing</span> &lt;*&gt; _ = <span class="type">Nothing</span></span><br></pre></td></tr></table></figure></p>
+<p>如下所示:<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> <span class="type">Maybe</span> <span class="keyword">where</span></span></div><div class="line">    pure          = <span class="type">Just</span></div><div class="line">    <span class="type">Just</span> f  &lt;*&gt; m = fmap f m</div><div class="line">    <span class="type">Nothing</span> &lt;*&gt; _ = <span class="type">Nothing</span></div></pre></td></tr></table></figure></p>
 <p>现在可以试试理解 &lt;*&gt; 是如何应用在 Maybe 中的。</p>
 </blockquote>
 <p><code>Just (+) &lt;*&gt; Just 3</code> 的结果是 ?</p>
@@ -292,7 +293,7 @@ ga('send', 'pageview');
 </blockquote>
 <p>那列表是怎么实现 <code>&lt;*&gt;</code> 的 ?</p>
 <blockquote>
-<p>如下所示:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> [] <span class="keyword">where</span></span></span><br><span class="line">    pure x = [x]</span><br><span class="line">    fs &lt;*&gt; xs = [f x | f &lt;- fs, x &lt;- xs]</span><br></pre></td></tr></table></figure></p>
+<p>如下所示:<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> [] <span class="keyword">where</span></span></div><div class="line">    pure x = [x]</div><div class="line">    fs &lt;*&gt; xs = [f x | f &lt;- fs, x &lt;- xs]</div></pre></td></tr></table></figure></p>
 <p>列表是通过「列表解析(List Comprehension)」来实现 <code>&lt;*&gt;</code> 的。<br>其中的 fs 可以看成是一个由函数组成的列表，如 [(+1), (*2), (^3)]<br>整个过程可以看作 <code>concatMap (\f -&gt; map f xs) fs</code> 的另一个写法。</p>
 </blockquote>
 <p>还有哪些是 <code>Applicative</code> 的实例 ?</p>
@@ -301,11 +302,11 @@ ga('send', 'pageview');
 </blockquote>
 <p><code>IO</code> 怎么实现 <code>&lt;*&gt;</code> ?</p>
 <blockquote>
-<p>看看下面的代码:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> <span class="type">IO</span> <span class="keyword">where</span></span></span><br><span class="line">    pure = return</span><br><span class="line">    a &lt;*&gt; b = <span class="keyword">do</span></span><br><span class="line">        f &lt;- a</span><br><span class="line">        x &lt;- b</span><br><span class="line">        return (f x)</span><br></pre></td></tr></table></figure></p>
+<p>看看下面的代码:<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> <span class="type">IO</span> <span class="keyword">where</span></span></div><div class="line">    pure = return</div><div class="line">    a &lt;*&gt; b = <span class="keyword">do</span></div><div class="line">        f &lt;- a</div><div class="line">        x &lt;- b</div><div class="line">        return (f x)</div></pre></td></tr></table></figure></p>
 </blockquote>
 <p>不太懂，有没有具体的例子 ?</p>
 <blockquote>
-<p>下面有个简单易懂的例子:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">myAction</span> :: <span class="type">IO</span> <span class="type">String</span></span><br><span class="line"><span class="title">myAction</span> = <span class="keyword">do</span></span><br><span class="line">    a &lt;- getLine</span><br><span class="line">    b &lt;- getLine</span><br><span class="line">    return $ a ++ b</span><br></pre></td></tr></table></figure></p>
+<p>下面有个简单易懂的例子:<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">myAction</span> :: <span class="type">IO</span> <span class="type">String</span></div><div class="line"><span class="title">myAction</span> = <span class="keyword">do</span></div><div class="line">    a &lt;- getLine</div><div class="line">    b &lt;- getLine</div><div class="line">    return $ a ++ b</div></pre></td></tr></table></figure></p>
 <p>其实我们可以可以写成下面这样:<br><code>myAction = (++) &lt;$&gt; getLine &lt;*&gt; getLine</code></p>
 </blockquote>
 <p>那 <code>(-&gt;) r</code> 又是什么 ?</p>
@@ -314,7 +315,7 @@ ga('send', 'pageview');
 </blockquote>
 <p><code>(-&gt;) r</code> 是怎么实现 <code>&lt;*&gt;</code> 的 ?</p>
 <blockquote>
-<p>看看下面的代码:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> <span class="container">((-&gt;)</span> r) <span class="keyword">where</span></span></span><br><span class="line">    pure x = (\_ -&gt; x)</span><br><span class="line">    f &lt;*&gt; g = \x -&gt; f x (g x)</span><br></pre></td></tr></table></figure></p>
+<p>看看下面的代码:<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Applicative</span> ((-&gt;) r) <span class="keyword">where</span></span></div><div class="line">    pure x = (\_ -&gt; x)</div><div class="line">    f &lt;*&gt; g = \x -&gt; f x (g x)</div></pre></td></tr></table></figure></p>
 </blockquote>
 <p><code>(-&gt;) r</code> 的 <code>&lt;*&gt;</code> 实现不是太好理解。</p>
 <blockquote>
@@ -326,12 +327,12 @@ ga('send', 'pageview');
 </blockquote>
 <p>看起来很绕，可以给一些例子吗 ?</p>
 <blockquote>
-<p>是的，直接看例子会好理解一点:<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="title">ghci</span>&gt; :t pure (+<span class="number">3</span>)</span><br><span class="line"><span class="title">pure</span> (+<span class="number">3</span>) :: f (a -&gt; a)</span><br><span class="line"></span><br><span class="line"><span class="title">ghci</span>&gt; :t pure (+<span class="number">3</span>) <span class="number">2</span></span><br><span class="line"><span class="title">pure</span> (+<span class="number">3</span>) <span class="number">2</span> :: a -&gt; a</span><br><span class="line"></span><br><span class="line"><span class="title">ghci</span>&gt; pure (+<span class="number">3</span>) <span class="number">2</span> <span class="number">4</span></span><br><span class="line"><span class="number">7</span></span><br></pre></td></tr></table></figure></p>
+<p>是的，直接看例子会好理解一点:<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; :t pure (+<span class="number">3</span>)</div><div class="line"><span class="title">pure</span> (+<span class="number">3</span>) :: f (a -&gt; a)</div><div class="line"></div><div class="line"><span class="title">ghci</span>&gt; :t pure (+<span class="number">3</span>) <span class="number">2</span></div><div class="line"><span class="title">pure</span> (+<span class="number">3</span>) <span class="number">2</span> :: a -&gt; a</div><div class="line"></div><div class="line"><span class="title">ghci</span>&gt; pure (+<span class="number">3</span>) <span class="number">2</span> <span class="number">4</span></div><div class="line"><span class="number">7</span></div></pre></td></tr></table></figure></p>
 <p>看到了吗 ?<br><code>pure (+3)</code> 返回的是 <code>(\_ -&gt; (+3))</code>。<br><code>pure (+3) 2</code> 返回的是 <code>(+3)</code>。<br><code>pure (+3) 2 4</code> 其实是 <code>(+3) 4</code> 的结果。</p>
 </blockquote>
 <p>OK，我已经了解 <code>pure</code> 是如何处理函数的了。</p>
 <blockquote>
-<p>好，接下来我们看 <code>&lt;*&gt;</code> 的实现。<br>看看下面的例子，我们按照定义一步一步来~<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 例子1</span></span><br><span class="line">    pure (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">100</span>)</span><br><span class="line"><span class="comment">-- 展开 pure (+3)</span></span><br><span class="line">= (\_ -&gt; (+<span class="number">3</span>)) &lt;*&gt; (*<span class="number">100</span>)</span><br><span class="line"><span class="comment">-- 展开 &lt;*&gt;</span></span><br><span class="line">= \x -&gt; (\_ -&gt; (+<span class="number">3</span>)) x (*<span class="number">100</span> x)</span><br><span class="line"><span class="comment">-- 当 x = 5 时</span></span><br><span class="line">= \<span class="number">5</span> -&gt; (\_ -&gt; (+<span class="number">3</span>)) <span class="number">5</span> (*<span class="number">100</span> <span class="number">5</span>)</span><br><span class="line"><span class="comment">-- 传进 5 之后的返回值如下</span></span><br><span class="line">= (\_ -&gt; (+<span class="number">3</span>)) <span class="number">5</span> <span class="number">500</span></span><br><span class="line"><span class="comment">-- 无论第一个参数是什么，它都是返回 (+3)</span></span><br><span class="line">= (+<span class="number">3</span>) <span class="number">500</span></span><br><span class="line">= <span class="number">503</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 例子2</span></span><br><span class="line">    (+) &lt;$&gt; (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">100</span>)</span><br><span class="line"><span class="comment">-- 展开 &lt;$&gt;</span></span><br><span class="line">= (+) . (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">100</span>)</span><br><span class="line"><span class="comment">-- 展开 &lt;*&gt;</span></span><br><span class="line">= \x -&gt; (+) . (+<span class="number">3</span>) x (*<span class="number">100</span> x)</span><br><span class="line"><span class="comment">-- 当 x = 5 时</span></span><br><span class="line">= \<span class="number">5</span> -&gt; (+) . (+<span class="number">3</span>) <span class="number">5</span> (*<span class="number">100</span> <span class="number">5</span>)</span><br><span class="line"><span class="comment">-- 返回值</span></span><br><span class="line">= (+) . (+<span class="number">3</span>) <span class="number">5</span> <span class="number">500</span></span><br><span class="line">= (<span class="number">8</span>+) <span class="number">500</span></span><br><span class="line">= <span class="number">508</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 例子3</span></span><br><span class="line">    (\x y z -&gt; [x,y,z]) &lt;$&gt; (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">2</span>) &lt;*&gt; (/<span class="number">2</span>)</span><br><span class="line"><span class="comment">-- 先假设 (\x y z -&gt; [x,y,z]) 为 f</span></span><br><span class="line">= f &lt;$&gt; (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">2</span>) &lt;*&gt; (/<span class="number">2</span>)</span><br><span class="line"><span class="comment">-- 展开 &lt;$&gt;</span></span><br><span class="line">= f . (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">2</span>) &lt;*&gt; (/<span class="number">2</span>)</span><br><span class="line"><span class="comment">-- 展开第一个 &lt;*&gt;</span></span><br><span class="line">= \x -&gt; (f . (+<span class="number">3</span>)) x (*<span class="number">2</span> x) &lt;*&gt; (/<span class="number">2</span>)</span><br><span class="line"><span class="comment">-- 展开第二个 &lt;*&gt;</span></span><br><span class="line">= \y -&gt; (\x -&gt; (f . (+<span class="number">3</span>)) x (*<span class="number">2</span> x)) y (/<span class="number">2</span> y)</span><br><span class="line"><span class="comment">-- 观察 (\x -&gt; (f . (+3)) x (*2 x)) y</span></span><br><span class="line"><span class="comment">-- 把 y 传入函数中可以得到</span></span><br><span class="line">= \y -&gt; (f . (+<span class="number">3</span>)) y (*<span class="number">2</span> y) (/<span class="number">2</span> y)</span><br><span class="line">= \y -&gt; f (+<span class="number">3</span> y) (*<span class="number">2</span> y) (/<span class="number">2</span> y)</span><br><span class="line"><span class="comment">-- 当传入 5 作为参数时</span></span><br><span class="line">= f (+<span class="number">3</span> <span class="number">5</span>) (*<span class="number">2</span> <span class="number">5</span>) (/<span class="number">2</span> <span class="number">5</span>)</span><br><span class="line">= f <span class="number">8</span> <span class="number">10</span> <span class="number">2.5</span></span><br><span class="line"><span class="comment">-- 把 f 换回 (\x y z -&gt; [x,y,z])</span></span><br><span class="line">= [<span class="number">8.0</span>,<span class="number">10.0</span>,<span class="number">2.5</span>]</span><br></pre></td></tr></table></figure></p>
+<p>好，接下来我们看 <code>&lt;*&gt;</code> 的实现。<br>看看下面的例子，我们按照定义一步一步来~<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="comment">-- 例子1</span></div><div class="line">    pure (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">100</span>)</div><div class="line"><span class="comment">-- 展开 pure (+3)</span></div><div class="line">= (\_ -&gt; (+<span class="number">3</span>)) &lt;*&gt; (*<span class="number">100</span>)</div><div class="line"><span class="comment">-- 展开 &lt;*&gt;</span></div><div class="line">= \x -&gt; (\_ -&gt; (+<span class="number">3</span>)) x (*<span class="number">100</span> x)</div><div class="line"><span class="comment">-- 当 x = 5 时</span></div><div class="line">= \<span class="number">5</span> -&gt; (\_ -&gt; (+<span class="number">3</span>)) <span class="number">5</span> (*<span class="number">100</span> <span class="number">5</span>)</div><div class="line"><span class="comment">-- 传进 5 之后的返回值如下</span></div><div class="line">= (\_ -&gt; (+<span class="number">3</span>)) <span class="number">5</span> <span class="number">500</span></div><div class="line"><span class="comment">-- 无论第一个参数是什么，它都是返回 (+3)</span></div><div class="line">= (+<span class="number">3</span>) <span class="number">500</span></div><div class="line">= <span class="number">503</span></div><div class="line"></div><div class="line"><span class="comment">-- 例子2</span></div><div class="line">    (+) &lt;$&gt; (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">100</span>)</div><div class="line"><span class="comment">-- 展开 &lt;$&gt;</span></div><div class="line">= (+) . (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">100</span>)</div><div class="line"><span class="comment">-- 展开 &lt;*&gt;</span></div><div class="line">= \x -&gt; (+) . (+<span class="number">3</span>) x (*<span class="number">100</span> x)</div><div class="line"><span class="comment">-- 当 x = 5 时</span></div><div class="line">= \<span class="number">5</span> -&gt; (+) . (+<span class="number">3</span>) <span class="number">5</span> (*<span class="number">100</span> <span class="number">5</span>)</div><div class="line"><span class="comment">-- 返回值</span></div><div class="line">= (+) . (+<span class="number">3</span>) <span class="number">5</span> <span class="number">500</span></div><div class="line">= (<span class="number">8</span>+) <span class="number">500</span></div><div class="line">= <span class="number">508</span></div><div class="line"></div><div class="line"><span class="comment">-- 例子3</span></div><div class="line">    (\x y z -&gt; [x,y,z]) &lt;$&gt; (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">2</span>) &lt;*&gt; (/<span class="number">2</span>)</div><div class="line"><span class="comment">-- 先假设 (\x y z -&gt; [x,y,z]) 为 f</span></div><div class="line">= f &lt;$&gt; (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">2</span>) &lt;*&gt; (/<span class="number">2</span>)</div><div class="line"><span class="comment">-- 展开 &lt;$&gt;</span></div><div class="line">= f . (+<span class="number">3</span>) &lt;*&gt; (*<span class="number">2</span>) &lt;*&gt; (/<span class="number">2</span>)</div><div class="line"><span class="comment">-- 展开第一个 &lt;*&gt;</span></div><div class="line">= \x -&gt; (f . (+<span class="number">3</span>)) x (*<span class="number">2</span> x) &lt;*&gt; (/<span class="number">2</span>)</div><div class="line"><span class="comment">-- 展开第二个 &lt;*&gt;</span></div><div class="line">= \y -&gt; (\x -&gt; (f . (+<span class="number">3</span>)) x (*<span class="number">2</span> x)) y (/<span class="number">2</span> y)</div><div class="line"><span class="comment">-- 观察 (\x -&gt; (f . (+3)) x (*2 x)) y</span></div><div class="line"><span class="comment">-- 把 y 传入函数中可以得到</span></div><div class="line">= \y -&gt; (f . (+<span class="number">3</span>)) y (*<span class="number">2</span> y) (/<span class="number">2</span> y)</div><div class="line">= \y -&gt; f (+<span class="number">3</span> y) (*<span class="number">2</span> y) (/<span class="number">2</span> y)</div><div class="line"><span class="comment">-- 当传入 5 作为参数时</span></div><div class="line">= f (+<span class="number">3</span> <span class="number">5</span>) (*<span class="number">2</span> <span class="number">5</span>) (/<span class="number">2</span> <span class="number">5</span>)</div><div class="line">= f <span class="number">8</span> <span class="number">10</span> <span class="number">2.5</span></div><div class="line"><span class="comment">-- 把 f 换回 (\x y z -&gt; [x,y,z])</span></div><div class="line">= [<span class="number">8.0</span>,<span class="number">10.0</span>,<span class="number">2.5</span>]</div></pre></td></tr></table></figure></p>
 <p>很有趣吧 !</p>
 </blockquote>
 <p>每次都要展开 <code>&lt;*&gt;</code> 很麻烦啊 ?</p>
@@ -356,10 +357,10 @@ ga('send', 'pageview');
 </blockquote>
 <p>我应该怎么理解这个规则 ?</p>
 <blockquote>
-<p>我们说 <code>Applicative</code> 是加强版的 <code>Functor</code>，它可以应用一个带有上下文的函数到 <code>Functor</code> 上。<br>我们看看之前提到的 <code>Applicative</code> 实例 :<br>对于 <code>Maybe</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line">  pure f &lt;*&gt; x</span><br><span class="line">= <span class="type">Just</span> f &lt;*&gt; x</span><br><span class="line">= fmap f x</span><br></pre></td></tr></table></figure></p>
-<p>对于 <code>List</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line">  pure f &lt;*&gt; x</span><br><span class="line">= [f] &lt;*&gt; x</span><br><span class="line">= [f x' | x' &lt;- x]</span><br><span class="line">= map f x</span><br><span class="line">= fmap f x</span><br></pre></td></tr></table></figure></p>
-<p>对于 <code>IO</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line">  pure f &lt;*&gt; x</span><br><span class="line">= return f &lt;*&gt; x</span><br><span class="line">= return (f x)</span><br><span class="line">= fmap f x</span><br></pre></td></tr></table></figure></p>
-<p>对于 <code>(-&gt;) r</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><span class="line">  pure f &lt;*&gt; x</span><br><span class="line">= (\_ -&gt; f) &lt;*&gt; x</span><br><span class="line">= (\y -&gt; (\_ -&gt; f) y (x y))</span><br><span class="line">= (\y -&gt; f (x y))</span><br><span class="line">= (\y -&gt; (f . x) y)</span><br><span class="line">= f . x</span><br><span class="line">= fmap f x</span><br></pre></td></tr></table></figure></p>
+<p>我们说 <code>Applicative</code> 是加强版的 <code>Functor</code>，它可以应用一个带有上下文的函数到 <code>Functor</code> 上。<br>我们看看之前提到的 <code>Applicative</code> 实例 :<br>对于 <code>Maybe</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line">  pure f &lt;*&gt; x</div><div class="line">= <span class="type">Just</span> f &lt;*&gt; x</div><div class="line">= fmap f x</div></pre></td></tr></table></figure></p>
+<p>对于 <code>List</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line">  pure f &lt;*&gt; x</div><div class="line">= [f] &lt;*&gt; x</div><div class="line">= [f x' | x' &lt;- x]</div><div class="line">= map f x</div><div class="line">= fmap f x</div></pre></td></tr></table></figure></p>
+<p>对于 <code>IO</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line">  pure f &lt;*&gt; x</div><div class="line">= return f &lt;*&gt; x</div><div class="line">= return (f x)</div><div class="line">= fmap f x</div></pre></td></tr></table></figure></p>
+<p>对于 <code>(-&gt;) r</code> :<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line">  pure f &lt;*&gt; x</div><div class="line">= (\_ -&gt; f) &lt;*&gt; x</div><div class="line">= (\y -&gt; (\_ -&gt; f) y (x y))</div><div class="line">= (\y -&gt; f (x y))</div><div class="line">= (\y -&gt; (f . x) y)</div><div class="line">= f . x</div><div class="line">= fmap f x</div></pre></td></tr></table></figure></p>
 <p>看到了吧 ! 我们上面提到的 <code>Applicative</code> 的实例全部都满足 <code>pure f &lt;*&gt; x = fmap f x</code> 哦 !</p>
 </blockquote>
 <p>还有其他需要遵守的规则吗 ?</p>
@@ -388,6 +389,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -535,7 +559,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

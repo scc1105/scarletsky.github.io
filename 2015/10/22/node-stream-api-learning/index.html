@@ -38,11 +38,11 @@ fs.readFile 对于每个 Node.js 使用者来说最熟悉不过了，简单易�
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -65,6 +65,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -235,8 +236,8 @@ ga('send', 'pageview');
 <li>存在 pipe 方法的目的地时，移除所有 data 事件的监听函数，并且调用 unpipe 方法，移除所有 pipe 方法的目的地</li>
 </ul>
 <p><strong>注意：</strong> 只移除 data 事件的监听函数，并不会自动引发数据流进入「暂停态」。另外，存在 pipe 方法的目的地时，调用 pause 方法，并不能保证数据流总是处于暂停态，一旦那些目的地发出数据请求，数据流有可能会继续提供数据。</p>
-<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><h3 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="comment">// 新建可读数据流</span></span><br><span class="line"><span class="keyword">var</span> rs = fs.createReadStream(<span class="string">'./test1.txt'</span>);</span><br><span class="line"><span class="comment">// 新建可写数据流</span></span><br><span class="line"><span class="keyword">var</span> ws = fs.createWriteStream(<span class="string">'./test2.txt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听可读数据流结束事件</span></span><br><span class="line">rs.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'read text1.txt successfully!'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 监听可写数据流结束事件</span></span><br><span class="line">ws.on(<span class="string">'finish'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'write text2.txt successfully!'</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 把可读数据流转换成流动态，流进可写数据流中</span></span><br><span class="line">rs.pipe(ws);</span><br></pre></td></tr></table></figure>
-<h3 id="读取-CSV-文件，并上传数据（我在生产环境中写过）"><a href="#读取-CSV-文件，并上传数据（我在生产环境中写过）" class="headerlink" title="读取 CSV 文件，并上传数据（我在生产环境中写过）"></a>读取 CSV 文件，并上传数据（我在生产环境中写过）</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> es = <span class="built_in">require</span>(<span class="string">'event-stream'</span>);</span><br><span class="line"><span class="keyword">var</span> csv = <span class="built_in">require</span>(<span class="string">'csv'</span>);</span><br><span class="line"><span class="keyword">var</span> parser = csv.parse();</span><br><span class="line"><span class="keyword">var</span> transformer = csv.transform(<span class="function"><span class="keyword">function</span>(<span class="params">record</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> record.join(<span class="string">','</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> data = fs.createReadStream(<span class="string">'./demo.csv'</span>);</span><br><span class="line">data</span><br><span class="line">    .pipe(parser)</span><br><span class="line">    .pipe(transformer)</span><br><span class="line">    <span class="comment">// 处理前一个 stream 传递过来的数据</span></span><br><span class="line">    .pipe(es.map(<span class="function"><span class="keyword">function</span>(<span class="params">data, callback</span>) </span>&#123;</span><br><span class="line">        upload(data, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">            callback(err);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;))</span><br><span class="line">    <span class="comment">// 相当于监听前一个 stream 的 end 事件</span></span><br><span class="line">    .pipe(es.wait(<span class="function"><span class="keyword">function</span>(<span class="params">err, body</span>) </span>&#123;</span><br><span class="line">        process.stdout.write(<span class="string">'done!'</span>);</span><br><span class="line">    &#125;));</span><br></pre></td></tr></table></figure>
+<h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><h3 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h3><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="comment">// 新建可读数据流</span></div><div class="line"><span class="keyword">var</span> rs = fs.createReadStream(<span class="string">'./test1.txt'</span>);</div><div class="line"><span class="comment">// 新建可写数据流</span></div><div class="line"><span class="keyword">var</span> ws = fs.createWriteStream(<span class="string">'./test2.txt'</span>);</div><div class="line"></div><div class="line"><span class="comment">// 监听可读数据流结束事件</span></div><div class="line">rs.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'read text1.txt successfully!'</span>);</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 监听可写数据流结束事件</span></div><div class="line">ws.on(<span class="string">'finish'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'write text2.txt successfully!'</span>);</div><div class="line">&#125;);</div><div class="line"><span class="comment">// 把可读数据流转换成流动态，流进可写数据流中</span></div><div class="line">rs.pipe(ws);</div></pre></td></tr></table></figure>
+<h3 id="读取-CSV-文件，并上传数据（我在生产环境中写过）"><a href="#读取-CSV-文件，并上传数据（我在生产环境中写过）" class="headerlink" title="读取 CSV 文件，并上传数据（我在生产环境中写过）"></a>读取 CSV 文件，并上传数据（我在生产环境中写过）</h3><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> es = <span class="built_in">require</span>(<span class="string">'event-stream'</span>);</div><div class="line"><span class="keyword">var</span> csv = <span class="built_in">require</span>(<span class="string">'csv'</span>);</div><div class="line"><span class="keyword">var</span> parser = csv.parse();</div><div class="line"><span class="keyword">var</span> transformer = csv.transform(<span class="function"><span class="keyword">function</span>(<span class="params">record</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> record.join(<span class="string">','</span>);</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> data = fs.createReadStream(<span class="string">'./demo.csv'</span>);</div><div class="line">data</div><div class="line">    .pipe(parser)</div><div class="line">    .pipe(transformer)</div><div class="line">    <span class="comment">// 处理前一个 stream 传递过来的数据</span></div><div class="line">    .pipe(es.map(<span class="function"><span class="keyword">function</span>(<span class="params">data, callback</span>) </span>&#123;</div><div class="line">        upload(data, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</div><div class="line">            callback(err);</div><div class="line">        &#125;);</div><div class="line">    &#125;))</div><div class="line">    <span class="comment">// 相当于监听前一个 stream 的 end 事件</span></div><div class="line">    .pipe(es.wait(<span class="function"><span class="keyword">function</span>(<span class="params">err, body</span>) </span>&#123;</div><div class="line">        process.stdout.write(<span class="string">'done!'</span>);</div><div class="line">    &#125;));</div></pre></td></tr></table></figure>
 <h3 id="更多用法"><a href="#更多用法" class="headerlink" title="更多用法"></a>更多用法</h3><p>可以参考一下 <a href="https://github.com/jeresig/node-stream-playground" target="_blank" rel="external">https://github.com/jeresig/node-stream-playground</a> ，进去示例网站之后直接点 add stream 就能看到结果了。</p>
 <h2 id="常见坑"><a href="#常见坑" class="headerlink" title="常见坑"></a>常见坑</h2><ul>
 <li>用 <code>rs.pipe(ws)</code> 的方式来写文件并不是把 rs 的内容 append 到 ws 后面，而是直接用 rs 的内容覆盖 ws 原有的内容</li>
@@ -244,7 +245,7 @@ ga('send', 'pageview');
 <li><p>pipe 方法返回的是目标数据流，如 <code>a.pipe(b)</code> 返回的是 b，因此监听事件的时候请注意你监听的对象是否正确</p>
 <ul>
 <li><p>如果你要监听多个数据流，同时你又使用了 pipe 方法来串联数据流的话，你就要写成：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">data</span><br><span class="line">    .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'data end'</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    .pipe(a)</span><br><span class="line">    .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'a end'</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    .pipe(b)</span><br><span class="line">    .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'b end'</span>);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">data</div><div class="line">    .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'data end'</span>);</div><div class="line">    &#125;)</div><div class="line">    .pipe(a)</div><div class="line">    .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'a end'</span>);</div><div class="line">    &#125;)</div><div class="line">    .pipe(b)</div><div class="line">    .on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'b end'</span>);</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -260,6 +261,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -407,7 +431,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

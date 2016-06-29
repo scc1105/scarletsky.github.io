@@ -35,11 +35,11 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -62,6 +62,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -190,9 +191,9 @@ ga('send', 'pageview');
   <div class="article-content">
     
       <h1 id="安全和认证"><a href="#安全和认证" class="headerlink" title="安全和认证"></a>安全和认证</h1><p>要开启安全检查，需要在启动 mongod 时添加 –auth 选项<br>admin 数据库为管理员，在认证之后可以读写所有数据库，执行特定的管理命令。<br>在开启安全检查之前，一定要有一个管理员帐号。<br>数据库的用户存储在 admin 的 <code>db.system.users</code> 集合中。</p>
-<p>创建管理员<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.createUser(&#123;user: <span class="string">'root'</span>, <span class="built_in">pwd</span>: <span class="string">'password'</span>, roles: [<span class="string">'root'</span>]&#125;) <span class="comment"># 添加管理员</span></span><br></pre></td></tr></table></figure></p>
-<p>开启验证<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mongod --config /usr/<span class="built_in">local</span>/etc/mongod.conf --auth</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证方法1</span></span><br><span class="line">$ mongo admin -u <span class="string">'username'</span> -p <span class="string">'password'</span> <span class="comment"># 必须指定该用户有权限访问的数据库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证方法2</span></span><br><span class="line">$ mongo</span><br><span class="line">&gt; use admin</span><br><span class="line">&gt; db.auth(<span class="string">'username'</span>, <span class="string">'password'</span>)</span><br><span class="line">&gt; use otherDatabase</span><br><span class="line">&gt; db.users.find().....</span><br></pre></td></tr></table></figure></p>
-<p>开启验证后，我们在使用 URI 去连接数据库的时候需要注意，要加上 authSource=admin 参数才能通过验证。这里以 mongoose 为例。<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</span><br><span class="line">mongoose.connect(<span class="string">'mongodb://user:pass@server:port/database?authSource=admin'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>创建管理员<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">&gt; use admin</div><div class="line">&gt; db.createUser(&#123;user: <span class="string">'root'</span>, <span class="built_in">pwd</span>: <span class="string">'password'</span>, roles: [<span class="string">'root'</span>]&#125;) <span class="comment"># 添加管理员</span></div></pre></td></tr></table></figure></p>
+<p>开启验证<br><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ mongod --config /usr/<span class="built_in">local</span>/etc/mongod.conf --auth</div><div class="line"></div><div class="line"><span class="comment"># 验证方法1</span></div><div class="line">$ mongo admin -u <span class="string">'username'</span> -p <span class="string">'password'</span> <span class="comment"># 必须指定该用户有权限访问的数据库</span></div><div class="line"></div><div class="line"><span class="comment"># 验证方法2</span></div><div class="line">$ mongo</div><div class="line">&gt; use admin</div><div class="line">&gt; db.auth(<span class="string">'username'</span>, <span class="string">'password'</span>)</div><div class="line">&gt; use otherDatabase</div><div class="line">&gt; db.users.find().....</div></pre></td></tr></table></figure></p>
+<p>开启验证后，我们在使用 URI 去连接数据库的时候需要注意，要加上 authSource=admin 参数才能通过验证。这里以 mongoose 为例。<br><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> mongoose = <span class="built_in">require</span>(<span class="string">'mongoose'</span>);</div><div class="line">mongoose.connect(<span class="string">'mongodb://user:pass@server:port/database?authSource=admin'</span>);</div></pre></td></tr></table></figure></p>
 <h1 id="用户角色权限"><a href="#用户角色权限" class="headerlink" title="用户角色权限"></a>用户角色权限</h1><p>Mongodb 内建了很多角色，详细可以去看看 <a href="http://docs.mongodb.org/manual/reference/built-in-roles/#built-in-roles" target="_blank" rel="external">built-in-roles</a></p>
 <p>这里只说说 Superuser roles。下面几种角色可以为任何用户分配任何权限在任何数据库上，这意味着拥有以下其中一种角色的用户可以分配他们自己的任何权限在任何数据库上面。</p>
 <ul>
@@ -210,6 +211,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -357,7 +381,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

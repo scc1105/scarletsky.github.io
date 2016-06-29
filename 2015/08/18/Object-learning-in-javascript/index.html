@@ -41,11 +41,11 @@ The Object.defineProperty() method defines a new property directly on an object,
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -68,6 +68,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -222,9 +223,9 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
-<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a><strong>注意</strong></h4><p>在 <code>descriptor</code> 中不能<strong>同时</strong>设置访问器 (<code>get</code> 和 <code>set</code>) 和 <code>wriable</code> 或 <code>value</code>，否则会报以下错误：<br><figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line">Invalid <span class="keyword">property</span>.<span class="title">  </span>A <span class="keyword">property</span><span class="title"> </span>cannot both have accessors <span class="operator">and</span> be writable <span class="operator">or</span> have a value</span><br></pre></td></tr></table></figure></p>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a><strong>注意</strong></h4><p>在 <code>descriptor</code> 中不能<strong>同时</strong>设置访问器 (<code>get</code> 和 <code>set</code>) 和 <code>wriable</code> 或 <code>value</code>，否则会报以下错误：<br><figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line">Invalid <span class="keyword">property</span>.<span class="title">  </span>A <span class="keyword">property</span><span class="title"> </span>cannot both have accessors <span class="keyword">and</span> be writable <span class="keyword">or</span> have a value</div></pre></td></tr></table></figure></p>
 <h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><p>我们知道，在 <code>Express.js</code> 升级到 4.0 之后，它把很多功能从核心库中移除了。当我们访问那些被移除的属性时，它会报错，告诉我们该属性已经被移除了。这个功能就是通过 <code>Object.defineProperty</code> 来实现的。看看源码吧：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">[</span><br><span class="line">  <span class="string">'json'</span>,</span><br><span class="line">  <span class="string">'urlencoded'</span>,</span><br><span class="line">  <span class="string">'bodyParser'</span>,</span><br><span class="line">  <span class="string">'compress'</span>,</span><br><span class="line">  <span class="string">'cookieSession'</span>,</span><br><span class="line">  <span class="string">'session'</span>,</span><br><span class="line">  <span class="string">'logger'</span>,</span><br><span class="line">  <span class="string">'cookieParser'</span>,</span><br><span class="line">  <span class="string">'favicon'</span>,</span><br><span class="line">  <span class="string">'responseTime'</span>,</span><br><span class="line">  <span class="string">'errorHandler'</span>,</span><br><span class="line">  <span class="string">'timeout'</span>,</span><br><span class="line">  <span class="string">'methodOverride'</span>,</span><br><span class="line">  <span class="string">'vhost'</span>,</span><br><span class="line">  <span class="string">'csrf'</span>,</span><br><span class="line">  <span class="string">'directory'</span>,</span><br><span class="line">  <span class="string">'limit'</span>,</span><br><span class="line">  <span class="string">'multipart'</span>,</span><br><span class="line">  <span class="string">'staticCache'</span>,</span><br><span class="line">].forEach(<span class="function"><span class="keyword">function</span> (<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(exports, name, &#123;</span><br><span class="line">    get: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Most middleware (like '</span> + name + <span class="string">') is no longer bundled with Express and must be installed separately. Please see https://github.com/senchalabs/connect#middleware.'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="code"><pre><div class="line">[</div><div class="line">  <span class="symbol">'json</span>',</div><div class="line">  <span class="symbol">'urlencoded</span>',</div><div class="line">  <span class="symbol">'bodyParser</span>',</div><div class="line">  <span class="symbol">'compress</span>',</div><div class="line">  <span class="symbol">'cookieSession</span>',</div><div class="line">  <span class="symbol">'session</span>',</div><div class="line">  <span class="symbol">'logger</span>',</div><div class="line">  <span class="symbol">'cookieParser</span>',</div><div class="line">  <span class="symbol">'favicon</span>',</div><div class="line">  <span class="symbol">'responseTime</span>',</div><div class="line">  <span class="symbol">'errorHandler</span>',</div><div class="line">  <span class="symbol">'timeout</span>',</div><div class="line">  <span class="symbol">'methodOverride</span>',</div><div class="line">  <span class="symbol">'vhost</span>',</div><div class="line">  <span class="symbol">'csrf</span>',</div><div class="line">  <span class="symbol">'directory</span>',</div><div class="line">  <span class="symbol">'limit</span>',</div><div class="line">  <span class="symbol">'multipart</span>',</div><div class="line">  <span class="symbol">'staticCache</span>',</div><div class="line">].forEach(<span class="name">function</span> (<span class="name">name</span>) &#123;</div><div class="line">  Object.defineProperty(<span class="name">exports</span>, name, &#123;</div><div class="line">    get: function () &#123;</div><div class="line">      throw new Error(<span class="symbol">'Most</span> middleware (<span class="name">like</span> ' + name + ') is no longer bundled with Express and must be installed separately. Please see https://github.com/senchalabs/connect#middleware.')<span class="comment">;</span></div><div class="line">    &#125;,</div><div class="line">    configurable: true</div><div class="line">  &#125;)<span class="comment">;</span></div><div class="line">&#125;)<span class="comment">;</span></div></pre></td></tr></table></figure>
 <h1 id="Object-defineProperties"><a href="#Object-defineProperties" class="headerlink" title="Object.defineProperties"></a>Object.defineProperties</h1><blockquote>
 <p>The Object.defineProperties() method defines new or modifies existing properties directly on an object, returning the object.</p>
 </blockquote>
@@ -243,6 +244,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -390,7 +414,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

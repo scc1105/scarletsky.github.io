@@ -12,14 +12,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="localtunnel,nodejs," />
+    <meta name="keywords" content="nodejs,localtunnel," />
   
 
   <meta name="description" content="简介Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。
 客户端安装$ npm install -g localtunnel
 使用假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露到公网中
-$ lt --port 8000&amp;#10;your url is: https://uhhzexcifv.localtunnel.me
-通过上面的命令，我们不需要做其他设">
+$ lt --port 8000your url is: https://uhhzexcifv.localtunnel.me
+通过上面的命令，我们不需要做其他设置就可以通">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Localtunnel（Node.js 版） 使用教程">
 <meta property="og:url" content="http://scarletsky.github.io/2016/01/17/localtunnel-usage/index.html">
@@ -27,16 +27,16 @@ $ lt --port 8000&amp;#10;your url is: https://uhhzexcifv.localtunnel.me
 <meta property="og:description" content="简介Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。
 客户端安装$ npm install -g localtunnel
 使用假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露到公网中
-$ lt --port 8000&amp;#10;your url is: https://uhhzexcifv.localtunnel.me
-通过上面的命令，我们不需要做其他设">
+$ lt --port 8000your url is: https://uhhzexcifv.localtunnel.me
+通过上面的命令，我们不需要做其他设置就可以通">
 <meta property="og:updated_time" content="2016-02-29T04:29:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Localtunnel（Node.js 版） 使用教程">
 <meta name="twitter:description" content="简介Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。
 客户端安装$ npm install -g localtunnel
 使用假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露到公网中
-$ lt --port 8000&amp;#10;your url is: https://uhhzexcifv.localtunnel.me
-通过上面的命令，我们不需要做其他设">
+$ lt --port 8000your url is: https://uhhzexcifv.localtunnel.me
+通过上面的命令，我们不需要做其他设置就可以通">
 
   
 
@@ -44,11 +44,11 @@ $ lt --port 8000&amp;#10;your url is: https://uhhzexcifv.localtunnel.me
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -71,6 +71,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -199,23 +200,23 @@ ga('send', 'pageview');
   <div class="article-content">
     
       <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Localtunnel 是一个可以让内网服务器暴露到公网上的开源项目。</p>
-<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ npm install -g localtunnel</span><br></pre></td></tr></table></figure>
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm install -g localtunnel</div></pre></td></tr></table></figure>
 <h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>假设本地服务器在 8000 端口，我们可以通过下面的命令把本地服务器暴露到公网中</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ lt --port 8000&#10;your url is: https://uhhzexcifv.localtunnel.me</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ lt --port 8000</div><div class="line">your url is: https://uhhzexcifv.localtunnel.me</div></pre></td></tr></table></figure>
 <p>通过上面的命令，我们不需要做其他设置就可以通过 <code>https://uhhzexcifv.localtunnel.me</code> 来访问我们本地服务器了。</p>
 <p>由于 <code>localtunnel.me</code> 是国外的服务器，访问速度有时候不太理想，这时候我们可以自己搭建 localtunnel 的服务端。</p>
-<h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ git clone git://github.com/defunctzombie/localtunnel-server.git&#10;$ cd localtunnel-server&#10;$ npm install</span><br></pre></td></tr></table></figure>
+<h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ git clone git://github.com/defunctzombie/localtunnel-server.git</div><div class="line">$ cd localtunnel-server</div><div class="line">$ npm install</div></pre></td></tr></table></figure>
 <h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><p>以监听 2000 端口为例：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># &#30452;&#25509;&#20351;&#29992;&#10;$ bin/server --port 2000&#10;&#10;# &#37197;&#21512; pm2 &#20351;&#29992;&#10;$ pm2 start bin/server --name lt -- --port 2000</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># 直接使用</div><div class="line">$ bin/server --port 2000</div><div class="line"></div><div class="line"># 配合 pm2 使用</div><div class="line">$ pm2 start bin/server --name lt -- --port 2000</div></pre></td></tr></table></figure>
 <p>启动服务端程序后，我们只要在使用客户端 <code>lt</code> 时加上 <code>--host</code> 参数，就可以指定服务端了。</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># host &#21518;&#38754;&#19981;&#35201;&#21152; /&#10;$ lt --host http://helloworld.com:2000 --port 8000&#10;your url is: http://jhuyudvlum.helloworld.com:2000</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># host 后面不要加 /</div><div class="line">$ lt --host http://helloworld.com:2000 --port 8000</div><div class="line">your url is: http://jhuyudvlum.helloworld.com:2000</div></pre></td></tr></table></figure>
 <p>这样，我们就可以通过自己的代理服务器来访问本地服务器了，不用经过第三方代理服务器，不必担心代理服务器的安全问题。</p>
 <h2 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h2><h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>在 Github 上面有一份 Nginx 的<a href="https://github.com/localtunnel/server/blob/master/devops/nginx/sites/localtunnel" target="_blank" rel="external">配置</a>，我们可以直接使用，或者按照自己的需要做些修改。</p>
 <h3 id="指定子域名"><a href="#指定子域名" class="headerlink" title="指定子域名"></a>指定子域名</h3><p>有时候，用随机字符串作为子域名并不是一件好事，我们可能需要固定的域名来访问本地服务器。这时，<code>lt --subdomain</code> 就可以派上用场了。</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># subdomain &#38480;&#21046;&#38271;&#24230;&#20026; 4 ~ 63&#10;$ lt --host http://helloworld.com:2000 --port 8000 --subdomain mysubdomain&#10;your url is: http://mysubdomain.helloworld.com:2000</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># subdomain 限制长度为 4 ~ 63</div><div class="line">$ lt --host http://helloworld.com:2000 --port 8000 --subdomain mysubdomain</div><div class="line">your url is: http://mysubdomain.helloworld.com:2000</div></pre></td></tr></table></figure>
 <p>看到了吗？通过 <code>--subdomain</code>，我们就可以指定自己喜欢的子域名了。</p>
 <h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p><strong>然而</strong>，如果我们通过 <code>--host</code> 来指定子域名，会发生什么？</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">$ lt --host http://mysubdomain.hello.com --port 8000&#10;Error: localtunnel server returned an error, please try again</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ lt --host http://mysubdomain.hello.com --port 8000</div><div class="line">Error: localtunnel server returned an error, please try again</div></pre></td></tr></table></figure>
 <p>就算配置了 Nginx 的反向代理，你依然会得到这个错误。可以查看 <a href="https://github.com/localtunnel/server/issues/21" target="_blank" rel="external">#21</a> 和  <a href="https://github.com/localtunnel/server/issues/31" target="_blank" rel="external">#31</a> 来看更多的细节。</p>
 <p>要解决这个问题，最简单的就是 <strong>不用</strong> <code>--host</code> 来指定子域名，而用 <code>--subdomain</code> 来指定。</p>
 <p>其实有好几个 pull request 都尝试去解决这个问题的，但不知道什么原因，作者一直没去合并。或者再过一段时间，这个问题就会解决，到时候， localtunnel 就会变得更加好用了。</p>
@@ -226,6 +227,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -373,7 +397,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

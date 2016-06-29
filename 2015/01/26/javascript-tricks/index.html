@@ -38,11 +38,11 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -65,6 +65,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -192,25 +193,48 @@ ga('send', 'pageview');
 
   <div class="article-content">
     
-      <h1 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h1><h2 id="首字母大写"><a href="#首字母大写" class="headerlink" title="首字母大写"></a>首字母大写</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="截取字符串最后几位"><a href="#截取字符串最后几位" class="headerlink" title="截取字符串最后几位"></a>截取字符串最后几位</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">str.substring(str.length-X)</span><br></pre></td></tr></table></figure>
-<h2 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">d.toString(<span class="number">16</span>)    (十进制 -&gt; 十六进制)</span><br><span class="line"><span class="built_in">parseInt</span>(‘ff’, <span class="number">16</span>) (十六进制 -&gt; 十进制)</span><br></pre></td></tr></table></figure>
-<h2 id="移除左边多余的-0"><a href="#移除左边多余的-0" class="headerlink" title="移除左边多余的 0"></a>移除左边多余的 0</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 用正则, '000.00' -&gt; 0.00</span></span><br><span class="line"><span class="comment">// 基于 http://stackoverflow.com/questions/594325/truncate-leading-zeros-of-a-string-in-javascript</span></span><br><span class="line">str.replace(<span class="regexp">/^[0]&#123;2&#125;/</span>, <span class="string">''</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 parseInt , '000123' -&gt; '123'</span></span><br><span class="line"><span class="comment">// http://stackoverflow.com/questions/6676488/remove-leading-zeros-from-a-number-in-javascript</span></span><br><span class="line"><span class="built_in">parseInt</span>(str, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="生成随机字符串"><a href="#生成随机字符串" class="headerlink" title="生成随机字符串"></a>生成随机字符串</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Math</span>.random().toString(<span class="number">36</span>).substring(<span class="number">7</span>)</span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript</span></span><br></pre></td></tr></table></figure>
-<h2 id="is-start-with"><a href="#is-start-with" class="headerlink" title="is-start-with?"></a>is-start-with?</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">string.lastIndexOf(str, <span class="number">0</span>) === <span class="number">0</span></span><br><span class="line">string.substring(<span class="number">0</span>, str.length) === str</span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string</span></span><br></pre></td></tr></table></figure>
-<h2 id="is-end-with"><a href="#is-end-with" class="headerlink" title="is-end-with?"></a>is-end-with?</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/280634/endswith-in-javascript</span></span><br></pre></td></tr></table></figure>
-<h2 id="解析-Base64"><a href="#解析-Base64" class="headerlink" title="解析 Base64"></a>解析 Base64</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> base64str = <span class="string">'this is base64 string'</span>;</span><br><span class="line">Buffer(base64str, <span class="string">'base64'</span>).toString();</span><br></pre></td></tr></table></figure>
+      <h1 id="字符串操作"><a href="#字符串操作" class="headerlink" title="字符串操作"></a>字符串操作</h1><h2 id="首字母大写"><a href="#首字母大写" class="headerlink" title="首字母大写"></a>首字母大写</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">str.replace(<span class="regexp">/\b\w+/g</span>, <span class="function"><span class="keyword">function</span> (<span class="params">word</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> word.substring(<span class="number">0</span>, <span class="number">1</span>).toLowerCase() + word.substring(<span class="number">1</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="截取字符串最后几位"><a href="#截取字符串最后几位" class="headerlink" title="截取字符串最后几位"></a>截取字符串最后几位</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">str.substring(str.length-X)</div></pre></td></tr></table></figure>
+<h2 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">d.toString(<span class="number">16</span>)    (十进制 -&gt; 十六进制)</div><div class="line"><span class="built_in">parseInt</span>(‘ff’, <span class="number">16</span>) (十六进制 -&gt; 十进制)</div></pre></td></tr></table></figure>
+<h2 id="移除左边多余的-0"><a href="#移除左边多余的-0" class="headerlink" title="移除左边多余的 0"></a>移除左边多余的 0</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 用正则, '000.00' -&gt; 0.00</span></div><div class="line"><span class="comment">// 基于 http://stackoverflow.com/questions/594325/truncate-leading-zeros-of-a-string-in-javascript</span></div><div class="line">str.replace(<span class="regexp">/^[0]&#123;2&#125;/</span>, <span class="string">''</span>);</div><div class="line"></div><div class="line"><span class="comment">// 用 parseInt , '000123' -&gt; '123'</span></div><div class="line"><span class="comment">// http://stackoverflow.com/questions/6676488/remove-leading-zeros-from-a-number-in-javascript</span></div><div class="line"><span class="built_in">parseInt</span>(str, <span class="number">10</span>);</div></pre></td></tr></table></figure>
+<h2 id="生成随机字符串"><a href="#生成随机字符串" class="headerlink" title="生成随机字符串"></a>生成随机字符串</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Math</span>.random().toString(<span class="number">36</span>).substring(<span class="number">7</span>)</div><div class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript</span></div></pre></td></tr></table></figure>
+<h2 id="is-start-with"><a href="#is-start-with" class="headerlink" title="is-start-with?"></a>is-start-with?</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">string.lastIndexOf(str, <span class="number">0</span>) === <span class="number">0</span></div><div class="line">string.substring(<span class="number">0</span>, str.length) === str</div><div class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string</span></div></pre></td></tr></table></figure>
+<h2 id="is-end-with"><a href="#is-end-with" class="headerlink" title="is-end-with?"></a>is-end-with?</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/280634/endswith-in-javascript</span></div></pre></td></tr></table></figure>
+<h2 id="解析-Base64"><a href="#解析-Base64" class="headerlink" title="解析 Base64"></a>解析 Base64</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> base64str = <span class="string">'this is base64 string'</span>;</div><div class="line">Buffer(base64str, <span class="string">'base64'</span>).toString();</div></pre></td></tr></table></figure>
 <hr>
-<h1 id="数组操作"><a href="#数组操作" class="headerlink" title="数组操作"></a>数组操作</h1><h2 id="获取最后数组中最后一个元素"><a href="#获取最后数组中最后一个元素" class="headerlink" title="获取最后数组中最后一个元素"></a>获取最后数组中最后一个元素</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">arr.slice(-<span class="number">1</span>).pop() <span class="comment">// 简洁</span></span><br><span class="line">arr[arr.length - <span class="number">1</span>] <span class="comment">// 快速</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array</span></span><br></pre></td></tr></table></figure>
-<h2 id="过滤重复元素"><a href="#过滤重复元素" class="headerlink" title="过滤重复元素"></a>过滤重复元素</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">arr.filter(<span class="function"><span class="keyword">function</span>(<span class="params">v, i</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> arr.indexOf(v) === i;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="数组操作"><a href="#数组操作" class="headerlink" title="数组操作"></a>数组操作</h1><h2 id="获取最后数组中最后一个元素"><a href="#获取最后数组中最后一个元素" class="headerlink" title="获取最后数组中最后一个元素"></a>获取最后数组中最后一个元素</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">arr.slice(<span class="number">-1</span>).pop() <span class="comment">// 简洁</span></div><div class="line">arr[arr.length - <span class="number">1</span>] <span class="comment">// 快速</span></div><div class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/3216013/get-the-last-item-in-an-array</span></div></pre></td></tr></table></figure>
+<h2 id="过滤重复元素"><a href="#过滤重复元素" class="headerlink" title="过滤重复元素"></a>过滤重复元素</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">arr.filter(<span class="function"><span class="keyword">function</span>(<span class="params">v, i</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> arr.indexOf(v) === i;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <hr>
-<h1 id="日期操作"><a href="#日期操作" class="headerlink" title="日期操作"></a>日期操作</h1><h2 id="获取当前时间戳"><a href="#获取当前时间戳" class="headerlink" title="获取当前时间戳"></a>获取当前时间戳</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">+<span class="keyword">new</span> <span class="built_in">Date</span></span><br><span class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript</span></span><br></pre></td></tr></table></figure>
+<h1 id="日期操作"><a href="#日期操作" class="headerlink" title="日期操作"></a>日期操作</h1><h2 id="获取当前时间戳"><a href="#获取当前时间戳" class="headerlink" title="获取当前时间戳"></a>获取当前时间戳</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">+<span class="keyword">new</span> <span class="built_in">Date</span></div><div class="line"><span class="comment">// 出自 http://stackoverflow.com/questions/221294/how-do-you-get-a-timestamp-in-javascript</span></div></pre></td></tr></table></figure>
 
     
   </div>
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -358,7 +382,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

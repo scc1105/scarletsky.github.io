@@ -35,11 +35,11 @@ MySQL 突然启动失败由于我们公司的 Gitlab 服务器内存不太够，
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -62,6 +62,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -186,22 +187,22 @@ ga('send', 'pageview');
     
       <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>最近帮公司的 Gitlab 从 7.14 升级到 8.7.6，升级的主要动机是整合 Gitlab CI，提升持续集成的效率。鉴于之前也是我把 Gitlab 从 7.x 升级到 7.14 的，我以为我已经有经验去处理了，但实际上，这次升级让我踩了不少以前没遇到过的坑…<br>本文主要记录升级 Gitlab 过程中踩过的一些坑~</p>
 <h2 id="MySQL-突然启动失败"><a href="#MySQL-突然启动失败" class="headerlink" title="MySQL 突然启动失败"></a>MySQL 突然启动失败</h2><p>由于我们公司的 Gitlab 服务器内存不太够，只有 2G，所以偶尔会出现 500 的错误，但通常情况下，直接通过 <code>$ sudo service gitlab restart</code> 重启一次服务就可以恢复正常了。<br>但是，最近我遇到过 gitlab 启动失败，原因是 MySQL 无法启动。<br>当我启动 MySQL 的时候，报了这样的错误：</p>
-<figure class="highlight lasso"><table><tr><td class="code"><pre><span class="line">$ sudo service mysql restart</span><br><span class="line"><span class="attribute">...</span></span><br><span class="line">MySQL Job failed <span class="keyword">to</span> start</span><br></pre></td></tr></table></figure>
+<figure class="highlight lasso"><table><tr><td class="code"><pre><div class="line">$ sudo service mysql restart</div><div class="line"><span class="attr">...</span></div><div class="line">MySQL Job failed <span class="keyword">to</span> start</div></pre></td></tr></table></figure>
 <p>报错就报错吧，去看看 error.log 就好了吧。 然而，我太天真了:</p>
-<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">$ <span class="keyword">cat</span> /<span class="keyword">var</span>/<span class="keyword">log</span>/mysql/<span class="keyword">error</span>.<span class="literal">log</span></span><br><span class="line">$ <span class="keyword">cat</span> /<span class="keyword">var</span>/<span class="keyword">log</span>/mysql/mysql.<span class="literal">log</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="code"><pre><div class="line">$ <span class="keyword">cat</span> /<span class="keyword">var</span>/<span class="keyword">log</span>/mysql/<span class="keyword">error</span>.<span class="built_in">log</span></div><div class="line">$ <span class="keyword">cat</span> /<span class="keyword">var</span>/<span class="keyword">log</span>/mysql/mysql.<span class="built_in">log</span></div></pre></td></tr></table></figure>
 <p>MySQL 的 error.log 是空的，mysql.log 也是空的…太诡异了，没 log 怎么 debug ?<br>还好有万能的 google，我找到了类似情况的问题：<a href="http://stackoverflow.com/questions/22909060/mysql-job-failed-to-start" target="_blank" rel="external">mysql-job-failed-to-start</a>。最高票的答案是重装 mysql 的，但我不敢冒这个风险。我注意到有个回答说：</p>
 <blockquote>
 <p>The given solution requires enough free HDD</p>
 </blockquote>
 <p>于是我马上查了一下硬盘空间：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">$ df -h</span><br><span class="line">Filesystem      Size  Used Avail <span class="operator"><span class="keyword">Use</span>% Mounted <span class="keyword">on</span></span><br><span class="line">/dev/xvda1       <span class="number">20</span><span class="keyword">G</span>   <span class="number">20</span><span class="keyword">G</span>  <span class="number">0</span><span class="keyword">G</span>   <span class="number">100</span>% /</span><br><span class="line">...</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line">$ df -h</div><div class="line">Filesystem      Size  Used Avail Use% Mounted on</div><div class="line">/dev/xvda1       <span class="number">20</span>G   <span class="number">20</span>G  <span class="number">0</span>G   <span class="number">100</span>% /</div><div class="line">...</div></pre></td></tr></table></figure>
 <p>原来是空间满了，于是我删掉了一些没用的东西，腾出了 3G 多的空间之后，MySQL 又可以正常启动了，Gitlab 也是！</p>
 <h2 id="迁移-MySQL-到-PostgreSQL-时找不到依赖"><a href="#迁移-MySQL-到-PostgreSQL-时找不到依赖" class="headerlink" title="迁移 MySQL 到 PostgreSQL 时找不到依赖"></a>迁移 MySQL 到 PostgreSQL 时找不到依赖</h2><p>以前一直听说 PostgreSQL 很强大，而 Gitlab 也是官方推荐使用 PostgreSQL，再加上 Gitlab 有官方教程教我们如何把 MySQL 迁移到 PostgreSQL，于是我就萌生了迁移数据库的念头。</p>
 <p>按照着 <a href="https://gitlab.com/gitlab-org/gitlab-ce/blob/master/doc/update/mysql_to_postgresql.md" target="_blank" rel="external">Migrating GitLab from MySQL to Postgres</a> 这篇文章，我很轻易就把 MySQL 中的数据迁移到 PostgreSQL 中了。<br>而且每个步骤都没报错，我以为一切正常，谁知道当我执行 <code>service gitlab start</code> 的时候，就报启动失败了。</p>
-<p>我一下子就懵了，为什么按照官方教程做还会报错？ 而且报的还是这种抱不到依赖的错误？<br><figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">Specified <span class="string">'postgresql'</span> <span class="keyword">for</span> database adapter, but the gem <span class="keyword">is</span> <span class="keyword">not</span> loaded. <span class="keyword">Add</span> `gem <span class="string">'pg'</span>` <span class="keyword">to</span> your Gemfile.</span><br></pre></td></tr></table></figure></p>
+<p>我一下子就懵了，为什么按照官方教程做还会报错？ 而且报的还是这种抱不到依赖的错误？<br><figure class="highlight oxygene"><table><tr><td class="code"><pre><div class="line">Specified <span class="string">'postgresql'</span> <span class="keyword">for</span> database adapter, but the gem <span class="keyword">is</span> <span class="keyword">not</span> loaded. <span class="keyword">Add</span> `gem <span class="string">'pg'</span>` <span class="keyword">to</span> your Gemfile.</div></pre></td></tr></table></figure></p>
 <p>我找了很多资料，但基本都是说把 <code>pg</code> 加到 Gemfile ，然后再 <code>bundle install</code> 就好了。<br>但我试过把 <code>vendor/bundle</code> 删掉再重装，还是有这个错误。<br>最后，我找到 <a href="https://gitlab.com/gitlab-org/gitlab-ci/issues/227" target="_blank" rel="external">Gem::LoadError: Specified ‘mysql2’ after update to 7.13
 </a> 这个 issue，里面提到在 <code>.bundle/config</code> 里面有一些 bundle 的配置！我发现我里面的配置和这个 issue 提到的配置是一样的：</p>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="string">BUNDLE_WITHOUT:</span> <span class="string">development:</span><span class="string">test:</span><span class="string">postgres:</span>mysql</span><br></pre></td></tr></table></figure>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><div class="line"><span class="string">BUNDLE_WITHOUT:</span> <span class="string">development:</span><span class="string">test:</span><span class="string">postgres:</span>mysql</div></pre></td></tr></table></figure>
 <p>最后，我把上面的 <code>postgres</code> 部分删掉，然后再运行 <code>sudo -u git -H bundle install --without development test mysql --deployment</code> 安装依赖，就能正常启动 gitlab 了。</p>
 <p>这时候，我才体会到，不熟悉 ruby 技术栈去搞 gitlab 真是累啊~</p>
 <h2 id="Docker-化时自动修改用户组引起其他问题"><a href="#Docker-化时自动修改用户组引起其他问题" class="headerlink" title="Docker 化时自动修改用户组引起其他问题"></a>Docker 化时自动修改用户组引起其他问题</h2><p><strong>严格来说这不是升级 Gitlab 升级过程中遇到的坑，这只是我在尝试把 gitlab docker 化时遇到的问题。</strong></p>
@@ -217,6 +218,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -364,7 +388,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

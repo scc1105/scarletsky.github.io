@@ -47,11 +47,11 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -74,6 +74,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -219,7 +220,7 @@ ga('send', 'pageview');
 <li>完</li>
 </ol>
 <p>翻译成代码就是：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="keyword">import</span> HTML5Backend <span class="keyword">from</span> <span class="string">'react-dnd-html5-backend'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; DragDropContext &#125; <span class="keyword">from</span> <span class="string">'react-dnd'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123; ... &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> DragDropContext(HTML5Backend)(App);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*---------------------------*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="keyword">import</span> &#123; DragSource &#125; <span class="keyword">from</span> <span class="string">'react-dnd'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComponent</span> </span>&#123; ... &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> DragSource(type, spec, collect)(MyComponent);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*---------------------------*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"><span class="keyword">import</span> &#123; DropTarget &#125; <span class="keyword">from</span> <span class="string">'react-dnd'</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComponent2</span> </span>&#123; ... &#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> DropTarget(types, spec, collect)(MyComponent2);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 1</span></div><div class="line"><span class="keyword">import</span> HTML5Backend <span class="keyword">from</span> <span class="string">'react-dnd-html5-backend'</span>;</div><div class="line"><span class="keyword">import</span> &#123; DragDropContext &#125; <span class="keyword">from</span> <span class="string">'react-dnd'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123; ... &#125;</div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> DragDropContext(HTML5Backend)(App);</div><div class="line"></div><div class="line"><span class="comment">/*---------------------------*/</span></div><div class="line"></div><div class="line"><span class="comment">// 2</span></div><div class="line"><span class="keyword">import</span> &#123; DragSource &#125; <span class="keyword">from</span> <span class="string">'react-dnd'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComponent</span> </span>&#123; ... &#125;</div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> DragSource(type, spec, collect)(MyComponent);</div><div class="line"></div><div class="line"><span class="comment">/*---------------------------*/</span></div><div class="line"></div><div class="line"><span class="comment">// 3</span></div><div class="line"><span class="keyword">import</span> &#123; DropTarget &#125; <span class="keyword">from</span> <span class="string">'react-dnd'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComponent2</span> </span>&#123; ... &#125;</div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> DropTarget(types, spec, collect)(MyComponent2);</div></pre></td></tr></table></figure>
 <p>这样，MyComponent 就变得可以拖拽，而 MyComponent2 就变得可以接受拖拽了，但这并不代表 MyComponent 可以放到 MyComponent2 中！</p>
 <h2 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h2><p>React DnD 中有一些特殊的概念，理解这些概念之后才能活用这个库！</p>
 <ul>
@@ -234,7 +235,7 @@ ga('send', 'pageview');
 <h3 id="DragDropContext-backend"><a href="#DragDropContext-backend" class="headerlink" title="DragDropContext(backend)"></a>DragDropContext(backend)</h3><ul>
 <li><code>backend</code> 实现 DnD 的方式，一般是 HTML5Backend</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> DragDropContext(HTML5Backend)(App);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> DragDropContext(HTML5Backend)(App);</div></pre></td></tr></table></figure>
 <hr>
 <h3 id="DragSource-type-spec-collect"><a href="#DragSource-type-spec-collect" class="headerlink" title="DragSource(type, spec, collect)"></a>DragSource(type, spec, collect)</h3><h3 id="DropTarget-type-spec-collect"><a href="#DropTarget-type-spec-collect" class="headerlink" title="DropTarget(type, spec, collect)"></a>DropTarget(type, spec, collect)</h3><ul>
 <li><code>type</code> 必须。type 是自定义的，可以是 string，symbol，也可以是用一个函数来返回该组件的其他 props。该组件只能放到相同 type 的 DropTarget 中。</li>
@@ -242,7 +243,7 @@ ga('send', 'pageview');
 <li><code>collect</code> 必须。一个函数返回一个 Object，这个 Object 会注入到组件的 props 中。</li>
 <li><code>options</code> 可选。除非有性能问题，否则不需要关心这个参数。</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> type = <span class="string">'xxx'</span>;</span><br><span class="line"><span class="keyword">const</span> spec = &#123; ... &#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">collect</span>(<span class="params">connect, monitor</span>) </span>&#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> DragSource(type, spec, collect)(MyComponent);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> DropTarget(type, spec, collect)(MyComponent2);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> type = <span class="string">'xxx'</span>;</div><div class="line"><span class="keyword">const</span> spec = &#123; ... &#125;;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">collect</span>(<span class="params">connect, monitor</span>) </span>&#123; ... &#125;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> DragSource(type, spec, collect)(MyComponent);</div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> DropTarget(type, spec, collect)(MyComponent2);</div></pre></td></tr></table></figure>
 <hr>
 <h3 id="DragSource-spec"><a href="#DragSource-spec" class="headerlink" title="DragSource#spec"></a>DragSource#spec</h3><p>让你的组件响应 dnd 相关事件，支持以下方法：</p>
 <ul>
@@ -257,7 +258,7 @@ ga('send', 'pageview');
 <li><code>monitor</code> 是一个 <code>DragSourceMonitor</code> 实例，用来查询当前 drag state 的信息。</li>
 <li><code>component</code> 表示当前组件，可以省略。</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> spec = &#123;</span><br><span class="line">    beginDrag(props) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; </span><br><span class="line">        	id: props.id, </span><br><span class="line">        	content: props.content</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> spec = &#123;</div><div class="line">    beginDrag(props) &#123;</div><div class="line">        <span class="keyword">return</span> &#123; </div><div class="line">        	id: props.id, </div><div class="line">        	content: props.content</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <hr>
 <h3 id="DropTarget-spec"><a href="#DropTarget-spec" class="headerlink" title="DropTarget#spec"></a>DropTarget#spec</h3><p>让你的组件响应 dnd 相关事件，支持以下方法：</p>
 <ul>
@@ -271,14 +272,14 @@ ga('send', 'pageview');
 <li><code>monitor</code> 是一个 <code>DropTargetMonitor</code> 实例，用来查询当前 drag state 的信息。</li>
 <li><code>component</code> 表示当前组件，可以省略。</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> spec = &#123;</span><br><span class="line">	drop(props, monitor, component) &#123;</span><br><span class="line">		<span class="comment">// 获取正在拖放的数据</span></span><br><span class="line">		<span class="keyword">const</span> item = monitor.getItem();</span><br><span class="line">		<span class="comment">// 更新组件状态</span></span><br><span class="line">		component.setState(&#123;</span><br><span class="line">			item</span><br><span class="line">		&#125;)</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> spec = &#123;</div><div class="line">	drop(props, monitor, component) &#123;</div><div class="line">		<span class="comment">// 获取正在拖放的数据</span></div><div class="line">		<span class="keyword">const</span> item = monitor.getItem();</div><div class="line">		<span class="comment">// 更新组件状态</span></div><div class="line">		component.setState(&#123;</div><div class="line">			item</div><div class="line">		&#125;)</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <hr>
 <h3 id="DragSource-collect-connect-monitor"><a href="#DragSource-collect-connect-monitor" class="headerlink" title="DragSource#collect(connect, monitor)"></a>DragSource#collect(connect, monitor)</h3><h3 id="DropTarget-collect-connect-monitor"><a href="#DropTarget-collect-connect-monitor" class="headerlink" title="DropTarget#collect(connect, monitor)"></a>DropTarget#collect(connect, monitor)</h3><p>返回一个 object，这个 object 可以会注入到组件的 props 中。</p>
 <ul>
 <li><code>connect</code> 一个 <code>DragSourceConnector</code>/<code>DropTargetConnector</code> 实例，可以用 <code>connect.dragSource()</code>/<code>connect.dropTarget()</code> 来封装我们的组件。</li>
 <li><code>monitor</code> 一个 <code>DragSourceMonitor</code>/<code>DropTargetMonitor</code> 实例，用来查询当前拖拽的信息。</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">collect</span>(<span class="params">connect, monitor</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        isDragging: monitor.isDragging(),</span><br><span class="line">        connectDragSource: connect.dragSource()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComponent</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">	render() &#123;</span><br><span class="line">		<span class="comment">// 可以访问 collect 中返回的  object</span></span><br><span class="line">		<span class="keyword">const</span> &#123; isDragging, connectDragSource &#125; = <span class="keyword">this</span>.props;</span><br><span class="line">		<span class="comment">// 需要用 connect.dragSource()/connect.dropTarget() 封装自己的组件</span></span><br><span class="line">		<span class="keyword">return</span> connectDragSource(</span><br><span class="line">			<span class="xml"><span class="tag">&lt;<span class="title">div</span>&gt;</span>123<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">		)</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">collect</span>(<span class="params">connect, monitor</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        isDragging: monitor.isDragging(),</div><div class="line">        connectDragSource: connect.dragSource()</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyComponent</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">	render() &#123;</div><div class="line">		<span class="comment">// 可以访问 collect 中返回的  object</span></div><div class="line">		<span class="keyword">const</span> &#123; isDragging, connectDragSource &#125; = <span class="keyword">this</span>.props;</div><div class="line">		<span class="comment">// 需要用 connect.dragSource()/connect.dropTarget() 封装自己的组件</span></div><div class="line">		<span class="keyword">return</span> connectDragSource(</div><div class="line">			<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>123<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div><div class="line">		)</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="具体例子"><a href="#具体例子" class="headerlink" title="具体例子"></a>具体例子</h2><ul>
 <li><a href="http://gaearon.github.io/react-dnd/examples-chessboard-tutorial-app.html" target="_blank" rel="external">演示</a></li>
 <li><a href="https://github.com/gaearon/react-dnd/tree/master/examples" target="_blank" rel="external">代码</a></li>
@@ -290,6 +291,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -437,7 +461,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }

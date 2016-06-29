@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="closure,javascript,闭包," />
+    <meta name="keywords" content="javascript,closure,闭包," />
   
 
   <meta name="description" content="写在前面本文尝试模仿 The Little Schema 的风格，介绍 JavaScript 的闭包。本文同时也是我学习 JavaScript 闭包的一次总结。欢迎一起讨论。
@@ -77,11 +77,11 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=0a48fd1a" rel="stylesheet">
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css" type="text/css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -104,6 +104,7 @@ ga('send', 'pageview');
 </head>
 
 <body>
+
 
   
     <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
@@ -256,7 +257,7 @@ ga('send', 'pageview');
 <blockquote>
 <p>全局变量</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  a = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">var</span> b = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  a = <span class="number">1</span>;</div><div class="line">  <span class="keyword">var</span> b = <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里的 a，b 分别是什么变量？</p>
 <blockquote>
 <p>a 是全局变量，b 是局部变量</p>
@@ -287,15 +288,15 @@ ga('send', 'pageview');
 </blockquote>
 <p>可以举个例子吗？</p>
 <blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> baz = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> foo = <span class="number">1</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> baz = <span class="number">2</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>foo 变量和 bar 函数都处于全局作用域中，baz 变量处于函数作用域中</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> bar = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> bar = <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这段代码中有多少个作用域？</p>
 <blockquote>
 <p>2 个，foo 函数所处的全局作用域和 bar 变量所处的函数作用域</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> bar = <span class="number">1</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">baz</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> test = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> bar = <span class="number">1</span>;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">baz</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> test = <span class="number">1</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这段代码中有多少个作用域？</p>
 <blockquote>
 <p>3 个，foo 函数所处的全局作用域，bar 所处的函数作用域，和 test 所处的函数作用域</p>
@@ -312,7 +313,7 @@ ga('send', 'pageview');
 <blockquote>
 <p>是的</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> bar = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(bar);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> bar = <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(bar);</div></pre></td></tr></table></figure>
 <p>会输出什么？</p>
 <blockquote>
 <p>Uncaught ReferenceError: bar is not defined</p>
@@ -321,7 +322,7 @@ ga('send', 'pageview');
 <blockquote>
 <p>因为外部作用域<strong>不能</strong>访问内部作用域</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(foo);</span><br><span class="line">&#125;</span><br><span class="line">bar();</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> foo = <span class="number">1</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(foo);</div><div class="line">&#125;</div><div class="line">bar();</div></pre></td></tr></table></figure>
 <p>会输出什么？</p>
 <blockquote>
 <p>1</p>
@@ -330,7 +331,7 @@ ga('send', 'pageview');
 <blockquote>
 <p>因为内部作用域<strong>可以</strong>访问外部作用域</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(x);</span><br><span class="line">&#125;</span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> x = <span class="number">2</span>;</div><div class="line">  <span class="built_in">console</span>.log(x);</div><div class="line">&#125;</div><div class="line">foo();</div></pre></td></tr></table></figure>
 <p>会输出什么？</p>
 <blockquote>
 <p>2</p>
@@ -339,7 +340,7 @@ ga('send', 'pageview');
 <blockquote>
 <p>因为局部变量的优先级比外部变量高</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x);</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(x);</span><br><span class="line">&#125;</span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(x);</div><div class="line">  <span class="keyword">var</span> x = <span class="number">2</span>;</div><div class="line">  <span class="built_in">console</span>.log(x);</div><div class="line">&#125;</div><div class="line">foo();</div></pre></td></tr></table></figure>
 <p>会输出什么？</p>
 <blockquote>
 <p>undefined<br>2</p>
@@ -354,11 +355,11 @@ ga('send', 'pageview');
 </blockquote>
 <p>可以举个例子吗？</p>
 <blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">bla = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> bla;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bla;</span><br><span class="line">bla = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">bla = <span class="number">0</span>;</div><div class="line"><span class="keyword">var</span> bla;</div><div class="line"></div><div class="line"><span class="comment">// 相当于</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> bla;</div><div class="line">bla = <span class="number">0</span>;</div></pre></td></tr></table></figure>
 </blockquote>
 <p>这和之前的例子有什么关系？</p>
 <blockquote>
-<p>函数内部声明的变量，都会先在函数的顶部声明。所以之前的例子就相当于<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> x;</span><br><span class="line">  <span class="built_in">console</span>.log(x);</span><br><span class="line">  x = <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>函数内部声明的变量，都会先在函数的顶部声明。所以之前的例子就相当于<br><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> x;</div><div class="line">  <span class="built_in">console</span>.log(x);</div><div class="line">  x = <span class="number">1</span>;</div><div class="line">  <span class="built_in">console</span>.log(x)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 </blockquote>
 <p>什么是词法作用域？</p>
 <blockquote>
@@ -374,7 +375,7 @@ ga('send', 'pageview');
 </blockquote>
 <p>可以举个例子吗？</p>
 <blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> baz = <span class="number">2</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(foo + baz);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> foo = <span class="number">1</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> baz = <span class="number">2</span>;</div><div class="line">  <span class="built_in">console</span>.log(foo + baz);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里 bar 函数有三个变量：baz, console, foo<br>其中 baz 是局部变量， console 和 foo 都属于自由变量</p>
 </blockquote>
 <p>为什么 console 和 foo 都是自由变量？</p>
@@ -393,17 +394,17 @@ ga('send', 'pageview');
 <blockquote>
 <p>不是，引用了自由变量的内部函数才是闭包</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(x + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> x = <span class="number">1</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(x + <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>foo 函数是一个闭包吗？</p>
 <blockquote>
 <p>不是，因为 foo 函数不是一个内部函数</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> x = <span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> x + <span class="number">1</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>bar 函数是一个闭包吗？</p>
 <blockquote>
 <p>不是，因为它只是一个内部函数，并没有引用自由变量</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> x = <span class="number">1</span>;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> x = <span class="number">1</span>;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> x + <span class="number">1</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>bar 函数是一个闭包吗？</p>
 <blockquote>
 <p>是的，因为它是一个内部函数，同时引用了自由变量</p>
@@ -422,12 +423,12 @@ ga('send', 'pageview');
 </blockquote>
 <p>第二点还没懂，可以举个例子吗？</p>
 <blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> add5 = add(<span class="number">5</span>);</span><br><span class="line"><span class="built_in">console</span>.log(add5(<span class="number">10</span>)) <span class="comment">// 15</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">y</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> x + y;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> add5 = add(<span class="number">5</span>);</div><div class="line"><span class="built_in">console</span>.log(add5(<span class="number">10</span>)) <span class="comment">// 15</span></div></pre></td></tr></table></figure>
 <p>即便 add 函数已经返回，add5 中依然可以访问 x</p>
 </blockquote>
 <p>第三点还没懂，可以举个例子吗？</p>
 <blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">user</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> id = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    getId: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> id; &#125;,</span><br><span class="line">    setId: <span class="function"><span class="keyword">function</span>(<span class="params">newId</span>) </span>&#123; id = newId &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo = user();</span><br><span class="line">foo.getId(); <span class="comment">// 1</span></span><br><span class="line">foo.setId(<span class="number">2</span>);</span><br><span class="line">foo.getId(); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">user</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> id = <span class="number">1</span>;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    getId: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> id; &#125;,</div><div class="line">    setId: <span class="function"><span class="keyword">function</span>(<span class="params">newId</span>) </span>&#123; id = newId &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> foo = user();</div><div class="line">foo.getId(); <span class="comment">// 1</span></div><div class="line">foo.setId(<span class="number">2</span>);</div><div class="line">foo.getId(); <span class="comment">// 2</span></div></pre></td></tr></table></figure>
 <p>这里闭包中的 id 是一个引用，不是实际值</p>
 </blockquote>
 <p>有点像私有方法？</p>
@@ -450,6 +451,29 @@ ga('send', 'pageview');
 </article>
 
 </div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
 
 
   <a id="backTop" class="back-top">
@@ -597,7 +621,7 @@ ga('send', 'pageview');
   }
 
   window.onload = function() {
-    loadScript('/js/bundle.js?235687', function() {
+    loadScript('/js/bundle.js?235683', function() {
       // load success
     });
   }
