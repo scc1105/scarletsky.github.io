@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>「译」Node.js Streams 基础 | Scarletsky</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="nodejs,stream," />
+  
+
+  <meta name="description" content="Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。
+流是什么流是 unix 管道，让你可以很容易地从数据源读取数据，然后流向另一个目的地。简单来说，流不是什么特别的东西，它只是一个实现了一些方法的 EventEmitter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「译」Node.js Streams 基础">
+<meta property="og:url" content="http://scarletsky.github.io/2016/07/01/basics-node-js-streams/index.html">
+<meta property="og:site_name" content="Scarletsky">
+<meta property="og:description" content="Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。
+流是什么流是 unix 管道，让你可以很容易地从数据源读取数据，然后流向另一个目的地。简单来说，流不是什么特别的东西，它只是一个实现了一些方法的 EventEmitter">
+<meta property="og:updated_time" content="2016-07-01T05:53:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="「译」Node.js Streams 基础">
+<meta name="twitter:description" content="Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。
+流是什么流是 unix 管道，让你可以很容易地从数据源读取数据，然后流向另一个目的地。简单来说，流不是什么特别的东西，它只是一个实现了一些方法的 EventEmitter">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-40690820-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#流是什么"><span class="toc-text">流是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可读流-Readable-Streams"><span class="toc-text">可读流 (Readable Streams)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从流中读取数据"><span class="toc-text">从流中读取数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置编码"><span class="toc-text">设置编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#管道-Piping"><span class="toc-text">管道 (Piping)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#链接-Chaining"><span class="toc-text">链接 (Chaining)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他方法"><span class="toc-text">其他方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可写流-Writable-Streams"><span class="toc-text">可写流 (Writable Streams)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#写入流"><span class="toc-text">写入流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写完数据后"><span class="toc-text">写完数据后</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结论"><span class="toc-text">结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-basics-node-js-streams" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">「译」Node.js Streams 基础</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.07.01</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Scarletsky</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/nodejs/">nodejs</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://scarletsky.github.io/2016/07/01/basics-node-js-streams/#disqus_thread"></a>
+        </span>
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。</p>
+<h2 id="流是什么"><a href="#流是什么" class="headerlink" title="流是什么"></a>流是什么</h2><p>流是 unix 管道，让你可以很容易地从数据源读取数据，然后流向另一个目的地。<br>简单来说，流不是什么特别的东西，它只是一个实现了一些方法的 <code>EventEmitter</code>。根据它实现的方法，流可以变成可读流(Readable)，可写流(Writable)，或者双向流(Duplex，同时可读可写)。<br>可读流能让你从一个数据源读取数据，而可写流则可以让你往目的地写入数据。</p>
+<p>如果你已经用过 Node.js，你很可能已经遇到过流了。<br>例如，在一个 Node.js 的 HTTP 服务器里面，<code>request</code> 是一个可读流，<code>response</code> 是一个可写流。<br>你也可能用过 <code>fs</code> 模块，它能帮你处理可读可写流。</p>
+<p>现在让你学一些基础，理解不同类型的流。本文会讨论可读流和可写流，双向流超出了本文的讨论范围，我们不作讨论。</p>
+<h2 id="可读流-Readable-Streams"><a href="#可读流-Readable-Streams" class="headerlink" title="可读流 (Readable Streams)"></a>可读流 (Readable Streams)</h2><p>我们可以用可读流从一个数据源中读取数据，这个数据源可以是任何东西，例如系统中的一个文件，内存中的 buffer，甚至是其他流。因为流是 <code>EventEmitter</code>，它们会用各种事件发送数据。我们会利用这些事件来让流工作。</p>
+<h3 id="从流中读取数据"><a href="#从流中读取数据" class="headerlink" title="从流中读取数据"></a>从流中读取数据</h3><p>从流中读取数据最好的方式是监听 <code>data</code> 事件，添加一个回调函数。当有数据流过来的时候，可读流会发送 <code>data</code> 事件，回调函数就会触发。看看下面的代码片段：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> readableStream = fs.createReadStream(<span class="string">'file.txt'</span>);</div><div class="line"><span class="keyword">var</span> data = <span class="string">''</span>;</div><div class="line"></div><div class="line"><span class="keyword">var</span> readableStream.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</div><div class="line">  data += chunk;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">readableStream.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(data);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><code>fs.createReadStream</code> 会给你一个可读流。<br>最开始的时候，这个流不是流动态的。当你添加了 <code>data</code> 的事件监听器，加上一个回调函数时，它才会变成流动态的。在这之后，它就会读取一小块数据，然后传到你的回调函数里面。<br>流的实现者决定了 <code>data</code> 事件的触发频率，例如 HTTP request 会在读取到几 KB 数据的时候触发 <code>data</code> 事件。 当你从一个文件中读取数据的时候，你可能会决定当一行被读完的时候就触发 <code>data</code> 事件。</p>
+<p>当没有数据可读的时候 (读到文件尾部时)，流就会发送 <code>end</code> 事件。在上面的例子中，我们监听了这个事件，当读完文件的时候，就把数据打印出来。</p>
+<p>还有另一种读取流的方式，你只要在读到文件尾部前不断调用流实例中的 <code>read()</code> 方法就可以了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> readableStream = fs.createReadStream(<span class="string">'file.txt'</span>);</div><div class="line"><span class="keyword">var</span> data = <span class="string">''</span>;</div><div class="line"><span class="keyword">var</span> chunk;</div><div class="line"></div><div class="line">readableStream.on(<span class="string">'readable'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">while</span> ((chunk = readableStream.read()) != <span class="literal">null</span>) &#123;</div><div class="line">    data += chunk;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">readableStream.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(data);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><code>read()</code> 方法会从内部 buffer 中读取数据，当没有数据可读的时候，它会返回 <code>null</code>。<br>因此，在 while 循环中我们检查 <code>read()</code> 是不是返回 <code>null</code>，当它返回 <code>null</code> 的时候，就终止循环。<br>需要注意的是，当我们可以从流中读取数据的时候，<code>readable</code> 事件就会触发。</p>
+<h3 id="设置编码"><a href="#设置编码" class="headerlink" title="设置编码"></a>设置编码</h3><p>默认情况下，你从流中读取到的是 <code>Buffer</code> 对象。如果你要读取的是字符串的话，这并不适合你。因此，你可以像下面的例子那样通过调用 <code>Readable.setEncoding()</code> 来设置流的编码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> readableStream = fs.createReadStream(<span class="string">'file.txt'</span>);</div><div class="line"><span class="keyword">var</span> data = <span class="string">''</span>;</div><div class="line"></div><div class="line">readableStream.setEncoding(<span class="string">'utf8'</span>);</div><div class="line"></div><div class="line">readableStream.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</div><div class="line">  data += chunk;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">readableStream.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(data);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面的例子中，我们把流的编码设置成 <code>utf8</code>，数据就会被解析成 <code>utf8</code>，回调函数中的 <code>chunk</code> 就会是字符串了。</p>
+<h3 id="管道-Piping"><a href="#管道-Piping" class="headerlink" title="管道 (Piping)"></a>管道 (Piping)</h3><p>管道是一个很棒的机制，你不需要自己管理流的状态就可以从数据源中读取数据，然后写入到目的地中。我们先看看下面的例子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> readableStream = fs.createReadStream(<span class="string">'file1.txt'</span>);</div><div class="line"><span class="keyword">var</span> writableStream = fs.createWriteStream(<span class="string">'file2.txt'</span>);</div><div class="line"></div><div class="line">readableStream.pipe(writableStream);</div></pre></td></tr></table></figure>
+<p>上面的例子利用 <code>pipe()</code> 方法把 file1 的内容写到 file2 中。因为 <code>pipe()</code> 会帮你管理数据流，你不需要担心数据流的速度。这让 <code>pipe()</code> 变得非常简洁易用。<br>需要注意的是，<code>pipe()</code> 会返回目的地的流，因此你可以很轻易让多个流链接起来！</p>
+<h3 id="链接-Chaining"><a href="#链接-Chaining" class="headerlink" title="链接 (Chaining)"></a>链接 (Chaining)</h3><p>假设有一个归档文件，你想要解压它。有很多方式可以完成这个任务。但最简洁的方式是利用管道和链接：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> zlib = <span class="built_in">require</span>(<span class="string">'zlib'</span>);</div><div class="line"></div><div class="line">fs.createReadStream(<span class="string">'input.txt.gz'</span>)</div><div class="line">  .pipe(zlib.createGunzip())</div><div class="line">  .pipe(fs.createWriteStream(<span class="string">'output.txt'</span>));</div></pre></td></tr></table></figure>
+<p>首先，我们通过 <code>input.txt.gz</code> 创建了一个可读流，然后让它流 <code>zlib.createGunzip()</code> 流，它会解压内容。最后，我们添加一个可写流把解压后的内容写到另一个文件中。</p>
+<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><p>我们已经讨论了一些可读流中重要的概念了，这里还有一些你需要知道的方法：</p>
+<ol>
+<li><code>Readable.pause()</code> - 这个方法会暂停流的流动。换句话说就是它不会再触发 <code>data</code> 事件。</li>
+<li><code>Readable.resume()</code> - 这个方法和上面的相反，会让暂停流恢复流动。</li>
+<li><code>Readable.unpipe()</code> - 这个方法会把目的地移除。如果有参数传入，它会让可读流停止刘翔某个特定的目的地，否则，它会移除所有目的地。</li>
+</ol>
+<h2 id="可写流-Writable-Streams"><a href="#可写流-Writable-Streams" class="headerlink" title="可写流 (Writable Streams)"></a>可写流 (Writable Streams)</h2><p>可写流让你把数据写入目的地。就像可读流那样，这些也是 <code>EventEmitter</code>，它们也会触发不同的事件。我们来看看可写流中会触发的事件和方法吧。</p>
+<h3 id="写入流"><a href="#写入流" class="headerlink" title="写入流"></a>写入流</h3><p>要把数据写如到可写流中，你需要在可写流实例中调用 <code>write()</code> 方法，看看下面的例子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> readableStream = fs.createReadStream(<span class="string">'file1.txt'</span>);</div><div class="line"><span class="keyword">var</span> writableStream = fs.createWriteStream(<span class="string">'file2.txt'</span>);</div><div class="line"></div><div class="line">readableStream.setEncoding(<span class="string">'utf8'</span>);</div><div class="line"></div><div class="line">readableStream.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">chunk</span>) </span>&#123;</div><div class="line">  writableStream.write(<span class="string">'chunk'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面的代码非常简单，它只是从输入流中读取数据，然后用 <code>write()</code> 写入到目的地中。<br>这个方法返回一个布尔值来表示写入是否成功。如果返回的是 <code>true</code> 那表示写入成功，你可以继续写入更多的数据。 如果是 <code>false</code>，那意味着发生了什么错误，你现在不能继续写入了。可写流会触发一个 <code>drain</code> 事件来告诉你你可以继续写入数据。</p>
+<h3 id="写完数据后"><a href="#写完数据后" class="headerlink" title="写完数据后"></a>写完数据后</h3><p>当你不需要在写入数据的时候，你可以调用 <code>end()</code> 方法来告诉流你已经完成写入了。假设 <code>res</code> 是一个 HTTP response 对象，你通常会发送响应给浏览器：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">res.write(<span class="string">'Some Data!!'</span>);</div><div class="line">res.end();</div></pre></td></tr></table></figure>
+<p>当 <code>end()</code> 被调用时，所有数据会被写入，然后流会触发一个 <code>finish</code> 事件。注意在调用 <code>end()</code> 之后，你就不能再往可写流中写入数据了。例如下面的代码就会报错：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">res.write(<span class="string">'Some Data!!'</span>);</div><div class="line">res.end();</div><div class="line">res.write(<span class="string">'Trying to write again'</span>); <span class="comment">//Error !</span></div></pre></td></tr></table></figure>
+<p>这里有一些和可写流相关的重要事件：</p>
+<ol>
+<li><code>error</code> - 在写入或链接发生错误时触发</li>
+<li><code>pipe</code> - 当可读流链接到可写流时，这个事件会触发</li>
+<li><code>unpipe</code> -  在可读流调用 <code>unpipe</code> 时会触发</li>
+</ol>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>这些是关于流的基础知识。流，管道，链接是核心，它们是 Node.js 中最强大的功能。如果使用得当，流可以帮助你写出简洁而且高性能的代码。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.sitepoint.com/basics-node-js-streams/" target="_blank" rel="external">https://www.sitepoint.com/basics-node-js-streams/</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'scarletskygithubio';
+    
+    var disqus_url = 'http://scarletsky.github.io/2016/07/01/basics-node-js-streams/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//scarletskygithubio.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

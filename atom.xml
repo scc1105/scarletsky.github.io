@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-06-20T02:53:34.000Z</updated>
+  <updated>2016-07-01T05:53:10.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,6 +14,74 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>「译」Node.js Streams 基础</title>
+    <link href="http://scarletsky.github.io/2016/07/01/basics-node-js-streams/"/>
+    <id>http://scarletsky.github.io/2016/07/01/basics-node-js-streams/</id>
+    <published>2016-07-01T05:45:12.000Z</published>
+    <updated>2016-07-01T05:53:10.000Z</updated>
+    
+    <content type="html">&lt;p&gt;Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。&lt;/p&gt;
+&lt;h2 id=&quot;流是什么&quot;&gt;&lt;a href=&quot;#流是什么&quot; class=&quot;headerlink&quot; title=&quot;流是什么&quot;&gt;&lt;/a&gt;流是什么&lt;/h2&gt;&lt;p&gt;流是 unix 管道，让你可以很容易地从数据源读取数据，然后流向另一个目的地。&lt;br&gt;简单来说，流不是什么特别的东西，它只是一个实现了一些方法的 &lt;code&gt;EventEmitter&lt;/code&gt;。根据它实现的方法，流可以变成可读流(Readable)，可写流(Writable)，或者双向流(Duplex，同时可读可写)。&lt;br&gt;可读流能让你从一个数据源读取数据，而可写流则可以让你往目的地写入数据。&lt;/p&gt;
+&lt;p&gt;如果你已经用过 Node.js，你很可能已经遇到过流了。&lt;br&gt;例如，在一个 Node.js 的 HTTP 服务器里面，&lt;code&gt;request&lt;/code&gt; 是一个可读流，&lt;code&gt;response&lt;/code&gt; 是一个可写流。&lt;br&gt;你也可能用过 &lt;code&gt;fs&lt;/code&gt; 模块，它能帮你处理可读可写流。&lt;/p&gt;
+&lt;p&gt;现在让你学一些基础，理解不同类型的流。本文会讨论可读流和可写流，双向流超出了本文的讨论范围，我们不作讨论。&lt;/p&gt;
+&lt;h2 id=&quot;可读流-Readable-Streams&quot;&gt;&lt;a href=&quot;#可读流-Readable-Streams&quot; class=&quot;headerlink&quot; title=&quot;可读流 (Readable Streams)&quot;&gt;&lt;/a&gt;可读流 (Readable Streams)&lt;/h2&gt;&lt;p&gt;我们可以用可读流从一个数据源中读取数据，这个数据源可以是任何东西，例如系统中的一个文件，内存中的 buffer，甚至是其他流。因为流是 &lt;code&gt;EventEmitter&lt;/code&gt;，它们会用各种事件发送数据。我们会利用这些事件来让流工作。&lt;/p&gt;
+&lt;h3 id=&quot;从流中读取数据&quot;&gt;&lt;a href=&quot;#从流中读取数据&quot; class=&quot;headerlink&quot; title=&quot;从流中读取数据&quot;&gt;&lt;/a&gt;从流中读取数据&lt;/h3&gt;&lt;p&gt;从流中读取数据最好的方式是监听 &lt;code&gt;data&lt;/code&gt; 事件，添加一个回调函数。当有数据流过来的时候，可读流会发送 &lt;code&gt;data&lt;/code&gt; 事件，回调函数就会触发。看看下面的代码片段：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;fs&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; readableStream = fs.createReadStream(&lt;span class=&quot;string&quot;&gt;&#39;file.txt&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; data = &lt;span class=&quot;string&quot;&gt;&#39;&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; readableStream.on(&lt;span class=&quot;string&quot;&gt;&#39;data&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;chunk&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  data += chunk;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;readableStream.on(&lt;span class=&quot;string&quot;&gt;&#39;end&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(data);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;code&gt;fs.createReadStream&lt;/code&gt; 会给你一个可读流。&lt;br&gt;最开始的时候，这个流不是流动态的。当你添加了 &lt;code&gt;data&lt;/code&gt; 的事件监听器，加上一个回调函数时，它才会变成流动态的。在这之后，它就会读取一小块数据，然后传到你的回调函数里面。&lt;br&gt;流的实现者决定了 &lt;code&gt;data&lt;/code&gt; 事件的触发频率，例如 HTTP request 会在读取到几 KB 数据的时候触发 &lt;code&gt;data&lt;/code&gt; 事件。 当你从一个文件中读取数据的时候，你可能会决定当一行被读完的时候就触发 &lt;code&gt;data&lt;/code&gt; 事件。&lt;/p&gt;
+&lt;p&gt;当没有数据可读的时候 (读到文件尾部时)，流就会发送 &lt;code&gt;end&lt;/code&gt; 事件。在上面的例子中，我们监听了这个事件，当读完文件的时候，就把数据打印出来。&lt;/p&gt;
+&lt;p&gt;还有另一种读取流的方式，你只要在读到文件尾部前不断调用流实例中的 &lt;code&gt;read()&lt;/code&gt; 方法就可以了。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;fs&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; readableStream = fs.createReadStream(&lt;span class=&quot;string&quot;&gt;&#39;file.txt&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; data = &lt;span class=&quot;string&quot;&gt;&#39;&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; chunk;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;readableStream.on(&lt;span class=&quot;string&quot;&gt;&#39;readable&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; ((chunk = readableStream.read()) != &lt;span class=&quot;literal&quot;&gt;null&lt;/span&gt;) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    data += chunk;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;readableStream.on(&lt;span class=&quot;string&quot;&gt;&#39;end&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(data);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;code&gt;read()&lt;/code&gt; 方法会从内部 buffer 中读取数据，当没有数据可读的时候，它会返回 &lt;code&gt;null&lt;/code&gt;。&lt;br&gt;因此，在 while 循环中我们检查 &lt;code&gt;read()&lt;/code&gt; 是不是返回 &lt;code&gt;null&lt;/code&gt;，当它返回 &lt;code&gt;null&lt;/code&gt; 的时候，就终止循环。&lt;br&gt;需要注意的是，当我们可以从流中读取数据的时候，&lt;code&gt;readable&lt;/code&gt; 事件就会触发。&lt;/p&gt;
+&lt;h3 id=&quot;设置编码&quot;&gt;&lt;a href=&quot;#设置编码&quot; class=&quot;headerlink&quot; title=&quot;设置编码&quot;&gt;&lt;/a&gt;设置编码&lt;/h3&gt;&lt;p&gt;默认情况下，你从流中读取到的是 &lt;code&gt;Buffer&lt;/code&gt; 对象。如果你要读取的是字符串的话，这并不适合你。因此，你可以像下面的例子那样通过调用 &lt;code&gt;Readable.setEncoding()&lt;/code&gt; 来设置流的编码：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;fs&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; readableStream = fs.createReadStream(&lt;span class=&quot;string&quot;&gt;&#39;file.txt&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; data = &lt;span class=&quot;string&quot;&gt;&#39;&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;readableStream.setEncoding(&lt;span class=&quot;string&quot;&gt;&#39;utf8&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;readableStream.on(&lt;span class=&quot;string&quot;&gt;&#39;data&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;chunk&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  data += chunk;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;readableStream.on(&lt;span class=&quot;string&quot;&gt;&#39;end&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(data);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上面的例子中，我们把流的编码设置成 &lt;code&gt;utf8&lt;/code&gt;，数据就会被解析成 &lt;code&gt;utf8&lt;/code&gt;，回调函数中的 &lt;code&gt;chunk&lt;/code&gt; 就会是字符串了。&lt;/p&gt;
+&lt;h3 id=&quot;管道-Piping&quot;&gt;&lt;a href=&quot;#管道-Piping&quot; class=&quot;headerlink&quot; title=&quot;管道 (Piping)&quot;&gt;&lt;/a&gt;管道 (Piping)&lt;/h3&gt;&lt;p&gt;管道是一个很棒的机制，你不需要自己管理流的状态就可以从数据源中读取数据，然后写入到目的地中。我们先看看下面的例子：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;fs&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; readableStream = fs.createReadStream(&lt;span class=&quot;string&quot;&gt;&#39;file1.txt&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; writableStream = fs.createWriteStream(&lt;span class=&quot;string&quot;&gt;&#39;file2.txt&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;readableStream.pipe(writableStream);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上面的例子利用 &lt;code&gt;pipe()&lt;/code&gt; 方法把 file1 的内容写到 file2 中。因为 &lt;code&gt;pipe()&lt;/code&gt; 会帮你管理数据流，你不需要担心数据流的速度。这让 &lt;code&gt;pipe()&lt;/code&gt; 变得非常简洁易用。&lt;br&gt;需要注意的是，&lt;code&gt;pipe()&lt;/code&gt; 会返回目的地的流，因此你可以很轻易让多个流链接起来！&lt;/p&gt;
+&lt;h3 id=&quot;链接-Chaining&quot;&gt;&lt;a href=&quot;#链接-Chaining&quot; class=&quot;headerlink&quot; title=&quot;链接 (Chaining)&quot;&gt;&lt;/a&gt;链接 (Chaining)&lt;/h3&gt;&lt;p&gt;假设有一个归档文件，你想要解压它。有很多方式可以完成这个任务。但最简洁的方式是利用管道和链接：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;fs&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; zlib = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;zlib&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;fs.createReadStream(&lt;span class=&quot;string&quot;&gt;&#39;input.txt.gz&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  .pipe(zlib.createGunzip())&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  .pipe(fs.createWriteStream(&lt;span class=&quot;string&quot;&gt;&#39;output.txt&#39;&lt;/span&gt;));&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;首先，我们通过 &lt;code&gt;input.txt.gz&lt;/code&gt; 创建了一个可读流，然后让它流 &lt;code&gt;zlib.createGunzip()&lt;/code&gt; 流，它会解压内容。最后，我们添加一个可写流把解压后的内容写到另一个文件中。&lt;/p&gt;
+&lt;h3 id=&quot;其他方法&quot;&gt;&lt;a href=&quot;#其他方法&quot; class=&quot;headerlink&quot; title=&quot;其他方法&quot;&gt;&lt;/a&gt;其他方法&lt;/h3&gt;&lt;p&gt;我们已经讨论了一些可读流中重要的概念了，这里还有一些你需要知道的方法：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;Readable.pause()&lt;/code&gt; - 这个方法会暂停流的流动。换句话说就是它不会再触发 &lt;code&gt;data&lt;/code&gt; 事件。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Readable.resume()&lt;/code&gt; - 这个方法和上面的相反，会让暂停流恢复流动。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Readable.unpipe()&lt;/code&gt; - 这个方法会把目的地移除。如果有参数传入，它会让可读流停止刘翔某个特定的目的地，否则，它会移除所有目的地。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;可写流-Writable-Streams&quot;&gt;&lt;a href=&quot;#可写流-Writable-Streams&quot; class=&quot;headerlink&quot; title=&quot;可写流 (Writable Streams)&quot;&gt;&lt;/a&gt;可写流 (Writable Streams)&lt;/h2&gt;&lt;p&gt;可写流让你把数据写入目的地。就像可读流那样，这些也是 &lt;code&gt;EventEmitter&lt;/code&gt;，它们也会触发不同的事件。我们来看看可写流中会触发的事件和方法吧。&lt;/p&gt;
+&lt;h3 id=&quot;写入流&quot;&gt;&lt;a href=&quot;#写入流&quot; class=&quot;headerlink&quot; title=&quot;写入流&quot;&gt;&lt;/a&gt;写入流&lt;/h3&gt;&lt;p&gt;要把数据写如到可写流中，你需要在可写流实例中调用 &lt;code&gt;write()&lt;/code&gt; 方法，看看下面的例子：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;fs&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; readableStream = fs.createReadStream(&lt;span class=&quot;string&quot;&gt;&#39;file1.txt&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; writableStream = fs.createWriteStream(&lt;span class=&quot;string&quot;&gt;&#39;file2.txt&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;readableStream.setEncoding(&lt;span class=&quot;string&quot;&gt;&#39;utf8&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;readableStream.on(&lt;span class=&quot;string&quot;&gt;&#39;data&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;chunk&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  writableStream.write(&lt;span class=&quot;string&quot;&gt;&#39;chunk&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上面的代码非常简单，它只是从输入流中读取数据，然后用 &lt;code&gt;write()&lt;/code&gt; 写入到目的地中。&lt;br&gt;这个方法返回一个布尔值来表示写入是否成功。如果返回的是 &lt;code&gt;true&lt;/code&gt; 那表示写入成功，你可以继续写入更多的数据。 如果是 &lt;code&gt;false&lt;/code&gt;，那意味着发生了什么错误，你现在不能继续写入了。可写流会触发一个 &lt;code&gt;drain&lt;/code&gt; 事件来告诉你你可以继续写入数据。&lt;/p&gt;
+&lt;h3 id=&quot;写完数据后&quot;&gt;&lt;a href=&quot;#写完数据后&quot; class=&quot;headerlink&quot; title=&quot;写完数据后&quot;&gt;&lt;/a&gt;写完数据后&lt;/h3&gt;&lt;p&gt;当你不需要在写入数据的时候，你可以调用 &lt;code&gt;end()&lt;/code&gt; 方法来告诉流你已经完成写入了。假设 &lt;code&gt;res&lt;/code&gt; 是一个 HTTP response 对象，你通常会发送响应给浏览器：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;res.write(&lt;span class=&quot;string&quot;&gt;&#39;Some Data!!&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;res.end();&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;当 &lt;code&gt;end()&lt;/code&gt; 被调用时，所有数据会被写入，然后流会触发一个 &lt;code&gt;finish&lt;/code&gt; 事件。注意在调用 &lt;code&gt;end()&lt;/code&gt; 之后，你就不能再往可写流中写入数据了。例如下面的代码就会报错：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;res.write(&lt;span class=&quot;string&quot;&gt;&#39;Some Data!!&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;res.end();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;res.write(&lt;span class=&quot;string&quot;&gt;&#39;Trying to write again&#39;&lt;/span&gt;); &lt;span class=&quot;comment&quot;&gt;//Error !&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这里有一些和可写流相关的重要事件：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;error&lt;/code&gt; - 在写入或链接发生错误时触发&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pipe&lt;/code&gt; - 当可读流链接到可写流时，这个事件会触发&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;unpipe&lt;/code&gt; -  在可读流调用 &lt;code&gt;unpipe&lt;/code&gt; 时会触发&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;结论&quot;&gt;&lt;a href=&quot;#结论&quot; class=&quot;headerlink&quot; title=&quot;结论&quot;&gt;&lt;/a&gt;结论&lt;/h2&gt;&lt;p&gt;这些是关于流的基础知识。流，管道，链接是核心，它们是 Node.js 中最强大的功能。如果使用得当，流可以帮助你写出简洁而且高性能的代码。&lt;/p&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://www.sitepoint.com/basics-node-js-streams/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.sitepoint.com/basics-node-js-streams/&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。&lt;/p&gt;
+&lt;h2 id=&quot;流是什么&quot;&gt;&lt;a h
+    
+    </summary>
+    
+      <category term="nodejs" scheme="http://scarletsky.github.io/categories/nodejs/"/>
+    
+    
+      <category term="nodejs" scheme="http://scarletsky.github.io/tags/nodejs/"/>
+    
+      <category term="stream" scheme="http://scarletsky.github.io/tags/stream/"/>
+    
+  </entry>
   
   <entry>
     <title>升级 GitLab 过程中踩过的坑</title>
@@ -2075,61 +2143,6 @@
       <category term="nodejs" scheme="http://scarletsky.github.io/tags/nodejs/"/>
     
       <category term="stream" scheme="http://scarletsky.github.io/tags/stream/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CommonJS 学习笔记</title>
-    <link href="http://scarletsky.github.io/2015/08/19/commonjs-learning/"/>
-    <id>http://scarletsky.github.io/2015/08/19/commonjs-learning/</id>
-    <published>2015-08-19T02:11:10.000Z</published>
-    <updated>2016-02-29T04:38:24.000Z</updated>
-    
-    <content type="html">&lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。&lt;/p&gt;
-&lt;p&gt;根据 CommonJS 规范，一个 JavaScript 文件就是一个模块，其他模块可以通过 &lt;code&gt;require&lt;/code&gt; 来获取 &lt;code&gt;module.exports&lt;/code&gt; 中暴露的内容，而其他部分都是私有的，其他模块不能访问。&lt;/p&gt;
-&lt;h1 id=&quot;module-对象&quot;&gt;&lt;a href=&quot;#module-对象&quot; class=&quot;headerlink&quot; title=&quot;module 对象&quot;&gt;&lt;/a&gt;module 对象&lt;/h1&gt;&lt;p&gt;每个模块都有一个module变量，该变量指向当前模块。module不是全局变量，而是每个模块都有的本地变量。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;module.id&lt;/code&gt; 模块的识别符，通常是带有绝对路径的模块文件名。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;module.filename&lt;/code&gt; 模块的文件名。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;module.loaded&lt;/code&gt; 返回一个布尔值，表示模块是否已经完成加载。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;module.parent&lt;/code&gt; 返回一个对象，表示调用该模块的模块。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;module.children&lt;/code&gt; 返回一个数组，表示该模块要用到的其他模块。数组中的内容是其他要用到的模块的 &lt;code&gt;module&lt;/code&gt; 对象。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;module.paths&lt;/code&gt; 返回一个数组，表示模块查找路径，排在越前面的优先级越高。具体请查看 &lt;a href=&quot;http://www.infoq.com/cn/articles/nodejs-module-mechanism/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;code&gt;module.exports&lt;/code&gt; 表示其他模块可以通过 &lt;code&gt;require&lt;/code&gt; 获取的内容。默认情况下是一个空对象，即 &lt;code&gt;{}&lt;/code&gt;。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;module-exports-和-exports&quot;&gt;&lt;a href=&quot;#module-exports-和-exports&quot; class=&quot;headerlink&quot; title=&quot;module.exports 和 exports&quot;&gt;&lt;/a&gt;module.exports 和 exports&lt;/h1&gt;&lt;p&gt;默认情况下，&lt;code&gt;module.exports&lt;/code&gt; 和 &lt;code&gt;exports&lt;/code&gt; 两者是等价的，即 &lt;code&gt;module.exports === exports&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;exports&lt;/code&gt; 只是为了方便我们编码而添加的，相当于在每个文件中自动添加了 &lt;code&gt;var exports = module.exports&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;我们可以根据个人喜好，把需要暴露的东西挂在 &lt;code&gt;exports&lt;/code&gt; 或 &lt;code&gt;module.exports&lt;/code&gt; 下。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;但是&lt;/strong&gt;，必须注意以下几点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;不能把 &lt;code&gt;exports&lt;/code&gt; 重新赋值，因为这样会令 &lt;code&gt;exports&lt;/code&gt; 不再指向 &lt;code&gt;module.exports&lt;/code&gt;，这样 &lt;code&gt;exports&lt;/code&gt; 就没用了。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;我们可以通过 &lt;code&gt;module.exports = function() {...}&lt;/code&gt; 这种方式指定 &lt;code&gt;module.exports&lt;/code&gt; 的指向，这样在其他模块中 &lt;code&gt;require&lt;/code&gt; 这个模块，获得的就是一个 &lt;code&gt;function&lt;/code&gt;，而不是一个对象。这样做也会导致 &lt;code&gt;exports&lt;/code&gt; 失效。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;由于上面的原因，我们会在很多地方看到 &lt;code&gt;module.exports = exports = xxx&lt;/code&gt; 这样的代码。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;http://javascript.ruanyifeng.com/nodejs/commonjs.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://javascript.ruanyifeng.com/nodejs/commonjs.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.infoq.com/cn/articles/nodejs-module-mechanism/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.infoq.com/cn/articles/nodejs-module-mechanism/&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/7137397/module-exports-vs-exports-in-node-js&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;CommonJS 是 JavaScript 模块化的规范，Node.js采用了这个规范。&lt;/p&gt;
-&lt;p&gt;根据 CommonJS 规范，一个 
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
-    
-    
-      <category term="commonjs" scheme="http://scarletsky.github.io/tags/commonjs/"/>
     
   </entry>
   
