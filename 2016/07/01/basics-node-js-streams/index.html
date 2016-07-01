@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Scarletsky">
 <meta property="og:description" content="Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。
 流是什么流是 unix 管道，让你可以很容易地从数据源读取数据，然后流向另一个目的地。简单来说，流不是什么特别的东西，它只是一个实现了一些方法的 EventEmitter">
-<meta property="og:updated_time" content="2016-07-01T05:53:10.000Z">
+<meta property="og:updated_time" content="2016-07-01T09:55:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「译」Node.js Streams 基础">
 <meta name="twitter:description" content="Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。
@@ -210,7 +210,7 @@ ga('send', 'pageview');
 <p>上面的例子利用 <code>pipe()</code> 方法把 file1 的内容写到 file2 中。因为 <code>pipe()</code> 会帮你管理数据流，你不需要担心数据流的速度。这让 <code>pipe()</code> 变得非常简洁易用。<br>需要注意的是，<code>pipe()</code> 会返回目的地的流，因此你可以很轻易让多个流链接起来！</p>
 <h3 id="链接-Chaining"><a href="#链接-Chaining" class="headerlink" title="链接 (Chaining)"></a>链接 (Chaining)</h3><p>假设有一个归档文件，你想要解压它。有很多方式可以完成这个任务。但最简洁的方式是利用管道和链接：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> zlib = <span class="built_in">require</span>(<span class="string">'zlib'</span>);</div><div class="line"></div><div class="line">fs.createReadStream(<span class="string">'input.txt.gz'</span>)</div><div class="line">  .pipe(zlib.createGunzip())</div><div class="line">  .pipe(fs.createWriteStream(<span class="string">'output.txt'</span>));</div></pre></td></tr></table></figure>
-<p>首先，我们通过 <code>input.txt.gz</code> 创建了一个可读流，然后让它流 <code>zlib.createGunzip()</code> 流，它会解压内容。最后，我们添加一个可写流把解压后的内容写到另一个文件中。</p>
+<p>首先，我们通过 <code>input.txt.gz</code> 创建了一个可读流，然后让它流向 <code>zlib.createGunzip()</code> 流，它会解压内容。最后，我们添加一个可写流把解压后的内容写到另一个文件中。</p>
 <h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><p>我们已经讨论了一些可读流中重要的概念了，这里还有一些你需要知道的方法：</p>
 <ol>
 <li><code>Readable.pause()</code> - 这个方法会暂停流的流动。换句话说就是它不会再触发 <code>data</code> 事件。</li>

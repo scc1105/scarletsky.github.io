@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-07-01T05:53:10.000Z</updated>
+  <updated>2016-07-01T09:55:50.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://scarletsky.github.io/2016/07/01/basics-node-js-streams/"/>
     <id>http://scarletsky.github.io/2016/07/01/basics-node-js-streams/</id>
     <published>2016-07-01T05:45:12.000Z</published>
-    <updated>2016-07-01T05:53:10.000Z</updated>
+    <updated>2016-07-01T09:55:50.000Z</updated>
     
     <content type="html">&lt;p&gt;Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。&lt;/p&gt;
 &lt;h2 id=&quot;流是什么&quot;&gt;&lt;a href=&quot;#流是什么&quot; class=&quot;headerlink&quot; title=&quot;流是什么&quot;&gt;&lt;/a&gt;流是什么&lt;/h2&gt;&lt;p&gt;流是 unix 管道，让你可以很容易地从数据源读取数据，然后流向另一个目的地。&lt;br&gt;简单来说，流不是什么特别的东西，它只是一个实现了一些方法的 &lt;code&gt;EventEmitter&lt;/code&gt;。根据它实现的方法，流可以变成可读流(Readable)，可写流(Writable)，或者双向流(Duplex，同时可读可写)。&lt;br&gt;可读流能让你从一个数据源读取数据，而可写流则可以让你往目的地写入数据。&lt;/p&gt;
@@ -42,7 +42,7 @@
 &lt;p&gt;上面的例子利用 &lt;code&gt;pipe()&lt;/code&gt; 方法把 file1 的内容写到 file2 中。因为 &lt;code&gt;pipe()&lt;/code&gt; 会帮你管理数据流，你不需要担心数据流的速度。这让 &lt;code&gt;pipe()&lt;/code&gt; 变得非常简洁易用。&lt;br&gt;需要注意的是，&lt;code&gt;pipe()&lt;/code&gt; 会返回目的地的流，因此你可以很轻易让多个流链接起来！&lt;/p&gt;
 &lt;h3 id=&quot;链接-Chaining&quot;&gt;&lt;a href=&quot;#链接-Chaining&quot; class=&quot;headerlink&quot; title=&quot;链接 (Chaining)&quot;&gt;&lt;/a&gt;链接 (Chaining)&lt;/h3&gt;&lt;p&gt;假设有一个归档文件，你想要解压它。有很多方式可以完成这个任务。但最简洁的方式是利用管道和链接：&lt;/p&gt;
 &lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;fs&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; zlib = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;zlib&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;fs.createReadStream(&lt;span class=&quot;string&quot;&gt;&#39;input.txt.gz&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  .pipe(zlib.createGunzip())&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  .pipe(fs.createWriteStream(&lt;span class=&quot;string&quot;&gt;&#39;output.txt&#39;&lt;/span&gt;));&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;首先，我们通过 &lt;code&gt;input.txt.gz&lt;/code&gt; 创建了一个可读流，然后让它流 &lt;code&gt;zlib.createGunzip()&lt;/code&gt; 流，它会解压内容。最后，我们添加一个可写流把解压后的内容写到另一个文件中。&lt;/p&gt;
+&lt;p&gt;首先，我们通过 &lt;code&gt;input.txt.gz&lt;/code&gt; 创建了一个可读流，然后让它流向 &lt;code&gt;zlib.createGunzip()&lt;/code&gt; 流，它会解压内容。最后，我们添加一个可写流把解压后的内容写到另一个文件中。&lt;/p&gt;
 &lt;h3 id=&quot;其他方法&quot;&gt;&lt;a href=&quot;#其他方法&quot; class=&quot;headerlink&quot; title=&quot;其他方法&quot;&gt;&lt;/a&gt;其他方法&lt;/h3&gt;&lt;p&gt;我们已经讨论了一些可读流中重要的概念了，这里还有一些你需要知道的方法：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;code&gt;Readable.pause()&lt;/code&gt; - 这个方法会暂停流的流动。换句话说就是它不会再触发 &lt;code&gt;data&lt;/code&gt; 事件。&lt;/li&gt;
