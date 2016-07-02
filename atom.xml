@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-07-01T09:55:50.000Z</updated>
+  <updated>2016-07-02T13:51:47.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://scarletsky.github.io/2016/07/01/basics-node-js-streams/"/>
     <id>http://scarletsky.github.io/2016/07/01/basics-node-js-streams/</id>
     <published>2016-07-01T05:45:12.000Z</published>
-    <updated>2016-07-01T09:55:50.000Z</updated>
+    <updated>2016-07-02T13:51:47.000Z</updated>
     
     <content type="html">&lt;p&gt;Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。&lt;/p&gt;
 &lt;h2 id=&quot;流是什么&quot;&gt;&lt;a href=&quot;#流是什么&quot; class=&quot;headerlink&quot; title=&quot;流是什么&quot;&gt;&lt;/a&gt;流是什么&lt;/h2&gt;&lt;p&gt;流是 unix 管道，让你可以很容易地从数据源读取数据，然后流向另一个目的地。&lt;br&gt;简单来说，流不是什么特别的东西，它只是一个实现了一些方法的 &lt;code&gt;EventEmitter&lt;/code&gt;。根据它实现的方法，流可以变成可读流(Readable)，可写流(Writable)，或者双向流(Duplex，同时可读可写)。&lt;br&gt;可读流能让你从一个数据源读取数据，而可写流则可以让你往目的地写入数据。&lt;/p&gt;
@@ -47,7 +47,7 @@
 &lt;ol&gt;
 &lt;li&gt;&lt;code&gt;Readable.pause()&lt;/code&gt; - 这个方法会暂停流的流动。换句话说就是它不会再触发 &lt;code&gt;data&lt;/code&gt; 事件。&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;Readable.resume()&lt;/code&gt; - 这个方法和上面的相反，会让暂停流恢复流动。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Readable.unpipe()&lt;/code&gt; - 这个方法会把目的地移除。如果有参数传入，它会让可读流停止刘翔某个特定的目的地，否则，它会移除所有目的地。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Readable.unpipe()&lt;/code&gt; - 这个方法会把目的地移除。如果有参数传入，它会让可读流停止流向某个特定的目的地，否则，它会移除所有目的地。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&quot;可写流-Writable-Streams&quot;&gt;&lt;a href=&quot;#可写流-Writable-Streams&quot; class=&quot;headerlink&quot; title=&quot;可写流 (Writable Streams)&quot;&gt;&lt;/a&gt;可写流 (Writable Streams)&lt;/h2&gt;&lt;p&gt;可写流让你把数据写入目的地。就像可读流那样，这些也是 &lt;code&gt;EventEmitter&lt;/code&gt;，它们也会触发不同的事件。我们来看看可写流中会触发的事件和方法吧。&lt;/p&gt;
 &lt;h3 id=&quot;写入流&quot;&gt;&lt;a href=&quot;#写入流&quot; class=&quot;headerlink&quot; title=&quot;写入流&quot;&gt;&lt;/a&gt;写入流&lt;/h3&gt;&lt;p&gt;要把数据写如到可写流中，你需要在可写流实例中调用 &lt;code&gt;write()&lt;/code&gt; 方法，看看下面的例子：&lt;/p&gt;

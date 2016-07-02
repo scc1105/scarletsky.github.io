@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Scarletsky">
 <meta property="og:description" content="Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。
 流是什么流是 unix 管道，让你可以很容易地从数据源读取数据，然后流向另一个目的地。简单来说，流不是什么特别的东西，它只是一个实现了一些方法的 EventEmitter">
-<meta property="og:updated_time" content="2016-07-01T09:55:50.000Z">
+<meta property="og:updated_time" content="2016-07-02T13:51:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="「译」Node.js Streams 基础">
 <meta name="twitter:description" content="Node.js 天生异步和事件驱动，非常适合处理 I/O 相关的任务。如果你在处理应用中 I/O 相关的操作，你可以利用 Node.js 中的流(stream)。因此，我们先具体看看流，理解一下它们是怎么简化 I/O 操作的吧。
@@ -215,7 +215,7 @@ ga('send', 'pageview');
 <ol>
 <li><code>Readable.pause()</code> - 这个方法会暂停流的流动。换句话说就是它不会再触发 <code>data</code> 事件。</li>
 <li><code>Readable.resume()</code> - 这个方法和上面的相反，会让暂停流恢复流动。</li>
-<li><code>Readable.unpipe()</code> - 这个方法会把目的地移除。如果有参数传入，它会让可读流停止刘翔某个特定的目的地，否则，它会移除所有目的地。</li>
+<li><code>Readable.unpipe()</code> - 这个方法会把目的地移除。如果有参数传入，它会让可读流停止流向某个特定的目的地，否则，它会移除所有目的地。</li>
 </ol>
 <h2 id="可写流-Writable-Streams"><a href="#可写流-Writable-Streams" class="headerlink" title="可写流 (Writable Streams)"></a>可写流 (Writable Streams)</h2><p>可写流让你把数据写入目的地。就像可读流那样，这些也是 <code>EventEmitter</code>，它们也会触发不同的事件。我们来看看可写流中会触发的事件和方法吧。</p>
 <h3 id="写入流"><a href="#写入流" class="headerlink" title="写入流"></a>写入流</h3><p>要把数据写如到可写流中，你需要在可写流实例中调用 <code>write()</code> 方法，看看下面的例子：</p>
