@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-07-02T13:51:47.000Z</updated>
+  <updated>2016-07-03T10:43:31.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,6 +14,152 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何用 JavaScript 下载文件</title>
+    <link href="http://scarletsky.github.io/2016/07/03/download-file-using-javascript/"/>
+    <id>http://scarletsky.github.io/2016/07/03/download-file-using-javascript/</id>
+    <published>2016-07-03T10:43:41.000Z</published>
+    <updated>2016-07-03T10:43:31.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;我们知道，下载文件是一个非常常见的需求，但由于浏览器的安全策略的限制，我们通常只能通过一个额外的页面，访问某个文件的 url 来实现下载功能，但是这种用户体验非常不好。&lt;br&gt;幸好，HTML 5 里面为 &lt;code&gt;&amp;lt;a&amp;gt;&lt;/code&gt; 标签添加了一个 &lt;code&gt;download&lt;/code&gt; 的属性，我们可以轻易的利用它来实现下载功能，再也不需要用以前的笨办法了。&lt;/p&gt;
+&lt;h2 id=&quot;原理&quot;&gt;&lt;a href=&quot;#原理&quot; class=&quot;headerlink&quot; title=&quot;原理&quot;&gt;&lt;/a&gt;原理&lt;/h2&gt;&lt;p&gt;我们先看看 &lt;code&gt;download&lt;/code&gt; 的使用方法：&lt;/p&gt;
+&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;http://somehost/somefile.zip&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;download&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;filename.zip&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;Download file&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;a&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;看看上面的代码，只要为 &lt;code&gt;&amp;lt;a&amp;gt;&lt;/code&gt; 标签添加 &lt;code&gt;download&lt;/code&gt; 属性，我们点击这个链接的时候就会自动下载文件了~&lt;br&gt;顺便说下，&lt;code&gt;download&lt;/code&gt; 的属性值是可选的，它用来指定下载文件的文件名。像上面的例子中，我们下载到本地的文件名就会是 filename.zip 拉，如果不指定的话，它就会是 somefile.zip 这个名字拉！&lt;/p&gt;
+&lt;p&gt;看到这里，你可能会说，坑爹啊，这明明是用 HTML 5 的新特性来实现下载文件嘛，说好的用 JavaScript 下载文件呢？&lt;/p&gt;
+&lt;p&gt;事实上，用 JavaScript 来下载文件也是利用这一特性来实现的，我们的 JavaScript 代码不外乎就是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;用 JavaScript 创建一个隐藏的 &lt;code&gt;&amp;lt;a&amp;gt;&lt;/code&gt; 标签&lt;/li&gt;
+&lt;li&gt;设置它的 &lt;code&gt;href&lt;/code&gt; 属性&lt;/li&gt;
+&lt;li&gt;设置它的 &lt;code&gt;download&lt;/code&gt; 属性&lt;/li&gt;
+&lt;li&gt;用 JavaScript 来触发这个它的 &lt;code&gt;click&lt;/code&gt; 事件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;翻译成 JavaScript 代码就是：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; a = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.createElement(&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; url = &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.URL.createObjectURL(blob);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; filename = &lt;span class=&quot;string&quot;&gt;&#39;what-you-want.txt&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;a.href = url;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;a.download = filename;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;a.click();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.URL.revokeObjectURL(url);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;好拉，是不是看到有个陌生的东东呢？&lt;/p&gt;
+&lt;h2 id=&quot;window-URL&quot;&gt;&lt;a href=&quot;#window-URL&quot; class=&quot;headerlink&quot; title=&quot;window.URL&quot;&gt;&lt;/a&gt;window.URL&lt;/h2&gt;&lt;p&gt;&lt;code&gt;window.URL&lt;/code&gt; 里面有两个方法： &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;createObjectURL&lt;/code&gt; 用 blob 对象来创建一个 object URL(它是一个 &lt;code&gt;DOMString&lt;/code&gt;)，我们可以用这个 object URL 来表示某个 blob 对象，这个 object URL 可以用在 &lt;code&gt;href&lt;/code&gt; 和 &lt;code&gt;src&lt;/code&gt; 之类的属性上。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;revokeObjectURL&lt;/code&gt; 释放由 &lt;code&gt;createObjectURL&lt;/code&gt; 创建的 object URL，当该 object URL 不需要的时候，我们要主动调用这个方法来获取最佳性能和内存使用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;知道了这两个方法之后，我们再回去看看上面的例子就很容易理解了吧！只是用 blob 对象来创建一条 URL，然后让 &lt;code&gt;&amp;lt;a&amp;gt;&lt;/code&gt; 标签引用该 URL，然后触发个点击事件，就可以下载文件了！&lt;/p&gt;
+&lt;p&gt;那么问题来了，blob 对象哪里来？&lt;/p&gt;
+&lt;h2 id=&quot;Blob-对象&quot;&gt;&lt;a href=&quot;#Blob-对象&quot; class=&quot;headerlink&quot; title=&quot;Blob 对象&quot;&gt;&lt;/a&gt;Blob 对象&lt;/h2&gt;&lt;p&gt;Blob 全称是 Binary large object，它表示一个类文件对象，可以用它来表示一个文件。根据 &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/Blob&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MDN&lt;/a&gt; 上面的说法，&lt;code&gt;File API&lt;/code&gt; 也是基于 blob 来实现的。&lt;/p&gt;
+&lt;p&gt;由于本文的主题是讲 JavaScript 下载文件，那我们构建 blob 的方式就是通过服务器返回的文件来创建 blob 拉！&lt;br&gt;而最简单的方式就是用 &lt;code&gt;fetch API&lt;/code&gt; 了，我们可以整合上面的例子：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;fetch(&lt;span class=&quot;string&quot;&gt;&#39;http://somehost/somefile.zip&#39;&lt;/span&gt;).then(res =&amp;gt; res.blob().then(blob =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; a = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.createElement(&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; url = &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.URL.createObjectURL(blob);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; filename = &lt;span class=&quot;string&quot;&gt;&#39;myfile.zip&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    a.href = url;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    a.download = filename;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    a.click();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.URL.revokeObjectURL(url);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;))&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;很简单对吧！&lt;/p&gt;
+&lt;p&gt;你可能会问，何必这么麻烦呢？直接写成下面这样不就好了：&lt;/p&gt;
+&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;http://somehost/somefile.zip&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;download&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;myfile.zip&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;Download file&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;a&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;嗯，对于这种写法，我只能说，你做的太正确了！如果你要下载的是已经存在服务器上面的静态文件的话，那么写成这样是最方便的。浏览器会帮你处理整个下载过程，不需要你干涉。如果你用 blob 的方式来下载文件的话，会有下面这些限制的：&lt;/p&gt;
+&lt;h3 id=&quot;限制一：不同浏览器对-blob-对象有不同的限制&quot;&gt;&lt;a href=&quot;#限制一：不同浏览器对-blob-对象有不同的限制&quot; class=&quot;headerlink&quot; title=&quot;限制一：不同浏览器对 blob 对象有不同的限制&quot;&gt;&lt;/a&gt;限制一：不同浏览器对 blob 对象有不同的限制&lt;/h3&gt;&lt;p&gt;具体看看下面这个表格（出自 &lt;a href=&quot;https://github.com/eligrey/FileSaver.js#supported-browsers&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;FileSaver.js&lt;/a&gt;）：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Browser&lt;/th&gt;
+&lt;th&gt;Constructs as&lt;/th&gt;
+&lt;th&gt;Filenames&lt;/th&gt;
+&lt;th&gt;Max Blob Size&lt;/th&gt;
+&lt;th&gt;Dependencies&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Firefox 20+&lt;/td&gt;
+&lt;td&gt;Blob&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;800 MiB&lt;/td&gt;
+&lt;td&gt;None&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Firefox &amp;lt; 20&lt;/td&gt;
+&lt;td&gt;data: URI&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;n/a&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/eligrey/Blob.js&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Blob.js&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Chrome&lt;/td&gt;
+&lt;td&gt;Blob&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;500 MiB&lt;/td&gt;
+&lt;td&gt;None&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Chrome for Android&lt;/td&gt;
+&lt;td&gt;Blob&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;500 MiB&lt;/td&gt;
+&lt;td&gt;None&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Edge&lt;/td&gt;
+&lt;td&gt;Blob&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;td&gt;None&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;IE 10+&lt;/td&gt;
+&lt;td&gt;Blob&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;600 MiB&lt;/td&gt;
+&lt;td&gt;None&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Opera 15+&lt;/td&gt;
+&lt;td&gt;Blob&lt;/td&gt;
+&lt;td&gt;Yes&lt;/td&gt;
+&lt;td&gt;500 MiB&lt;/td&gt;
+&lt;td&gt;None&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Opera &amp;lt; 15&lt;/td&gt;
+&lt;td&gt;data: URI&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;n/a&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/eligrey/Blob.js&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Blob.js&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Safari 6.1+*&lt;/td&gt;
+&lt;td&gt;Blob&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;td&gt;None&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Safari &amp;lt; 6&lt;/td&gt;
+&lt;td&gt;data: URI&lt;/td&gt;
+&lt;td&gt;No&lt;/td&gt;
+&lt;td&gt;n/a&lt;/td&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/eligrey/Blob.js&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Blob.js&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&quot;限制二：构建完-blob-对象后才会转换成文件&quot;&gt;&lt;a href=&quot;#限制二：构建完-blob-对象后才会转换成文件&quot; class=&quot;headerlink&quot; title=&quot;限制二：构建完 blob 对象后才会转换成文件&quot;&gt;&lt;/a&gt;限制二：构建完 blob 对象后才会转换成文件&lt;/h3&gt;&lt;p&gt;这一点限制对小文件(几十kb)可能没什么影响，但对稍微大一点的文件影响就很大了。试想，用户要下载一个 100mb 的文件，如果他点击了下载按钮之后没看到下载提示的话，他肯定会继续按，等他按了几次之后还没看到下载提示时，他就会抱怨我们的网站，然后离开了。&lt;/p&gt;
+&lt;p&gt;然而事实上下载的的确确发生了，只是要等到下载完文件之后才能构建 blob 对象，再转化成文件。而且，用户再触发多几次下载就会造成一些资源上的浪费。&lt;/p&gt;
+&lt;p&gt;因此，如果是要下载大文件的话，还是推荐直接创建一个 &lt;code&gt;&amp;lt;a&amp;gt;&lt;/code&gt; 标签拉~&lt;br&gt;写 html 也好，写 JavaScript 动态创建也好，用自己喜欢的方式去创建就好了。&lt;/p&gt;
+&lt;h2 id=&quot;为什么要用-JavaScript-下载文件&quot;&gt;&lt;a href=&quot;#为什么要用-JavaScript-下载文件&quot; class=&quot;headerlink&quot; title=&quot;为什么要用 JavaScript 下载文件&quot;&gt;&lt;/a&gt;为什么要用 JavaScript 下载文件&lt;/h2&gt;&lt;p&gt;好拉，说了半天，其实我们一直说的都是：「不要用 JavaScript 下载文件拉，限制多多，又不好用，直接用 html 就好拉，简单方便又快捷」这个论调。&lt;br&gt;事实上也确实如此，但有些时候我们确实需要通过 JavaScript 来做一些&lt;strong&gt;预&lt;/strong&gt;处理。&lt;/p&gt;
+&lt;h3 id=&quot;权限校验&quot;&gt;&lt;a href=&quot;#权限校验&quot; class=&quot;headerlink&quot; title=&quot;权限校验&quot;&gt;&lt;/a&gt;权限校验&lt;/h3&gt;&lt;p&gt;有些时候，我们需要对下载做一些限制，最常见的就是权限校验了，如检查该用户是否有下载的权限，是否有高速下载的权限等等。这时候，我们可以利用 JavaScript 做一些预处理。如：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;fetch(&lt;span class=&quot;string&quot;&gt;&#39;http://somehost/check-permission&#39;&lt;/span&gt;, options).then(res =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (res.code === &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; a = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.createElement(&lt;span class=&quot;string&quot;&gt;&#39;a&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; url = res.data.url;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; filename = &lt;span class=&quot;string&quot;&gt;&#39;myfile.zip&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        a.href = url;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        a.download = filename;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        a.click();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        alert(&lt;span class=&quot;string&quot;&gt;&#39;You have no permission to download the file!&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在这个例子里面，我们没有用 blob 来构建 URL，而是通过后端服务器来计算出用户的下载链接，然后再利用之前提到的动态创建 &lt;code&gt;&amp;lt;a&amp;gt;&lt;/code&gt; 标签的方式来实现下载，很简单吧！&lt;/p&gt;
+&lt;h3 id=&quot;动态文件&quot;&gt;&lt;a href=&quot;#动态文件&quot; class=&quot;headerlink&quot; title=&quot;动态文件&quot;&gt;&lt;/a&gt;动态文件&lt;/h3&gt;&lt;p&gt;动态生成文件然后返回给客户端也是一个很常见的需求，譬如我们有时候需要做导出数据的功能，把数据库中的某些数据导出到 Excel 中，然后再返回客户端。&lt;br&gt;这时候我们就不能简单的指定 &lt;code&gt;href&lt;/code&gt; 属性，因为对应的 URL 并不存在。&lt;br&gt;我们只能通过 JavaScript 对服务器发出一个请求，通知它去生成某个文件，然后把对应的 URL 返回给客户端。&lt;br&gt;有没有感觉这个过程和上面「权限校验」一节很像？肯定拉，因为我们只是对 URL 做了一些预处理而已嘛~&lt;/p&gt;
+&lt;h2 id=&quot;注意事项&quot;&gt;&lt;a href=&quot;#注意事项&quot; class=&quot;headerlink&quot; title=&quot;注意事项&quot;&gt;&lt;/a&gt;注意事项&lt;/h2&gt;&lt;p&gt;由于 &lt;code&gt;download&lt;/code&gt; 属性是 HTML 5 的新特性，因此它不支持旧版本的浏览器。&lt;/p&gt;
+&lt;h2 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h2&gt;&lt;p&gt;HTML 5 新的 &lt;code&gt;download&lt;/code&gt; 特性真的很好用，结合 JavaScript 的动态能力我们可以很方便的做出复杂的下载功能~&lt;/p&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/eligrey/FileSaver.js/blob/master/FileSaver.js&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/eligrey/FileSaver.js/blob/master/FileSaver.js&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/API/Blob&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://developer.mozilla.org/en-US/docs/Web/API/Blob&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/19327749/javascript-blob-filename-without-link&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/19327749/javascript-blob-filename-without-link&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/24501358/how-to-set-a-header-for-a-http-get-request-and-trigger-file-download&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/24501358/how-to-set-a-header-for-a-http-get-request-and-trigger-file-download&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://blog.bguiz.com/2014/07/03/file-download-with-http-request-header/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.bguiz.com/2014/07/03/file-download-with-http-request-header/&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;我们知道，下载文件是一个非常常见的需求，但由于浏览器的安全策略的限制，我们通常只能通过一个额外的页面，访问某个文件的 url 来实现下载功能
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
+  </entry>
   
   <entry>
     <title>「译」Node.js Streams 基础</title>
@@ -2007,9 +2153,9 @@
       <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
     
     
-      <category term="dnd" scheme="http://scarletsky.github.io/tags/dnd/"/>
-    
       <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
+      <category term="dnd" scheme="http://scarletsky.github.io/tags/dnd/"/>
     
       <category term="react" scheme="http://scarletsky.github.io/tags/react/"/>
     
@@ -2057,92 +2203,6 @@
       <category term="life" scheme="http://scarletsky.github.io/tags/life/"/>
     
       <category term="bitrhday" scheme="http://scarletsky.github.io/tags/bitrhday/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Node.js 中 Stream API 的使用</title>
-    <link href="http://scarletsky.github.io/2015/10/22/node-stream-api-learning/"/>
-    <id>http://scarletsky.github.io/2015/10/22/node-stream-api-learning/</id>
-    <published>2015-10-22T09:09:06.000Z</published>
-    <updated>2016-02-29T04:34:05.000Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;基本介绍&quot;&gt;&lt;a href=&quot;#基本介绍&quot; class=&quot;headerlink&quot; title=&quot;基本介绍&quot;&gt;&lt;/a&gt;基本介绍&lt;/h2&gt;&lt;p&gt;在 Node.js 中，读取文件的方式有两种，一种是用 &lt;code&gt;fs.readFile&lt;/code&gt;，另外一种是利用 &lt;code&gt;fs.createReadStream&lt;/code&gt; 来读取。&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;fs.readFile&lt;/code&gt; 对于每个 Node.js 使用者来说最熟悉不过了，简单易懂，很好上手。但它的缺点是会先将数据全部读入内存，一旦遇到大文件的时候，这种方式读取的效率就非常低下了。&lt;/p&gt;
-&lt;p&gt;而 &lt;code&gt;fs.createReadStream&lt;/code&gt; 则是通过 Stream 来读取数据，它会把文件（数据）分割成小块，然后触发一些特定的事件，我们可以监听这些事件，编写特定的处理函数。这种方式相对上面来说，并不好上手，但它效率非常高。&lt;/p&gt;
-&lt;p&gt;事实上， Stream 在 Node.js 中并非仅仅用在文件处理上，其他地方也可以看到它的身影，如 &lt;code&gt;process.stdin/stdout&lt;/code&gt;, &lt;code&gt;http&lt;/code&gt;, &lt;code&gt;tcp sockets&lt;/code&gt;, &lt;code&gt;zlib&lt;/code&gt;, &lt;code&gt;crypto&lt;/code&gt; 等都有用到。&lt;/p&gt;
-&lt;p&gt;本文是我学习 Node.js 中的 Stream API 中的一点总结，希望对大家有用。&lt;/p&gt;
-&lt;h2 id=&quot;特点&quot;&gt;&lt;a href=&quot;#特点&quot; class=&quot;headerlink&quot; title=&quot;特点&quot;&gt;&lt;/a&gt;特点&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;基于事件通讯&lt;/li&gt;
-&lt;li&gt;可以通过 &lt;code&gt;pipe&lt;/code&gt; 来连接流&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;种类&quot;&gt;&lt;a href=&quot;#种类&quot; class=&quot;headerlink&quot; title=&quot;种类&quot;&gt;&lt;/a&gt;种类&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;Readable Stream  可读数据流&lt;/li&gt;
-&lt;li&gt;Writeable Stream  可写数据流&lt;/li&gt;
-&lt;li&gt;Duplex Stream  双向数据流，可以同时读和写&lt;/li&gt;
-&lt;li&gt;Transform Stream 转换数据流，可读可写，同时可以转换（处理）数据&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;事件&quot;&gt;&lt;a href=&quot;#事件&quot; class=&quot;headerlink&quot; title=&quot;事件&quot;&gt;&lt;/a&gt;事件&lt;/h2&gt;&lt;h3 id=&quot;可读数据流的事件&quot;&gt;&lt;a href=&quot;#可读数据流的事件&quot; class=&quot;headerlink&quot; title=&quot;可读数据流的事件&quot;&gt;&lt;/a&gt;可读数据流的事件&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;readable&lt;/code&gt; 数据向外流时触发&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;data&lt;/code&gt; 对于那些没有显式暂停的数据流，添加data事件监听函数，会将数据流切换到流动态，尽快向外提供数据&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;end&lt;/code&gt; 读取完数据时触发。注意不能和 &lt;code&gt;writeableStream.end()&lt;/code&gt; 混淆，writeableStream 并没有 end 事件，只有 &lt;code&gt;.end()&lt;/code&gt; 方法&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;close&lt;/code&gt; 数据源关闭时触发&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;error&lt;/code&gt; 读取数据发生错误时触发&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;可写数据流的事件&quot;&gt;&lt;a href=&quot;#可写数据流的事件&quot; class=&quot;headerlink&quot; title=&quot;可写数据流的事件&quot;&gt;&lt;/a&gt;可写数据流的事件&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;drain&lt;/code&gt; &lt;code&gt;writable.write(chunk)&lt;/code&gt; 返回 false 之后，缓存全部写入完成，可以重新写入时就会触发&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;finish&lt;/code&gt; 调用 &lt;code&gt;.end&lt;/code&gt; 方法时，所有缓存的数据释放后触发，类似于可读数据流中的 &lt;strong&gt;end&lt;/strong&gt; 事件，表示写入过程结束&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;pipe&lt;/code&gt; 作为 pipe 目标时触发&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;unpipe&lt;/code&gt; 作为 unpipe 目标时触发&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;error&lt;/code&gt; 写入数据发生错误时触发&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;状态&quot;&gt;&lt;a href=&quot;#状态&quot; class=&quot;headerlink&quot; title=&quot;状态&quot;&gt;&lt;/a&gt;状态&lt;/h2&gt;&lt;p&gt;可读数据流有两种状态：&lt;strong&gt;流动态&lt;/strong&gt; 和 &lt;strong&gt;暂停态&lt;/strong&gt;，改变数据流状态的方法如下：&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;暂停态 -&amp;gt; 流动态&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;添加 data 事件的监听函数&lt;/li&gt;
-&lt;li&gt;调用 resume 方法&lt;/li&gt;
-&lt;li&gt;调用 pipe 方法&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt; 如果转为流动态时，没有 data 事件的监听函数，也没有 pipe 方法的目的地，那么数据将遗失。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;流动态 -&amp;gt; 暂停态&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;不存在 pipe 方法的目的地时，调用 pause 方法&lt;/li&gt;
-&lt;li&gt;存在 pipe 方法的目的地时，移除所有 data 事件的监听函数，并且调用 unpipe 方法，移除所有 pipe 方法的目的地&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt; 只移除 data 事件的监听函数，并不会自动引发数据流进入「暂停态」。另外，存在 pipe 方法的目的地时，调用 pause 方法，并不能保证数据流总是处于暂停态，一旦那些目的地发出数据请求，数据流有可能会继续提供数据。&lt;/p&gt;
-&lt;h2 id=&quot;用法&quot;&gt;&lt;a href=&quot;#用法&quot; class=&quot;headerlink&quot; title=&quot;用法&quot;&gt;&lt;/a&gt;用法&lt;/h2&gt;&lt;h3 id=&quot;读写文件&quot;&gt;&lt;a href=&quot;#读写文件&quot; class=&quot;headerlink&quot; title=&quot;读写文件&quot;&gt;&lt;/a&gt;读写文件&lt;/h3&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;fs&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 新建可读数据流&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; rs = fs.createReadStream(&lt;span class=&quot;string&quot;&gt;&#39;./test1.txt&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 新建可写数据流&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ws = fs.createWriteStream(&lt;span class=&quot;string&quot;&gt;&#39;./test2.txt&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 监听可读数据流结束事件&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;rs.on(&lt;span class=&quot;string&quot;&gt;&#39;end&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;read text1.txt successfully!&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 监听可写数据流结束事件&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ws.on(&lt;span class=&quot;string&quot;&gt;&#39;finish&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;write text2.txt successfully!&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 把可读数据流转换成流动态，流进可写数据流中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;rs.pipe(ws);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;读取-CSV-文件，并上传数据（我在生产环境中写过）&quot;&gt;&lt;a href=&quot;#读取-CSV-文件，并上传数据（我在生产环境中写过）&quot; class=&quot;headerlink&quot; title=&quot;读取 CSV 文件，并上传数据（我在生产环境中写过）&quot;&gt;&lt;/a&gt;读取 CSV 文件，并上传数据（我在生产环境中写过）&lt;/h3&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; fs = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;fs&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; es = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;event-stream&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; csv = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;csv&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; parser = csv.parse();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; transformer = csv.transform(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;record&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; record.join(&lt;span class=&quot;string&quot;&gt;&#39;,&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; data = fs.createReadStream(&lt;span class=&quot;string&quot;&gt;&#39;./demo.csv&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;data&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .pipe(parser)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .pipe(transformer)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 处理前一个 stream 传递过来的数据&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .pipe(es.map(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;data, callback&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        upload(data, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;err&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            callback(err);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;))&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;comment&quot;&gt;// 相当于监听前一个 stream 的 end 事件&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .pipe(es.wait(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;err, body&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        process.stdout.write(&lt;span class=&quot;string&quot;&gt;&#39;done!&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;));&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h3 id=&quot;更多用法&quot;&gt;&lt;a href=&quot;#更多用法&quot; class=&quot;headerlink&quot; title=&quot;更多用法&quot;&gt;&lt;/a&gt;更多用法&lt;/h3&gt;&lt;p&gt;可以参考一下 &lt;a href=&quot;https://github.com/jeresig/node-stream-playground&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/jeresig/node-stream-playground&lt;/a&gt; ，进去示例网站之后直接点 add stream 就能看到结果了。&lt;/p&gt;
-&lt;h2 id=&quot;常见坑&quot;&gt;&lt;a href=&quot;#常见坑&quot; class=&quot;headerlink&quot; title=&quot;常见坑&quot;&gt;&lt;/a&gt;常见坑&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;用 &lt;code&gt;rs.pipe(ws)&lt;/code&gt; 的方式来写文件并不是把 rs 的内容 append 到 ws 后面，而是直接用 rs 的内容覆盖 ws 原有的内容&lt;/li&gt;
-&lt;li&gt;已结束/关闭的流不能重复使用，必须重新创建数据流&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;pipe 方法返回的是目标数据流，如 &lt;code&gt;a.pipe(b)&lt;/code&gt; 返回的是 b，因此监听事件的时候请注意你监听的对象是否正确&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;如果你要监听多个数据流，同时你又使用了 pipe 方法来串联数据流的话，你就要写成：&lt;/p&gt;
-&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;data&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .on(&lt;span class=&quot;string&quot;&gt;&#39;end&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;data end&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .pipe(a)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .on(&lt;span class=&quot;string&quot;&gt;&#39;end&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;a end&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .pipe(b)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    .on(&lt;span class=&quot;string&quot;&gt;&#39;end&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;b end&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;常用类库&quot;&gt;&lt;a href=&quot;#常用类库&quot; class=&quot;headerlink&quot; title=&quot;常用类库&quot;&gt;&lt;/a&gt;常用类库&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/dominictarr/event-stream&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;event-stream&lt;/a&gt; 用起来有函数式编程的感觉，个人比较喜欢&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/sindresorhus/awesome-nodejs#streams&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;awesome-nodejs#streams&lt;/a&gt; 由于其他 stream 库我都没用过，所以有需求的就直接看这里吧&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://javascript.ruanyifeng.com/nodejs/stream.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;阮一峰 - stream接口&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://nodejs.org/api/stream.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;nodejs.org Stream&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://codewinds.com/blog/2013-08-20-nodejs-transform-streams.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Transforming data with Node.js transform streams&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/18335499/nodejs-whats-the-difference-between-a-duplex-stream-and-a-transform-stream&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;NodeJS: What’s the difference between a Duplex stream and a Transform stream?&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;基本介绍&quot;&gt;&lt;a href=&quot;#基本介绍&quot; class=&quot;headerlink&quot; title=&quot;基本介绍&quot;&gt;&lt;/a&gt;基本介绍&lt;/h2&gt;&lt;p&gt;在 Node.js 中，读取文件的方式有两种，一种是用 &lt;code&gt;fs.readFile&lt;/code&gt;，另外一种是利用 &lt;
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
-    
-    
-      <category term="nodejs" scheme="http://scarletsky.github.io/tags/nodejs/"/>
-    
-      <category term="stream" scheme="http://scarletsky.github.io/tags/stream/"/>
     
   </entry>
   
