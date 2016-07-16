@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://scarletsky.github.io/2016/07/16/non-determinism-value-and-list-monad-in-haskell/</loc>
+    
+    <lastmod>2016-07-16T12:42:11.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</loc>
     
     <lastmod>2016-07-16T12:15:46.000Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/</loc>
     
     <lastmod>2016-07-16T12:15:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://scarletsky.github.io/2016/07/16/why-list-is-non-determinism-value-in-haskell/</loc>
-    
-    <lastmod>2016-07-16T10:48:29.000Z</lastmod>
     
   </url>
   

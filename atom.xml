@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-07-16T10:48:29.000Z</updated>
+  <updated>2016-07-16T12:42:11.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Why list is non-determinism value in Haskell</title>
-    <link href="http://scarletsky.github.io/2016/07/16/why-list-is-non-determinism-value-in-haskell/"/>
-    <id>http://scarletsky.github.io/2016/07/16/why-list-is-non-determinism-value-in-haskell/</id>
+    <title>Non-determinism value and List Monad in Haskell</title>
+    <link href="http://scarletsky.github.io/2016/07/16/non-determinism-value-and-list-monad-in-haskell/"/>
+    <id>http://scarletsky.github.io/2016/07/16/non-determinism-value-and-list-monad-in-haskell/</id>
     <published>2016-07-16T08:01:39.000Z</published>
-    <updated>2016-07-16T10:48:29.000Z</updated>
+    <updated>2016-07-16T12:42:11.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;看 《Learn you a haskell for a great good》 这本书的过程中，有时候会看到 &lt;strong&gt;non-determinism value&lt;/strong&gt; 这个词，虽然具体不知道什么意思，但不影响阅读，所以就没深究。&lt;br&gt;最近看到 List Monad 部分的时候，这个词的出现频率比以前高得多。这时候我才留意到，&lt;strong&gt;non-determinism value&lt;/strong&gt; 之前也是在 List 相关的地方出现的。&lt;br&gt;那么，&lt;strong&gt;non-determinism value&lt;/strong&gt; 到底指的是什么呢？&lt;/p&gt;
 &lt;h2 id=&quot;determinism-value-与-non-determinism-value&quot;&gt;&lt;a href=&quot;#determinism-value-与-non-determinism-value&quot; class=&quot;headerlink&quot; title=&quot;determinism value 与 non-determinism value&quot;&gt;&lt;/a&gt;determinism value 与 non-determinism value&lt;/h2&gt;&lt;p&gt;在理解 &lt;strong&gt;non-determinism value&lt;/strong&gt; 之前，我们先看看什么是 &lt;strong&gt;determinism value&lt;/strong&gt;。&lt;/p&gt;
