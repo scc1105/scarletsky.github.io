@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-07-03T10:43:31.000Z</updated>
+  <updated>2016-07-16T10:48:29.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,6 +14,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Why list is non-determinism value in Haskell</title>
+    <link href="http://scarletsky.github.io/2016/07/16/why-list-is-non-determinism-value-in-haskell/"/>
+    <id>http://scarletsky.github.io/2016/07/16/why-list-is-non-determinism-value-in-haskell/</id>
+    <published>2016-07-16T08:01:39.000Z</published>
+    <updated>2016-07-16T10:48:29.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;看 《Learn you a haskell for a great good》 这本书的过程中，有时候会看到 &lt;strong&gt;non-determinism value&lt;/strong&gt; 这个词，虽然具体不知道什么意思，但不影响阅读，所以就没深究。&lt;br&gt;最近看到 List Monad 部分的时候，这个词的出现频率比以前高得多。这时候我才留意到，&lt;strong&gt;non-determinism value&lt;/strong&gt; 之前也是在 List 相关的地方出现的。&lt;br&gt;那么，&lt;strong&gt;non-determinism value&lt;/strong&gt; 到底指的是什么呢？&lt;/p&gt;
+&lt;h2 id=&quot;determinism-value-与-non-determinism-value&quot;&gt;&lt;a href=&quot;#determinism-value-与-non-determinism-value&quot; class=&quot;headerlink&quot; title=&quot;determinism value 与 non-determinism value&quot;&gt;&lt;/a&gt;determinism value 与 non-determinism value&lt;/h2&gt;&lt;p&gt;在理解 &lt;strong&gt;non-determinism value&lt;/strong&gt; 之前，我们先看看什么是 &lt;strong&gt;determinism value&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;从字面意思推测，&lt;strong&gt;determinism value&lt;/strong&gt; 是确定的值，那确定的值到底是什么呢？书中有这么一段话：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;A value like 5 is deterministic. It has only one result and we know exactly what it is. On the other hand, a value like [3,8,9] contains several results, so we can view it as one value that is actually many values at the same time.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;像 5 这种只表示一种结果的值，它就是确定的值。&lt;br&gt;像 [3,8,9] 那样，它包含了多个值，我们可以把它看成是用一个值来表示多个结果，例如它可以表示 3，也可以表示 8，也可以表示 9，因此它是非确定值。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;determinism value&lt;/strong&gt; 和 &lt;strong&gt;non-determinism value&lt;/strong&gt; 的区别就在这里。&lt;/p&gt;
+&lt;h2 id=&quot;List-Monad&quot;&gt;&lt;a href=&quot;#List-Monad&quot; class=&quot;headerlink&quot; title=&quot;List Monad&quot;&gt;&lt;/a&gt;List Monad&lt;/h2&gt;&lt;p&gt;那么 &lt;strong&gt;non-determinism value&lt;/strong&gt; 到底有什么用呢？&lt;br&gt;我们知道了它可以表示多个结果，那么在动态计算的时候就很方便了，先看看下面这个简单的例子：&lt;/p&gt;
+&lt;figure class=&quot;highlight hs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;do&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  x &amp;lt;- [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  y &amp;lt;- [&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  return (x + y)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;因为 &lt;code&gt;x&lt;/code&gt; 可以 1 或者 2， &lt;code&gt;y&lt;/code&gt; 可以表示 4 或者 5 或者 6，所以 &lt;code&gt;x+y&lt;/code&gt; 就可以表示出 &lt;code&gt;1+4&lt;/code&gt;, &lt;code&gt;1+5&lt;/code&gt;, &lt;code&gt;1+6&lt;/code&gt;, &lt;code&gt;2+4&lt;/code&gt;, &lt;code&gt;2+5&lt;/code&gt;, &lt;code&gt;2+6&lt;/code&gt; 这么多结果了！&lt;/p&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/29886852/why-is-the-following-haskell-code-non-deterministic&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/29886852/why-is-the-following-haskell-code-non-deterministic&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://stackoverflow.com/questions/20638893/how-can-non-determinism-be-modeled-with-a-list-monad&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/20638893/how-can-non-determinism-be-modeled-with-a-list-monad&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://learnyoua.haskell.sg/content/zh-cn/ch13/for-a-few-monads-more.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://learnyoua.haskell.sg/content/zh-cn/ch13/for-a-few-monads-more.html&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;看 《Learn you a haskell for a great good》 这本书的过程中，有时候会看到 &lt;strong&gt;non-de
+    
+    </summary>
+    
+      <category term="haskell" scheme="http://scarletsky.github.io/categories/haskell/"/>
+    
+    
+      <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
+    
+  </entry>
   
   <entry>
     <title>如何用 JavaScript 下载文件</title>
@@ -2153,56 +2187,11 @@
       <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
     
     
-      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
-    
       <category term="dnd" scheme="http://scarletsky.github.io/tags/dnd/"/>
     
+      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
       <category term="react" scheme="http://scarletsky.github.io/tags/react/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>写在二十四岁生日</title>
-    <link href="http://scarletsky.github.io/2015/10/25/birthday-summary/"/>
-    <id>http://scarletsky.github.io/2015/10/25/birthday-summary/</id>
-    <published>2015-10-25T09:38:50.000Z</published>
-    <updated>2016-02-29T04:33:49.000Z</updated>
-    
-    <content type="html">&lt;p&gt;又一年过去了，今年是第四年。&lt;br&gt;今年的生日是和女朋友一起，平平淡淡地过的。&lt;br&gt;回顾今年，我做的事情基本都是读书，学习，工作，陪妹子。&lt;/p&gt;
-&lt;p&gt;相信大家都知道读书的好处，但很多人在工作之后都会抱怨没时间读书，包括我自己。但人们常说，时间是挤出来的。所以，我也试着去挤时间——把上下班坐地铁/公交的时间利用起来。于是乎，这一年下来看的书大概有：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;《三体系列》&lt;/li&gt;
-&lt;li&gt;《啊哈，算法》&lt;/li&gt;
-&lt;li&gt;《黑客与画家》&lt;/li&gt;
-&lt;li&gt;《Rework-重来：更为简单有效的商业思维》&lt;/li&gt;
-&lt;li&gt;《失控》&lt;/li&gt;
-&lt;li&gt;《教训》&lt;/li&gt;
-&lt;li&gt;《跨界》&lt;/li&gt;
-&lt;li&gt;《把时间当朋友》&lt;/li&gt;
-&lt;li&gt;《JavaScript 函数式编程》&lt;/li&gt;
-&lt;li&gt;《The Little Schemer》&lt;/li&gt;
-&lt;li&gt;《实用 Common Lisp 编程》&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;还有其他还没看完的技术书/文章。&lt;br&gt;这样看下来今年看得书不多不少，时间利用率还算可以吧。&lt;/p&gt;
-&lt;p&gt;从上面的书单可以看到，其实我今年开始去学习函数式语言了。我想去了解下面向对象之外的世界是怎样的。至于到底会不会用上这些技术，以后才知道，现在只管学就好了。&lt;/p&gt;
-&lt;p&gt;工作上面，今年年中的时候以前的老大找过我，问我要不要跟他一起干，说他能给我我现在拥有的一切给我，还把项目的一切控制权交给我，其实他们的项目前景还是挺好的，但跟我的技术栈不符合，加上我对他们所在行业不太感兴趣，所以只好推掉了~看以后还有没有机会合作~&lt;/p&gt;
-&lt;p&gt;另外，我今年还试着做了一个开源的网站，&lt;a href=&quot;http://aniquo.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://aniquo.com&lt;/a&gt; 大家有兴趣的可以去围观一下。没什么特别有趣的东西，只有我自己收录的一些经典的语录而已。本来是想把它做成一个语录搜索系统的，但精力有限，现阶段大概算是一个可用的版本。至于用户量，从头到尾都只有我一个，233. 继续做这个的原因，只剩下情怀了。如果有人有兴趣的话，联系我吧~至于源码，到 github 搜下就找到了，写的很烂的东西。&lt;/p&gt;
-&lt;p&gt;今年的总结大概就这些了~&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;又一年过去了，今年是第四年。&lt;br&gt;今年的生日是和女朋友一起，平平淡淡地过的。&lt;br&gt;回顾今年，我做的事情基本都是读书，学习，工作，陪妹子。&lt;/p&gt;
-&lt;p&gt;相信大家都知道读书的好处，但很多人在工作之后都会抱怨没时间读书，包括我自己。但人们常说，时间是挤出来的。所以，我也试着
-    
-    </summary>
-    
-      <category term="life" scheme="http://scarletsky.github.io/categories/life/"/>
-    
-    
-      <category term="life" scheme="http://scarletsky.github.io/tags/life/"/>
-    
-      <category term="bitrhday" scheme="http://scarletsky.github.io/tags/bitrhday/"/>
     
   </entry>
   
