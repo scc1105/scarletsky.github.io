@@ -886,11 +886,11 @@
   </entry>
   
   <entry>
-    <title>type vs data vs newtype in haskell</title>
+    <title>type vs data vs newtype in Haskell</title>
     <link href="http://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/"/>
     <id>http://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/</id>
     <published>2016-03-15T10:09:56.000Z</published>
-    <updated>2016-03-20T05:46:21.000Z</updated>
+    <updated>2016-07-16T12:15:32.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;type&quot;&gt;&lt;a href=&quot;#type&quot; class=&quot;headerlink&quot; title=&quot;type&quot;&gt;&lt;/a&gt;type&lt;/h2&gt;&lt;p&gt;&lt;code&gt;type&lt;/code&gt; 关键字用来设置类型别名，提高代码可读性。&lt;/p&gt;
 &lt;p&gt;我们可以类比 shell 里面的 &lt;code&gt;alias&lt;/code&gt; 命令，它是用来设置命令别名的。譬如下面的 shell 命令：&lt;/p&gt;
@@ -928,11 +928,11 @@
   </entry>
   
   <entry>
-    <title>What is applicative in haskell ?</title>
+    <title>What is applicative in Haskell ?</title>
     <link href="http://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/"/>
     <id>http://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/</id>
     <published>2016-03-07T03:52:28.000Z</published>
-    <updated>2016-03-15T10:13:25.000Z</updated>
+    <updated>2016-07-16T12:15:35.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;初探&quot;&gt;&lt;a href=&quot;#初探&quot; class=&quot;headerlink&quot; title=&quot;初探&quot;&gt;&lt;/a&gt;初探&lt;/h2&gt;&lt;p&gt;什么是 &lt;code&gt;Applicative&lt;/code&gt; ?&lt;/p&gt;
 &lt;blockquote&gt;
@@ -1359,11 +1359,11 @@
   </entry>
   
   <entry>
-    <title>(译) Haskell 中随机数的使用</title>
+    <title>「译」 Haskell 中随机数的使用</title>
     <link href="http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/"/>
     <id>http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</id>
     <published>2016-02-06T09:35:18.000Z</published>
-    <updated>2016-02-29T04:27:40.000Z</updated>
+    <updated>2016-07-16T12:15:46.000Z</updated>
     
     <content type="html">&lt;p&gt;随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 &lt;code&gt;System.Random&lt;/code&gt; 库）是伴随着状态的传递的。 &lt;/p&gt;
 &lt;p&gt;大部分需要获得帮助的人都有命令式编程的背景，因此，我会先用命令式的方式，然后再用函数式的方式来教大家在 Haskell 中使用随机数。&lt;/p&gt;

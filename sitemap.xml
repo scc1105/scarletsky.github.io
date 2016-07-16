@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</loc>
+    
+    <lastmod>2016-07-16T12:15:46.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/</loc>
+    
+    <lastmod>2016-07-16T12:15:35.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/</loc>
+    
+    <lastmod>2016-07-16T12:15:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://scarletsky.github.io/2016/07/16/why-list-is-non-determinism-value-in-haskell/</loc>
     
     <lastmod>2016-07-16T10:48:29.000Z</lastmod>
@@ -82,20 +103,6 @@
     <loc>http://scarletsky.github.io/2016/04/02/assign-vs-extend-vs-merge-in-lodash/</loc>
     
     <lastmod>2016-04-02T05:17:35.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://scarletsky.github.io/2016/03/15/type-vs-data-vs-newtype-in-haskell/</loc>
-    
-    <lastmod>2016-03-20T05:46:21.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://scarletsky.github.io/2016/03/07/what-is-applicative-in-haskell/</loc>
-    
-    <lastmod>2016-03-15T10:13:25.000Z</lastmod>
     
   </url>
   
@@ -250,13 +257,6 @@
     <loc>http://scarletsky.github.io/2016/01/30/nodejs-process-excel/</loc>
     
     <lastmod>2016-02-29T04:28:16.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</loc>
-    
-    <lastmod>2016-02-29T04:27:40.000Z</lastmod>
     
   </url>
   
