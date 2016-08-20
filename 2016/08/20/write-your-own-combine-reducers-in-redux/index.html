@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>自定义 Redux 中的 combineReducers | Scarletsky</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript,redux," />
+  
+
+  <meta name="description" content="简介Redux 中的 combineReducers 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。然而，随着我们的应用变得越来越复杂，combineReducers 有可能不能满足我们的需求。正如 Redux 官方文档所说:
+
+This helper is just a convenience! You can write your own combineRe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义 Redux 中的 combineReducers">
+<meta property="og:url" content="http://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/index.html">
+<meta property="og:site_name" content="Scarletsky">
+<meta property="og:description" content="简介Redux 中的 combineReducers 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。然而，随着我们的应用变得越来越复杂，combineReducers 有可能不能满足我们的需求。正如 Redux 官方文档所说:
+
+This helper is just a convenience! You can write your own combineRe">
+<meta property="og:updated_time" content="2016-08-20T13:53:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义 Redux 中的 combineReducers">
+<meta name="twitter:description" content="简介Redux 中的 combineReducers 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。然而，随着我们的应用变得越来越复杂，combineReducers 有可能不能满足我们的需求。正如 Redux 官方文档所说:
+
+This helper is just a convenience! You can write your own combineRe">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-40690820-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例"><span class="toc-text">实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-write-your-own-combine-reducers-in-redux" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">自定义 Redux 中的 combineReducers</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.08.20</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Scarletsky</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/#disqus_thread"></a>
+        </span>
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Redux 中的 <code>combineReducers</code> 能让我们很方便地把多个 reducers 组合起来，成为一个新的 reducer。<br>然而，随着我们的应用变得越来越复杂，<code>combineReducers</code> 有可能不能满足我们的需求。<br>正如 Redux 官方文档所说:</p>
+<blockquote>
+<p>This helper is just a convenience! You can write your own combineReducers that works differently, or even assemble the state object from the child reducers manually and write a root reducing function explicitly, like you would write any other function.</p>
+</blockquote>
+<p><code>combineReducers</code> 只是方便我们使用而已，我们可以自定义一个完全不同的 <code>combineReducers</code> 来满足我们特殊的需求。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>我们先回忆一下 reducer 的写法：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> reducer = (oldState, action) =&gt; newState;</div></pre></td></tr></table></figure>
+<p>reducer 是一个普通的函数，接受两个参数：<code>oldState</code> 和 <code>action</code>，然后返回一个 <code>newState</code>。<br>为了把多个 reducers 组合起来，我们通常会用 Redux 自带的 <code>combineReducers</code> 来实现:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> rootReducer = combineReducers(&#123;</div><div class="line">  key1: key1Reducer,</div><div class="line">  key2: key2Reducer</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>先留意一下我们传了什么给 <code>combineReducers</code>:<br><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  key1: <span class="function"><span class="keyword">function</span>(<span class="params">state.key1, action</span>) </span>&#123; <span class="comment">/*...*/</span> &#125;,</div><div class="line">  key2: <span class="function"><span class="keyword">function</span>(<span class="params">state.key2, action</span>) </span>&#123; <span class="comment">/*...*/</span> &#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>好了，让我们先来想一想，经过 <code>combineReducers</code> 的处理之后，我们得到了什么呢？<br>不用想了，很显然我们得到了一个新的 reducer。<br>那这个新的 reducer 又长什么样呢？<br><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> rootReducer = (oldState, action) =&gt; newState;</div></pre></td></tr></table></figure></p>
+<p>你应该不会惊讶，因为所有 reducer 都长这个样子，即使它是已经被组合过的 reducer，它也是长这个样子。<br>现在你应该猜到 <code>combineReducers</code> 做了什么了吧？其实它最基本形态是这样子的:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">combineReducers</span>(<span class="params">reducers</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">state, action</span>) </span>&#123; <span class="comment">/*...*/</span> &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>它接受 <code>reducers</code> 作为参数，然后返回一个标准的 reducer 函数。</p>
+<blockquote>
+<p>注意:<br>其实到了这一步，我们就可以自定义 <code>combineReducers</code> 了，我们完全可以写一个类似的函数，然后在里面写各种 <code>switch...case</code> 语句来达到自定义的目的。<br>但我觉得我们还是先看看 Redux 自带的 <code>combineReducers</code> 做了什么比较好，因为我们自定义的 <code>combineReducers</code> 很有可能需要原来的功能。</p>
+</blockquote>
+<p>还记得我刚才叫你留意的地方吗？没错，就是下面这个:<br><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// reducers</span></div><div class="line">&#123;</div><div class="line">  key1: <span class="function"><span class="keyword">function</span>(<span class="params">state.key1, action</span>) </span>&#123; <span class="comment">/*...*/</span> &#125;,</div><div class="line">  key2: <span class="function"><span class="keyword">function</span>(<span class="params">state.key2, action</span>) </span>&#123; <span class="comment">/*...*/</span> &#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们来回想一下 <code>store.dispatch(action)</code> 的过程：当一个 <code>action</code> 触发的时候，所有 reducers 都应该响应这个 <code>action</code>，做出相应的改变，最后返回一个新的 <code>store</code>。<br>对着上面这个结构，我们其实很容易就能写出这样的效果，还能加上一些其他的处理：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">reCombineReducers</span>(<span class="params">reducers</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">state, action</span>) </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (action.type) &#123;</div><div class="line">      <span class="keyword">case</span> SP_ACTION:</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Object</span>.assign(&#123;&#125;, state, &#123; <span class="comment">/* do something */</span> &#125;)</div><div class="line">      <span class="keyword">default</span>:</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Object</span>.keys(reducers)</div><div class="line">                    .map(k =&gt; (&#123; [k]: reducers[k](state[k], action) &#125;))</div><div class="line">                    .reduce((prev, next) =&gt; <span class="built_in">Object</span>.assign(&#123;&#125;, prev, next))</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的例子模拟了原来 <code>combineReducers</code> 的功能，还对 <code>SP_ACTION</code> 进行了特殊的处理，很简单吧！</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>按照 Redux 的原则，不同的 reducer 应该相互独立的，它们之间不应该有任何依赖。<br>这个原则看着是很美好的，但在实际使用中还是会有一些例外的情况。<br>一个很简单的例子，也是我遇到过的例子，就是实现一个简单的表格 (其实我的情况复杂的多，需要实现类似 Excel 那样的操作，同时支持其他额外的功能)。<br>我们先来设计一下 <code>state</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// state</span></div><div class="line">&#123;</div><div class="line">  rows: &#123; ... &#125;,</div><div class="line">  cells: &#123; ... &#125;,</div><div class="line">  data: &#123; ... &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>rows</code>, <code>cells</code>, <code>data</code> 都会响应一些特定的 <code>action</code> (如 <code>CHANGE_ROW_PROPS</code>, <code>CHANGE_CELL_PROPS</code>, <code>CHANGE_DATA</code>)，做出相应的改变，这些都是我们所期望的。<br>然而，当出现一些特殊的 action (如 <code>GET_TABLE_SUCCESS</code>，表示成功从服务端获取数据) 的时候，灾难就出现了：<br>所有的 reducer 都需要监听 <code>GET_TABLE_SUCCESS</code> 这个 action，这意味着如果我们有 n 个 reducer 的话，我们就需要修改 n 个文件！<br>当我再加上 <code>UPDATE_TABLE_SUCCESS</code>，<code>REMOVE_TABLE_SUCCESS</code> 之类的 <code>action</code> 时，我要再修改 n 个文件！<br>这不合理啊，为什么我加一个简单的功能，需要修改这么多文件，最重要的是，这些修改都是非常类似！</p>
+<p>这时候，我们就需要自定义 <code>combineReducers</code> 来解决我们的需求拉：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">reCombineReducers</span>(<span class="params">reducers</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">state, action</span>) </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (action.type) &#123;</div><div class="line">      <span class="keyword">case</span> GET_TABLE_SUCCESS:</div><div class="line">      <span class="keyword">case</span> UPDATE_TABLE_SUCCESS:</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Object</span>.assign(&#123;&#125;, state, action.payload.table);</div><div class="line">      <span class="keyword">case</span> REMOVE_TABLE_SUCCESS:</div><div class="line">        <span class="keyword">return</span> initState;</div><div class="line">      <span class="keyword">default</span>:</div><div class="line">        <span class="keyword">return</span> <span class="built_in">Object</span>.keys(reducers)</div><div class="line">                    .map(k =&gt; (&#123; [k]: reducers[k](state[k], action) &#125;))</div><div class="line">                    .reduce((prev, next) =&gt; <span class="built_in">Object</span>.assign(&#123;&#125;, prev, next))</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> table = reCombineReducers(&#123;</div><div class="line">  sections,</div><div class="line">  suites,</div><div class="line">  rows,</div><div class="line">  cells,</div><div class="line">  toys,</div><div class="line">  data,</div><div class="line">  logics</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>怎么样，是不是比修改多个文件舒服很多？</p>
+<p>(完)</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://redux.js.org/docs/api/combineReducers.html" target="_blank" rel="external">http://redux.js.org/docs/api/combineReducers.html</a><br><a href="https://github.com/reactjs/redux/blob/master/src/combineReducers.js" target="_blank" rel="external">https://github.com/reactjs/redux/blob/master/src/combineReducers.js</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持 scarletsky</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'scarletskygithubio';
+    
+    var disqus_url = 'http://scarletsky.github.io/2016/08/20/write-your-own-combine-reducers-in-redux/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//scarletskygithubio.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
