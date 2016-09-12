@@ -1917,7 +1917,7 @@
     <link href="http://scarletsky.github.io/2016/01/22/spacemacs-usage/"/>
     <id>http://scarletsky.github.io/2016/01/22/spacemacs-usage/</id>
     <published>2016-01-22T07:20:38.000Z</published>
-    <updated>2016-06-15T02:00:30.000Z</updated>
+    <updated>2016-09-12T14:41:05.000Z</updated>
     
     <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。&lt;/p&gt;
 &lt;h2 id=&quot;安装-amp-使用&quot;&gt;&lt;a href=&quot;#安装-amp-使用&quot; class=&quot;headerlink&quot; title=&quot;安装 &amp;amp; 使用&quot;&gt;&lt;/a&gt;安装 &amp;amp; 使用&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git &lt;span class=&quot;built_in&quot;&gt;clone&lt;/span&gt; https://github.com/syl20bnr/spacemacs ~/.emacs.d&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ emacs&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -2007,6 +2007,14 @@
 &lt;p&gt;我们只需要在 &lt;code&gt;~/.spacemacs&lt;/code&gt; 中的 &lt;code&gt;user-config&lt;/code&gt; 中加入下面代码即可：&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;(add-to-list &amp;apos;auto-mode-alist &amp;apos;(&amp;quot;\\.js\\&amp;apos;&amp;quot; . react-mode))&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;上面代码会用 &lt;code&gt;react-mode&lt;/code&gt; 打开所有 &lt;code&gt;.js&lt;/code&gt; 文件。&lt;/p&gt;
+&lt;h2 id=&quot;设置主模式的-hook&quot;&gt;&lt;a href=&quot;#设置主模式的-hook&quot; class=&quot;headerlink&quot; title=&quot;设置主模式的 hook&quot;&gt;&lt;/a&gt;设置主模式的 hook&lt;/h2&gt;&lt;p&gt;主模式的 hook 是一个 elisp 函数，这个函数会在主模式加载时调用，常用于为特定的主模式自定义配置。&lt;br&gt;如我想在 &lt;code&gt;js2-mode&lt;/code&gt; 中作出如下配置：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;移除检查分号的提示 (否则当行末缺少了分号的时候，会给出烦人的提示)&lt;/li&gt;
+&lt;li&gt;支持 Node.js 内建函数 (否则当出现 &lt;code&gt;require&lt;/code&gt;, &lt;code&gt;module&lt;/code&gt; 之类的时候会提示未定义变量)&lt;/li&gt;
+&lt;li&gt;设置缩进为 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这时候我可以通过如下方式来设置：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;;; hooks&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;(defun my-js-mode-hook ()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  (setq js2-basic-offset 2)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  (setq js-indent-level 2)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  (setq js2-include-node-externs t)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  (setq js2-strict-missing-semi-warning nil))&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;(add-hook &amp;apos;js2-mode-hook &amp;apos;my-js-mode-hook)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h2 id=&quot;Emacs-服务器&quot;&gt;&lt;a href=&quot;#Emacs-服务器&quot; class=&quot;headerlink&quot; title=&quot;Emacs 服务器&quot;&gt;&lt;/a&gt;Emacs 服务器&lt;/h2&gt;&lt;p&gt;Spacemacs 会在启动时启动服务器，这个服务器会在 Spacemacs 关闭的时候被杀掉。&lt;/p&gt;
 &lt;h3 id=&quot;使用-Emacs-服务器&quot;&gt;&lt;a href=&quot;#使用-Emacs-服务器&quot; class=&quot;headerlink&quot; title=&quot;使用 Emacs 服务器&quot;&gt;&lt;/a&gt;使用 Emacs 服务器&lt;/h3&gt;&lt;p&gt;当 Emacs 服务器启动的时候，我们可以在命令行中使用 &lt;code&gt;emacsclient&lt;/code&gt; 命令：&lt;/p&gt;
 &lt;ul&gt;
@@ -2023,7 +2031,7 @@
 &lt;li&gt;&lt;code&gt;SPC q q&lt;/code&gt; 退出 Emacs 并杀掉服务器，会对已修改的 Buffer 给出保存的提示。&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;SPC q Q&lt;/code&gt; 同上，但会丢失所有未保存的修改。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Hooks.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Hooks.html&lt;/a&gt;&lt;/p&gt;
 </content>
     
     <summary type="html">
