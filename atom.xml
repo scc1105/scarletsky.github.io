@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-09-11T15:37:20.000Z</updated>
+  <updated>2016-10-05T02:22:46.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,6 +14,106 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>在 Node.js 中为 Restful API 编写单元测试</title>
+    <link href="http://scarletsky.github.io/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/"/>
+    <id>http://scarletsky.github.io/2016/10/05/write-unit-tests-for-restful-api-in-nodejs/</id>
+    <published>2016-10-05T03:57:26.000Z</published>
+    <updated>2016-10-05T02:22:46.000Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;单元测试是针对程序模块来进行正确性检验的测试工作，程序单元是应用的最小可测试部件。&lt;br&gt;在 Web 应用中，我们可以把 Restful API 看作是构成应用的单元。&lt;br&gt;Restful API 比较好测试，测试起来也比较简单。&lt;br&gt;本文将介绍编写测试的原因和原则，然后以 Node.js 为例子介绍测试 Restful API 的方法。&lt;/p&gt;
+&lt;h2 id=&quot;为什么要编写测试&quot;&gt;&lt;a href=&quot;#为什么要编写测试&quot; class=&quot;headerlink&quot; title=&quot;为什么要编写测试&quot;&gt;&lt;/a&gt;为什么要编写测试&lt;/h2&gt;&lt;p&gt;每个开发者都知道单元测试的重要性，但并不是每个开发者都会去编写单元测试。原因也很容易理解：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;编写测试需要更多的时间，会拖慢项目进度&lt;/li&gt;
+&lt;li&gt;编写测试需要写更多的代码，更容易出现错误&lt;/li&gt;
+&lt;li&gt;当需求更变后，我们要花更多的精力去修改测试代码&lt;/li&gt;
+&lt;li&gt;有时候测试代码可能会比源代码多几倍&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我以前也抱有类似的想法，认为人工测试就足够了，没必要特意去编写单元测试。&lt;br&gt;然而随着项目的规模的增大，代码也会慢慢出现意外。&lt;br&gt;最典型的例子是为了某需求修改了 A 位置，需求完成了，而 B 位置就出现了 Bug。&lt;/p&gt;
+&lt;p&gt;在读过 &lt;a href=&quot;http://www.yinwang.org/blog-cn/2016/09/14/tests&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;王垠大神的《测试的道理》&lt;/a&gt; 之后，我更加明白了一个道理：我没有大神般的编码能力，我只能通过单元测试来检验自己的编码。&lt;/p&gt;
+&lt;p&gt;除了检验代码的正确性之外，我认为单元测试还有一个很重要的作用：为日后重构项目做准备。&lt;br&gt;只要单元测试覆盖得够好，以后重构的时候就很容易发现问题，节约大量的时间。&lt;/p&gt;
+&lt;p&gt;轮子哥在 &lt;a href=&quot;https://www.zhihu.com/question/28729261/answer/94964928&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;知乎&lt;/a&gt; 上说过一句很有意思的话：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;所以那些专门写不需要维护的软件的人，讨厌测试，也是情有可原的。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果你要编写一个长期维护的软件，那么你最好添加单元测试。&lt;/p&gt;
+&lt;h2 id=&quot;F-I-R-S-T-原则&quot;&gt;&lt;a href=&quot;#F-I-R-S-T-原则&quot; class=&quot;headerlink&quot; title=&quot;F.I.R.S.T 原则&quot;&gt;&lt;/a&gt;F.I.R.S.T 原则&lt;/h2&gt;&lt;p&gt;当我们决定要编写单元测试之后，我们就要考虑怎样 &lt;strong&gt;写好&lt;/strong&gt; 单元测试，换句话说就是编写单元测试时需要注意哪些原则。&lt;br&gt;那么，有哪些原则是我们需要注意的呢？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Fast&lt;/strong&gt;: 测试必须是快速的&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Isolated / Independent&lt;/strong&gt;: &lt;ul&gt;
+&lt;li&gt;每个测试都要做 3 A =&amp;gt; Arrange(准备), Act(行动), Assert(断言)&lt;/li&gt;
+&lt;li&gt;Arrange: 测试过程中用到的数据不能依赖于运行环境，测试中用到的数据应是测试中的一部分&lt;/li&gt;
+&lt;li&gt;Act: 调用你想要测试的方法 / API&lt;/li&gt;
+&lt;li&gt;Assert: 根据返回结果进行断言&lt;/li&gt;
+&lt;li&gt;测试结果不能依赖运行环境&lt;/li&gt;
+&lt;li&gt;测试结果不依赖运行测试的顺序&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Repeatable&lt;/strong&gt;:&lt;ul&gt;
+&lt;li&gt;每个测试必须是可重复执行的，即运行 N 次，会得到 N 次相同的结果&lt;/li&gt;
+&lt;li&gt;每个测试的结果不应依赖时间，日期，和随机数的输出&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Self-validating&lt;/strong&gt;: &lt;ul&gt;
+&lt;li&gt;每个测试都可以自己判断结果来判断测试是否通过&lt;/li&gt;
+&lt;li&gt;不需要人类去查阅手册来判断结果&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Thorough and Timely&lt;/strong&gt;:&lt;ul&gt;
+&lt;li&gt;应该尽量覆盖所有使用场景&lt;/li&gt;
+&lt;li&gt;应该尝试测试驱动开发(TDD)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这就是经典的 F.I.R.S.T 原则。&lt;br&gt;我们最好时刻注意自己编写的单元测试是否遵守这些原则。&lt;/p&gt;
+&lt;p&gt;JavaScript 社区里有很多测试框架可以用来编写单元测试，有 &lt;code&gt;ava&lt;/code&gt;、&lt;code&gt;mocha&lt;/code&gt;、&lt;code&gt;jasmine&lt;/code&gt;、&lt;code&gt;tap&lt;/code&gt; 等。&lt;br&gt;这些测试框架都有提供 &lt;code&gt;beforeEach&lt;/code&gt;、&lt;code&gt;afterEach&lt;/code&gt; API，目的是隔离我们的测试数据，从而满足 &lt;strong&gt;Isolated / Independent&lt;/strong&gt; 和 &lt;strong&gt;Repeatable&lt;/strong&gt; 原则。&lt;/p&gt;
+&lt;h2 id=&quot;编写单元测试&quot;&gt;&lt;a href=&quot;#编写单元测试&quot; class=&quot;headerlink&quot; title=&quot;编写单元测试&quot;&gt;&lt;/a&gt;编写单元测试&lt;/h2&gt;&lt;p&gt;假设我们有以下 Restful API (用了 jwt 来做用户验证):&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; router = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Router()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 根据 token 获取用户信息，必须登录&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;router.get(&lt;span class=&quot;string&quot;&gt;&#39;/user&#39;&lt;/span&gt;, jwt, user.getSelf)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 获取用户列表，无需登录&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;router.get(&lt;span class=&quot;string&quot;&gt;&#39;/users&#39;&lt;/span&gt;, user.getList)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 获取指定用户信息，无需登录&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;router.get(&lt;span class=&quot;string&quot;&gt;&#39;/users/:userId&#39;&lt;/span&gt;, user.get)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 创建新用户(用户注册)，无需登录&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;router.post(&lt;span class=&quot;string&quot;&gt;&#39;/users&#39;&lt;/span&gt;, user.create)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 更新用户信息，必须登录&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;router.put(&lt;span class=&quot;string&quot;&gt;&#39;/user&#39;&lt;/span&gt;, jwt, user.update)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;那么我们应该怎样为这些 Restful API 编写单元测试呢？&lt;/p&gt;
+&lt;p&gt;最基本流程是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;为 app 创建 http 服务器&lt;/li&gt;
+&lt;li&gt;对各个 API 发出请求&lt;/li&gt;
+&lt;li&gt;对响应内容进行断言&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;幸运的是，社区里已经有相应的工具让我们可以方便管理这个流程，这个工具就是 —— &lt;code&gt;supertest&lt;/code&gt;。&lt;br&gt;它提供了非常灵活的 API，足以帮助我们测试 Restful API 了。&lt;br&gt;基本用法如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; app = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;../app&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; request = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;supertest&#39;&lt;/span&gt;)(app)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;request&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  .get(&lt;span class=&quot;string&quot;&gt;&#39;/users&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  .expect(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  .end((err, res) =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    res.body.should.be.an.Array()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;blockquote&gt;
+&lt;p&gt;提示&lt;br&gt;如果你遇到了 &lt;code&gt;TypeError: app.address is not a function&lt;/code&gt;, 请尝试一下以下方法：&lt;br&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; request = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;supertest&#39;&lt;/span&gt;).agent(app.listen())&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;现在，我们可以把 &lt;code&gt;supertest&lt;/code&gt; 和其他测试框架整合起来了，我选择了 &lt;code&gt;mocha&lt;/code&gt; 作为例子，因为它很经典，当你会用 &lt;code&gt;mocha&lt;/code&gt; 之后，其他测试框架基本上就难不倒你了。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; co = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;co&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; &amp;#123; ObjectId &amp;#125; = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;mongoose&#39;&lt;/span&gt;).Types&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; config = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;../config&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; UserModel = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;../models/user&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; app = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;../app&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; request = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;supertest&#39;&lt;/span&gt;)(app)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;describe(&lt;span class=&quot;string&quot;&gt;&#39;User API&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 为每个单元测试初始化数据&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 每个单元测试中可以通过 context 来访问相关的数据&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  beforeEach(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;done&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    co(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;* (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      self.user1 = &lt;span class=&quot;keyword&quot;&gt;yield&lt;/span&gt; UserModel.create(&amp;#123; username: &lt;span class=&quot;string&quot;&gt;&#39;user1&#39;&lt;/span&gt; &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      self.token = jwt.sign(&amp;#123; _id: self.user1._id &amp;#125;, config.jwtSecret, &amp;#123; expiresIn: &lt;span class=&quot;number&quot;&gt;3600&lt;/span&gt; &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      done()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;).catch(err =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;err: &#39;&lt;/span&gt;, err)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      done()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 正常情况下访问 /user&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  it(&lt;span class=&quot;string&quot;&gt;&#39;should get user info when GET /user with token&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;done&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; self = &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    request&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .get(&lt;span class=&quot;string&quot;&gt;&#39;/user&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .set(&lt;span class=&quot;string&quot;&gt;&#39;Authorization&#39;&lt;/span&gt;, self.token)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .expect(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .end((err, res) =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        res.body._id.should.equal(self.user1._id)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        done()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 非正常情况下访问 /user&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  it(&lt;span class=&quot;string&quot;&gt;&#39;should return 403 when GET /user without token&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;done&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    request&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .get(&lt;span class=&quot;string&quot;&gt;&#39;/user&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .expect(&lt;span class=&quot;number&quot;&gt;403&lt;/span&gt;, done)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 访问 /users，登录用户和非登录用户都会得到相同的结果，所以不需要区别对待&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  it(&lt;span class=&quot;string&quot;&gt;&#39;should return user list when GET /users&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;done&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    request&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .get(&lt;span class=&quot;string&quot;&gt;&#39;/users&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .expect(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .end((err, res) =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        res.body.should.be.an.Array()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        done()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 访问 /users/:userId 也不需要区分登录和非登录状态&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  it(&lt;span class=&quot;string&quot;&gt;&#39;should return user info when GET /users/:userId&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;done&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; self = &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    request&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .get(&lt;span class=&quot;string&quot;&gt;`/users/&lt;span class=&quot;subst&quot;&gt;$&amp;#123;self.user1._id&amp;#125;&lt;/span&gt;`&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .expect(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .end((err, res) =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        res.body._id.should.equal(self.user1._id)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        done()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 访问不存在的用户，我们需要构造一个虚假的用户 id&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  it(&lt;span class=&quot;string&quot;&gt;&#39;should return 404 when GET /users/$&amp;#123;non-existent&amp;#125;&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;done&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    request&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .get(&lt;span class=&quot;string&quot;&gt;`/users/&lt;span class=&quot;subst&quot;&gt;$&amp;#123;ObjectId()&amp;#125;&lt;/span&gt;`&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .expect(&lt;span class=&quot;number&quot;&gt;404&lt;/span&gt;, done)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 正常情况下的用户注册不会带上 token&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  it(&lt;span class=&quot;string&quot;&gt;&#39;should return user info when POST /user&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;done&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; username = &lt;span class=&quot;string&quot;&gt;&#39;test user&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    request&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .post(&lt;span class=&quot;string&quot;&gt;&#39;/users&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .send(&amp;#123; username: username &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .expect(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .end((err, res) =&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        res.body.username.should.equal(username)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        done()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 非法情况下的用户注册，带上了 token 的请求要判断为非法请求&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  it(&lt;span class=&quot;string&quot;&gt;&#39;should return 400 when POST /user with token&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;done&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; username = &lt;span class=&quot;string&quot;&gt;&#39;test user 2&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    request&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .post(&lt;span class=&quot;string&quot;&gt;&#39;/users&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .set(&lt;span class=&quot;string&quot;&gt;&#39;Authorization&#39;&lt;/span&gt;, &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.token)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .send(&amp;#123; username: username &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .expect(&lt;span class=&quot;number&quot;&gt;400&lt;/span&gt;, done)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 正常情况下更新用户信息，需要带上 token&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  it(&lt;span class=&quot;string&quot;&gt;&#39;should return 200 when PUT /user with token&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;done&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    request&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .put(&lt;span class=&quot;string&quot;&gt;&#39;/user&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .set(&lt;span class=&quot;string&quot;&gt;&#39;Authorization&#39;&lt;/span&gt;, &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.token)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .send(&amp;#123; username: &lt;span class=&quot;string&quot;&gt;&#39;valid username&#39;&lt;/span&gt; &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .expect(&lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;, done)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// 非法情况下更新用户信息，如缺少 token&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  it(&lt;span class=&quot;string&quot;&gt;&#39;should return 400 when PUT /user without token&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;done&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    request&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .put(&lt;span class=&quot;string&quot;&gt;&#39;/user&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .send(&amp;#123; username: &lt;span class=&quot;string&quot;&gt;&#39;valid username&#39;&lt;/span&gt; &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      .expect(&lt;span class=&quot;number&quot;&gt;400&lt;/span&gt;, done)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;可以看到，为 Restful API 编写单元测试还有一个优点，就是可以轻易区分登录状态和非登录状态。如果要在用户界面中测试这些功能，那么就需要不停地登录和注销，将会是一项累人的工作~&lt;br&gt;另外，上面的例子中基本都是对返回状态吗进行断言的，你可以按照自己的需要进行断言。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;提示&lt;br&gt;你可以选择自己喜欢的断言库，我这里选择了 should.js，原因是好读。&lt;br&gt;个人认为 should.js 和其他断言库比起来有个缺点，就是不好写。&lt;br&gt;value.should.xxx.yyy.zzz 这个形式和 assert.equal(value, expected) 相比不太直观。&lt;br&gt;另外由于 should.js 是通过扩展 Object.prototype 的原型来实现的，但 null 值是一个例外，它不能访问任何属性。&lt;br&gt;因此 should.js 在 null 上会失效。&lt;br&gt;一个变通的办法是 &lt;code&gt;(value === null).should.equal(true)&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ npm test&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  User api&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ✓ should get user info when GET /user with token&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ✓ should return 403 when GET /user without token&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ✓ should return user list when GET /users&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ✓ should return user info when GET /users/:userId&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ✓ should return 404 when GET /users/$&amp;#123;non-existent&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ✓ should return user info when POST /user&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ✓ should return 400 when POST /user with token&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ✓ should return 200 when PUT /user with token&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ✓ should return 400 when PUT /user without token&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;当我们运行测试时，看到自己编写的测试都通过时，心里都会非常踏实。&lt;br&gt;而当我们要对项目进行重构时，这些测试用例会帮我们发现重构过程中的问题，减少 Debug 时间，提升重构时的效率。&lt;/p&gt;
+&lt;h2 id=&quot;细节&quot;&gt;&lt;a href=&quot;#细节&quot; class=&quot;headerlink&quot; title=&quot;细节&quot;&gt;&lt;/a&gt;细节&lt;/h2&gt;&lt;h3 id=&quot;如何连接测试数据库&quot;&gt;&lt;a href=&quot;#如何连接测试数据库&quot; class=&quot;headerlink&quot; title=&quot;如何连接测试数据库&quot;&gt;&lt;/a&gt;如何连接测试数据库&lt;/h3&gt;&lt;p&gt;在 Node.js 的环境下，我们可以设置环境变量 &lt;code&gt;NODE_ENV=test&lt;/code&gt;，然后通过这个环境变量去连接测试数据库，这样测试数据就不会存在于开发环境下的数据库拉！&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// config.js&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;module&lt;/span&gt;.exports = &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  development: &amp;#123;&amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  production: &amp;#123;&amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  test: &amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// app.js&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; ENV = process.NODE_ENV || &lt;span class=&quot;string&quot;&gt;&#39;development&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; config = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;./config&#39;&lt;/span&gt;)[ENV]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// connect db by config&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;如何清空测试数据库&quot;&gt;&lt;a href=&quot;#如何清空测试数据库&quot; class=&quot;headerlink&quot; title=&quot;如何清空测试数据库&quot;&gt;&lt;/a&gt;如何清空测试数据库&lt;/h3&gt;&lt;p&gt;清空数据库这种一次性的工作最好放到 npm scripts 中处理，需要进行清空操作的时候直接运行 &lt;code&gt;npm run resetDB&lt;/code&gt; 就可以了。&lt;br&gt;需要注意的是，编写清空数据库脚本时必须判断环境变量 &lt;code&gt;NODE_ENV&lt;/code&gt;，以免误删 production 环境下的数据。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// resetDB.js&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;const&lt;/span&gt; env = process.NODE_ENV || &lt;span class=&quot;string&quot;&gt;&#39;development&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (env === &lt;span class=&quot;string&quot;&gt;&#39;test&#39;&lt;/span&gt; || env === &lt;span class=&quot;string&quot;&gt;&#39;development&#39;&lt;/span&gt;) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// connect db and delete data&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Error&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;You can not run this script in production.&#39;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// package.json&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;scripts&quot;&lt;/span&gt;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;resetDB&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;node scripts/resetDB.js&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// ...&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;何时清空测试环境的数据库&quot;&gt;&lt;a href=&quot;#何时清空测试环境的数据库&quot; class=&quot;headerlink&quot; title=&quot;何时清空测试环境的数据库&quot;&gt;&lt;/a&gt;何时清空测试环境的数据库&lt;/h3&gt;&lt;p&gt;如果是按照上面的原则来生成测试数据的话，测试数据其实可以不用删掉的。&lt;br&gt;但由于测试数据会占用我们的空间，最好还是把这些测试数据删掉。&lt;br&gt;那么，清空测试数据库这个操作在测试前执行好，还是测试后执行好？&lt;br&gt;我个人倾向于测试前删除，因为有时候我们需要进入数据库，查看测试数据的正确性。&lt;br&gt;如果在测试后清空测试数据库的话，我们就没办法访问到测试数据了。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;scripts&quot;&lt;/span&gt;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;resetDB&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;node scripts/resetDB.js&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;test&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;NODE_ENV=test npm run resetDB &amp;amp;&amp;amp; mocha --harmony&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;// ...&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://zh.wikipedia.org/zh-cn/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://zh.wikipedia.org/zh-cn/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://blog.hubstaff.com/why-you-should-write-unit-tests/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://blog.hubstaff.com/why-you-should-write-unit-tests/&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://www.yinwang.org/blog-cn/2016/09/14/tests&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.yinwang.org/blog-cn/2016/09/14/tests&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://www.zhihu.com/question/28729261/answer/94964928&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.zhihu.com/question/28729261/answer/94964928&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://agileinaflash.blogspot.de/2009/02/first.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://agileinaflash.blogspot.de/2009/02/first.html&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://howtodoinjava.com/best-practices/first-principles-for-good-tests/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://howtodoinjava.com/best-practices/first-principles-for-good-tests/&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/ghsukumar/SFDC_Best_Practices/wiki/F.I.R.S.T-Principles-of-Unit-Testing&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/ghsukumar/SFDC_Best_Practices/wiki/F.I.R.S.T-Principles-of-Unit-Testing&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/sindresorhus/awesome-nodejs#testing&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/sindresorhus/awesome-nodejs#testing&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/visionmedia/supertest&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/visionmedia/supertest&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://yq.aliyun.com/articles/57804&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://yq.aliyun.com/articles/57804&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;单元测试是针对程序模块来进行正确性检验的测试工作，程序单元是应用的最小可测试部件。&lt;br&gt;在 Web 应用中，我们可以把 Restful A
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
+      <category term="nodejs" scheme="http://scarletsky.github.io/tags/nodejs/"/>
+    
+  </entry>
   
   <entry>
     <title>浅谈单页应用中前端分页的实现方案</title>
@@ -1909,144 +2009,6 @@
       <category term="css" scheme="http://scarletsky.github.io/tags/css/"/>
     
       <category term="flexbox" scheme="http://scarletsky.github.io/tags/flexbox/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spacemacs 使用总结</title>
-    <link href="http://scarletsky.github.io/2016/01/22/spacemacs-usage/"/>
-    <id>http://scarletsky.github.io/2016/01/22/spacemacs-usage/</id>
-    <published>2016-01-22T07:20:38.000Z</published>
-    <updated>2016-09-12T14:41:05.000Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。&lt;/p&gt;
-&lt;h2 id=&quot;安装-amp-使用&quot;&gt;&lt;a href=&quot;#安装-amp-使用&quot; class=&quot;headerlink&quot; title=&quot;安装 &amp;amp; 使用&quot;&gt;&lt;/a&gt;安装 &amp;amp; 使用&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git &lt;span class=&quot;built_in&quot;&gt;clone&lt;/span&gt; https://github.com/syl20bnr/spacemacs ~/.emacs.d&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ emacs&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;配置文件&quot;&gt;&lt;a href=&quot;#配置文件&quot; class=&quot;headerlink&quot; title=&quot;配置文件&quot;&gt;&lt;/a&gt;配置文件&lt;/h2&gt;&lt;p&gt;Spacemacs 的配置文件位于 &lt;code&gt;~/.spacemacs&lt;/code&gt; 中，我们只需要修改这个文件就可以制定自己的配置了。&lt;/p&gt;
-&lt;p&gt;一般情况下，我们只需要在 &lt;code&gt;dotspacemacs-configuration-layers&lt;/code&gt; 中添加自己需要的 layer 就可以了。&lt;/p&gt;
-&lt;h2 id=&quot;常用快捷键&quot;&gt;&lt;a href=&quot;#常用快捷键&quot; class=&quot;headerlink&quot; title=&quot;常用快捷键&quot;&gt;&lt;/a&gt;常用快捷键&lt;/h2&gt;&lt;h4 id=&quot;配置文件管理&quot;&gt;&lt;a href=&quot;#配置文件管理&quot; class=&quot;headerlink&quot; title=&quot;配置文件管理&quot;&gt;&lt;/a&gt;配置文件管理&lt;/h4&gt;&lt;p&gt;&lt;code&gt;SPC f e d&lt;/code&gt; 快速打开配置文件 &lt;code&gt;.spacemacs&lt;/code&gt;&lt;br&gt;&lt;code&gt;SPC f e R&lt;/code&gt; 同步配置文件&lt;/p&gt;
-&lt;h4 id=&quot;文件管理&quot;&gt;&lt;a href=&quot;#文件管理&quot; class=&quot;headerlink&quot; title=&quot;文件管理&quot;&gt;&lt;/a&gt;文件管理&lt;/h4&gt;&lt;p&gt;&lt;code&gt;SPC f f&lt;/code&gt; 打开文件（夹），相当于 &lt;code&gt;$ open xxx&lt;/code&gt; 或 &lt;code&gt;$ cd /path/to/project&lt;/code&gt;&lt;br&gt;&lt;code&gt;SPC /&lt;/code&gt; 用合适的搜索工具搜索内容，相当于 &lt;code&gt;$ grep/ack/ag/pt xxx&lt;/code&gt; 或 ST / Atom 中的 &lt;code&gt;Ctrl + Shift + f&lt;/code&gt;&lt;br&gt;&lt;code&gt;SPC s c&lt;/code&gt; 清除搜索高亮&lt;br&gt;&lt;code&gt;SPC f R&lt;/code&gt; 重命名当前文件&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;SPC b k&lt;/code&gt; 关闭当前 buffer&lt;br&gt;&lt;code&gt;SPC SPC&lt;/code&gt; 搜索当前文件 &lt;/p&gt;
-&lt;h4 id=&quot;窗口管理&quot;&gt;&lt;a href=&quot;#窗口管理&quot; class=&quot;headerlink&quot; title=&quot;窗口管理&quot;&gt;&lt;/a&gt;窗口管理&lt;/h4&gt;&lt;p&gt;&lt;code&gt;SPC f t 或 SPC p t&lt;/code&gt; 用 NeoTree 打开/关闭侧边栏，相当于 ST / Atom 中的 &lt;code&gt;Ctrl(cmd) + k + b&lt;/code&gt;&lt;br&gt;&lt;code&gt;SPC f t&lt;/code&gt; 打开当前文件所在的目录&lt;br&gt;&lt;code&gt;SPC p t&lt;/code&gt; 打开当前文件所在的&lt;strong&gt;根&lt;/strong&gt;目录&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;SPC 0&lt;/code&gt; 光标跳转到侧边栏（NeoTree）中&lt;br&gt;&lt;code&gt;SPC n(数字)&lt;/code&gt; 光标跳转到第 n 个 buffer 中&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;SPC w s 或 SPC w -&lt;/code&gt; 水平分割窗口&lt;br&gt;&lt;code&gt;SPC w v 或 SPC w /&lt;/code&gt; 垂直分割窗口&lt;br&gt;&lt;code&gt;SPC w c&lt;/code&gt; 关闭当前窗口&lt;/p&gt;
-&lt;h4 id=&quot;项目管理&quot;&gt;&lt;a href=&quot;#项目管理&quot; class=&quot;headerlink&quot; title=&quot;项目管理&quot;&gt;&lt;/a&gt;项目管理&lt;/h4&gt;&lt;p&gt;&lt;code&gt;SPC p p&lt;/code&gt; 切换项目&lt;br&gt;&lt;code&gt;SPC p D&lt;/code&gt; 在 dired 中打开项目根目录&lt;br&gt;&lt;code&gt;SPC p f&lt;/code&gt; 在项目中搜索文件名，相当于 ST / Atom 中的 &lt;code&gt;Ctrl + p&lt;/code&gt;&lt;br&gt;&lt;code&gt;SPC p R&lt;/code&gt; 在项目中替换字符串，根据提示输入「匹配」和「替换」的字符串，然后输入替换的方式：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;E&lt;/code&gt; 修改刚才输入的「替换」字符串&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;RET&lt;/code&gt; 表示不做处理&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;y&lt;/code&gt; 表示只替换一处&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;Y&lt;/code&gt; 表示替换全部&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;n&lt;/code&gt; 或 &lt;code&gt;delete&lt;/code&gt; 表示跳过当前匹配项，匹配下一项&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;^&lt;/code&gt; 表示跳过当前匹配项，匹配上一项&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;,&lt;/code&gt; 表示替换当前项，但不移动光标，可和 &lt;code&gt;n&lt;/code&gt; 或 &lt;code&gt;^&lt;/code&gt; 配合使用&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4 id=&quot;对齐&quot;&gt;&lt;a href=&quot;#对齐&quot; class=&quot;headerlink&quot; title=&quot;对齐&quot;&gt;&lt;/a&gt;对齐&lt;/h4&gt;&lt;p&gt;&lt;code&gt;SPC j =&lt;/code&gt; 自动对齐，相当于 beautify&lt;/p&gt;
-&lt;h4 id=&quot;Shell-集成-必须先配置-Shell-layer&quot;&gt;&lt;a href=&quot;#Shell-集成-必须先配置-Shell-layer&quot; class=&quot;headerlink&quot; title=&quot;Shell 集成 (必须先配置 Shell layer)&quot;&gt;&lt;/a&gt;Shell 集成 (必须先配置 Shell layer)&lt;/h4&gt;&lt;p&gt;&lt;code&gt;SPC &amp;#39;(单引号)&lt;/code&gt; 打开/关闭 Shell&lt;br&gt;&lt;code&gt;C-k&lt;/code&gt; 前一条 shell 命令，相当于在 shell 中按上箭头&lt;br&gt;&lt;code&gt;C-j&lt;/code&gt; 后一条 shell 命令，相当于在 shell 中按下箭头&lt;/p&gt;
-&lt;h2 id=&quot;让-Spacemacs-支持-EditorConfig&quot;&gt;&lt;a href=&quot;#让-Spacemacs-支持-EditorConfig&quot; class=&quot;headerlink&quot; title=&quot;让 Spacemacs 支持 EditorConfig&quot;&gt;&lt;/a&gt;让 Spacemacs 支持 EditorConfig&lt;/h2&gt;&lt;p&gt;EditorConfig 是一个配置文件，一般位于项目的根目录，它可以让不同的编辑器和IDE 都按照相同的格式来格式化代码，对于项目的维护者来说是一个很好的工具。&lt;/p&gt;
-&lt;p&gt;Spacemacs 也支持 EditorConfig，只需要在配置文件中添加配置即可。下面以 OS X 为例，通过以下步骤即可让 Spacemacs 支持 EditorConfig：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;code&gt;$ brew install editorconfig&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;在 &lt;code&gt;~/.spacemacs&lt;/code&gt; 中的 &lt;code&gt;dotspacemacs-additional-packages&lt;/code&gt; 中添加 &lt;code&gt;editorconfig&lt;/code&gt;：&lt;/p&gt;
-&lt;figure class=&quot;highlight armasm&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;symbol&quot;&gt;dotspacemacs&lt;/span&gt;-&lt;span class=&quot;keyword&quot;&gt;additional-packages&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; &lt;span class=&quot;string&quot;&gt;&#39;(&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   editorconfig&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   )&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;创建 &lt;code&gt;.editorconfig&lt;/code&gt; 文件，写上自己喜欢的配置。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;在 &lt;code&gt;~/.spacemacs&lt;/code&gt; 中的 &lt;code&gt;docspacemacs/user-config&lt;/code&gt; 中加入 &lt;code&gt;(editorconfig-mode 1)&lt;/code&gt;。&lt;/li&gt;
-&lt;li&gt;完。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;Git-集成-必须先配置Magit-的使用&quot;&gt;&lt;a href=&quot;#Git-集成-必须先配置Magit-的使用&quot; class=&quot;headerlink&quot; title=&quot;Git 集成 (必须先配置Magit 的使用)&quot;&gt;&lt;/a&gt;Git 集成 (必须先配置Magit 的使用)&lt;/h2&gt;&lt;p&gt;Git 是一个优秀的版本控制工具，我们可以在 &lt;code&gt;.spacemacs&lt;/code&gt; 的 &lt;code&gt;dotspacemacs-configuration-layers&lt;/code&gt; 列表中添加 &lt;code&gt;git&lt;/code&gt; 就可以集成 git 了。&lt;/p&gt;
-&lt;p&gt;下面是一些常用的 git 命令，前缀为 &lt;code&gt;g&lt;/code&gt;。&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Git&lt;/th&gt;
-&lt;th&gt;Magit&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;git init&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;SPC g i&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;git status&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;SPC g s&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;git add&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;SPC g s&lt;/code&gt; 弹出层选中文件然后按 &lt;code&gt;s&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;git add currentFile&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;SPC g S&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;git commit&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;SPC g c c&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;git push&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;SPC g P&lt;/code&gt; 按提示操作&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;git checkout xxx&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;SPC g C&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;git checkout -- xxx&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;SPC g s&lt;/code&gt; 弹出层选中文件然后按 &lt;code&gt;u&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;git log&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;SPC g l l&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;在 commit 时，我们输入完 commit message 之后，需要按 &lt;code&gt;C-c C-c&lt;/code&gt; 来完成 commit 操作，也可以按 &lt;code&gt;C-c C-k&lt;/code&gt; 来取消 commit 。&lt;/p&gt;
-&lt;h2 id=&quot;设置文件默认的主模式&quot;&gt;&lt;a href=&quot;#设置文件默认的主模式&quot; class=&quot;headerlink&quot; title=&quot;设置文件默认的主模式&quot;&gt;&lt;/a&gt;设置文件默认的主模式&lt;/h2&gt;&lt;p&gt;虽然我们可以通过 &lt;code&gt;M-x&lt;/code&gt; 来设置文件的主模式，但这种方式只是在单独修改某个文件的主模式时好用，如果要把所有同类型的文件都改成其他模式，这种方式的效率就太低了。&lt;/p&gt;
-&lt;p&gt;在 Spacemacs 中，我们可以用 &lt;code&gt;auto-mode-alist&lt;/code&gt; 来设置某一类文件默认的主模式。&lt;/p&gt;
-&lt;p&gt;我们只需要在 &lt;code&gt;~/.spacemacs&lt;/code&gt; 中的 &lt;code&gt;user-config&lt;/code&gt; 中加入下面代码即可：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;(add-to-list &amp;apos;auto-mode-alist &amp;apos;(&amp;quot;\\.js\\&amp;apos;&amp;quot; . react-mode))&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;上面代码会用 &lt;code&gt;react-mode&lt;/code&gt; 打开所有 &lt;code&gt;.js&lt;/code&gt; 文件。&lt;/p&gt;
-&lt;h2 id=&quot;设置主模式的-hook&quot;&gt;&lt;a href=&quot;#设置主模式的-hook&quot; class=&quot;headerlink&quot; title=&quot;设置主模式的 hook&quot;&gt;&lt;/a&gt;设置主模式的 hook&lt;/h2&gt;&lt;p&gt;主模式的 hook 是一个 elisp 函数，这个函数会在主模式加载时调用，常用于为特定的主模式自定义配置。&lt;br&gt;如我想在 &lt;code&gt;js2-mode&lt;/code&gt; 中作出如下配置：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;移除检查分号的提示 (否则当行末缺少了分号的时候，会给出烦人的提示)&lt;/li&gt;
-&lt;li&gt;支持 Node.js 内建函数 (否则当出现 &lt;code&gt;require&lt;/code&gt;, &lt;code&gt;module&lt;/code&gt; 之类的时候会提示未定义变量)&lt;/li&gt;
-&lt;li&gt;设置缩进为 2&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;这时候我可以通过如下方式来设置：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;;; hooks&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;(defun my-js-mode-hook ()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  (setq js2-basic-offset 2)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  (setq js-indent-level 2)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  (setq js2-include-node-externs t)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  (setq js2-strict-missing-semi-warning nil))&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;(add-hook &amp;apos;js2-mode-hook &amp;apos;my-js-mode-hook)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;Emacs-服务器&quot;&gt;&lt;a href=&quot;#Emacs-服务器&quot; class=&quot;headerlink&quot; title=&quot;Emacs 服务器&quot;&gt;&lt;/a&gt;Emacs 服务器&lt;/h2&gt;&lt;p&gt;Spacemacs 会在启动时启动服务器，这个服务器会在 Spacemacs 关闭的时候被杀掉。&lt;/p&gt;
-&lt;h3 id=&quot;使用-Emacs-服务器&quot;&gt;&lt;a href=&quot;#使用-Emacs-服务器&quot; class=&quot;headerlink&quot; title=&quot;使用 Emacs 服务器&quot;&gt;&lt;/a&gt;使用 Emacs 服务器&lt;/h3&gt;&lt;p&gt;当 Emacs 服务器启动的时候，我们可以在命令行中使用 &lt;code&gt;emacsclient&lt;/code&gt; 命令：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;$ emacsclient -c&lt;/code&gt; 用 Emacs GUI 来打开文件&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;$ emacsclient -t&lt;/code&gt; 用命令行中 Emacs 来打开文件&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;杀掉-Emacs-服务器&quot;&gt;&lt;a href=&quot;#杀掉-Emacs-服务器&quot; class=&quot;headerlink&quot; title=&quot;杀掉 Emacs 服务器&quot;&gt;&lt;/a&gt;杀掉 Emacs 服务器&lt;/h3&gt;&lt;p&gt;除了关闭 Spacemacs 之外，我们还可以用下面的命令来杀掉 Emacs 服务器：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;$ emacsclient -e &amp;#39;(kill-emacs)&amp;#39;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&quot;持久化-Emacs-服务器&quot;&gt;&lt;a href=&quot;#持久化-Emacs-服务器&quot; class=&quot;headerlink&quot; title=&quot;持久化 Emacs 服务器&quot;&gt;&lt;/a&gt;持久化 Emacs 服务器&lt;/h3&gt;&lt;p&gt;我们可以持久化 Emacs 服务器，在 Emacs 关闭的时候，服务器不被杀掉。只要设置 &lt;code&gt;~/.spacemacs&lt;/code&gt; 中 &lt;code&gt;dotspacemacs-persistent-server&lt;/code&gt; 为 &lt;code&gt;t&lt;/code&gt; 即可。&lt;/p&gt;
-&lt;p&gt;但这种情况下，我们只可以通过以下方式来杀掉服务器了：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;SPC q q&lt;/code&gt; 退出 Emacs 并杀掉服务器，会对已修改的 Buffer 给出保存的提示。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;SPC q Q&lt;/code&gt; 同上，但会丢失所有未保存的修改。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/syl20bnr/spacemacs/blob/master/doc/DOCUMENTATION.org&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://brannonlucas.com/using-editorconfig-and-spacemacs-on-os-x/&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Hooks.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.gnu.org/software/emacs/manual/html_node/elisp/Mode-Hooks.html&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;Spacemacs 是一份 emacs 的配置文件，想要使用它，你先要有 emacs。&lt;/p&gt;
-&lt;h2 id=&quot;安装-amp-使用&quot;&gt;&lt;a 
-    
-    </summary>
-    
-      <category term="emacs" scheme="http://scarletsky.github.io/categories/emacs/"/>
-    
-    
-      <category term="emacs" scheme="http://scarletsky.github.io/tags/emacs/"/>
-    
-      <category term="spacemacs" scheme="http://scarletsky.github.io/tags/spacemacs/"/>
     
   </entry>
   
