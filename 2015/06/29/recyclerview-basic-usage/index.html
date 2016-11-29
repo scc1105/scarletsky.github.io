@@ -56,7 +56,7 @@ onCre">
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+  <link href="/css/styles.css?v=d671a41f" rel="stylesheet">
 
 
   
@@ -80,6 +80,14 @@ ga('send', 'pageview');
 
   
 
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
 </head>
 
 <body>
@@ -103,6 +111,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/archives/"
+            rel="noopener noreferrer"
             target="_self"
             >
             博客
@@ -113,6 +122,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/category/"
+            rel="noopener noreferrer"
             target="_self"
             >
             分类
@@ -123,6 +133,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/tag/"
+            rel="noopener noreferrer"
             target="_self"
             >
             标签
@@ -133,6 +144,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/about/"
+            rel="noopener noreferrer"
             target="_self"
             >
             关于
@@ -143,6 +155,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/atom.xml"
+            rel="noopener noreferrer"
             target="_blank"
             >
             RSS
@@ -153,6 +166,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/search/"
+            rel="noopener noreferrer"
             target="_self"
             >
             搜索
@@ -201,6 +215,16 @@ ga('send', 'pageview');
         </span>
       
 
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
     </div>
   </header>
 
@@ -229,7 +253,7 @@ ga('send', 'pageview');
 </li>
 </ul>
 <p>#XML<br>新建 xml，添加 <code>RecyclerView</code>。</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;RelativeLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    xmlns:fab=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">    android:orientation=<span class="string">"vertical"</span></div><div class="line">    android:layout_width=<span class="string">"match_parent"</span></div><div class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</div><div class="line"></div><div class="line">    &lt;android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span></div><div class="line">        android:id=<span class="string">"@+id/my_recyclerview"</span></div><div class="line">        android:layout_width=<span class="string">"match_parent"</span></div><div class="line">        android:layout_height=<span class="string">"wrap_content"</span> /&gt;</div><div class="line"></div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:fab=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    android:orientation=&quot;vertical&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line"></div><div class="line">    &lt;android.support.v7.widget.RecyclerView</div><div class="line">        android:id=&quot;@+id/my_recyclerview&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;wrap_content&quot; /&gt;</div><div class="line"></div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure>
 <p>#ViewHolder</p>
 <p>我们以前使用 <code>ListView</code> 的时候，会用以下的方式来提高 <code>ListView</code> 的性能:</p>
 <ul>
@@ -238,14 +262,14 @@ ga('send', 'pageview');
 </ul>
 <p><code>RecyclerView</code> 标准化了 <code>ViewHolder</code> 来缓存昂贵 <code>findViewById</code> 的结果。</p>
 <p>例子：</p>
-<figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> MyViewHolder <span class="keyword">extends</span> RecyclerView.ViewHolder &#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> TextView mTitle;</div><div class="line">    <span class="keyword">public</span> TextView mSubtitle;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyViewHolder</span> <span class="params">(View v)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(v);</div><div class="line">        mTitle = (TextView) v.findViewById(R.id.title);</div><div class="line">        mSubtitle = (TextView) v.findViewById(R.id.subtitle);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">public static MyViewHolder extends RecyclerView.ViewHolder &#123;</div><div class="line"></div><div class="line">    public TextView mTitle;</div><div class="line">    public TextView mSubtitle;</div><div class="line"></div><div class="line">    public MyViewHolder (View v) &#123;</div><div class="line">        super(v);</div><div class="line">        mTitle = (TextView) v.findViewById(R.id.title);</div><div class="line">        mSubtitle = (TextView) v.findViewById(R.id.subtitle);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>PS: 一般 <code>ViewHolder</code> 会编写在 <code>Adapter</code> 的内部。</p>
 <p>#Adapter</p>
 <p>我们需要继承 <code>RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt;</code> 来编写我们自己的 <code>Adapter</code> 。编写我们自己的 <code>Adapter</code> 的时候，最重要的是要重写 <code>onCreateViewHolder</code> 和 <code>onBindViewHolder</code> 方法。</p>
-<figure class="highlight aspectj"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">RecyclerView</span>.<span class="title">ViewHolder</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">public</span> RecyclerView.<span class="function">ViewHolder <span class="title">onCreateViewHolder</span> <span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</div><div class="line">        View v = LayoutInflater.from(ctx).inflate(R.layout.my_adapter, parent, <span class="keyword">false</span>);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewHolder(v);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onBindViewHolder</span> <span class="params">(RecyclerView.ViewHolder h, <span class="keyword">int</span> position)</span> </span>&#123;</div><div class="line">        MyViewHolder holder = (MyViewHolder) h;</div><div class="line">        holder.mTitle.setText(<span class="string">"This is my title"</span>);</div><div class="line">        holder.mSubtitle.setText(<span class="string">"This is my subtitle"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">return</span> data.<span class="title">size</span><span class="params">()</span></span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">public class MyAdapter extends RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt; &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public RecyclerView.ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) &#123;</div><div class="line">        View v = LayoutInflater.from(ctx).inflate(R.layout.my_adapter, parent, false);</div><div class="line">        return new ViewHolder(v);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onBindViewHolder (RecyclerView.ViewHolder h, int position) &#123;</div><div class="line">        MyViewHolder holder = (MyViewHolder) h;</div><div class="line">        holder.mTitle.setText(&quot;This is my title&quot;);</div><div class="line">        holder.mSubtitle.setText(&quot;This is my subtitle&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int getItemCount() &#123;</div><div class="line">        return data.size();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>注意，在这个例子中我们的 <code>MyAdapter</code> 存放的是 <code>&lt;RecyclerView.ViewHolder&gt;</code>，所以在 <code>onCreateViewHolder</code> 中返回的也必须是 <code>&lt;RecyclerView.ViewHolder&gt;</code>，而在 <code>onBindViewHolder</code> 的回调中，我们拿到的也是 <code>RecyclerView.ViewHolder</code>，要把它强转成我们之前编写的 <code>MyViewHolder</code> 之后才能正常使用。</p>
 <p>#RecyclerView<br>最后只要设置一下 <code>RecyclerView</code> 就能使用了。</p>
-<figure class="highlight mipsasm"><table><tr><td class="code"><pre><div class="line">RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recyclerview)<span class="comment">;</span></div><div class="line">mRecyclerView.setLayoutManager(new LinearLayoutManager(this))<span class="comment">;</span></div><div class="line">mRecyclerView.setAdapter(adapter)<span class="comment">;</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.my_recyclerview);</div><div class="line">mRecyclerView.setLayoutManager(new LinearLayoutManager(this));</div><div class="line">mRecyclerView.setAdapter(adapter);</div></pre></td></tr></table></figure>
 <p>#参考资料<br><a href="http://wobushi.ren/recyclerview.html" target="_blank" rel="external">RecyclerView全攻略</a><br><a href="http://blog.csdn.net/lmj623565791/article/details/45059587" target="_blank" rel="external">Android RecyclerView 使用完全解析 体验艺术般的控件</a></p>
 
     
@@ -299,6 +323,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/archives/"
+              rel="noopener noreferrer"
               target="_self"
               >
               博客
@@ -309,6 +334,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/category/"
+              rel="noopener noreferrer"
               target="_self"
               >
               分类
@@ -319,6 +345,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/tag/"
+              rel="noopener noreferrer"
               target="_self"
               >
               标签
@@ -329,6 +356,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/about/"
+              rel="noopener noreferrer"
               target="_self"
               >
               关于
@@ -339,6 +367,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/atom.xml"
+              rel="noopener noreferrer"
               target="_blank"
               >
               RSS
@@ -349,6 +378,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/search/"
+              rel="noopener noreferrer"
               target="_self"
               >
               搜索

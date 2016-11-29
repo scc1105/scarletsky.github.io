@@ -35,7 +35,7 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+  <link href="/css/styles.css?v=d671a41f" rel="stylesheet">
 
 
   
@@ -59,6 +59,14 @@ ga('send', 'pageview');
 
   
 
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
 </head>
 
 <body>
@@ -82,6 +90,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/archives/"
+            rel="noopener noreferrer"
             target="_self"
             >
             博客
@@ -92,6 +101,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/category/"
+            rel="noopener noreferrer"
             target="_self"
             >
             分类
@@ -102,6 +112,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/tag/"
+            rel="noopener noreferrer"
             target="_self"
             >
             标签
@@ -112,6 +123,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/about/"
+            rel="noopener noreferrer"
             target="_self"
             >
             关于
@@ -122,6 +134,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/atom.xml"
+            rel="noopener noreferrer"
             target="_blank"
             >
             RSS
@@ -132,6 +145,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/search/"
+            rel="noopener noreferrer"
             target="_self"
             >
             搜索
@@ -185,6 +199,16 @@ ga('send', 'pageview');
         </span>
       
 
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
     </div>
   </header>
 
@@ -246,12 +270,12 @@ ga('send', 'pageview');
 <li>对响应内容进行断言</li>
 </ul>
 <p>幸运的是，社区里已经有相应的工具让我们可以方便管理这个流程，这个工具就是 —— <code>supertest</code>。<br>它提供了非常灵活的 API，足以帮助我们测试 Restful API 了。<br>基本用法如下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> app = <span class="built_in">require</span>(<span class="string">'../app'</span>)</div><div class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'supertest'</span>)(app)</div><div class="line"></div><div class="line">request</div><div class="line">  .get(<span class="string">'/users'</span>)</div><div class="line">  .expect(<span class="number">200</span>)</div><div class="line">  .end((err, res) =&gt; &#123;</div><div class="line">    res.body.should.be.an.Array()</div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> app = <span class="built_in">require</span>(<span class="string">'../app'</span>)</div><div class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'supertest'</span>)(app)</div><div class="line"></div><div class="line">request</div><div class="line">  .get(<span class="string">'/users'</span>)</div><div class="line">  .expect(<span class="number">200</span>)</div><div class="line">  .end(<span class="function">(<span class="params">err, res</span>) =&gt;</span> &#123;</div><div class="line">    res.body.should.be.an.Array()</div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
 <blockquote>
 <p>提示<br>如果你遇到了 <code>TypeError: app.address is not a function</code>, 请尝试一下以下方法：<br><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'supertest'</span>).agent(app.listen())</div></pre></td></tr></table></figure></p>
 </blockquote>
 <p>现在，我们可以把 <code>supertest</code> 和其他测试框架整合起来了，我选择了 <code>mocha</code> 作为例子，因为它很经典，当你会用 <code>mocha</code> 之后，其他测试框架基本上就难不倒你了。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> co = <span class="built_in">require</span>(<span class="string">'co'</span>)</div><div class="line"><span class="keyword">const</span> &#123; ObjectId &#125; = <span class="built_in">require</span>(<span class="string">'mongoose'</span>).Types</div><div class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'../config'</span>)</div><div class="line"><span class="keyword">const</span> UserModel = <span class="built_in">require</span>(<span class="string">'../models/user'</span>)</div><div class="line"><span class="keyword">const</span> app = <span class="built_in">require</span>(<span class="string">'../app'</span>)</div><div class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'supertest'</span>)(app)</div><div class="line"></div><div class="line">describe(<span class="string">'User API'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// 为每个单元测试初始化数据</span></div><div class="line">  <span class="comment">// 每个单元测试中可以通过 context 来访问相关的数据</span></div><div class="line">  beforeEach(<span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    co(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">      self.user1 = <span class="keyword">yield</span> UserModel.create(&#123; username: <span class="string">'user1'</span> &#125;)</div><div class="line">      self.token = jwt.sign(&#123; _id: self.user1._id &#125;, config.jwtSecret, &#123; expiresIn: <span class="number">3600</span> &#125;)</div><div class="line">      done()</div><div class="line">    &#125;).catch(err =&gt; &#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'err: '</span>, err)</div><div class="line">      done()</div><div class="line">    &#125;)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 正常情况下访问 /user</span></div><div class="line">  it(<span class="string">'should get user info when GET /user with token'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> self = <span class="keyword">this</span></div><div class="line">    request</div><div class="line">      .get(<span class="string">'/user'</span>)</div><div class="line">      .set(<span class="string">'Authorization'</span>, self.token)</div><div class="line">      .expect(<span class="number">200</span>)</div><div class="line">      .end((err, res) =&gt; &#123;</div><div class="line">        res.body._id.should.equal(self.user1._id)</div><div class="line">        done()</div><div class="line">      &#125;)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 非正常情况下访问 /user</span></div><div class="line">  it(<span class="string">'should return 403 when GET /user without token'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    request</div><div class="line">      .get(<span class="string">'/user'</span>)</div><div class="line">      .expect(<span class="number">403</span>, done)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 访问 /users，登录用户和非登录用户都会得到相同的结果，所以不需要区别对待</span></div><div class="line">  it(<span class="string">'should return user list when GET /users'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    request</div><div class="line">      .get(<span class="string">'/users'</span>)</div><div class="line">      .expect(<span class="number">200</span>)</div><div class="line">      .end((err, res) =&gt; &#123;</div><div class="line">        res.body.should.be.an.Array()</div><div class="line">        done()</div><div class="line">      &#125;)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 访问 /users/:userId 也不需要区分登录和非登录状态</span></div><div class="line">  it(<span class="string">'should return user info when GET /users/:userId'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> self = <span class="keyword">this</span></div><div class="line">    request</div><div class="line">      .get(<span class="string">`/users/<span class="subst">$&#123;self.user1._id&#125;</span>`</span>)</div><div class="line">      .expect(<span class="number">200</span>)</div><div class="line">      .end((err, res) =&gt; &#123;</div><div class="line">        res.body._id.should.equal(self.user1._id)</div><div class="line">        done()</div><div class="line">      &#125;)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 访问不存在的用户，我们需要构造一个虚假的用户 id</span></div><div class="line">  it(<span class="string">'should return 404 when GET /users/$&#123;non-existent&#125;'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    request</div><div class="line">      .get(<span class="string">`/users/<span class="subst">$&#123;ObjectId()&#125;</span>`</span>)</div><div class="line">      .expect(<span class="number">404</span>, done)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 正常情况下的用户注册不会带上 token</span></div><div class="line">  it(<span class="string">'should return user info when POST /user'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> username = <span class="string">'test user'</span></div><div class="line">    request</div><div class="line">      .post(<span class="string">'/users'</span>)</div><div class="line">      .send(&#123; username: username &#125;)</div><div class="line">      .expect(<span class="number">200</span>)</div><div class="line">      .end((err, res) =&gt; &#123;</div><div class="line">        res.body.username.should.equal(username)</div><div class="line">        done()</div><div class="line">      &#125;)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 非法情况下的用户注册，带上了 token 的请求要判断为非法请求</span></div><div class="line">  it(<span class="string">'should return 400 when POST /user with token'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> username = <span class="string">'test user 2'</span></div><div class="line">    request</div><div class="line">      .post(<span class="string">'/users'</span>)</div><div class="line">      .set(<span class="string">'Authorization'</span>, <span class="keyword">this</span>.token)</div><div class="line">      .send(&#123; username: username &#125;)</div><div class="line">      .expect(<span class="number">400</span>, done)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 正常情况下更新用户信息，需要带上 token</span></div><div class="line">  it(<span class="string">'should return 200 when PUT /user with token'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    request</div><div class="line">      .put(<span class="string">'/user'</span>)</div><div class="line">      .set(<span class="string">'Authorization'</span>, <span class="keyword">this</span>.token)</div><div class="line">      .send(&#123; username: <span class="string">'valid username'</span> &#125;)</div><div class="line">      .expect(<span class="number">200</span>, done)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 非法情况下更新用户信息，如缺少 token</span></div><div class="line">  it(<span class="string">'should return 400 when PUT /user without token'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    request</div><div class="line">      .put(<span class="string">'/user'</span>)</div><div class="line">      .send(&#123; username: <span class="string">'valid username'</span> &#125;)</div><div class="line">      .expect(<span class="number">400</span>, done)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> co = <span class="built_in">require</span>(<span class="string">'co'</span>)</div><div class="line"><span class="keyword">const</span> &#123; ObjectId &#125; = <span class="built_in">require</span>(<span class="string">'mongoose'</span>).Types</div><div class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'../config'</span>)</div><div class="line"><span class="keyword">const</span> UserModel = <span class="built_in">require</span>(<span class="string">'../models/user'</span>)</div><div class="line"><span class="keyword">const</span> app = <span class="built_in">require</span>(<span class="string">'../app'</span>)</div><div class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'supertest'</span>)(app)</div><div class="line"></div><div class="line">describe(<span class="string">'User API'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// 为每个单元测试初始化数据</span></div><div class="line">  <span class="comment">// 每个单元测试中可以通过 context 来访问相关的数据</span></div><div class="line">  beforeEach(<span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    co(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">      self.user1 = <span class="keyword">yield</span> UserModel.create(&#123; <span class="attr">username</span>: <span class="string">'user1'</span> &#125;)</div><div class="line">      self.token = jwt.sign(&#123; <span class="attr">_id</span>: self.user1._id &#125;, config.jwtSecret, &#123; <span class="attr">expiresIn</span>: <span class="number">3600</span> &#125;)</div><div class="line">      done()</div><div class="line">    &#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'err: '</span>, err)</div><div class="line">      done()</div><div class="line">    &#125;)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 正常情况下访问 /user</span></div><div class="line">  it(<span class="string">'should get user info when GET /user with token'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> self = <span class="keyword">this</span></div><div class="line">    request</div><div class="line">      .get(<span class="string">'/user'</span>)</div><div class="line">      .set(<span class="string">'Authorization'</span>, self.token)</div><div class="line">      .expect(<span class="number">200</span>)</div><div class="line">      .end(<span class="function">(<span class="params">err, res</span>) =&gt;</span> &#123;</div><div class="line">        res.body._id.should.equal(self.user1._id)</div><div class="line">        done()</div><div class="line">      &#125;)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 非正常情况下访问 /user</span></div><div class="line">  it(<span class="string">'should return 403 when GET /user without token'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    request</div><div class="line">      .get(<span class="string">'/user'</span>)</div><div class="line">      .expect(<span class="number">403</span>, done)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 访问 /users，登录用户和非登录用户都会得到相同的结果，所以不需要区别对待</span></div><div class="line">  it(<span class="string">'should return user list when GET /users'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    request</div><div class="line">      .get(<span class="string">'/users'</span>)</div><div class="line">      .expect(<span class="number">200</span>)</div><div class="line">      .end(<span class="function">(<span class="params">err, res</span>) =&gt;</span> &#123;</div><div class="line">        res.body.should.be.an.Array()</div><div class="line">        done()</div><div class="line">      &#125;)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 访问 /users/:userId 也不需要区分登录和非登录状态</span></div><div class="line">  it(<span class="string">'should return user info when GET /users/:userId'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> self = <span class="keyword">this</span></div><div class="line">    request</div><div class="line">      .get(<span class="string">`/users/<span class="subst">$&#123;self.user1._id&#125;</span>`</span>)</div><div class="line">      .expect(<span class="number">200</span>)</div><div class="line">      .end(<span class="function">(<span class="params">err, res</span>) =&gt;</span> &#123;</div><div class="line">        res.body._id.should.equal(self.user1._id)</div><div class="line">        done()</div><div class="line">      &#125;)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 访问不存在的用户，我们需要构造一个虚假的用户 id</span></div><div class="line">  it(<span class="string">'should return 404 when GET /users/$&#123;non-existent&#125;'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    request</div><div class="line">      .get(<span class="string">`/users/<span class="subst">$&#123;ObjectId()&#125;</span>`</span>)</div><div class="line">      .expect(<span class="number">404</span>, done)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 正常情况下的用户注册不会带上 token</span></div><div class="line">  it(<span class="string">'should return user info when POST /user'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> username = <span class="string">'test user'</span></div><div class="line">    request</div><div class="line">      .post(<span class="string">'/users'</span>)</div><div class="line">      .send(&#123; <span class="attr">username</span>: username &#125;)</div><div class="line">      .expect(<span class="number">200</span>)</div><div class="line">      .end(<span class="function">(<span class="params">err, res</span>) =&gt;</span> &#123;</div><div class="line">        res.body.username.should.equal(username)</div><div class="line">        done()</div><div class="line">      &#125;)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 非法情况下的用户注册，带上了 token 的请求要判断为非法请求</span></div><div class="line">  it(<span class="string">'should return 400 when POST /user with token'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> username = <span class="string">'test user 2'</span></div><div class="line">    request</div><div class="line">      .post(<span class="string">'/users'</span>)</div><div class="line">      .set(<span class="string">'Authorization'</span>, <span class="keyword">this</span>.token)</div><div class="line">      .send(&#123; <span class="attr">username</span>: username &#125;)</div><div class="line">      .expect(<span class="number">400</span>, done)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 正常情况下更新用户信息，需要带上 token</span></div><div class="line">  it(<span class="string">'should return 200 when PUT /user with token'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    request</div><div class="line">      .put(<span class="string">'/user'</span>)</div><div class="line">      .set(<span class="string">'Authorization'</span>, <span class="keyword">this</span>.token)</div><div class="line">      .send(&#123; <span class="attr">username</span>: <span class="string">'valid username'</span> &#125;)</div><div class="line">      .expect(<span class="number">200</span>, done)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">  <span class="comment">// 非法情况下更新用户信息，如缺少 token</span></div><div class="line">  it(<span class="string">'should return 400 when PUT /user without token'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">done</span>) </span>&#123;</div><div class="line">    request</div><div class="line">      .put(<span class="string">'/user'</span>)</div><div class="line">      .send(&#123; <span class="attr">username</span>: <span class="string">'valid username'</span> &#125;)</div><div class="line">      .expect(<span class="number">400</span>, done)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
 <p>可以看到，为 Restful API 编写单元测试还有一个优点，就是可以轻易区分登录状态和非登录状态。如果要在用户界面中测试这些功能，那么就需要不停地登录和注销，将会是一项累人的工作~<br>另外，上面的例子中基本都是对返回状态吗进行断言的，你可以按照自己的需要进行断言。</p>
 <blockquote>
 <p>提示<br>你可以选择自己喜欢的断言库，我这里选择了 should.js，原因是好读。<br>个人认为 should.js 和其他断言库比起来有个缺点，就是不好写。<br>value.should.xxx.yyy.zzz 这个形式和 assert.equal(value, expected) 相比不太直观。<br>另外由于 should.js 是通过扩展 Object.prototype 的原型来实现的，但 null 值是一个例外，它不能访问任何属性。<br>因此 should.js 在 null 上会失效。<br>一个变通的办法是 <code>(value === null).should.equal(true)</code>。</p>
@@ -260,7 +284,7 @@ ga('send', 'pageview');
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ npm test</div><div class="line"></div><div class="line">  User api</div><div class="line">    ✓ should get user info when GET /user with token</div><div class="line">    ✓ should return 403 when GET /user without token</div><div class="line">    ✓ should return user list when GET /users</div><div class="line">    ✓ should return user info when GET /users/:userId</div><div class="line">    ✓ should return 404 when GET /users/$&#123;non-existent&#125;</div><div class="line">    ✓ should return user info when POST /user</div><div class="line">    ✓ should return 400 when POST /user with token</div><div class="line">    ✓ should return 200 when PUT /user with token</div><div class="line">    ✓ should return 400 when PUT /user without token</div></pre></td></tr></table></figure>
 <p>当我们运行测试时，看到自己编写的测试都通过时，心里都会非常踏实。<br>而当我们要对项目进行重构时，这些测试用例会帮我们发现重构过程中的问题，减少 Debug 时间，提升重构时的效率。</p>
 <h2 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h2><h3 id="如何连接测试数据库"><a href="#如何连接测试数据库" class="headerlink" title="如何连接测试数据库"></a>如何连接测试数据库</h3><p>在 Node.js 的环境下，我们可以设置环境变量 <code>NODE_ENV=test</code>，然后通过这个环境变量去连接测试数据库，这样测试数据就不会存在于开发环境下的数据库拉！</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  development: &#123;&#125;,</div><div class="line">  production: &#123;&#125;,</div><div class="line">  test: &#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// app.js</span></div><div class="line"><span class="keyword">const</span> ENV = process.NODE_ENV || <span class="string">'development'</span></div><div class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'./config'</span>)[ENV]</div><div class="line"><span class="comment">// connect db by config</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">development</span>: &#123;&#125;,</div><div class="line">  <span class="attr">production</span>: &#123;&#125;,</div><div class="line">  <span class="attr">test</span>: &#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// app.js</span></div><div class="line"><span class="keyword">const</span> ENV = process.NODE_ENV || <span class="string">'development'</span></div><div class="line"><span class="keyword">const</span> config = <span class="built_in">require</span>(<span class="string">'./config'</span>)[ENV]</div><div class="line"><span class="comment">// connect db by config</span></div></pre></td></tr></table></figure>
 <h3 id="如何清空测试数据库"><a href="#如何清空测试数据库" class="headerlink" title="如何清空测试数据库"></a>如何清空测试数据库</h3><p>清空数据库这种一次性的工作最好放到 npm scripts 中处理，需要进行清空操作的时候直接运行 <code>npm run resetDB</code> 就可以了。<br>需要注意的是，编写清空数据库脚本时必须判断环境变量 <code>NODE_ENV</code>，以免误删 production 环境下的数据。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// resetDB.js</span></div><div class="line"><span class="keyword">const</span> env = process.NODE_ENV || <span class="string">'development'</span></div><div class="line"><span class="keyword">if</span> (env === <span class="string">'test'</span> || env === <span class="string">'development'</span>) &#123;</div><div class="line">  <span class="comment">// connect db and delete data</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'You can not run this script in production.'</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// package.json</span></div><div class="line">&#123;</div><div class="line">  <span class="string">"scripts"</span>: &#123;</div><div class="line">    <span class="string">"resetDB"</span>: <span class="string">"node scripts/resetDB.js"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="何时清空测试环境的数据库"><a href="#何时清空测试环境的数据库" class="headerlink" title="何时清空测试环境的数据库"></a>何时清空测试环境的数据库</h3><p>如果是按照上面的原则来生成测试数据的话，测试数据其实可以不用删掉的。<br>但由于测试数据会占用我们的空间，最好还是把这些测试数据删掉。<br>那么，清空测试数据库这个操作在测试前执行好，还是测试后执行好？<br>我个人倾向于测试前删除，因为有时候我们需要进入数据库，查看测试数据的正确性。<br>如果在测试后清空测试数据库的话，我们就没办法访问到测试数据了。</p>
@@ -318,6 +342,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/archives/"
+              rel="noopener noreferrer"
               target="_self"
               >
               博客
@@ -328,6 +353,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/category/"
+              rel="noopener noreferrer"
               target="_self"
               >
               分类
@@ -338,6 +364,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/tag/"
+              rel="noopener noreferrer"
               target="_self"
               >
               标签
@@ -348,6 +375,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/about/"
+              rel="noopener noreferrer"
               target="_self"
               >
               关于
@@ -358,6 +386,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/atom.xml"
+              rel="noopener noreferrer"
               target="_blank"
               >
               RSS
@@ -368,6 +397,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/search/"
+              rel="noopener noreferrer"
               target="_self"
               >
               搜索

@@ -18,7 +18,7 @@
   <meta name="description" content="#CoordinatorLayout
 这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。
 常见的用法如下：
-&amp;lt;android.support.design.widget.CoordinatorLayout    xmlns:android=&quot;http://sche">
+&amp;lt;android.support.design.widget.CoordinatorLayout    xmlns:android=&amp;quot;http:/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Support Design Library 注意事项">
 <meta property="og:url" content="http://scarletsky.github.io/2015/07/05/android-support-design-library-experience/index.html">
@@ -26,14 +26,14 @@
 <meta property="og:description" content="#CoordinatorLayout
 这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。
 常见的用法如下：
-&amp;lt;android.support.design.widget.CoordinatorLayout    xmlns:android=&quot;http://sche">
+&amp;lt;android.support.design.widget.CoordinatorLayout    xmlns:android=&amp;quot;http:/">
 <meta property="og:updated_time" content="2016-02-29T04:37:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Support Design Library 注意事项">
 <meta name="twitter:description" content="#CoordinatorLayout
 这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。
 常见的用法如下：
-&amp;lt;android.support.design.widget.CoordinatorLayout    xmlns:android=&quot;http://sche">
+&amp;lt;android.support.design.widget.CoordinatorLayout    xmlns:android=&amp;quot;http:/">
 
   
 
@@ -41,7 +41,7 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+  <link href="/css/styles.css?v=d671a41f" rel="stylesheet">
 
 
   
@@ -65,6 +65,14 @@ ga('send', 'pageview');
 
   
 
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
 </head>
 
 <body>
@@ -88,6 +96,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/archives/"
+            rel="noopener noreferrer"
             target="_self"
             >
             博客
@@ -98,6 +107,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/category/"
+            rel="noopener noreferrer"
             target="_self"
             >
             分类
@@ -108,6 +118,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/tag/"
+            rel="noopener noreferrer"
             target="_self"
             >
             标签
@@ -118,6 +129,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/about/"
+            rel="noopener noreferrer"
             target="_self"
             >
             关于
@@ -128,6 +140,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/atom.xml"
+            rel="noopener noreferrer"
             target="_blank"
             >
             RSS
@@ -138,6 +151,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/search/"
+            rel="noopener noreferrer"
             target="_self"
             >
             搜索
@@ -186,6 +200,16 @@ ga('send', 'pageview');
         </span>
       
 
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
     </div>
   </header>
 
@@ -194,7 +218,7 @@ ga('send', 'pageview');
       <p>#CoordinatorLayout</p>
 <p>这个新 Layout 是 FrameLayout 的加强版，用来协调各个子 view 的行为。最主要是用来实现 Toolbar 的折叠效果，也可以用来实现 FAB 自动消失的效果。</p>
 <p>常见的用法如下：</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><div class="line">&lt;android<span class="selector-class">.support</span><span class="selector-class">.design</span><span class="selector-class">.widget</span><span class="selector-class">.CoordinatorLayout</span></div><div class="line">    xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">    android:layout_width=<span class="string">"match_parent"</span></div><div class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</div><div class="line"></div><div class="line">    &lt;android<span class="selector-class">.support</span><span class="selector-class">.v4</span><span class="selector-class">.widget</span><span class="selector-class">.NestedScrollView</span></div><div class="line">        xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></div><div class="line">        xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span></div><div class="line">        android:layout_width=<span class="string">"match_parent"</span></div><div class="line">        android:layout_height=<span class="string">"match_parent"</span></div><div class="line">        android:layout_gravity=<span class="string">"fill_vertical"</span></div><div class="line">        android:layout_marginBottom=<span class="string">"?attr/actionBarSize"</span></div><div class="line">        android:<span class="attribute">background</span>=<span class="string">"@android:color/white"</span></div><div class="line">        app:layout_behavior=<span class="string">"@string/appbar_scrolling_view_behavior"</span></div><div class="line">        &gt;</div><div class="line"></div><div class="line">        &lt;FrameLayout</div><div class="line">            android:id=<span class="string">"@+id/frame_image_toolbar_content"</span></div><div class="line">            android:layout_width=<span class="string">"match_parent"</span></div><div class="line">            android:layout_height=<span class="string">"match_parent"</span></div><div class="line">            &gt;</div><div class="line">        &lt;/FrameLayout&gt;</div><div class="line"></div><div class="line">    &lt;/android<span class="selector-class">.support</span><span class="selector-class">.v4</span><span class="selector-class">.widget</span><span class="selector-class">.NestedScrollView</span>&gt;</div><div class="line"></div><div class="line">    &lt;android<span class="selector-class">.support</span><span class="selector-class">.design</span><span class="selector-class">.widget</span><span class="selector-class">.AppBarLayout</span></div><div class="line">        android:id=<span class="string">"@+id/appbar"</span></div><div class="line">        android:layout_width=<span class="string">"match_parent"</span></div><div class="line">        android:layout_height=<span class="string">"256dp"</span></div><div class="line">        android:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>&gt;</div><div class="line"></div><div class="line">        &lt;android<span class="selector-class">.support</span><span class="selector-class">.design</span><span class="selector-class">.widget</span><span class="selector-class">.CollapsingToolbarLayout</span></div><div class="line">            android:id=<span class="string">"@+id/collapsing_toolbar_wrapper"</span></div><div class="line">            android:layout_width=<span class="string">"match_parent"</span></div><div class="line">            android:layout_height=<span class="string">"match_parent"</span></div><div class="line">            app:contentScrim=<span class="string">"?attr/colorPrimary"</span></div><div class="line">            app:expandedTitleMarginEnd=<span class="string">"64dp"</span></div><div class="line">            app:expandedTitleMarginStart=<span class="string">"48dp"</span></div><div class="line">            app:layout_scrollFlags=<span class="string">"scroll|exitUntilCollapsed"</span></div><div class="line">            &gt;</div><div class="line"></div><div class="line">            &lt;ImageView</div><div class="line">                android:id=<span class="string">"@+id/collapsing_toolbar_image"</span></div><div class="line">                android:layout_width=<span class="string">"match_parent"</span></div><div class="line">                android:layout_height=<span class="string">"match_parent"</span></div><div class="line">                android:scaleType=<span class="string">"centerCrop"</span></div><div class="line">                app:layout_collapseMode=<span class="string">"parallax"</span></div><div class="line">                /&gt;</div><div class="line"></div><div class="line">            &lt;android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.Toolbar</span></div><div class="line">                android:id=<span class="string">"@+id/collapsing_toolbar"</span></div><div class="line">                android:layout_width=<span class="string">"match_parent"</span></div><div class="line">                android:layout_height=<span class="string">"?attr/actionBarSize"</span></div><div class="line">                app:layout_collapseMode=<span class="string">"pin"</span></div><div class="line">                app:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span></div><div class="line">                app:popupTheme=<span class="string">"@style/ThemeOverlay.AppCompat.Light"</span></div><div class="line">                /&gt;</div><div class="line"></div><div class="line">        &lt;/android<span class="selector-class">.support</span><span class="selector-class">.design</span><span class="selector-class">.widget</span><span class="selector-class">.CollapsingToolbarLayout</span>&gt;</div><div class="line"></div><div class="line">    &lt;/android<span class="selector-class">.support</span><span class="selector-class">.design</span><span class="selector-class">.widget</span><span class="selector-class">.AppBarLayout</span>&gt;</div><div class="line"></div><div class="line">&lt;/android<span class="selector-class">.support</span><span class="selector-class">.design</span><span class="selector-class">.widget</span><span class="selector-class">.CoordinatorLayout</span>&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;android.support.design.widget.CoordinatorLayout</div><div class="line">    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line"></div><div class="line">    &lt;android.support.v4.widget.NestedScrollView</div><div class="line">        xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">        xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;</div><div class="line">        android:layout_gravity=&quot;fill_vertical&quot;</div><div class="line">        android:layout_marginBottom=&quot;?attr/actionBarSize&quot;</div><div class="line">        android:background=&quot;@android:color/white&quot;</div><div class="line">        app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;</div><div class="line">        &gt;</div><div class="line"></div><div class="line">        &lt;FrameLayout</div><div class="line">            android:id=&quot;@+id/frame_image_toolbar_content&quot;</div><div class="line">            android:layout_width=&quot;match_parent&quot;</div><div class="line">            android:layout_height=&quot;match_parent&quot;</div><div class="line">            &gt;</div><div class="line">        &lt;/FrameLayout&gt;</div><div class="line"></div><div class="line">    &lt;/android.support.v4.widget.NestedScrollView&gt;</div><div class="line"></div><div class="line">    &lt;android.support.design.widget.AppBarLayout</div><div class="line">        android:id=&quot;@+id/appbar&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;256dp&quot;</div><div class="line">        android:theme=&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;&gt;</div><div class="line"></div><div class="line">        &lt;android.support.design.widget.CollapsingToolbarLayout</div><div class="line">            android:id=&quot;@+id/collapsing_toolbar_wrapper&quot;</div><div class="line">            android:layout_width=&quot;match_parent&quot;</div><div class="line">            android:layout_height=&quot;match_parent&quot;</div><div class="line">            app:contentScrim=&quot;?attr/colorPrimary&quot;</div><div class="line">            app:expandedTitleMarginEnd=&quot;64dp&quot;</div><div class="line">            app:expandedTitleMarginStart=&quot;48dp&quot;</div><div class="line">            app:layout_scrollFlags=&quot;scroll|exitUntilCollapsed&quot;</div><div class="line">            &gt;</div><div class="line"></div><div class="line">            &lt;ImageView</div><div class="line">                android:id=&quot;@+id/collapsing_toolbar_image&quot;</div><div class="line">                android:layout_width=&quot;match_parent&quot;</div><div class="line">                android:layout_height=&quot;match_parent&quot;</div><div class="line">                android:scaleType=&quot;centerCrop&quot;</div><div class="line">                app:layout_collapseMode=&quot;parallax&quot;</div><div class="line">                /&gt;</div><div class="line"></div><div class="line">            &lt;android.support.v7.widget.Toolbar</div><div class="line">                android:id=&quot;@+id/collapsing_toolbar&quot;</div><div class="line">                android:layout_width=&quot;match_parent&quot;</div><div class="line">                android:layout_height=&quot;?attr/actionBarSize&quot;</div><div class="line">                app:layout_collapseMode=&quot;pin&quot;</div><div class="line">                app:theme=&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;</div><div class="line">                app:popupTheme=&quot;@style/ThemeOverlay.AppCompat.Light&quot;</div><div class="line">                /&gt;</div><div class="line"></div><div class="line">        &lt;/android.support.design.widget.CollapsingToolbarLayout&gt;</div><div class="line"></div><div class="line">    &lt;/android.support.design.widget.AppBarLayout&gt;</div><div class="line"></div><div class="line">&lt;/android.support.design.widget.CoordinatorLayout&gt;</div></pre></td></tr></table></figure>
 <ul>
 <li>CollapsingToolbarLayout.setTitle 代替 Toolbar.setTitle</li>
 <li>NestedScrollView 中必须添加 <code>app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;</code> 属性之后，里面的内容才会位于 AppBarLayout 之下</li>
@@ -253,6 +277,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/archives/"
+              rel="noopener noreferrer"
               target="_self"
               >
               博客
@@ -263,6 +288,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/category/"
+              rel="noopener noreferrer"
               target="_self"
               >
               分类
@@ -273,6 +299,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/tag/"
+              rel="noopener noreferrer"
               target="_self"
               >
               标签
@@ -283,6 +310,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/about/"
+              rel="noopener noreferrer"
               target="_self"
               >
               关于
@@ -293,6 +321,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/atom.xml"
+              rel="noopener noreferrer"
               target="_blank"
               >
               RSS
@@ -303,6 +332,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/search/"
+              rel="noopener noreferrer"
               target="_self"
               >
               搜索

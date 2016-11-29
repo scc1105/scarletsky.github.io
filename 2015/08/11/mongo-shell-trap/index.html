@@ -53,7 +53,7 @@ js 脚本中不能包含 use 关键字，需要用 $ mongo mydb xxx.js 这样的
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+  <link href="/css/styles.css?v=d671a41f" rel="stylesheet">
 
 
   
@@ -77,6 +77,14 @@ ga('send', 'pageview');
 
   
 
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
 </head>
 
 <body>
@@ -100,6 +108,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/archives/"
+            rel="noopener noreferrer"
             target="_self"
             >
             博客
@@ -110,6 +119,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/category/"
+            rel="noopener noreferrer"
             target="_self"
             >
             分类
@@ -120,6 +130,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/tag/"
+            rel="noopener noreferrer"
             target="_self"
             >
             标签
@@ -130,6 +141,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/about/"
+            rel="noopener noreferrer"
             target="_self"
             >
             关于
@@ -140,6 +152,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/atom.xml"
+            rel="noopener noreferrer"
             target="_blank"
             >
             RSS
@@ -150,6 +163,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/search/"
+            rel="noopener noreferrer"
             target="_self"
             >
             搜索
@@ -203,6 +217,16 @@ ga('send', 'pageview');
         </span>
       
 
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
     </div>
   </header>
 
@@ -218,7 +242,7 @@ ga('send', 'pageview');
 <li><p>使用 <code>$set</code> 来设置数字时需要注意，mongo shell 默认会把所有数字类型的值转换成浮点型，如果你需要插入整形，你需要用 <code>NumberInt()</code> 或 <code>NumberLong()</code> 来代替。</p>
 </li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">$ mongo mydb test.js</div><div class="line"></div><div class="line"><span class="comment">// test.js</span></div><div class="line"><span class="keyword">var</span> users = db.users.find(&#123;&#125;);</div><div class="line">users.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">u</span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// not console.log(u._id) !!</span></div><div class="line">    <span class="comment">// use print instead of console!</span></div><div class="line">    print(u._id);</div><div class="line"></div><div class="line">    db.users.update(&#123;</div><div class="line">        _id: ObjectId(<span class="string">''</span> + u._id) <span class="comment">// make sure the params is string</span></div><div class="line">    &#125;, &#123;</div><div class="line">        $set: &#123;</div><div class="line">            money: NumberInt(<span class="number">100</span>) <span class="comment">// it will be int, not float.</span></div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">$ mongo mydb test.js</div><div class="line"></div><div class="line"><span class="comment">// test.js</span></div><div class="line"><span class="keyword">var</span> users = db.users.find(&#123;&#125;);</div><div class="line">users.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">u</span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// not console.log(u._id) !!</span></div><div class="line">    <span class="comment">// use print instead of console!</span></div><div class="line">    print(u._id);</div><div class="line"></div><div class="line">    db.users.update(&#123;</div><div class="line">        <span class="attr">_id</span>: ObjectId(<span class="string">''</span> + u._id) <span class="comment">// make sure the params is string</span></div><div class="line">    &#125;, &#123;</div><div class="line">        <span class="attr">$set</span>: &#123;</div><div class="line">            <span class="attr">money</span>: NumberInt(<span class="number">100</span>) <span class="comment">// it will be int, not float.</span></div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer" target="_blank" rel="external">http://stackoverflow.com/questions/8218484/mongodb-inserts-float-when-trying-to-insert-integer</a></p>
 <p><a href="http://docs.mongodb.org/manual/core/shell-types/" target="_blank" rel="external">http://docs.mongodb.org/manual/core/shell-types/</a></p>
 
@@ -273,6 +297,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/archives/"
+              rel="noopener noreferrer"
               target="_self"
               >
               博客
@@ -283,6 +308,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/category/"
+              rel="noopener noreferrer"
               target="_self"
               >
               分类
@@ -293,6 +319,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/tag/"
+              rel="noopener noreferrer"
               target="_self"
               >
               标签
@@ -303,6 +330,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/about/"
+              rel="noopener noreferrer"
               target="_self"
               >
               关于
@@ -313,6 +341,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/atom.xml"
+              rel="noopener noreferrer"
               target="_blank"
               >
               RSS
@@ -323,6 +352,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/search/"
+              rel="noopener noreferrer"
               target="_self"
               >
               搜索

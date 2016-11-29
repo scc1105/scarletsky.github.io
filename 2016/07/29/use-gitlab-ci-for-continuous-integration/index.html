@@ -35,7 +35,7 @@
     <link rel="icon" href="/favicon.ico">
   
 
-  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+  <link href="/css/styles.css?v=d671a41f" rel="stylesheet">
 
 
   
@@ -59,6 +59,14 @@ ga('send', 'pageview');
 
   
 
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
 </head>
 
 <body>
@@ -82,6 +90,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/archives/"
+            rel="noopener noreferrer"
             target="_self"
             >
             博客
@@ -92,6 +101,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/category/"
+            rel="noopener noreferrer"
             target="_self"
             >
             分类
@@ -102,6 +112,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/tag/"
+            rel="noopener noreferrer"
             target="_self"
             >
             标签
@@ -112,6 +123,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/about/"
+            rel="noopener noreferrer"
             target="_self"
             >
             关于
@@ -122,6 +134,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/atom.xml"
+            rel="noopener noreferrer"
             target="_blank"
             >
             RSS
@@ -132,6 +145,7 @@ ga('send', 'pageview');
           <a
             class="CIRCLE"
             href="/search/"
+            rel="noopener noreferrer"
             target="_self"
             >
             搜索
@@ -180,6 +194,16 @@ ga('send', 'pageview');
         </span>
       
 
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
     </div>
   </header>
 
@@ -188,7 +212,7 @@ ga('send', 'pageview');
       <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>从 GitLab 8.0 开始，GitLab CI 就已经集成在 GitLab 中，我们只要在项目中添加一个 <code>.gitlab-ci.yml</code> 文件，然后添加一个 Runner，即可进行持续集成。 而且随着 GitLab 的升级，GitLab CI 变得越来越强大，本文将介绍如何使用 GitLab CI 进行持续集成。</p>
 <h1 id="一些概念"><a href="#一些概念" class="headerlink" title="一些概念"></a>一些概念</h1><p>在介绍 GitLab CI 之前，我们先看看一些持续集成相关的概念。</p>
 <h2 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h2><p>一次 Pipeline 其实相当于一次构建任务，里面可以包含多个流程，如安装依赖、运行测试、编译、部署测试服务器、部署生产服务器等流程。<br>任何提交或者 Merge Request 的合并都可以触发 Pipeline，如下图所示：</p>
-<figure class="highlight gherkin"><table><tr><td class="code"><pre><div class="line">+------------------+           +----------------+</div><div class="line">|<span class="string">                  </span>|<span class="string">  trigger  </span>|<span class="string">                </span>|</div><div class="line">|<span class="string">   Commit / MR    +----------&gt;+    Pipeline    </span>|</div><div class="line">|<span class="string">                  </span>|<span class="string">           </span>|<span class="string">                </span>|</div><div class="line">+------------------+           +----------------+</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+------------------+           +----------------+</div><div class="line">|                  |  trigger  |                |</div><div class="line">|   Commit / MR    +----------&gt;+    Pipeline    |</div><div class="line">|                  |           |                |</div><div class="line">+------------------+           +----------------+</div></pre></td></tr></table></figure>
 <h2 id="Stages"><a href="#Stages" class="headerlink" title="Stages"></a>Stages</h2><p>Stages 表示构建阶段，说白了就是上面提到的流程。<br>我们可以在一次 Pipeline 中定义多个 Stages，这些 Stages 会有以下特点：</p>
 <ul>
 <li>所有 Stages 会按照顺序运行，即当一个 Stage 完成后，下一个 Stage 才会开始</li>
@@ -196,7 +220,7 @@ ga('send', 'pageview');
 <li>如果任何一个 Stage 失败，那么后面的 Stages 不会执行，该构建任务 (Pipeline) 失败</li>
 </ul>
 <p>因此，Stages 和 Pipeline 的关系就是：</p>
-<figure class="highlight gherkin"><table><tr><td class="code"><pre><div class="line">+--------------------------------------------------------+</div><div class="line">|<span class="string">                                                        </span>|</div><div class="line">|<span class="string">  Pipeline                                              </span>|</div><div class="line">|<span class="string">                                                        </span>|</div><div class="line">|<span class="string">  +-----------+     +------------+      +------------+  </span>|</div><div class="line">|<span class="string">  </span>|<span class="string">  Stage 1  </span>|<span class="string">----&gt;</span>|<span class="string">   Stage 2  </span>|<span class="string">-----&gt;</span>|<span class="string">   Stage 3  </span>|<span class="string">  </span>|</div><div class="line">|<span class="string">  +-----------+     +------------+      +------------+  </span>|</div><div class="line">|<span class="string">                                                        </span>|</div><div class="line">+--------------------------------------------------------+</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+--------------------------------------------------------+</div><div class="line">|                                                        |</div><div class="line">|  Pipeline                                              |</div><div class="line">|                                                        |</div><div class="line">|  +-----------+     +------------+      +------------+  |</div><div class="line">|  |  Stage 1  |----&gt;|   Stage 2  |-----&gt;|   Stage 3  |  |</div><div class="line">|  +-----------+     +------------+      +------------+  |</div><div class="line">|                                                        |</div><div class="line">+--------------------------------------------------------+</div></pre></td></tr></table></figure>
 <h2 id="Jobs"><a href="#Jobs" class="headerlink" title="Jobs"></a>Jobs</h2><p>Jobs 表示构建工作，表示某个 Stage 里面执行的工作。<br>我们可以在 Stages 里面定义多个 Jobs，这些 Jobs 会有以下特点：</p>
 <ul>
 <li>相同 Stage 中的 Jobs 会并行执行</li>
@@ -204,7 +228,7 @@ ga('send', 'pageview');
 <li>如果任何一个 Job 失败，那么该 Stage 失败，即该构建任务 (Pipeline) 失败</li>
 </ul>
 <p>所以，Jobs 和 Stage 的关系图就是：</p>
-<figure class="highlight gherkin"><table><tr><td class="code"><pre><div class="line">+------------------------------------------+</div><div class="line">|<span class="string">                                          </span>|</div><div class="line">|<span class="string">  Stage 1                                 </span>|</div><div class="line">|<span class="string">                                          </span>|</div><div class="line">|<span class="string">  +---------+  +---------+  +---------+   </span>|</div><div class="line">|<span class="string">  </span>|<span class="string">  Job 1  </span>|<span class="string">  </span>|<span class="string">  Job 2  </span>|<span class="string">  </span>|<span class="string">  Job 3  </span>|<span class="string">   </span>|</div><div class="line">|<span class="string">  +---------+  +---------+  +---------+   </span>|</div><div class="line">|<span class="string">                                          </span>|</div><div class="line">+------------------------------------------+</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+------------------------------------------+</div><div class="line">|                                          |</div><div class="line">|  Stage 1                                 |</div><div class="line">|                                          |</div><div class="line">|  +---------+  +---------+  +---------+   |</div><div class="line">|  |  Job 1  |  |  Job 2  |  |  Job 3  |   |</div><div class="line">|  +---------+  +---------+  +---------+   |</div><div class="line">|                                          |</div><div class="line">+------------------------------------------+</div></pre></td></tr></table></figure>
 <h1 id="GitLab-Runner"><a href="#GitLab-Runner" class="headerlink" title="GitLab Runner"></a>GitLab Runner</h1><h2 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h2><p>理解了上面的基本概念之后，有没有觉得少了些什么东西 —— 由谁来执行这些构建任务呢？<br>答案就是 GitLab Runner 了！</p>
 <p>想问为什么不是 GitLab CI 来运行那些构建任务？<br>一般来说，构建任务都会占用很多的系统资源 (譬如编译代码)，而 GitLab CI 又是 GitLab 的一部分，如果由 GitLab CI 来运行构建任务的话，在执行构建任务的时候，GitLab 的性能会大幅下降。</p>
 <p>GitLab CI 最大的作用是管理各个项目的构建状态，因此，运行构建任务这种浪费资源的事情就交给 GitLab Runner 来做拉！<br>因为 GitLab Runner 可以安装到不同的机器上，所以在构建任务运行期间并不会影响到 GitLab 的性能~</p>
@@ -314,6 +338,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/archives/"
+              rel="noopener noreferrer"
               target="_self"
               >
               博客
@@ -324,6 +349,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/category/"
+              rel="noopener noreferrer"
               target="_self"
               >
               分类
@@ -334,6 +360,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/tag/"
+              rel="noopener noreferrer"
               target="_self"
               >
               标签
@@ -344,6 +371,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/about/"
+              rel="noopener noreferrer"
               target="_self"
               >
               关于
@@ -354,6 +382,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/atom.xml"
+              rel="noopener noreferrer"
               target="_blank"
               >
               RSS
@@ -364,6 +393,7 @@ ga('send', 'pageview');
             <a
               class="CIRCLE"
               href="/search/"
+              rel="noopener noreferrer"
               target="_self"
               >
               搜索
