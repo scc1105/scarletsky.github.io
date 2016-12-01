@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-11-29T15:55:15.000Z</updated>
+  <updated>2016-12-01T14:17:54.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://scarletsky.github.io/2016/11/30/error-handling-in-restful-api/"/>
     <id>http://scarletsky.github.io/2016/11/30/error-handling-in-restful-api/</id>
     <published>2016-11-30T09:02:18.000Z</published>
-    <updated>2016-11-29T15:55:15.000Z</updated>
+    <updated>2016-12-01T14:17:54.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>随着移动开发和前端开发的崛起，越来越多的 Web 后端应用都倾向于实现 Restful API。<br>Restful API 是一个简单易用的前后端分离方案，它只需要对客户端请求进行处理，然后返回结果即可， 无需考虑页面渲染，一定程度上减轻了后端开发人员的负担。<br>然而，正是由于 Restful API 不需要考虑页面渲染，导致它不能在页面上展示错误信息。<br>那就意着当出现错误的时候，它只能通过返回一个错误的响应，来告诉用户和开发者相应的错误信息，提示他们接下来应该怎么办。<br>本文将讨论 Restful API 中的错误处理方案。</p>
 <h2 id="设计错误信息"><a href="#设计错误信息" class="headerlink" title="设计错误信息"></a>设计错误信息</h2><p>当 Restful API 需要抛出错误的时候，我们要考虑的是：这个错误应该包含哪些信息。<br>我们先看看 Github, Google, Facebook, Twitter, Twilio 的错误信息是怎样的。</p>
@@ -63,7 +63,7 @@
 </li>
 </ul>
 <p>尽管我们可以通过 Http 状态码来表示错误的类型，<br>但在实际应用中，如果仅仅使用 Http 状态码的话，我们的代码中就遍布 Http 状态码：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Node.j</span></div><div class="line"><span class="keyword">if</span> (!res.body.title) &#123;</div><div class="line">  res.statusCode = <span class="number">400</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (!user) &#123;</div><div class="line">  res.statusCode = <span class="number">401</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (!post) &#123;</div><div class="line">  res.statusCode = <span class="number">404</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Node.js</span></div><div class="line"><span class="keyword">if</span> (!res.body.title) &#123;</div><div class="line">  res.statusCode = <span class="number">400</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (!user) &#123;</div><div class="line">  res.statusCode = <span class="number">401</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (!post) &#123;</div><div class="line">  res.statusCode = <span class="number">404</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>上面的实现方式在小项目中还可以接受，当项目变大、需求变多的时候，维护起来就变得很麻烦了。<br>为了提高错误的可读性和可维护性，我们需要对各种错误进行分类。<br>我个人习惯把错误分成以下几种类型：</p>
 <ul>
 <li>格式错误 (FORMAT_INVALID)</li>
