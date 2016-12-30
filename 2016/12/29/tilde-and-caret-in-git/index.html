@@ -25,7 +25,7 @@ $ git log --graph --on">
 <meta property="og:description" content="简介在使用 Git 的时候，我们经常会看见 ~ 和 ^，如 HEAD~2, HEAD^3 等。初学者经常会对这些符号感到疑惑，本文将讨论这两个符号的用途。
 为何需要 ~ 和 ^不知道大家有没体会到，我们经常需要根据一个提交去查找它的祖先提交，如查找 HEAD 的第三个祖先提交。要找到对应的提交，我们可以直接通过 git log，然后手动选中第三个提交。
 $ git log --graph --on">
-<meta property="og:updated_time" content="2016-12-29T15:38:27.000Z">
+<meta property="og:updated_time" content="2016-12-30T12:17:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git 中的 ~ 和 ^">
 <meta name="twitter:description" content="简介在使用 Git 的时候，我们经常会看见 ~ 和 ^，如 HEAD~2, HEAD^3 等。初学者经常会对这些符号感到疑惑，本文将讨论这两个符号的用途。
@@ -236,7 +236,10 @@ ga('send', 'pageview');
 <p><code>&lt;rev&gt;^&lt;n&gt;</code> 用来表示一个提交的第 n 个父提交，如果不指定 n，那么默认为 1。<br>和 <code>~</code> 不同的是，<code>HEAD^^^</code> 并不等价于 <code>HEAD^3</code>，而是等价与 <code>HEAD^1^1^1</code>。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ git rev-parse HEAD~</div><div class="line">7a3fb3d (C)</div><div class="line"></div><div class="line">$ git rev-parse HEAD~^</div><div class="line">71bd2cf (A)</div><div class="line"></div><div class="line">$ git rev-parse HEAD~^0</div><div class="line">7a3fb3d (C)</div><div class="line"></div><div class="line">$ git rev-parse HEAD~^2</div><div class="line">07b920c (B)</div><div class="line"></div><div class="line">$ git rev-parse HEAD~^3</div><div class="line">fatal: ambiguous argument <span class="string">'HEAD~^3'</span>: unknown revision or path not <span class="keyword">in</span> the working tree.</div><div class="line"></div><div class="line">$ git rev-parse HEAD^2</div><div class="line">fatal: ambiguous argument <span class="string">'HEAD^2'</span>: unknown revision or path not <span class="keyword">in</span> the working tree.</div></pre></td></tr></table></figure>
 <h2 id="与-的关系"><a href="#与-的关系" class="headerlink" title="~ 与 ^ 的关系"></a>~ 与 ^ 的关系</h2><p>我们知道，<code>~</code> 获取第一个祖先提交，<code>^</code> 可以获取第一个父提交。<br>其实第一个祖先提交就是第一个父提交，反之亦然。<br>因此，当 n 为 1 时，<code>~</code> 和 <code>^</code> 其实是等价的。<br>譬如：<code>HEAD~~~</code> 和 <code>HEAD^^^</code> 是等价的。</p>
-<p>最后，放上一张 Jon Loeliger 在 <a href="https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html" target="_blank" rel="external">kernel.org</a> 中画的图：</p>
+<p>最后，引用 <a href="https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html" target="_blank" rel="external">kernel.org</a> 中非常形象的一段话：</p>
+<blockquote>
+<p>Here is an illustration, by Jon Loeliger. Both commit nodes B and C are parents of commit node A. Parent commits are ordered left-to-right.</p>
+</blockquote>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">G   H   I   J</div><div class="line"> \ /     \ /</div><div class="line">  D   E   F</div><div class="line">   \  |  / \</div><div class="line">    \ | /   |</div><div class="line">     \|/    |</div><div class="line">      B     C</div><div class="line">       \   /</div><div class="line">        \ /</div><div class="line">         A</div><div class="line">A =      = A^0</div><div class="line">B = A^   = A^1     = A~1</div><div class="line">C = A^2  = A^2</div><div class="line">D = A^^  = A^1^1   = A~2</div><div class="line">E = B^2  = A^^2</div><div class="line">F = B^3  = A^^3</div><div class="line">G = A^^^ = A^1^1^1 = A~3</div><div class="line">H = D^2  = B^^2    = A^^^2  = A~2^2</div><div class="line">I = F^   = B^3^    = A^^3^</div><div class="line">J = F^2  = B^3^2   = A^^3^2</div></pre></td></tr></table></figure>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://stackoverflow.com/questions/2221658/whats-the-difference-between-head-and-head-in-git" target="_blank" rel="external">http://stackoverflow.com/questions/2221658/whats-the-difference-between-head-and-head-in-git</a><br><a href="https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html" target="_blank" rel="external">https://www.kernel.org/pub/software/scm/git/docs/git-rev-parse.html</a></p>
 
