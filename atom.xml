@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2016-12-30T12:17:33.000Z</updated>
+  <updated>2017-01-30T16:11:46.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,6 +14,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>用 JavaScript 构建事件系统</title>
+    <link href="http://scarletsky.github.io/2017/01/30/build-your-own-event-system-in-javascript/"/>
+    <id>http://scarletsky.github.io/2017/01/30/build-your-own-event-system-in-javascript/</id>
+    <published>2017-01-30T00:30:21.000Z</published>
+    <updated>2017-01-30T16:11:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在组件化开发越来越流行的今天，事件系统演者着非常重要的角色，它经常作为组件间通讯的桥梁。<br>本文将讨论如何用 JavaScript 实现一个简单的事件系统。</p>
+<h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><p>我们先回想一下使用事件系统的方式。<br>通常，我们要先通过 <code>.on</code> / <code>.listen</code> 方法注册为一个事件注册一个回调函数。<br>然后调用 <code>.emit</code> / <code>.fire</code> 来触发一个事件，该事件对应的回调函数就会一一触发。<br>这样就是我们平常使用的事件系统的工作方式。</p>
+<p>事件系统本质上是一个键值对的合集，一个事件名对应多个函数。<br>在 JavaScript 中，我们很容易用一个 <code>Object</code> 来模拟这种行为。如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">ADD_ENTITY</span>: [fn1, fn2, fn3],</div><div class="line">  <span class="attr">REMOVE_ENTITY</span>: [fn4],</div><div class="line">  <span class="attr">UPDATE_ENTITY</span>: [fn5, fn6]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的结构表示有三个事件：<code>ADD_ENTITY</code>, <code>REMOVE_ENTITY</code>, <code>UPDATE_ENTITY</code>，它们对应了一些回调函数。<br>当 <code>ADD_ENTITY</code> 触发的时候，<code>fn1</code>, <code>fn2</code>, <code>fn3</code> 都会依次调用，如此类推。</p>
+<h2 id="on-amp-off-amp-emit"><a href="#on-amp-off-amp-emit" class="headerlink" title="on &amp; off &amp; emit"></a>on &amp; off &amp; emit</h2><p>接下来我们将利用上述的结构来实现事件系统。其中最基本的三个操作是：</p>
+<ul>
+<li><code>on</code> 监听事件</li>
+<li><code>off</code> 移除事件</li>
+<li><code>emit</code> 触发事件</li>
+</ul>
+<p>按照上述的结构，我们很容易可以写出如下的代码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventEmitter</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>() &#123;</div><div class="line">    <span class="keyword">this</span>._events = &#123;&#125;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  on(event, callback) &#123;</div><div class="line">    <span class="keyword">let</span> callbacks = <span class="keyword">this</span>._events[event] || [];</div><div class="line">    callbacks.push(callback);</div><div class="line">    <span class="keyword">this</span>._events[event] = callbacks;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  off(event) &#123;</div><div class="line">    <span class="keyword">delete</span> <span class="keyword">this</span>._events[event]</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  emit(event) &#123;</div><div class="line">    <span class="keyword">let</span> callbacks = <span class="keyword">this</span>._events[event];</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!callbacks || callbacks.length === <span class="number">0</span>) &#123;</div><div class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'You should register listener for event '</span> + event);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">let</span> args = [].slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>);</div><div class="line">    callbacks.forEach(<span class="function"><span class="params">fn</span> =&gt;</span> fn.apply(<span class="keyword">this</span>, args));</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的代码非常简单，<code>on</code> 和 <code>off</code> 只是在操作 <code>Object</code>，为其添加、更新或删除一些键值对。<br>而 <code>emit</code> 方法只是根据给定的事件名来调用它相关的回调函数。</p>
+<p>这样，我们就实现了一个简单的事件系统：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> ee = <span class="keyword">new</span> EventEmitter();</div><div class="line">ee.on(<span class="string">'TEST1'</span>, (x) =&gt; <span class="built_in">console</span>.log(<span class="string">'In test1, x is: '</span>, x));</div><div class="line">ee.on(<span class="string">'TEST2'</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'In test2'</span>));</div><div class="line">ee.on(<span class="string">'TEST2'</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'In test2 again'</span>));</div><div class="line"></div><div class="line">ee.emit(<span class="string">'TEST1'</span>, <span class="number">1</span>);</div><div class="line"><span class="comment">// In test1, x is:  1</span></div><div class="line"></div><div class="line">ee.emit(<span class="string">'TEST2'</span>);</div><div class="line"><span class="comment">// In test2</span></div><div class="line"><span class="comment">// In test2 again</span></div><div class="line"></div><div class="line">ee.off(<span class="string">'TEST1'</span>);</div><div class="line">ee.off(<span class="string">'TEST2'</span>);</div><div class="line"><span class="built_in">console</span>.log(ee._events);</div><div class="line"><span class="comment">// &#123;&#125;</span></div></pre></td></tr></table></figure>
+<h2 id="once"><a href="#once" class="headerlink" title="once"></a>once</h2><p>有些时候，我们需要指定某些回调函数只触发一次。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://corcoran.io/2013/06/01/building-a-minimal-javascript-event-system/" target="_blank" rel="external">https://corcoran.io/2013/06/01/building-a-minimal-javascript-event-system/</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;在组件化开发越来越流行的今天，事件系统演者着非常重要的角色，它经常作为组件间通讯的桥梁。&lt;br&gt;本文将讨论如何用 JavaScript 实现
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
+  </entry>
   
   <entry>
     <title>Git 中的 ~ 和 ^</title>
@@ -1833,92 +1873,6 @@
       <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
     
       <category term="functor" scheme="http://scarletsky.github.io/tags/functor/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>「译」 Haskell 中随机数的使用</title>
-    <link href="http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/"/>
-    <id>http://scarletsky.github.io/2016/02/06/random-numbers-in-haskell/</id>
-    <published>2016-02-06T09:35:18.000Z</published>
-    <updated>2016-07-16T12:15:46.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 <code>System.Random</code> 库）是伴随着状态的传递的。 </p>
-<p>大部分需要获得帮助的人都有命令式编程的背景，因此，我会先用命令式的方式，然后再用函数式的方式来教大家在 Haskell 中使用随机数。</p>
-<h2 id="任务"><a href="#任务" class="headerlink" title="任务"></a>任务</h2><p>我会生成满足以下条件的随机列表：</p>
-<ul>
-<li>列表长度是 1 到 7 </li>
-<li>列表中的每一项都是 0.0 到 1.0 之间的浮点数</li>
-</ul>
-<h2 id="命令式"><a href="#命令式" class="headerlink" title="命令式"></a>命令式</h2><p>在 IO monad 中有一个全局的生成器，你可以初始化它，然后获取随机数。下面有一些常用的函数：</p>
-<h3 id="setStdGen-StdGen-gt-IO"><a href="#setStdGen-StdGen-gt-IO" class="headerlink" title="setStdGen :: StdGen -&gt; IO ()"></a><code>setStdGen :: StdGen -&gt; IO ()</code></h3><p>初始化或者设置全局生成器，我们可以用 <code>mkStdGen</code> 来生成随机种子。因此，有一个很傻瓜式的用法：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">setStdGen</span> (mkStdGen <span class="number">42</span>)</div></pre></td></tr></table></figure>
-<p>当然，你可以用任意的 <code>Int</code> 来替换 <code>42</code>。</p>
-<p>其实，你可以选择是否调用 <code>setStdGen</code>，如果你不调用的话，全局的生成器还是可用的。因为在 runtime 会在启动的时候用一个任意的种子去初始化它，所以每次启动的时候，都会有一个不同的种子。</p>
-<h3 id="randomRIO-Random-a-gt-a-a-gt-IO-a"><a href="#randomRIO-Random-a-gt-a-a-gt-IO-a" class="headerlink" title="randomRIO :: (Random a) =&gt; (a,a) -&gt; IO a"></a><code>randomRIO :: (Random a) =&gt; (a,a) -&gt; IO a</code></h3><p>在给定范围随机返回一个类型为 <code>a</code> 的值，同时全局生成器也会更新。你可以通过一个元组来指定范围。下面这个例子会返回 <code>a</code> 到 <code>z</code> 之间的随机值（包含 <code>a</code> 和 <code>z</code>）：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">c</span> &lt;- randomRIO ('a', 'z')</div></pre></td></tr></table></figure>
-<p><code>a</code> 可以是任意类型吗？并非如此。在 Haskell 98 标准中， <code>Random</code> 库只支持 <code>Bool</code>, <code>Char</code>,  <code>Int</code>, <code>Integer</code>, <code>Float</code>, <code>Double</code>（你可以自己去扩展这个支持的范围，但这是另外一个话题了）。</p>
-<h3 id="randomIO-Random-a-gt-IO-a"><a href="#randomIO-Random-a-gt-IO-a" class="headerlink" title="randomIO :: (Random a) =&gt; IO a"></a><code>randomIO :: (Random a) =&gt; IO a</code></h3><p>返回一个类型为 <code>a</code> 的随机数（<code>a</code> 可以是任意类型吗？看上文），全局的生成器也会更新。下面这个例子会返回一个 <code>Double</code> 类型的随机数：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">x</span> &lt;- randomIO :: <span class="type">IO</span> <span class="type">Double</span></div></pre></td></tr></table></figure>
-<p>随机数返回的范围由类型决定。</p>
-<p>需要注意的是，这些都是 IO 函数，因此你只可以在 IO 函数中使用它们。换句话说，如果你写了一个要使用它们的函数，它的返回类型也会变成是 IO 函数。</p>
-<p>举个例子，上面提到的代码片段都要写在 <code>do block</code> 中。这只是一个提醒，因为我们想要用命令式的方式来生成随机数。</p>
-<p>下面这个例子展示如何在 IO monad 中完成之前的任务：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> System.Random</div><div class="line"></div><div class="line"><span class="title">main</span> = <span class="keyword">do</span></div><div class="line">    setStdGen (mkStdGen <span class="number">42</span>)  <span class="comment">-- 这步是可选的，如果有这一步，你每一次运行的结果都是一样的，因为随机种子固定是 42</span></div><div class="line">    s &lt;- randomStuff</div><div class="line">    print s</div><div class="line"></div><div class="line"><span class="title">randomStuff</span> :: <span class="type">IO</span> [<span class="type">Float</span>]</div><div class="line"><span class="title">randomStuff</span> = <span class="keyword">do</span></div><div class="line">    n &lt;- randomRIO (<span class="number">1</span>, <span class="number">7</span>)</div><div class="line">    sequence (replicate n (randomRIO (<span class="number">0</span>, <span class="number">1</span>)))</div></pre></td></tr></table></figure>
-<h2 id="纯函数式"><a href="#纯函数式" class="headerlink" title="纯函数式"></a>纯函数式</h2><p>你可能有以下原因想知道如何用函数式的方式生成随机数：</p>
-<ul>
-<li>你有好奇心</li>
-<li>你不想用 IO monad</li>
-<li>因为一些并发或者其他原因，你想几个生成器同时存在，共享全局生成器不能解决你的问题</li>
-</ul>
-<p>实际上，有两种方法来用函数式的方式去生成随机数：</p>
-<ul>
-<li>从 stream（无限列表） 中提取随机数</li>
-<li>把生成器当成函数参数的一部分，然后返回随机数</li>
-</ul>
-<p>这里有一些常用的函数用来创建生成器和包含随机数的无限列表。</p>
-<h3 id="mkStdGen-Int-gt-StdGen"><a href="#mkStdGen-Int-gt-StdGen" class="headerlink" title="mkStdGen :: Int -&gt; StdGen"></a><code>mkStdGen :: Int -&gt; StdGen</code></h3><p>用随机种子创建生成器。</p>
-<h3 id="randomRs-Random-a-RandomGen-g-gt-a-a-gt-g-gt-a"><a href="#randomRs-Random-a-RandomGen-g-gt-a-a-gt-g-gt-a" class="headerlink" title="randomRs :: (Random a, RandomGen g) =&gt; (a, a) -&gt; g -&gt; [a]"></a><code>randomRs :: (Random a, RandomGen g) =&gt; (a, a) -&gt; g -&gt; [a]</code></h3><p>用生成器生成给定范围的无限列表。例子：用 <code>42</code> 作为随机种子，返回 <code>a</code> 到 <code>z</code> 之间包含 <code>a</code> 和 <code>z</code> 的无限列表：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">randomRs</span> ('a', 'z') (mkStdGen <span class="number">42</span>)</div></pre></td></tr></table></figure>
-<p>类型 <code>a</code> 是随机数的类型。类型 <code>g</code> 看起来是通用的，但实际上它总是 <code>StdGen</code>。</p>
-<h3 id="randoms-Random-a-RandomGen-g-gt-g-gt-a"><a href="#randoms-Random-a-RandomGen-g-gt-g-gt-a" class="headerlink" title="randoms :: (Random a, RandomGen g) =&gt; g -&gt; [a]"></a><code>randoms :: (Random a, RandomGen g) =&gt; g -&gt; [a]</code></h3><p>用给定的生成器生成随机数的无限列表。例如：用 <code>42</code> 作为随机种子生成 <code>Double</code> 类型的列表：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">randoms</span> (mkStdGen <span class="number">42</span>) :: [<span class="type">Double</span>]</div></pre></td></tr></table></figure>
-<p>随机数的范围由类型决定，你需要查文档来确定具体范围，或者直接用 <code>randomRs</code>。</p>
-<p>注意，这些都是函数式的 —— 意味着这里面没有副作用，特别是生成器并不会更新。如果你用一个生成器去生成第一个列表，然后用相同的生成器去生成第二个列表…</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">g</span> = mkStdGen <span class="number">42</span></div><div class="line"><span class="title">a</span> = randoms g :: [<span class="type">Double</span>]</div><div class="line"><span class="title">b</span> = randoms g :: [<span class="type">Double</span>]</div></pre></td></tr></table></figure>
-<p>猜猜结果，由于透明引用，这两个列表的结果是一样的！（如果你想用一个随机种子来生成两个不同的列表，我等下告诉你一个方法）。</p>
-<p>下面一种方法来完成创建 <code>1</code> 到 <code>7</code> 的随机列表：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> System.Random</div><div class="line"></div><div class="line"><span class="title">main</span> = <span class="keyword">do</span></div><div class="line">    <span class="keyword">let</span> g   = mkStdGen <span class="number">42</span></div><div class="line">    <span class="keyword">let</span> [s] = take <span class="number">1</span> (randomStuff g)</div><div class="line">    print s</div><div class="line"></div><div class="line"><span class="title">randomStuff</span> :: <span class="type">RandomGen</span> g =&gt; g -&gt; [[<span class="type">Float</span>]]</div><div class="line"><span class="title">randomStuff</span> g = work (randomRs (<span class="number">0.0</span>, <span class="number">1.0</span>) g)</div><div class="line"></div><div class="line"><span class="title">work</span> :: [<span class="type">Float</span>] -&gt; [[<span class="type">Float</span>]]</div><div class="line"><span class="title">work</span> (r:rs)      =</div><div class="line">    <span class="keyword">let</span> n        = truncate (r * <span class="number">7.0</span>) + <span class="number">1</span></div><div class="line">        (xs, ys) = splitAt n rs</div><div class="line">    <span class="keyword">in</span> xs : work ys</div></pre></td></tr></table></figure>
-<p>除了必要的打印操作外，这是纯函数式的。它用生成器生成了无限列表，然后再用这个无限列表来生成另一个无限列表作为答案，最后取第一个作为返回值。</p>
-<p>我这样做是因为尽管我们今天的人物是生成一个随机数，但你通常会需要很多个，我希望这个例子可以对你有点帮助。</p>
-<p>上面的代码的工作原理是：用一个生成器，创建一个包含 <code>Float</code> 的无限列表。截取第一个值，并扩大这个值到 <code>1</code> 到 <code>7</code>，然后用剩下的列表来生成答案。换句话说，把输入的列表分成 <code>(r:rs)</code>，<code>r</code> 决定生成列表的长度（<code>1</code> 到 <code>7</code>），<code>rs</code> 之后会被计算答案。</p>
-<h3 id="split-RandomGen-g-gt-g-gt-g-g"><a href="#split-RandomGen-g-gt-g-gt-g-g" class="headerlink" title="split :: (RandomGen g) =&gt; g -&gt; (g, g)"></a><code>split :: (RandomGen g) =&gt; g -&gt; (g, g)</code></h3><p>用一个随机种子创建两个不同的生成器，其他情况下重用相同的种子是不明智的。</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">g</span> = mkStdGen <span class="number">42</span></div><div class="line">(ga, gb) = split g</div><div class="line"><span class="comment">-- do not use g elsewhere</span></div></pre></td></tr></table></figure>
-<p>如果你想创建多余两个的生成器，你可以对新的生成器中的其中一个使用 <code>split</code>：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">g</span> = mkStdGen <span class="number">42</span></div><div class="line">(ga, g') = split g</div><div class="line">(gb, gc) = split g'</div><div class="line"><span class="comment">-- do not use g, g' elsewhere</span></div></pre></td></tr></table></figure>
-<p>我们可以用 <code>split</code> 来获得两个生成器，这样我们就可以产生两个随机列表了。</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">randomStuff</span> :: <span class="type">RandomGen</span> g =&gt; g -&gt; [[<span class="type">Float</span>]]</div><div class="line"><span class="title">randomStuff</span> g = work (randomRs (<span class="number">1</span>, <span class="number">7</span>) ga) (randomRs (<span class="number">0.0</span>, <span class="number">1.0</span>) gb)</div><div class="line">    <span class="keyword">where</span> (ga,gb) = split g</div><div class="line"></div><div class="line"><span class="title">work</span> :: [<span class="type">Int</span>] -&gt; [<span class="type">Float</span>] -&gt; [[<span class="type">Float</span>]]</div><div class="line"><span class="title">work</span> (n:ns) rs =</div><div class="line">    <span class="keyword">let</span> (xs,ys) = splitAt n rs</div><div class="line">    <span class="keyword">in</span> xs : work ns ys</div></pre></td></tr></table></figure>
-<p>它把生成器分成两个，然后产生两个列表。</p>
-<p>我在主程序中硬编码了随机种子。正常情况下你可以在其他地方获取随机种子 —— 从输入中获取，从文件中获取，从时间上获取，或者从某些设备中获取。</p>
-<p>这些在主程序中都是 do-able 的，因为它们都可以在 IO monad 中访问。</p>
-<p>你也可以通过 <code>getStdGen</code> 获取全局生成器：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">main</span> = <span class="keyword">do</span></div><div class="line">    g &lt;- getStdGen</div><div class="line">    <span class="keyword">let</span> [s] = take randomStuff g</div><div class="line">    print s</div></pre></td></tr></table></figure>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://www.vex.net/~trebla/haskell/random.xhtml" target="_blank" rel="external">原文</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;随机数（我指的是伪随机数）是通过显式或隐式的状态来生成的。这意味着在 Haskell 中，随机数的使用（通过 &lt;code&gt;System.Random&lt;/code&gt; 库）是伴随着状态的传递的。 &lt;/p&gt;
-&lt;p&gt;大部分需要获得帮助的人都有命令式编程的背景，因此，我会先用命令式的
-    
-    </summary>
-    
-      <category term="haskell" scheme="http://scarletsky.github.io/categories/haskell/"/>
-    
-    
-      <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
-    
-      <category term="random" scheme="http://scarletsky.github.io/tags/random/"/>
     
   </entry>
   
