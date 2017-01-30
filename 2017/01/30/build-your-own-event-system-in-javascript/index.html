@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Scarletsky">
 <meta property="og:description" content="简介在组件化开发越来越流行的今天，事件系统演者着非常重要的角色，它经常作为组件间通讯的桥梁。本文将讨论如何用 JavaScript 实现一个简单的事件系统。
 基本结构我们先回想一下使用事件系统的方式。通常，我们要先通过 .on / .listen 方法注册为一个事件注册一个回调函数。然后调用 .emit / .fire 来触发一个事件，该事件对应的回调函数就会一一触发。这样就是我们平常使用的事件系">
-<meta property="og:updated_time" content="2017-01-30T16:12:22.000Z">
+<meta property="og:updated_time" content="2017-01-30T16:17:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用 JavaScript 构建事件系统">
 <meta name="twitter:description" content="简介在组件化开发越来越流行的今天，事件系统演者着非常重要的角色，它经常作为组件间通讯的桥梁。本文将讨论如何用 JavaScript 实现一个简单的事件系统。
@@ -161,7 +161,7 @@ ga('send', 'pageview');
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本结构"><span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#on-amp-off-amp-emit"><span class="toc-text">on & off & emit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#once"><span class="toc-text">once</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本结构"><span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#on-amp-off-amp-emit"><span class="toc-text">on & off & emit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
   </div>
 
 
@@ -230,7 +230,6 @@ ga('send', 'pageview');
 <p>上面的代码非常简单，<code>on</code> 和 <code>off</code> 只是在操作 <code>Object</code>，为其添加、更新或删除一些键值对。<br>而 <code>emit</code> 方法只是根据给定的事件名来调用它相关的回调函数。</p>
 <p>这样，我们就实现了一个简单的事件系统：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> ee = <span class="keyword">new</span> EventEmitter();</div><div class="line">ee.on(<span class="string">'TEST1'</span>, (x) =&gt; <span class="built_in">console</span>.log(<span class="string">'In test1, x is: '</span>, x));</div><div class="line">ee.on(<span class="string">'TEST2'</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'In test2'</span>));</div><div class="line">ee.on(<span class="string">'TEST2'</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'In test2 again'</span>));</div><div class="line"></div><div class="line">ee.emit(<span class="string">'TEST1'</span>, <span class="number">1</span>);</div><div class="line"><span class="comment">// In test1, x is:  1</span></div><div class="line"></div><div class="line">ee.emit(<span class="string">'TEST2'</span>);</div><div class="line"><span class="comment">// In test2</span></div><div class="line"><span class="comment">// In test2 again</span></div><div class="line"></div><div class="line">ee.off(<span class="string">'TEST1'</span>);</div><div class="line">ee.off(<span class="string">'TEST2'</span>);</div><div class="line"><span class="built_in">console</span>.log(ee._events);</div><div class="line"><span class="comment">// &#123;&#125;</span></div></pre></td></tr></table></figure>
-<h2 id="once"><a href="#once" class="headerlink" title="once"></a>once</h2><p>有些时候，我们需要指定某些回调函数只触发一次。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://corcoran.io/2013/06/01/building-a-minimal-javascript-event-system/" target="_blank" rel="external">https://corcoran.io/2013/06/01/building-a-minimal-javascript-event-system/</a></p>
 
     
