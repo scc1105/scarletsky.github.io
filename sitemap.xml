@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/</loc>
+    
+    <lastmod>2017-02-21T16:22:19.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://scarletsky.github.io/2017/01/30/build-your-own-event-system-in-javascript/</loc>
     
     <lastmod>2017-01-31T15:48:25.000Z</lastmod>

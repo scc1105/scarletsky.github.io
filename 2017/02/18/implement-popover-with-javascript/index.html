@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何用 JavaScript 实现 Popover | Scarletsky</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="javascript," />
+  
+
+  <meta name="description" content="简介Popover 是我们日常开发中用得比较多的组件，通常用于给定一个触发元素，当某特定事件 (hover, click等) 在该元素上触发时，弹出相关的菜单供用户选择。
+目标我们的 Popover 需要实现如下特性：
+
+点击触发元素时，Popover 出现/消失
+点击 Popover 内部时，Popover 不消失
+点击 Popover 外部时(不包含触发元素)，Popover 消失
+
+先看如下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何用 JavaScript 实现 Popover">
+<meta property="og:url" content="http://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/index.html">
+<meta property="og:site_name" content="Scarletsky">
+<meta property="og:description" content="简介Popover 是我们日常开发中用得比较多的组件，通常用于给定一个触发元素，当某特定事件 (hover, click等) 在该元素上触发时，弹出相关的菜单供用户选择。
+目标我们的 Popover 需要实现如下特性：
+
+点击触发元素时，Popover 出现/消失
+点击 Popover 内部时，Popover 不消失
+点击 Popover 外部时(不包含触发元素)，Popover 消失
+
+先看如下">
+<meta property="og:updated_time" content="2017-02-21T16:22:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何用 JavaScript 实现 Popover">
+<meta name="twitter:description" content="简介Popover 是我们日常开发中用得比较多的组件，通常用于给定一个触发元素，当某特定事件 (hover, click等) 在该元素上触发时，弹出相关的菜单供用户选择。
+目标我们的 Popover 需要实现如下特性：
+
+点击触发元素时，Popover 出现/消失
+点击 Popover 内部时，Popover 不消失
+点击 Popover 外部时(不包含触发元素)，Popover 消失
+
+先看如下">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-40690820-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目标"><span class="toc-text">目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监听-document-中的-click-事件"><span class="toc-text">监听 document 中的 click 事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用-tabindex-focus-blur"><span class="toc-text">利用 tabindex + focus + blur</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-implement-popover-with-javascript" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">如何用 JavaScript 实现 Popover</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.02.18</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Scarletsky</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Popover 是我们日常开发中用得比较多的组件，通常用于给定一个触发元素，当某特定事件 (<code>hover</code>, <code>click</code>等) 在该元素上触发时，弹出相关的菜单供用户选择。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>我们的 Popover 需要实现如下特性：</p>
+<ul>
+<li>点击触发元素时，Popover 出现/消失</li>
+<li>点击 Popover 内部时，Popover 不消失</li>
+<li>点击 Popover 外部时(不包含触发元素)，Popover 消失</li>
+</ul>
+<p>先看如下的 HTML 结构和 CSS 代码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"trigger"</span>&gt;</span>click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"popover"</span> <span class="attr">class</span>=<span class="string">"popover"</span>&gt;</span></div><div class="line">    i am popover</div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"hide"</span>&gt;</span>hide popover<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-class">.popover</span> &#123;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">10px</span>;</div><div class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</div><div class="line">  <span class="attribute">display</span>: none;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.popover</span><span class="selector-class">.show</span> &#123;</div><div class="line">  <span class="attribute">display</span>: block;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这是一个基本的 Popover 的 HTML 结构和用来实现出现/消失的 CSS，再添加一些 JavaScript 代码，我们就能实现一个 Popover 了。<br>实现 Popover 中最麻烦的是上面提到的最后一点，即： 如何判断点击事件是发生在 Popover 内部还是外部。<br>对于这个问题，常见的有两种解法：</p>
+<ul>
+<li>监听 document 中的 click 事件</li>
+<li>利用 tabindex + focus + blur</li>
+</ul>
+<h2 id="监听-document-中的-click-事件"><a href="#监听-document-中的-click-事件" class="headerlink" title="监听 document 中的 click 事件"></a>监听 document 中的 click 事件</h2><p>一种常见的方式是在 <code>document</code> 中添加事件监听器，用 <code>e.target</code> 来判断点击是否发生在 Popover 内部。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> isVisible = <span class="literal">false</span>;</div><div class="line"><span class="keyword">var</span> trigger = <span class="built_in">document</span>.getElementById(<span class="string">'trigger'</span>);</div><div class="line"><span class="keyword">var</span> hide = <span class="built_in">document</span>.getElementById(<span class="string">'hide'</span>);</div><div class="line"><span class="keyword">var</span> popover = <span class="built_in">document</span>.getElementById(<span class="string">'popover'</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showPopover</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  isVisible = <span class="literal">true</span>;</div><div class="line">  popover.classList.add(<span class="string">'show'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hidePopover</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  isVisible = <span class="literal">false</span>;</div><div class="line">  popover.classList.remove(<span class="string">'show'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">togglePopover</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (isVisible) &#123;</div><div class="line">    hidePopover();</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    showPopover();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">trigger.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  e.stopPropagation();</div><div class="line">  togglePopover();</div><div class="line">&#125;);</div><div class="line"></div><div class="line">hide.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  hidePopover();</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (isVisible &amp;&amp;</div><div class="line">      e.target !== popover &amp;&amp;</div><div class="line">      e.target.parentElement !== popover</div><div class="line">  ) &#123;</div><div class="line">    hidePopover();</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面的实现虽然非常简单，但有一点需要注意的：<br>由于我们是在 <code>document</code> 中来监听 <code>click</code> 是否触发在 Popover 外部的，而触发元素也是在 Popover 之外，由事件冒泡的流程可以知道，浏览器会先调用触发元素中的函数，再调用 <code>document</code> 中的函数，这样一来 Popover 就不会显示了。所以我们需要调用 <code>e.stopPropagation</code> 来告诉浏览器不在派发事件。</p>
+<h2 id="利用-tabindex-focus-blur"><a href="#利用-tabindex-focus-blur" class="headerlink" title="利用 tabindex + focus + blur"></a>利用 tabindex + focus + blur</h2><p>这种方式是利用 <code>tabindex</code> 让 Popover 能够响应 <code>focus</code> 和 <code>blur</code> 事件。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"trigger"</span>&gt;</span>click<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"popover2"</span> <span class="attr">class</span>=<span class="string">"popover"</span> <span class="attr">tabindex</span>=<span class="string">"0"</span>&gt;</span></div><div class="line">    i am popover</div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"close"</span>&gt;</span>close<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-id">#popover2</span> &#123;</div><div class="line">  <span class="attribute">outline</span>: none;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> trigger = <span class="built_in">document</span>.getElementById(<span class="string">'trigger'</span>);</div><div class="line"><span class="keyword">var</span> popover = <span class="built_in">document</span>.getElementById(<span class="string">'popover2'</span>);</div><div class="line"><span class="keyword">var</span> hide = <span class="built_in">document</span>.getElementById(<span class="string">'hide'</span>);</div><div class="line"><span class="keyword">var</span> shouldTriggerBlur = <span class="literal">true</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showPopover</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  popover.classList.add(<span class="string">'show'</span>);</div><div class="line">  popover.focus();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hidePopover</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  shouldTriggerBlur = <span class="literal">true</span>;</div><div class="line">  popover.classList.remove(<span class="string">'show'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">trigger.addEventListener(<span class="string">'click'</span>, showPopover);</div><div class="line"></div><div class="line">hide.addEventListener(<span class="string">'click'</span>, hidePopover);</div><div class="line"></div><div class="line">popover.addEventListener(<span class="string">'blur'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (shouldTriggerBlur) &#123;</div><div class="line">    hidePopover();</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">popover.addEventListener(<span class="string">'mousedown'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (e.target === hide) &#123;</div><div class="line">    shouldTriggerBlur = <span class="literal">false</span>;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>当点击触发元素时，调用 Popover 的 <code>focus</code> 方法，这样如果鼠标点击 Popover 外部时，就能自动触发 <code>blur</code> 事件了。<br>有一点是需要注意的：如果 Popover 中有其他可以响应 <code>click</code> 事件的元素 (如 <code>&lt;button /&gt;</code>)，当我们点击这些元素时，会先触发 Popover 的 <code>blur</code> 事件，这时候 Popover 已经隐藏了，那么 Popover 中的 <code>&lt;button /&gt;</code> 自然就点击不到了。<br>因此，上面的例子中，我用了一个 <code>shouldTriggerBlur</code> 变量来判断是否需要触发 <code>blur</code> 事件。</p>
+<p>另外，这种实现有一个缺陷：在 Popover 出现后再点击触发元素，Popover 并不会消失。原因和刚才提到的一样，因为 <code>blur</code> 事件比 <code>click</code> 先触发。</p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持 scarletsky</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/01/30/build-your-own-event-system-in-javascript/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'scarletskygithubio';
+    
+    var disqus_url = 'http://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//scarletskygithubio.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

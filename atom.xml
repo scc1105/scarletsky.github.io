@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2017-01-31T15:48:25.000Z</updated>
+  <updated>2017-02-21T16:22:19.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何用 JavaScript 实现 Popover</title>
+    <link href="http://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/"/>
+    <id>http://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/</id>
+    <published>2017-02-18T08:21:21.000Z</published>
+    <updated>2017-02-21T16:22:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Popover 是我们日常开发中用得比较多的组件，通常用于给定一个触发元素，当某特定事件 (<code>hover</code>, <code>click</code>等) 在该元素上触发时，弹出相关的菜单供用户选择。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>我们的 Popover 需要实现如下特性：</p>
+<ul>
+<li>点击触发元素时，Popover 出现/消失</li>
+<li>点击 Popover 内部时，Popover 不消失</li>
+<li>点击 Popover 外部时(不包含触发元素)，Popover 消失</li>
+</ul>
+<p>先看如下的 HTML 结构和 CSS 代码：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"trigger"</span>&gt;</span>click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"popover"</span> <span class="attr">class</span>=<span class="string">"popover"</span>&gt;</span></div><div class="line">    i am popover</div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"hide"</span>&gt;</span>hide popover<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-class">.popover</span> &#123;</div><div class="line">  <span class="attribute">padding</span>: <span class="number">10px</span>;</div><div class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid black;</div><div class="line">  <span class="attribute">display</span>: none;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-class">.popover</span><span class="selector-class">.show</span> &#123;</div><div class="line">  <span class="attribute">display</span>: block;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这是一个基本的 Popover 的 HTML 结构和用来实现出现/消失的 CSS，再添加一些 JavaScript 代码，我们就能实现一个 Popover 了。<br>实现 Popover 中最麻烦的是上面提到的最后一点，即： 如何判断点击事件是发生在 Popover 内部还是外部。<br>对于这个问题，常见的有两种解法：</p>
+<ul>
+<li>监听 document 中的 click 事件</li>
+<li>利用 tabindex + focus + blur</li>
+</ul>
+<h2 id="监听-document-中的-click-事件"><a href="#监听-document-中的-click-事件" class="headerlink" title="监听 document 中的 click 事件"></a>监听 document 中的 click 事件</h2><p>一种常见的方式是在 <code>document</code> 中添加事件监听器，用 <code>e.target</code> 来判断点击是否发生在 Popover 内部。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> isVisible = <span class="literal">false</span>;</div><div class="line"><span class="keyword">var</span> trigger = <span class="built_in">document</span>.getElementById(<span class="string">'trigger'</span>);</div><div class="line"><span class="keyword">var</span> hide = <span class="built_in">document</span>.getElementById(<span class="string">'hide'</span>);</div><div class="line"><span class="keyword">var</span> popover = <span class="built_in">document</span>.getElementById(<span class="string">'popover'</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showPopover</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  isVisible = <span class="literal">true</span>;</div><div class="line">  popover.classList.add(<span class="string">'show'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hidePopover</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  isVisible = <span class="literal">false</span>;</div><div class="line">  popover.classList.remove(<span class="string">'show'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">togglePopover</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (isVisible) &#123;</div><div class="line">    hidePopover();</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    showPopover();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">trigger.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  e.stopPropagation();</div><div class="line">  togglePopover();</div><div class="line">&#125;);</div><div class="line"></div><div class="line">hide.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  hidePopover();</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (isVisible &amp;&amp;</div><div class="line">      e.target !== popover &amp;&amp;</div><div class="line">      e.target.parentElement !== popover</div><div class="line">  ) &#123;</div><div class="line">    hidePopover();</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>上面的实现虽然非常简单，但有一点需要注意的：<br>由于我们是在 <code>document</code> 中来监听 <code>click</code> 是否触发在 Popover 外部的，而触发元素也是在 Popover 之外，由事件冒泡的流程可以知道，浏览器会先调用触发元素中的函数，再调用 <code>document</code> 中的函数，这样一来 Popover 就不会显示了。所以我们需要调用 <code>e.stopPropagation</code> 来告诉浏览器不在派发事件。</p>
+<h2 id="利用-tabindex-focus-blur"><a href="#利用-tabindex-focus-blur" class="headerlink" title="利用 tabindex + focus + blur"></a>利用 tabindex + focus + blur</h2><p>这种方式是利用 <code>tabindex</code> 让 Popover 能够响应 <code>focus</code> 和 <code>blur</code> 事件。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"trigger"</span>&gt;</span>click<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"popover2"</span> <span class="attr">class</span>=<span class="string">"popover"</span> <span class="attr">tabindex</span>=<span class="string">"0"</span>&gt;</span></div><div class="line">    i am popover</div><div class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"close"</span>&gt;</span>close<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-id">#popover2</span> &#123;</div><div class="line">  <span class="attribute">outline</span>: none;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> trigger = <span class="built_in">document</span>.getElementById(<span class="string">'trigger'</span>);</div><div class="line"><span class="keyword">var</span> popover = <span class="built_in">document</span>.getElementById(<span class="string">'popover2'</span>);</div><div class="line"><span class="keyword">var</span> hide = <span class="built_in">document</span>.getElementById(<span class="string">'hide'</span>);</div><div class="line"><span class="keyword">var</span> shouldTriggerBlur = <span class="literal">true</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">showPopover</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  popover.classList.add(<span class="string">'show'</span>);</div><div class="line">  popover.focus();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hidePopover</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  shouldTriggerBlur = <span class="literal">true</span>;</div><div class="line">  popover.classList.remove(<span class="string">'show'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">trigger.addEventListener(<span class="string">'click'</span>, showPopover);</div><div class="line"></div><div class="line">hide.addEventListener(<span class="string">'click'</span>, hidePopover);</div><div class="line"></div><div class="line">popover.addEventListener(<span class="string">'blur'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (shouldTriggerBlur) &#123;</div><div class="line">    hidePopover();</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">popover.addEventListener(<span class="string">'mousedown'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (e.target === hide) &#123;</div><div class="line">    shouldTriggerBlur = <span class="literal">false</span>;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>当点击触发元素时，调用 Popover 的 <code>focus</code> 方法，这样如果鼠标点击 Popover 外部时，就能自动触发 <code>blur</code> 事件了。<br>有一点是需要注意的：如果 Popover 中有其他可以响应 <code>click</code> 事件的元素 (如 <code>&lt;button /&gt;</code>)，当我们点击这些元素时，会先触发 Popover 的 <code>blur</code> 事件，这时候 Popover 已经隐藏了，那么 Popover 中的 <code>&lt;button /&gt;</code> 自然就点击不到了。<br>因此，上面的例子中，我用了一个 <code>shouldTriggerBlur</code> 变量来判断是否需要触发 <code>blur</code> 事件。</p>
+<p>另外，这种实现有一个缺陷：在 Popover 出现后再点击触发元素，Popover 并不会消失。原因和刚才提到的一样，因为 <code>blur</code> 事件比 <code>click</code> 先触发。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;Popover 是我们日常开发中用得比较多的组件，通常用于给定一个触发元素，当某特定事件 (&lt;code&gt;hover&lt;/code&gt;, &lt;cod
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://scarletsky.github.io/tags/javascript/"/>
+    
+  </entry>
   
   <entry>
     <title>用 JavaScript 构建事件系统</title>
@@ -1684,202 +1730,6 @@
     
     
       <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>What is functor in Haskell ?</title>
-    <link href="http://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/"/>
-    <id>http://scarletsky.github.io/2016/02/09/what-is-functor-in-haskell/</id>
-    <published>2016-02-09T14:50:13.000Z</published>
-    <updated>2016-03-01T06:52:13.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Functor-简介"><a href="#Functor-简介" class="headerlink" title="Functor 简介"></a>Functor 简介</h2><p>什么是 Functor ?</p>
-<blockquote>
-<p>现在你可以认为 Functor 是一种数据类型。</p>
-</blockquote>
-<p>Functor 有什么用 ?</p>
-<blockquote>
-<p>我们可以对 Functor 使用 <code>fmap</code>。</p>
-</blockquote>
-<p><code>fmap</code> 是什么东西 ?</p>
-<blockquote>
-<p><code>fmap</code> 是一个函数。</p>
-</blockquote>
-<p><code>fmap</code> 是函数的话，那它的类型签名是什么 ?</p>
-<blockquote>
-<p><code>fmap :: (a -&gt; b) -&gt; f a -&gt; f b</code>。</p>
-</blockquote>
-<p>我应该怎么看这个类型签名 ?</p>
-<blockquote>
-<p>它接受一个函数和一个 Functor 类型作为参数，然后返回另一个 Functor 。</p>
-</blockquote>
-<p><code>fmap</code> 有什么用 ?</p>
-<blockquote>
-<p>类似于 <code>map</code><br><code>map (+1) [1,2,3,4,5]  -- 返回 [2,3,4,5,6]</code><br><code>fmap (+1) [1,2,3,4,5] -- 返回 [2,3,4,5,6]</code></p>
-</blockquote>
-<p>所以列表是 Functor ?</p>
-<blockquote>
-<p>是的，List 是 Functor。</p>
-</blockquote>
-<p>为什么列表是 Functor ?</p>
-<blockquote>
-<p>因为列表实现了 <code>fmap</code>。</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">Functor</span> [] <span class="keyword">where</span></span></div><div class="line">  fmap = map</div></pre></td></tr></table></figure>
-</blockquote>
-<p>实现了 <code>fmap</code> 的数据类型都是 Functor ?</p>
-<blockquote>
-<p>不一定。</p>
-</blockquote>
-<p>为什么 ?</p>
-<blockquote>
-<p>除了要实现 <code>fmap</code> 之外，还需要满足一些条件才能成为 Functor。</p>
-</blockquote>
-<p>满足什么条件 ?</p>
-<blockquote>
-<ol>
-<li>必须保证 <code>fmap id = id</code>，也就是说 <code>fmap id xs</code> 和 <code>id xs</code> 必须返回相同的值。</li>
-<li>必须是可组合的，两个 <code>fmap</code> 组合使用的结果应该和两个函数组合起来再用 <code>fmap</code> 的结果相同。<br>也就是说 <code>fmap f . fmap g</code> 必须等于 <code>fmap (f . g)</code>。</li>
-</ol>
-</blockquote>
-<p>为什么 <code>fmap id = id</code> ?</p>
-<blockquote>
-<p>因为<br><code>id :: a -&gt; a</code><br><code>fmap id :: T(a) -&gt; T(a)</code><br>令 <code>T(a) = a</code><br>即 <code>fmap id :: a -&gt; a</code><br>所以 <code>fmap id = id</code></p>
-</blockquote>
-<p>所以条件一是什么意思 ?</p>
-<blockquote>
-<p>意思是 <code>fmap</code> 只能对值调用 <code>f</code>，不能做额外的事情。</p>
-</blockquote>
-<p>有具体例子吗 ?</p>
-<blockquote>
-<p>看看这个经典的自定义数据类型，C表示计数器：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">CMaybe</span> a = <span class="type">CNothing</span> | <span class="type">CJust</span> <span class="type">Int</span> a <span class="keyword">deriving</span> (<span class="type">Show</span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">CMaybe</span> <span class="keyword">where</span></div><div class="line">  fmap f <span class="type">CNothing</span>          = <span class="type">CNothing</span></div><div class="line">  fmap f (<span class="type">CJust</span> counter x) = <span class="type">CJust</span> (counter + <span class="number">1</span>) (f x)</div><div class="line"></div><div class="line"><span class="comment">-- ghci</span></div><div class="line"></div><div class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>)</div><div class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"hoha"</span></div><div class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"he"</span>) (fmap (++ <span class="string">"ha"</span>) (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"ho"</span>))</div><div class="line"><span class="type">CJust</span> <span class="number">2</span> <span class="string">"hohahe"</span></div><div class="line"><span class="title">ghci</span>&gt; fmap (++ <span class="string">"blah"</span>) <span class="type">CNothing</span></div><div class="line"><span class="type">CNothing</span></div></pre></td></tr></table></figure>
-<p>这里的 <code>fmap</code> 除了对值调用 <code>f</code> 之外，还对 <code>counter</code> 加一。</p>
-</blockquote>
-<p>这有什么问题吗 ?</p>
-<blockquote>
-<p>再看看 <code>fmap id</code> 和 <code>id</code><br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; fmap id (<span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span>)</div><div class="line"><span class="type">CJust</span> <span class="number">1</span> <span class="string">"haha"</span></div><div class="line"><span class="title">ghci</span>&gt; id (<span class="type">Cjust</span> <span class="number">0</span> <span class="string">"haha"</span>)</div><div class="line"><span class="type">CJust</span> <span class="number">0</span> <span class="string">"haha"</span></div></pre></td></tr></table></figure></p>
-<p>看出问题了吗 ?</p>
-</blockquote>
-<p><code>fmap id</code> 和 <code>id</code> 返回的结果不相等 ?</p>
-<blockquote>
-<p>是的，所以即便 <code>CMaybe a</code> 实现了 <code>fmap</code>，但它也不是 Functor。</p>
-</blockquote>
-<p>为什么 <code>fmap (f . g) = fmap f . fmap g</code> ?</p>
-<blockquote>
-<p>假设<br><code>f :: a -&gt; b</code>, <code>g :: b -&gt; c</code><br>那么<br><code>f . g :: a -&gt; c</code><br>即<br><code>fmap (f . g) = T(a) -&gt; T(c)</code><br>又因为<br><code>fmap f = T(a) -&gt; T(b)</code>, <code>fmap g = T(b) -&gt; T(c)</code><br>所以<br><code>fmap f . fmap g = T(a) -&gt; T(c)</code><br>即 <code>fmap (f . g) = fmap f . fmap g</code></p>
-</blockquote>
-<p>条件二有点像乘法分配律。</p>
-<blockquote>
-<p>是的。<br>乘法分配律是 <code>(a + b) x c = a x c + b x c</code>。<br>而条件二是 <code>fmap (f . g) = fmap f . fmap g</code>。</p>
-</blockquote>
-<p>条件二有具体例子吗 ?</p>
-<blockquote>
-<p>可以类比函数，因为函数本身也是 Functor，所以函数会满足<strong>可组合</strong>这个条件。<br>而实际应用中，我们也经常使用到函数组合这个特性。</p>
-</blockquote>
-<p>实现了 <code>fmap</code> ，同时满足两个条件的数据类型就是 Functor 吗？</p>
-<blockquote>
-<p>不，还有一个规则，就是该数据类型要有一个类型参数。</p>
-</blockquote>
-<p>能举个例子吗 ?</p>
-<blockquote>
-<p>我们已经知道 List 是一个 Functor，先看看 List 的定义：<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> [] a = [] | a : [a]</span></div></pre></td></tr></table></figure></p>
-<p>列表有一个类型参数 a，表示一个列表中可以包含相同类型的元素。</p>
-</blockquote>
-<p>Functor 只能有一个类型参数吗？</p>
-<blockquote>
-<p>不是，我们可以通过其他方法让多于一个类型参数的数据类型都能成为 Functor 的实例。</p>
-</blockquote>
-<p>什么手段 ?</p>
-<blockquote>
-<p>你需要先知道怎么定义一个 Functor。</p>
-</blockquote>
-<h2 id="自定义-Functor"><a href="#自定义-Functor" class="headerlink" title="自定义 Functor"></a>自定义 Functor</h2><p>我应该怎么自定义 Functor ?</p>
-<blockquote>
-<p>先定义一个数据类型，再让该类型成为 Functor 的实例。<br><figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">MyFunctor</span> a = <span class="type">Data</span> a <span class="keyword">deriving</span> (<span class="type">Show</span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">Functor</span> <span class="type">MyFunctor</span> <span class="keyword">where</span></div><div class="line">  fmap f (<span class="type">Data</span> x) = <span class="type">Data</span> (f x)</div></pre></td></tr></table></figure></p>
-<p>这样，我们定义的 MyFunctor 就是一个 Functor 了。</p>
-</blockquote>
-<p>刚才提到的让多于一个类型参数的数据类型成为 Functor 实例的方法是？</p>
-<blockquote>
-<p>利用 Haskell 中不全调用的特性。</p>
-</blockquote>
-<p>可以给个例子吗？</p>
-<blockquote>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">MyFunctor2</span> a b = <span class="type">Data2</span> a b <span class="keyword">deriving</span> (<span class="type">Show</span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">Functor</span> (<span class="type">MyFunctor2</span> <span class="title">a</span>) <span class="keyword">where</span></div><div class="line">  fmap f (<span class="type">Data2</span> x y) = <span class="type">Data2</span> x (f y)</div></pre></td></tr></table></figure>
-<p>在 Haskell 中，我们可以利用 Haskell 不全调用的特性，把 MyFunctor2 a 当成一个整体，这样就相当于只有 b 一个类型参数了。</p>
-</blockquote>
-<h2 id="真-·-Functor"><a href="#真-·-Functor" class="headerlink" title="真 · Functor"></a>真 · Functor</h2><p>我从上面看到，Functor 是一个类型类？</p>
-<blockquote>
-<p>是的。事实上，<strong>Functor 是一个类型类，表示满足一些条件的数据类型。</strong></p>
-</blockquote>
-<p>满足上面提到的条件？</p>
-<blockquote>
-<p>是的！</p>
-</blockquote>
-<p>有哪些常见的 Functor ？</p>
-<blockquote>
-<p><code>List</code>, <code>Maybe</code>等等。<br>你可以在 ghci 中输入 <code>:i Functor</code> 来查看更多预定义的 Functor。</p>
-</blockquote>
-<p>这些 Functor 有什么特点？</p>
-<blockquote>
-<p>它们都带有上下文：即可以表示有值，也可以表示空值。<br>[] 表示空值，[a] 表示有值；<br>Nothing 表示空值，Just a表示有值；</p>
-</blockquote>
-<p>这样有什么好处吗？</p>
-<blockquote>
-<p>好处是显然易见的。考虑下下面的伪代码：<br><figure class="highlight py"><table><tr><td class="code"><pre><div class="line">post = Posts.find_by_id(<span class="number">1</span>)</div><div class="line"><span class="keyword">if</span> post</div><div class="line">  <span class="keyword">return</span> post.title</div><div class="line"><span class="keyword">else</span></div><div class="line">  <span class="keyword">return</span> <span class="keyword">None</span></div></pre></td></tr></table></figure></p>
-<p>为什么这段伪代码需要判断 post 是否为空？因为 post 没有上下文环境，不能表示空值。<br>如果 post 有上下文环境 (也就是 post 可以表示空值)，那么我们的代码就可以直接写成：<br><figure class="highlight py"><table><tr><td class="code"><pre><div class="line">post = Posts.find_by_id(<span class="number">1</span>)</div><div class="line"><span class="keyword">return</span> post.title</div></pre></td></tr></table></figure></p>
-<p>因此，如果一个值可以带有上下文环境的话，我们的代码就可以写的非常简洁。</p>
-</blockquote>
-<p>把刚才的伪代码写成 Haskell 代码 ?</p>
-<blockquote>
-<p><code>fmap (getPostTitle) (findPosts 1)</code></p>
-</blockquote>
-<p><code>if else</code> 不见了？</p>
-<blockquote>
-<p>是的，这里假设 post 是一个 Functor，它可以表示带有空值的情况。所以 <code>if else</code> 就不需要了。</p>
-</blockquote>
-<p>那 <code>fmap</code> 呢？ 它事实上是什么东西？</p>
-<blockquote>
-<p><code>fmap</code> 确确实实是一个函数，它知道怎么把传进的函数应用到 Functor 中，并返回一个新的 Functor。</p>
-</blockquote>
-<p><code>fmap</code> 对 Functor 调用函数的过程发生了什么？</p>
-<blockquote>
-<p>看下面两张图 (图出自 <a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">Functors, Applicatives, And Monads In Pictures</a>)：<br><img src="https://cloud.githubusercontent.com/assets/2386165/12949440/c8753e16-d042-11e5-84ff-b47753d65c52.png" alt="fmap_just"><br><img src="https://cloud.githubusercontent.com/assets/2386165/12949441/c87a69b8-d042-11e5-80d6-2ee458e13e37.png" alt="fmap_nothing"><br>实际上，<code>fmap</code> 先取出 Functor 中的值，然后把值传进函数中，再把函数的返回值放回到 Functor 中，最后返回新的 Functor。</p>
-</blockquote>
-<p>Functor 有什么限制？</p>
-<blockquote>
-<p><code>fmap f x</code> 中的 <code>f</code> 只接受一个参数。<br><code>fmap f x</code> 中的 <code>f</code> 不能带有上下文 (换句话说只能是 (+42) 不能是 <code>Just (+42)</code>)。</p>
-</blockquote>
-<p>关于 Functor 的知识，还有什么我是需要知道的 ？</p>
-<blockquote>
-<p><code>fmap</code> 可以中缀调用，即 <code>f `fmap` xs</code><br><code>&lt;$&gt;</code> 是 <code>fmap</code> 的别名，一般用于中缀调用，即 <code>f &lt;$&gt; xs</code>。</p>
-</blockquote>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Functor 是类型类，只要满足以下条件的数据类型都可以成为 Functor 的实例：</p>
-<ul>
-<li>实现 <code>fmap</code>。</li>
-<li>保证 <code>fmap id = id</code>。</li>
-<li>保证 <code>fmap (f . g) = fmap f . fmap g</code>。</li>
-<li>该数据类型必须有一个以上的类型参数。</li>
-</ul>
-<p>最后，强烈建议看看 <a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">这篇文章</a>，相当形象生动。</p>
-<h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p><a href="https://github.com/bramblex" target="_blank" rel="external">@bramblex</a> 给出 <code>fmap id = id</code> 和 <code>fmap (f . g) = fmap f . fmap g</code> 的证明过程。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://learnyouahaskell.com/functors-applicative-functors-and-monoids" target="_blank" rel="external">Functors, Applicative Functors and Monoids</a><br><a href="http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="external">Functors, Applicatives, And Monads In Pictures</a><br><a href="http://cnhaskell.com/chp/10.html#functor" target="_blank" rel="external">Functor 简介</a><br><a href="http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor" target="_blank" rel="external">http://stackoverflow.com/questions/2030863/in-functional-programming-what-is-a-functor</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Functor-简介&quot;&gt;&lt;a href=&quot;#Functor-简介&quot; class=&quot;headerlink&quot; title=&quot;Functor 简介&quot;&gt;&lt;/a&gt;Functor 简介&lt;/h2&gt;&lt;p&gt;什么是 Functor ?&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;现在你可
-    
-    </summary>
-    
-      <category term="haskell" scheme="http://scarletsky.github.io/categories/haskell/"/>
-    
-    
-      <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
-    
-      <category term="functor" scheme="http://scarletsky.github.io/tags/functor/"/>
     
   </entry>
   
