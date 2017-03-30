@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://scarletsky.github.io/"/>
-  <updated>2017-02-21T16:22:19.000Z</updated>
+  <updated>2017-03-30T13:56:54.000Z</updated>
   <id>http://scarletsky.github.io/</id>
   
   <author>
@@ -14,6 +14,99 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PostgreSQL 学习笔记</title>
+    <link href="http://scarletsky.github.io/2017/03/15/notes-of-postgresql/"/>
+    <id>http://scarletsky.github.io/2017/03/15/notes-of-postgresql/</id>
+    <published>2017-03-15T13:57:28.000Z</published>
+    <updated>2017-03-30T13:56:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>PostgreSQL 是世界上功能最强大的关系型数据库，除了标准的 SQL 的支持外，还有丰富的特性，可以通过扩展来增强数据库的能力。<br>本文是我学习 PostgreSQL 过程中的一些总结。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">brew update</div><div class="line">brew install postgresql</div></pre></td></tr></table></figure>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><ul>
+<li><code>\?</code> 显示帮助信息</li>
+<li><code>\l</code> 列出所有数据库，相当于 <code>show databases</code></li>
+<li><code>\c &lt;database_name&gt;</code> 连接指定的数据库，相当于 <code>use &lt;database_name&gt;</code></li>
+<li><code>\dt</code> 列出数据库中所有的表，相当于 <code>show tables</code></li>
+<li><code>\ds</code> 列出数据库中所有序列</li>
+<li><code>\d &lt;table_name&gt;</code> 显示该表的详细信息</li>
+<li><code>\password &lt;username&gt;</code> 修改指定用户的密码</li>
+<li><code>\dx</code> 列出数据库已使用的扩展</li>
+<li><code>\x</code> 开启/关闭展开显示，当 <code>select</code> 的输出结果太长时，可以试试这个模式</li>
+</ul>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>我们知道，PostgreSQL 有非常丰富的扩展供我们使用，下面列举一些常见的扩展：</p>
+<h3 id="uuid-ossp"><a href="#uuid-ossp" class="headerlink" title="uuid-ossp"></a>uuid-ossp</h3><p>该模块提供了一些函数来生成 UUID。如 <code>uuid_generate_v1</code>, <code>uuid_generate_v4</code> 等。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> EXTENSION <span class="string">"uuid-ossp"</span>;</div><div class="line"><span class="keyword">SELECT</span> uuid_generate_v4();</div><div class="line">           uuid_generate_v4</div><div class="line"><span class="comment">--------------------------------------</span></div><div class="line"> cc230056-ed05-4bcf-a12f-1611728ac199</div></pre></td></tr></table></figure>
+<p>从<a href="http://www.postgres.cn/docs/9.4/uuid-ossp.html" target="_blank" rel="external">官网</a>上了解到，如果我们只需要生成 UUID (v4)，那么可以考虑使用 <code>pgcrypto</code> 模块。</p>
+<h3 id="pgcrypto"><a href="#pgcrypto" class="headerlink" title="pgcrypto"></a>pgcrypto</h3><p>该模块提供了一些加密的函数，其中 <code>gen_random_uuid</code> 这个函数可以用来生成 UUID。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> EXTENSION <span class="string">"pgcrypto"</span>;</div><div class="line"><span class="keyword">SELECT</span> gen_random_uuid();</div><div class="line">           gen_random_uuid</div><div class="line"><span class="comment">--------------------------------------</span></div><div class="line"> f8ea5410-cac7-4811-bfbd-5e0b8d0a0cc4</div></pre></td></tr></table></figure>
+<h3 id="hstore"><a href="#hstore" class="headerlink" title="hstore"></a>hstore</h3><p>该模块为 PostgreSQL 提供存储 Key/Value 数据的功能，你可以定义 hstore 数据列来存储这样的数据，并可对这些数据进行分组、排序和唯一检索的查询。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">CREATE EXTENSION "hstore";</div><div class="line">SELECT 'a=&gt;1, b=&gt;2'::hstore;</div><div class="line">       hstore</div><div class="line">--------------------</div><div class="line"> "a"=&gt;"1", "b"=&gt;"2"</div></pre></td></tr></table></figure>
+<p>对于 hstore 的增删查改操作，我们可以用如下的操作：</p>
+<ul>
+<li><code>hstore -&gt; text</code> 获取 hstore 中指定的 key。</li>
+<li><code>hstore || hstore</code> 合并两个 hstore，常用于更新操作。</li>
+<li><code>delete(hstore, text)</code> 删除 hstore 中指定的 key。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> testhstore (<span class="keyword">id</span> <span class="built_in">SERIAL</span>, <span class="keyword">value</span> hstore);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> testhstore (<span class="keyword">value</span>) <span class="keyword">VALUES</span> (<span class="string">'name=&gt;smallfish, age=&gt;29'</span>::hstore);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> testhstore (<span class="keyword">value</span>) <span class="keyword">VALUES</span> (<span class="string">'name=&gt;nnfish, age=&gt;20'</span>::hstore);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> testhstore (<span class="keyword">value</span>) <span class="keyword">VALUES</span> (<span class="string">'name=&gt;aaa, age=&gt;30, addr=&gt;China'</span>::hstore);</div><div class="line"></div><div class="line"><span class="comment">-- 查询 key</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span>, <span class="keyword">value</span>-&gt;<span class="string">'name'</span> <span class="keyword">AS</span> <span class="keyword">name</span> <span class="keyword">FROM</span> testhstore;</div><div class="line"> id |   name</div><div class="line"><span class="comment">----+-----------</span></div><div class="line">  1 | smallfish</div><div class="line">  2 | nnfish</div><div class="line">  3 | aaa</div><div class="line">(3 rows)</div><div class="line"><span class="comment">-- 更新 key</span></div><div class="line"><span class="keyword">UPDATE</span> testhstore <span class="keyword">SET</span> <span class="keyword">value</span> = <span class="keyword">value</span> || (<span class="string">'addr=&gt;Shanghai'</span>) <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">2</span>;</div><div class="line"><span class="comment">-- 删除 key</span></div><div class="line"><span class="keyword">UPDATE</span> testhstore <span class="keyword">SET</span> <span class="keyword">value</span> = <span class="keyword">delete</span>(<span class="keyword">value</span>, <span class="string">'addr'</span>) <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">3</span>;</div></pre></td></tr></table></figure>
+<h3 id="PostGIS"><a href="#PostGIS" class="headerlink" title="PostGIS"></a>PostGIS</h3><p>PostGIS 在对象关系型数据库PostgreSQL上增加了存储管理空间数据的能力，相当于Oracle的spatial部分。PostGIS最大的特点是符合并且实现了OpenGIS的一些规范，是最著名的开源GIS数据库。</p>
+<h3 id="PostPic"><a href="#PostPic" class="headerlink" title="PostPic"></a>PostPic</h3><p>PostPic 用来在数据库内进行图像处理，PostPic 为 SQL 增加了 image 类型，还包含很多相关的函数用来处理图片以及从图片中抽取对应的属性。</p>
+<h2 id="JSON-JSONB"><a href="#JSON-JSONB" class="headerlink" title="JSON / JSONB"></a>JSON / JSONB</h2><p>JSON 类型是在 PostgreSQL 9.2 版本中加入的，而 JSONB 则是在 9.4 版本中加入的。<br>两者的区别在于：JSON 是纯文本，而 JSONB 则是二进制。<br>由于 JSON 存储的是未经处理过的 JSON 字符串，不需要进行解析，而 JSONB 插入时需要进行解析，因此在插入速度上 JSON 会比 JSONB 快，但在查询时，JSONB 会比 JSON 快。</p>
+<p>因此，如果我们的应用需要频繁操作 JSON 的话，用 JSONB 会比较合适；相反，如果只是需要存储的话，用 JSON 会比较合适。</p>
+<p>下面是一些常用的 JSON / JSONB 的操作：</p>
+<ul>
+<li><code>json -&gt; int</code> 根据指定索引获取 JSON 数组中的元素</li>
+<li><code>json -&gt; text</code> 获取 JSON 中指定字段的值</li>
+<li><code>json #&gt; array</code> 获取 JSON 中指定路径的值</li>
+</ul>
+<p>需要注意的是，上面三种操作都是返回 <code>JSON(B)</code> 类型的结果，有些情况下我们需要把结果转换成字符串之后才能进行比较。<br>这时候就需要在上面几个操作符改成 <code>-&gt;&gt;</code>, <code>#&gt;&gt;</code>，这样返回的结果就是 <code>text</code> 类型，可以直接进行比较了。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line">  pg_typeof(<span class="string">'&#123; "name": "john", "age": 30, "addr": "shanghai" &#125;'</span>::<span class="keyword">json</span> -&gt; <span class="string">'age'</span>),</div><div class="line">  pg_typeof(<span class="string">'&#123; "name": "john", "age": 30, "addr": "shanghai" &#125;'</span>::<span class="keyword">json</span> -&gt;&gt; <span class="string">'age'</span>);</div><div class="line"></div><div class="line"> pg_typeof | pg_typeof</div><div class="line"><span class="comment">-----------+-----------</span></div><div class="line"> json      | text</div></pre></td></tr></table></figure>
+<p>看看下面的例子：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">CREATE TABLE testjson (id SERIAL, value json);</div><div class="line">INSERT INTO testjson (value) values ('&#123; "name": "john", "age": 30, "addr": "shanghai" &#125;');</div><div class="line">INSERT INTO testjson (value) values ('&#123; "name": "lucy", "age": 20, "addr": "guangzhou" &#125;');</div><div class="line">INSERT INTO testjson (value) values ('&#123; "name": "tim", "age": 24, "addr": "beijing", "books": [1,2,3,4,5] &#125;');</div><div class="line"></div><div class="line">-- 根据指定 key 查询</div><div class="line">SELECT * FROM testjson WHERE value -&gt;&gt; 'age' &gt; '20';</div><div class="line"></div><div class="line"> id |                                 value</div><div class="line">----+-----------------------------------------------------------------------</div><div class="line">  1 | &#123; "name": "john", "age": 30, "addr": "shanghai" &#125;</div><div class="line">  3 | &#123; "name": "tim", "age": 24, "addr": "beijing", "books": [1,2,3,4,5] &#125;</div><div class="line"></div><div class="line">-- 根据指定路径查询</div><div class="line">SELECT * FROM testjson WHERE value #&gt;&gt; '&#123;books, 3&#125;' = '4';</div><div class="line"> id |                                 value</div><div class="line">----+-----------------------------------------------------------------------</div><div class="line">  3 | &#123; "name": "tim", "age": 24, "addr": "beijing", "books": [1,2,3,4,5] &#125;</div></pre></td></tr></table></figure>
+<p>由于 JSON 是纯文本，因此对其进行更新操作只是相当于操作字符串，如：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="keyword">UPDATE</span> testjson <span class="keyword">SET</span> <span class="keyword">value</span> = <span class="keyword">replace</span>(<span class="keyword">value</span>::<span class="built_in">text</span>, <span class="string">'"john"'</span>, <span class="string">'"mark"'</span>)::<span class="keyword">json</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</div></pre></td></tr></table></figure>
+<p>这种方式相当不友好，因此，如果需要经常操作 JSON 的话，建议使用 JSONB 类型，它提供了多种操作方式。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="comment">-- for JSONB</span></div><div class="line"><span class="comment">-- 根据指定字段更新</span></div><div class="line"><span class="keyword">UPDATE</span> testjsonb <span class="keyword">SET</span> <span class="keyword">value</span> = jsonb_set(<span class="keyword">value</span>, <span class="string">'&#123;name&#125;'</span>, <span class="string">'mark'</span>) <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">1</span>;</div><div class="line"><span class="comment">-- 根据指定路径更新</span></div><div class="line"><span class="keyword">UPDATE</span> testjsonb <span class="keyword">SET</span> <span class="keyword">value</span> = jsonb_set(<span class="keyword">value</span>, <span class="string">'&#123;books, 3&#125;'</span>, <span class="string">'10'</span>) <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">3</span>;</div><div class="line"><span class="comment">-- 移除 age 字段</span></div><div class="line"><span class="keyword">UPDATE</span> testjsonb <span class="keyword">SET</span> <span class="keyword">value</span> = <span class="keyword">value</span> - <span class="string">'age'</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="number">2</span>;</div></pre></td></tr></table></figure>
+<h2 id="升级"><a href="#升级" class="headerlink" title="升级"></a>升级</h2><h3 id="macOS-1"><a href="#macOS-1" class="headerlink" title="macOS"></a>macOS</h3><ul>
+<li><p>停止 PostgreSQL 服务器</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">brew services stop postgresql</div></pre></td></tr></table></figure>
+</li>
+<li><p>升级 PostgreSQL</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">brew update &amp;&amp; brew upgrade postgresql</div></pre></td></tr></table></figure>
+</li>
+<li><p>为新版 PostgreSQL 创建数据库</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">initdb /usr/local/var/postgres9.6.2 -E utf8</div></pre></td></tr></table></figure>
+</li>
+<li><p>迁移数据</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">pg_upgrade \</div><div class="line">  -d /usr/local/var/postgres \</div><div class="line">  -D /usr/local/var/postgres9.6.2 \</div><div class="line">  -b /usr/local/Cellar/postgresql/9.5/bin/ \</div><div class="line">  -B /usr/local/Cellar/postgresql/9.6.2/bin/ \</div><div class="line">  -v</div></pre></td></tr></table></figure>
+</li>
+<li><p>把新数据库移动到 PostgreSQL 默认的位置</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">mv /usr/local/var/postgres /usr/local/var/postgres9.5</div><div class="line">mv /usr/local/var/postgres9.6.2 /usr/local/var/postgres</div></pre></td></tr></table></figure>
+</li>
+<li><p>重启 PostgreSQL 服务器</p>
+  <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">brew services start postgresql</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="常见坑"><a href="#常见坑" class="headerlink" title="常见坑"></a>常见坑</h2><h3 id="单引号与双引号"><a href="#单引号与双引号" class="headerlink" title="单引号与双引号"></a>单引号与双引号</h3><p>单引号 (<code>&#39;</code>) 和双引号 (<code>&quot;</code>) 在 PostgreSQL 中有明确的区分，单引号用来引用值 (value)，而双引号用来引用标识符，如字段名，表名等等。<br>因此，下面两段 SQL 会有不同的结果：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><div class="line"><span class="comment">-- 单引号</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span> <span class="keyword">FROM</span> posts <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="string">'ad3eef9a-e081-46a9-9304-4a1d1637e542'</span>;</div><div class="line">                  id</div><div class="line"><span class="comment">--------------------------------------</span></div><div class="line"> ad3eef9a-e081-46a9-9304-4a1d1637e542</div><div class="line">(1 row)</div><div class="line"></div><div class="line"><span class="comment">-- 双引号</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">id</span> <span class="keyword">FROM</span> posts <span class="keyword">WHERE</span> <span class="keyword">id</span> = <span class="string">"ad3eef9a-e081-46a9-9304-4a1d1637e542"</span>;</div><div class="line">ERROR:  column "ad3eef9a-e081-46a9-9304-4a1d1637e542" does not exist</div><div class="line">LINE 1: <span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> posts <span class="keyword">where</span> <span class="keyword">id</span> = <span class="string">"ad3eef9a-e081-46a9-9304-4a1...</span></div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://www.postgres.cn/docs/9.4/index.html" target="_blank" rel="external">http://www.postgres.cn/docs/9.4/index.html</a><br><a href="http://postgresguide.com/" target="_blank" rel="external">http://postgresguide.com/</a><br><a href="http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html</a><br><a href="https://hashrocket.com/blog/posts/faster-json-generation-with-postgresql" target="_blank" rel="external">https://hashrocket.com/blog/posts/faster-json-generation-with-postgresql</a><br><a href="https://www.postgresql.org/docs/9.4/static/uuid-ossp.html" target="_blank" rel="external">https://www.postgresql.org/docs/9.4/static/uuid-ossp.html</a><br><a href="https://www.postgresql.org/docs/9.4/static/pgcrypto.html" target="_blank" rel="external">https://www.postgresql.org/docs/9.4/static/pgcrypto.html</a><br><a href="http://www.postgresqltutorial.com/postgresql-hstore/" target="_blank" rel="external">http://www.postgresqltutorial.com/postgresql-hstore/</a><br><a href="https://www.postgresql.org/docs/9.5/static/sql-do.html" target="_blank" rel="external">https://www.postgresql.org/docs/9.5/static/sql-do.html</a><br><a href="https://keita.blog/2016/01/09/homebrew-and-postgresql-9-5/" target="_blank" rel="external">https://keita.blog/2016/01/09/homebrew-and-postgresql-9-5/</a><br><a href="http://www.oschina.net/news/28211/postgresql-most-useful-extensions" target="_blank" rel="external">http://www.oschina.net/news/28211/postgresql-most-useful-extensions</a><br><a href="http://chenxiaoyu.org/2011/02/19/postgresql-key-value-hstore.html" target="_blank" rel="external">http://chenxiaoyu.org/2011/02/19/postgresql-key-value-hstore.html</a><br><a href="https://segmentfault.com/a/1190000002911580" target="_blank" rel="external">https://segmentfault.com/a/1190000002911580</a><br><a href="https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/" target="_blank" rel="external">https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/</a><br><a href="http://blog.lerner.co.il/quoting-postgresql/" target="_blank" rel="external">http://blog.lerner.co.il/quoting-postgresql/</a><br><a href="https://wiki.postgresql.org/wiki/Things_to_find_out_about_when_moving_from_MySQL_to_PostgreSQL" target="_blank" rel="external">https://wiki.postgresql.org/wiki/Things_to_find_out_about_when_moving_from_MySQL_to_PostgreSQL</a><br><a href="http://stackoverflow.com/questions/38777535/what-is-the-difference-between-and-in-postgres-sql" target="_blank" rel="external">http://stackoverflow.com/questions/38777535/what-is-the-difference-between-and-in-postgres-sql</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;PostgreSQL 是世界上功能最强大的关系型数据库，除了标准的 SQL 的支持外，还有丰富的特性，可以通过扩展来增强数据库的能力。&lt;br
+    
+    </summary>
+    
+      <category term="sql" scheme="http://scarletsky.github.io/categories/sql/"/>
+    
+    
+      <category term="sql" scheme="http://scarletsky.github.io/tags/sql/"/>
+    
+      <category term="postgresql" scheme="http://scarletsky.github.io/tags/postgresql/"/>
+    
+  </entry>
   
   <entry>
     <title>如何用 JavaScript 实现 Popover</title>
@@ -1693,43 +1786,6 @@
       <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
     
       <category term="applicative" scheme="http://scarletsky.github.io/tags/applicative/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>FlexibleInstances 和 TypeSynonymInstances 编译指令的区别</title>
-    <link href="http://scarletsky.github.io/2016/02/28/flexible-instances-vs-type-synonym-instances-in-haskell/"/>
-    <id>http://scarletsky.github.io/2016/02/28/flexible-instances-vs-type-synonym-instances-in-haskell/</id>
-    <published>2016-02-28T14:31:21.000Z</published>
-    <updated>2016-02-29T04:22:08.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="FlexibleInstances"><a href="#FlexibleInstances" class="headerlink" title="FlexibleInstances"></a>FlexibleInstances</h2><p>先看看下面这个简单的例子：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="comment">-- Learning.hs</span></div><div class="line"><span class="class"><span class="keyword">data</span> <span class="type">Vector</span> a = <span class="type">Vector</span> a a <span class="keyword">deriving</span> (<span class="type">Show</span>)</span></div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">class</span> <span class="type">MyClass</span> a <span class="keyword">where</span></div><div class="line">    myFun :: a -&gt; a</div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">MyClass</span> (<span class="type">Vector</span> <span class="title">a</span>) <span class="keyword">where</span></div><div class="line">    myFun = id</div></pre></td></tr></table></figure>
-<p>这样的定义看起来是没有问题的，因为不需要任何编译指令就能通过编译了。<br>我们可以运行看看：</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; :l <span class="type">Learning</span>.hs</div><div class="line">[<span class="number">1</span> <span class="keyword">of</span> <span class="number">1</span>] <span class="type">Compiling</span> <span class="type">Main</span>             ( <span class="type">Test</span>.hs, interpreted )</div><div class="line"><span class="type">Ok</span>, modules loaded: <span class="type">Main</span>.</div><div class="line"><span class="title">ghci</span>&gt; myFun (<span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span>)</div><div class="line"><span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span></div><div class="line"><span class="title">ghci</span>&gt; myFun (<span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span>) :: <span class="type">Vector</span> <span class="type">Int</span></div><div class="line"><span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span></div><div class="line"><span class="title">ghci</span>&gt; myFun (<span class="type">Vector</span> <span class="number">1</span> <span class="number">2</span>) :: <span class="type">Vector</span> <span class="type">Double</span></div><div class="line"><span class="type">Vector</span> <span class="number">1.0</span> <span class="number">2.0</span></div></pre></td></tr></table></figure>
-<p>但如果我们需要为 <code>Vector a</code> 不同的类型参数实现不同的 <code>myFun</code> 的话呢？</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">instance</span> <span class="type">MyClass</span> (<span class="type">Vector</span> <span class="type">Int</span>) <span class="keyword">where</span></span></div><div class="line">    myFun = undefined</div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">MyClass</span> (<span class="type">Vector</span> <span class="type">Double</span>) <span class="keyword">where</span></div><div class="line">    myFun = undefined</div></pre></td></tr></table></figure>
-<p>我们再看看编译时会发生什么？</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="title">ghci</span>&gt; :r</div><div class="line">[<span class="number">1</span> <span class="keyword">of</span> <span class="number">1</span>] <span class="type">Compiling</span> <span class="type">Main</span>             ( <span class="type">Learning</span>.hs, interpreted )</div><div class="line"></div><div class="line"><span class="type">Learning</span>.hs:<span class="number">10</span>:<span class="number">10</span>:</div><div class="line">    <span class="type">Illegal</span> <span class="keyword">instance</span> declaration for ‘<span class="type">MyClass</span> (<span class="type">Vector</span> <span class="type">Int</span>)’</div><div class="line">          (<span class="type">All</span> <span class="keyword">instance</span> types must be <span class="keyword">of</span> the form (<span class="type">T</span> a1 ... an)</div><div class="line">           <span class="keyword">where</span> a1 ... an are *distinct <span class="class"><span class="keyword">type</span> variables*,</span></div><div class="line">           and each <span class="class"><span class="keyword">type</span> variable appears at most once in the instance head.</span></div><div class="line">           <span class="type">Use</span> <span class="type">FlexibleInstances</span> <span class="keyword">if</span> you want to disable this.)</div><div class="line">    <span class="type">In</span> the <span class="keyword">instance</span> declaration for ‘<span class="type">MyClass</span> (<span class="type">Vector</span> <span class="type">Int</span>)’</div><div class="line"><span class="type">Failed</span>, modules loaded: none.</div></pre></td></tr></table></figure>
-<p>编译失败！为什么会编译失败呢？</p>
-<p>因为通常情况下，我们不能给多态类型（polymorphic type）的特化版本（specialized version）写类型类实例。<br>在这个例子中，<code>Vector Int</code> 和 <code>Vector Double</code> 就是 <code>Vector a</code> 的特化版本。<br>如果我们需要为这些特化版本写类型类实例的话，我们就需要开启 <code>FlexibleInstances</code> 编译指令来取消这个限制。</p>
-<h2 id="TypeSynonymInstances"><a href="#TypeSynonymInstances" class="headerlink" title="TypeSynonymInstances"></a>TypeSynonymInstances</h2><p>理解了上面的 <code>FlexibleInstances</code> 后，<code>TypeSynonymInstances</code> 就容易理解了。</p>
-<p>如果我需要为 <code>Vector Int</code> 添加一个别名，然后让这个别名成为 MyClass 类型类的实例，我们就会需要用到 <code>TypeSynonymInstances</code> 编译指令了。</p>
-<figure class="highlight hs"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">type</span> <span class="type">VectorInt</span> = <span class="type">Vector</span> <span class="type">Int</span></span></div><div class="line"><span class="class"></span></div><div class="line"><span class="keyword">instance</span> <span class="type">MyClass</span> <span class="type">VectorInt</span> <span class="keyword">where</span></div><div class="line">    myFun = undefined</div></pre></td></tr></table></figure>
-<p>默认情况下，ghc 编译上面的代码时会报错，原因是 Haskell 98 并不支持这种语法。<br>要让 ghc 成功编译上面的代码，我们就需要开启 <code>TypeSynonymInstances</code> 这个编译指令了。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://rwh.readthedocs.org/en/latest/chp/6.html" target="_blank" rel="external">http://rwh.readthedocs.org/en/latest/chp/6.html</a><br><a href="http://book.realworldhaskell.org/read/using-typeclasses.html" target="_blank" rel="external">http://book.realworldhaskell.org/read/using-typeclasses.html</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;FlexibleInstances&quot;&gt;&lt;a href=&quot;#FlexibleInstances&quot; class=&quot;headerlink&quot; title=&quot;FlexibleInstances&quot;&gt;&lt;/a&gt;FlexibleInstances&lt;/h2&gt;&lt;p&gt;先看看下面这个简单的
-    
-    </summary>
-    
-      <category term="haskell" scheme="http://scarletsky.github.io/categories/haskell/"/>
-    
-    
-      <category term="haskell" scheme="http://scarletsky.github.io/tags/haskell/"/>
     
   </entry>
   

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://scarletsky.github.io/2017/03/15/notes-of-postgresql/</loc>
+    
+    <lastmod>2017-03-30T13:56:54.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://scarletsky.github.io/2017/02/18/implement-popover-with-javascript/</loc>
     
     <lastmod>2017-02-21T16:22:19.000Z</lastmod>
