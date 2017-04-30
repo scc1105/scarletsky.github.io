@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>PostgreSQL 中的客户端认证 | Scarletsky</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="database, postgresql," />
+  
+
+  <meta name="description" content="简介当客户端与数据库服务器连接时，它需要指定用哪个数据库用户的身份来连接。PostgreSQL 为我们提供了很多种客户端认证的方式，我们可以根据自己的需要来选择认证方式。
+psqlpsql 是 PostgreSQL 的客户端程序，要连接 PostgreSQL 数据库，我们需要指定以下内容：
+
+-d or --dbname 数据库名
+默认情况下是连接与当前操作系统用户名字相同的数据库。
+如果该数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL 中的客户端认证">
+<meta property="og:url" content="http://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/index.html">
+<meta property="og:site_name" content="Scarletsky">
+<meta property="og:description" content="简介当客户端与数据库服务器连接时，它需要指定用哪个数据库用户的身份来连接。PostgreSQL 为我们提供了很多种客户端认证的方式，我们可以根据自己的需要来选择认证方式。
+psqlpsql 是 PostgreSQL 的客户端程序，要连接 PostgreSQL 数据库，我们需要指定以下内容：
+
+-d or --dbname 数据库名
+默认情况下是连接与当前操作系统用户名字相同的数据库。
+如果该数据库">
+<meta property="og:updated_time" content="2017-04-30T07:18:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PostgreSQL 中的客户端认证">
+<meta name="twitter:description" content="简介当客户端与数据库服务器连接时，它需要指定用哪个数据库用户的身份来连接。PostgreSQL 为我们提供了很多种客户端认证的方式，我们可以根据自己的需要来选择认证方式。
+psqlpsql 是 PostgreSQL 的客户端程序，要连接 PostgreSQL 数据库，我们需要指定以下内容：
+
+-d or --dbname 数据库名
+默认情况下是连接与当前操作系统用户名字相同的数据库。
+如果该数据库">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-40690820-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#psql"><span class="toc-text">psql</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见情况"><span class="toc-text">常见情况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pg-hba-conf"><span class="toc-text">pg_hba.conf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#位置"><span class="toc-text">位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#格式"><span class="toc-text">格式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修复"><span class="toc-text">修复</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#让用户通过-peer-和-ident-认证"><span class="toc-text">让用户通过 peer 和 ident 认证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改-pg-hba-conf"><span class="toc-text">修改 pg_hba.conf</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-client-authentication-in-postgresql" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">PostgreSQL 中的客户端认证</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.04.26</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Scarletsky</span>
+        </span>
+      
+
+      
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="http://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>当客户端与数据库服务器连接时，它需要指定用哪个数据库用户的身份来连接。<br>PostgreSQL 为我们提供了很多种客户端认证的方式，我们可以根据自己的需要来选择认证方式。</p>
+<h2 id="psql"><a href="#psql" class="headerlink" title="psql"></a>psql</h2><p><code>psql</code> 是 PostgreSQL 的客户端程序，要连接 PostgreSQL 数据库，我们需要指定以下内容：</p>
+<ul>
+<li><code>-d</code> or <code>--dbname</code> 数据库名<ul>
+<li>默认情况下是连接与当前操作系统用户名字相同的数据库。</li>
+<li>如果该数据库不存在，会报 psql: FATAL:  database “root” does not exist。</li>
+</ul>
+</li>
+<li><code>-h</code> or <code>--host</code> 主机名<ul>
+<li>默认情况下 psql 会通过 Unix socket 连接数据库。</li>
+<li>如果没有 Unix socket，那么会以 TCP/IP 连接到 localhost。</li>
+<li>如果需要通过 TCP/IP 连接到数据库，那么就需要指定主机名。</li>
+</ul>
+</li>
+<li><code>-p</code> or <code>--port</code> 端口号<ul>
+<li>默认情况下是 5432 端口。</li>
+</ul>
+</li>
+<li><code>-U</code> or <code>--username</code> 用户名<ul>
+<li>默认情况下是用当前操作系统用户名去连接数据库。</li>
+<li>如果该用户不存在，会报 psql: FATAL:  role “root” does not exist。</li>
+</ul>
+</li>
+</ul>
+<p>我们也可以用 URI 的方式连接数据库：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">psql postgresql://dbmaster:5433/mydb?sslmode=require</div></pre></td></tr></table></figure>
+<h2 id="常见情况"><a href="#常见情况" class="headerlink" title="常见情况"></a>常见情况</h2><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ psql</div><div class="line">postgres=# CREATE USER test WITH PASSWORD &apos;123456&apos;;</div><div class="line">postgres=# CREATE DATABASE test OWNER test;</div><div class="line">postgres=# \q</div><div class="line"></div><div class="line">$ psql -U test</div><div class="line">psql: FATAL:  Peer authentication failed for user &quot;test&quot;</div><div class="line">$ psql -U test -h 127.0.0.1</div><div class="line">psql: FATAL:  Ident authentication failed for user &quot;test&quot;</div></pre></td></tr></table></figure>
+<p>相信每个在生产环境中使用 PostgreSQL 的人都折腾过客户端认证的问题。<br>明明用户名和密码都正确，而且用户也是数据库的拥有者，为什么 PostgreSQL 会禁止访问？<br>这通常是因为 <code>pg_hba.conf</code> 没有配置好。</p>
+<h2 id="pg-hba-conf"><a href="#pg-hba-conf" class="headerlink" title="pg_hba.conf"></a>pg_hba.conf</h2><h3 id="位置"><a href="#位置" class="headerlink" title="位置"></a>位置</h3><p><code>pg_hba.conf</code> 是 PostgreSQL 客户端认证的配置文件 (hba 是 host-based authentication 的缩写)，它位于 PostgreSQL 的配置目录下，通常是 <code>/usr/local/pgsql/data</code> 或者 <code>/var/lib/pgsql/data</code>。<br>如果两个位置都找不到，但可以连接到数据库，可以直接在 psql shell 里面输入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">postgres=# SHOW hba_file;</div><div class="line">              hba_file</div><div class="line">-------------------------------------</div><div class="line"> /usr/local/var/postgres/pg_hba.conf</div></pre></td></tr></table></figure>
+<p>如果没有连接数据库的权限，可以尝试在终端中输入 <code>ps aux | grep postgres</code>，它会输出和 PostgreSQL 相关的进程，找到类似下面的进程：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># ps aux | grep postgres</div><div class="line">root   3815  0.0  0.0  10772   920 pts/1    S+   00:34   0:00 grep --color=auto postgres</div><div class="line">postgres 24819  0.0  1.9 238588 20068 ?        S    Apr25   0:01 /usr/bin/postgres -D /var/lib/pgsql/data</div><div class="line">....</div></pre></td></tr></table></figure>
+<p>其中 -D 后面的就是该目录的位置了。</p>
+<h3 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h3><p>找到 <code>pg_hba.conf</code> 的位置之后，我们可以查看里面的内容：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># cat pg_hba.conf</div><div class="line">...</div><div class="line"># TYPE  DATABASE        USER            ADDRESS                 METHOD</div><div class="line">local   all             all                                     peer</div><div class="line">host    all             all             127.0.0.1/32            ident</div><div class="line">host    all             all             ::1/128                 ident</div></pre></td></tr></table></figure>
+<p>从内容可以看出，<code>pg_hba.conf</code> 是以行为单位来配置的，每一行包含了以下内容：</p>
+<ul>
+<li><p><code>TYPE</code> 连接类型，表示允许用哪些方式连接数据库，它允许以下几个值：</p>
+<ul>
+<li><code>local</code> 通过 Unix socket 的方式连接。</li>
+<li><code>host</code> 通过 TCP/IP 的方式连接，它能匹配 SSL 和 non-SSL 连接。</li>
+<li><code>hostssl</code> 只允许 SSL 连接。</li>
+<li><code>hostnossl</code> 只允许 non-SSL 连接。</li>
+</ul>
+</li>
+<li><p><code>DATABASE</code> 可连接的数据库，它有以下几个特殊值：</p>
+<ul>
+<li><code>all</code> 匹配所有数据库。</li>
+<li><code>sameuser</code> 可连接和用户名相同的数据库。</li>
+<li><code>samerole</code> 可连接和角色名相同的数据库。</li>
+<li><code>replication</code> 允许复制连接，用于集群环境下的数据库同步。<br>除了上面这些特殊值之外，我们可以写特定的数据库，可以用逗号 (,) 来分割多个数据库。</li>
+</ul>
+</li>
+<li><p><code>USER</code> 可连接数据库的用户，值有三种写法：</p>
+<ul>
+<li><code>all</code> 匹配所有用户。</li>
+<li>特定数据库用户名。</li>
+<li>特定数据库用户组，需要在前面加上 <code>+</code> (如：<code>+admin</code>)。</li>
+</ul>
+</li>
+<li><p><code>ADDRESS</code> 可连接数据库的地址，有以下几种形式：</p>
+<ul>
+<li><code>all</code> 匹配所有 IP 地址。</li>
+<li><code>samehost</code> 匹配该服务器的 IP 地址。</li>
+<li><code>samenet</code> 匹配该服务器子网下的 IP 地址。</li>
+<li>ipaddress/netmask (如：172.20.143.89/32)，支持 IPv4 与 IPv6。</li>
+<li>如果上面几种形式都匹配不上，就会被当成是 hostname。<br><strong>注意: 只有 host, hostssl, hostnossl 会应用个字段。</strong></li>
+</ul>
+</li>
+<li><p><code>METHOD</code> 连接数据库时的认证方式，常见的有几个特殊值：</p>
+<ul>
+<li><code>trust</code> 无条件通过认证。</li>
+<li><code>reject</code> 无条件拒绝认证。</li>
+<li><code>md5</code> 用 md5 加密密码进行认证。</li>
+<li><code>password</code> 用明文密码进行认证，不建议在不信任的网络中使用。</li>
+<li><code>ident</code> 从一个 ident 服务器 (RFC1413) 获得客户端的操作系统用户名并且用它作为被允许的数据库用户名来认证，只能用在 TCP/IP 的类型中 (即 host, hostssl, hostnossl)。</li>
+<li><code>peer</code> 从内核获得客户端的操作系统用户名并把它用作被允许的数据库用户名来认证，只能用于本地连接 (即 local)。</li>
+<li>其他特殊值可以在 <a href="https://www.postgresql.org/docs/9.6/static/auth-pg-hba-conf.html" target="_blank" rel="external">官方文档</a> 中查阅。<br><strong>简单来说，ident 和 peer 都要求客户端操作系统中存在对应的用户。</strong><br><strong>注意: 上面列举的只有 md5 和 password 是需要密码的，其他方式都不需要输入密码认证。</strong></li>
+</ul>
+</li>
+</ul>
+<p>了解完这些字段之后，我们可以看看 <code>pg_hba.conf</code> 初始化的内容了。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">local   all             all                                     peer</div><div class="line"># 表示本机上的所有用户可以以 Unix socket 的方式连接数据库。</div><div class="line">host    all             all             127.0.0.1/32            ident</div><div class="line"># 同上，但只允许 127.0.0.1/32 (IPv4) 这个 IP 连接数据库。</div><div class="line">host    all             all             ::1/128                 ident</div><div class="line"># 同上，但只允许 ::1/128 (IPv6) 这个 IP 连接数据库。</div></pre></td></tr></table></figure>
+<h2 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h2><p>在文章开头，我们看见过两种错误，分别是 Peer authentication failed 和 Ident authentication failed。<br>这是因为 <code>pg_hba.conf</code> 中限定了认证方式是 <code>peer</code> 和 <code>ident</code>。<br>要让我们的 test 用户连接到数据库，我们有以下选择：</p>
+<ul>
+<li>让 test 用户通过 <code>peer</code> 和 <code>ident</code> 认证</li>
+<li>修改 <code>pg_hba.conf</code> 的认证方式</li>
+</ul>
+<h3 id="让用户通过-peer-和-ident-认证"><a href="#让用户通过-peer-和-ident-认证" class="headerlink" title="让用户通过 peer 和 ident 认证"></a>让用户通过 peer 和 ident 认证</h3><p>从上面可以知道，要让用户通过 peer 和 ident 认证，我们需要在操作系统中创建对应的用户。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ sudo su -</div><div class="line"># useradd test</div><div class="line"># psql -U test</div><div class="line">psql: FATAL:  Peer authentication failed for user &quot;test&quot;</div><div class="line"># psql -U test -h 127.0.0.1</div><div class="line">psql: FATAL:  Ident authentication failed for user &quot;test&quot;</div><div class="line"># su - test</div><div class="line">$ psql</div><div class="line">test=&gt;</div></pre></td></tr></table></figure>
+<p>如果使用了 ident 的方式进行认证，而客户端的操作系统中没有 ident 服务器，那么客户端的操作系统中需要先安装 ident 服务器。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># su - test</div><div class="line">$ psql -U test -h 127.0.0.1</div><div class="line">psql: FATAL:  Ident authentication failed for user &quot;test&quot;</div><div class="line"></div><div class="line">$ dnf install oidentd</div><div class="line">$ systemctl enable oidentd</div><div class="line">$ systemctl start oidentd</div><div class="line"></div><div class="line">$ psql -U test -h 127.0.0.1</div><div class="line">test=&gt;</div></pre></td></tr></table></figure>
+<h3 id="修改-pg-hba-conf"><a href="#修改-pg-hba-conf" class="headerlink" title="修改 pg_hba.conf"></a>修改 pg_hba.conf</h3><p>打开 <code>pg_hba.conf</code>，把规则中的 ident 修改成 md5，即：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">host    all             all             127.0.0.1/32            md5</div><div class="line">host    all             all             ::1/128                 md5</div></pre></td></tr></table></figure>
+<p>然后重启 PostgreSQL 服务器即可生效。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ vim /var/lib/pgsql/data/pg_hba.conf</div><div class="line">$ systemctl restart postgresql</div><div class="line">$ psql -U test -h 127.0.0.1</div><div class="line">Password for user test:</div><div class="line">test=&gt;</div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://www.postgresql.org/docs/9.6/static/app-psql.html" target="_blank" rel="external">https://www.postgresql.org/docs/9.6/static/app-psql.html</a><br><a href="https://www.postgresql.org/docs/9.6/static/client-authentication.html" target="_blank" rel="external">https://www.postgresql.org/docs/9.6/static/client-authentication.html</a><br><a href="https://www.postgresql.org/docs/9.6/static/auth-methods.html" target="_blank" rel="external">https://www.postgresql.org/docs/9.6/static/auth-methods.html</a><br><a href="https://www.postgresql.org/docs/9.6/static/creating-cluster.html" target="_blank" rel="external">https://www.postgresql.org/docs/9.6/static/creating-cluster.html</a><br><a href="http://www.davidpashley.com/articles/postgresql-user-administration/" target="_blank" rel="external">http://www.davidpashley.com/articles/postgresql-user-administration/</a><br><a href="http://stackoverflow.com/questions/14025972/postgresql-how-to-find-pg-hba-conf-file-using-mac-os-x" target="_blank" rel="external">http://stackoverflow.com/questions/14025972/postgresql-how-to-find-pg-hba-conf-file-using-mac-os-x</a><br><a href="http://stackoverflow.com/questions/2942485/psql-fatal-ident-authentication-failed-for-user-postgres" target="_blank" rel="external">http://stackoverflow.com/questions/2942485/psql-fatal-ident-authentication-failed-for-user-postgres</a></p>
+
+    
+  </div>
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持 scarletsky</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/03/15/notes-of-postgresql/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'scarletskygithubio';
+    
+    var disqus_url = 'http://scarletsky.github.io/2017/04/26/client-authentication-in-postgresql/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//scarletskygithubio.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
